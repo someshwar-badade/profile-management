@@ -108,6 +108,7 @@ class Users extends  Controllers\BaseController
 
 	public function login()
 	{
+		
 		if ($this->request->getMethod() === 'post') {
 			$requestData = (array) $this->request->getJSON();
 			$requestData = array_filter($requestData);
@@ -303,80 +304,80 @@ class Users extends  Controllers\BaseController
 		}
 	}
 
-	public function requestOtp()
-	{
-		if ($this->request->getMethod() === 'post') {
-			$requestData = (array) $this->request->getJSON();
+	// public function requestOtp()
+	// {
+	// 	if ($this->request->getMethod() === 'post') {
+	// 		$requestData = (array) $this->request->getJSON();
 
-			$validation =  \Config\Services::validation();
-			$validation->setRules(
-				[
-					'mobile' => 'required|numeric|exact_length[10]'
-				],
-				[   // Errors
+	// 		$validation =  \Config\Services::validation();
+	// 		$validation->setRules(
+	// 			[
+	// 				'mobile' => 'required|numeric|exact_length[10]'
+	// 			],
+	// 			[   // Errors
 
-					'mobile' => [
-						'required' => lang('forms.register.mobile.errorRequired'),
-						'exact_length' => lang('forms.register.mobile.errorMinlength'),
-						'is_unique' => lang('forms.register.mobile.errorUnique'),
-						'numeric' => lang('forms.register.mobile.errorNumeric')
-					],
-				]
-			);
+	// 				'mobile' => [
+	// 					'required' => lang('forms.register.mobile.errorRequired'),
+	// 					'exact_length' => lang('forms.register.mobile.errorMinlength'),
+	// 					'is_unique' => lang('forms.register.mobile.errorUnique'),
+	// 					'numeric' => lang('forms.register.mobile.errorNumeric')
+	// 				],
+	// 			]
+	// 		);
 
-			$valid = $validation->run($requestData);
-			if (!$valid) {
+	// 		$valid = $validation->run($requestData);
+	// 		if (!$valid) {
 
-				return $this->fail($validation->getErrors(), 400);
-			}
+	// 			return $this->fail($validation->getErrors(), 400);
+	// 		}
 
-			$otpModel = new OtpModel();
+	// 		$otpModel = new OtpModel();
 
-			//check record exist in database 
-			$otpData = $otpModel->select('id,mobile,otp,token')->where('mobile', $requestData['mobile'])->first();
+	// 		//check record exist in database 
+	// 		$otpData = $otpModel->select('id,mobile,otp,token')->where('mobile', $requestData['mobile'])->first();
 
-			$otpExpiredTime = 10;
-			$payload = [
-				'ist' => time(),
-				'iss' => 'localhost',
-				'exp' => time() + (60 * $otpExpiredTime)
-			];
+	// 		$otpExpiredTime = 10;
+	// 		$payload = [
+	// 			'ist' => time(),
+	// 			'iss' => 'localhost',
+	// 			'exp' => time() + (60 * $otpExpiredTime)
+	// 		];
 
-			$token = JWT::encode($payload, JWT_SECRETE_KEY);
+	// 		$token = JWT::encode($payload, JWT_SECRETE_KEY);
 
-			//get otp text
-			$otp_code = $this->generateOtp();
-			if ($otpData) {
-				//update
-				$otpData['otp'] = $otp_code;
-				$otpData['token'] = $token;
+	// 		//get otp text
+	// 		$otp_code = $this->generateOtp();
+	// 		if ($otpData) {
+	// 			//update
+	// 			$otpData['otp'] = $otp_code;
+	// 			$otpData['token'] = $token;
 
-				$isUpdate = $otpModel->save($otpData);
-			} else {
-				//insert new
-				$requestData['otp'] = $otp_code;
-				$requestData['token'] = $token;
-				$isUpdate = $otpModel->insert($requestData);
-			}
+	// 			$isUpdate = $otpModel->save($otpData);
+	// 		} else {
+	// 			//insert new
+	// 			$requestData['otp'] = $otp_code;
+	// 			$requestData['token'] = $token;
+	// 			$isUpdate = $otpModel->insert($requestData);
+	// 		}
 
-			if (isset($isUpdate)) {
-				//send SMS
-				$message = "Your OTP for ".SITE_TITLE." is $otp_code. The OTP is valid for the next $otpExpiredTime minutes.";
-				//getting values from included file
+	// 		if (isset($isUpdate)) {
+	// 			//send SMS
+	// 			$message = "Your OTP for ".SITE_TITLE." is $otp_code. The OTP is valid for the next $otpExpiredTime minutes.";
+	// 			//getting values from included file
 
-				$message = urlencode($message);
+	// 			$message = urlencode($message);
 
 				
-				$output = sendSms($requestData['mobile'],$message);
-				if (stripos(strip_tags($output), "Successfully") !== false) {
+	// 			$output = sendSms($requestData['mobile'],$message);
+	// 			if (stripos(strip_tags($output), "Successfully") !== false) {
 
-					return $this->respond(['success' => lang('forms.register.otp.otpSendScuccess')]);
-				}
-			}
+	// 				return $this->respond(['success' => lang('forms.register.otp.otpSendScuccess')]);
+	// 			}
+	// 		}
 
-			return $this->fail(['messages' => 'error'], 400);
-		}
-	}
+	// 		return $this->fail(['messages' => 'error'], 400);
+	// 	}
+	// }
 
 	protected function generateOtp($length = 6)
 	{
@@ -384,151 +385,151 @@ class Users extends  Controllers\BaseController
 	}
 
 
-	protected function isOtpExpired($mobile)
-	{
-		$otpModel = new OtpModel();
-		$otpDetails = $otpModel->where('mobile', $mobile)->first();
-		try {
-			$payload = JWT::decode($otpDetails['token'], JWT_SECRETE_KEY, ['HS256']);
-			//make expire used otp
-			$payload = [
-				'ist' => time(),
-				'iss' => 'localhost',
-				'exp' => time() + (-60)
-			];
-			$token = JWT::encode($payload, JWT_SECRETE_KEY);
-			$otpDetails['token'] = $token;
-			$otpModel->save($otpDetails);
-		} catch (Exception $e) {
-			return $e->getMessage();
-		}
+	// protected function isOtpExpired($mobile)
+	// {
+	// 	$otpModel = new OtpModel();
+	// 	$otpDetails = $otpModel->where('mobile', $mobile)->first();
+	// 	try {
+	// 		$payload = JWT::decode($otpDetails['token'], JWT_SECRETE_KEY, ['HS256']);
+	// 		//make expire used otp
+	// 		$payload = [
+	// 			'ist' => time(),
+	// 			'iss' => 'localhost',
+	// 			'exp' => time() + (-60)
+	// 		];
+	// 		$token = JWT::encode($payload, JWT_SECRETE_KEY);
+	// 		$otpDetails['token'] = $token;
+	// 		$otpModel->save($otpDetails);
+	// 	} catch (Exception $e) {
+	// 		return $e->getMessage();
+	// 	}
 
-		return false;
-	}
+	// 	return false;
+	// }
 
-	public function forgotpassword()
-	{
-		if ($this->request->getMethod() === 'post') {
-			$requestData = (array) $this->request->getJSON();
+	// public function forgotpassword()
+	// {
+	// 	if ($this->request->getMethod() === 'post') {
+	// 		$requestData = (array) $this->request->getJSON();
 
-			$validation =  \Config\Services::validation();
-			$validation->setRules(
-				[
-					'mobile' => 'required|numeric|exact_length[10]|is_not_unique[users.mobile,mobile,{mobile}]',
-					'otp' => 'required|is_not_unique[otp.otp,mobile,{mobile}]',
-					'password' => 'required',
-				],
-				[   // Errors
+	// 		$validation =  \Config\Services::validation();
+	// 		$validation->setRules(
+	// 			[
+	// 				'mobile' => 'required|numeric|exact_length[10]|is_not_unique[users.mobile,mobile,{mobile}]',
+	// 				'otp' => 'required|is_not_unique[otp.otp,mobile,{mobile}]',
+	// 				'password' => 'required',
+	// 			],
+	// 			[   // Errors
 
-					'mobile' => [
-						'required' => lang('forms.forgotPassword.mobile.errorRequired'),
-						'exact_length' => lang('forms.forgotPassword.mobile.errorMinlength'),
-						'is_not_unique' => lang('forms.forgotPassword.mobile.errorInvalid'),
-						'numeric' => lang('forms.forgotPassword.mobile.errorNumeric')
-					],
-					'otp' => [
-						'required' => lang('forms.forgotPassword.otp.errorRequired'),
-						'is_not_unique' => lang('forms.forgotPassword.otp.errorInvalid'),
-					],
-					'password' => [
-						'required' => lang('forms.forgotPassword.password.errorRequired'),
-					],
-				]
-			);
+	// 				'mobile' => [
+	// 					'required' => lang('forms.forgotPassword.mobile.errorRequired'),
+	// 					'exact_length' => lang('forms.forgotPassword.mobile.errorMinlength'),
+	// 					'is_not_unique' => lang('forms.forgotPassword.mobile.errorInvalid'),
+	// 					'numeric' => lang('forms.forgotPassword.mobile.errorNumeric')
+	// 				],
+	// 				'otp' => [
+	// 					'required' => lang('forms.forgotPassword.otp.errorRequired'),
+	// 					'is_not_unique' => lang('forms.forgotPassword.otp.errorInvalid'),
+	// 				],
+	// 				'password' => [
+	// 					'required' => lang('forms.forgotPassword.password.errorRequired'),
+	// 				],
+	// 			]
+	// 		);
 
-			$valid = $validation->run($requestData);
-			if (!$valid) {
+	// 		$valid = $validation->run($requestData);
+	// 		if (!$valid) {
 
-				return $this->fail($validation->getErrors(), 400);
-			}
+	// 			return $this->fail($validation->getErrors(), 400);
+	// 		}
 
-			// check otp expired
-			if ($this->isOtpExpired($requestData['mobile'])) {
-				return $this->fail(['otp' => 'OTP Expired']);
-			}
+	// 		// check otp expired
+	// 		if ($this->isOtpExpired($requestData['mobile'])) {
+	// 			return $this->fail(['otp' => 'OTP Expired']);
+	// 		}
 
-			//get user details
-			$model = new UserModel();
-			$user = $model->where('mobile', $requestData['mobile'])->first();
+	// 		//get user details
+	// 		$model = new UserModel();
+	// 		$user = $model->where('mobile', $requestData['mobile'])->first();
 
-			//update password
-			if ($user) {
-				$user['password'] = password_hash($requestData['password'], PASSWORD_BCRYPT);
+	// 		//update password
+	// 		if ($user) {
+	// 			$user['password'] = password_hash($requestData['password'], PASSWORD_BCRYPT);
 
-				if ($model->save($user)) {
-					return $this->respond(['success' => lang('forms.forgotPassword.successMessage')]);
-				}
-			}
+	// 			if ($model->save($user)) {
+	// 				return $this->respond(['success' => lang('forms.forgotPassword.successMessage')]);
+	// 			}
+	// 		}
 
-			return $this->fail(['messages' => 'error']);
-		}
-	}
+	// 		return $this->fail(['messages' => 'error']);
+	// 	}
+	// }
 
-	public function contactUs()
-	{
+	// public function contactUs()
+	// {
 
-		$SettingsModel = new SettingsModel();
-		$contactusModel = new ContactusModel();
+	// 	$SettingsModel = new SettingsModel();
+	// 	$contactusModel = new ContactusModel();
 
-		if ($this->request->getMethod() === 'post') {
-			$requestData = (array) $this->request->getJSON();
-			$requestData = array_filter($requestData);
+	// 	if ($this->request->getMethod() === 'post') {
+	// 		$requestData = (array) $this->request->getJSON();
+	// 		$requestData = array_filter($requestData);
 
-			$validation =  \Config\Services::validation();
-			$validation->setRules(
-				[
-					'fullname' => 'required|min_length[3]',
-					'email' => 'required|valid_email',
-					'mobile' => 'required|numeric|exact_length[10]',
-					'otp' => 'required|is_not_unique[otp.otp,mobile,{mobile}]',
-					'message' => 'required'
-				],
-				[   // Errors
-					'fullname' => [
-						'required' => lang('forms.contactUs.fullName.errorRequired'),
-						'min_length' => lang('forms.contactUs.fullName.errorMinlength')
-					],
-					'email' => [
-						'required' => lang('forms.contactUs.emailAddress.errorRequired')
-					],
-					'mobile' => [
-						'required' => lang('forms.contactUs.mobile.errorRequired'),
-						'numeric' => lang('forms.contactUs.mobile.errorNumeric'),
-						'exact_length' => lang('forms.contactUs.mobile.errorMinlength'),
-					],
-					'otp' => [
-						'required' => lang('forms.contactUs.otp.errorRequired'),
-						'is_not_unique' => lang('forms.contactUs.otp.errorInvalid'),
-					],
-					'message' => [
-						'required' => lang('forms.contactUs.message.errorRequired')
-					]
-				]
-			);
+	// 		$validation =  \Config\Services::validation();
+	// 		$validation->setRules(
+	// 			[
+	// 				'fullname' => 'required|min_length[3]',
+	// 				'email' => 'required|valid_email',
+	// 				'mobile' => 'required|numeric|exact_length[10]',
+	// 				'otp' => 'required|is_not_unique[otp.otp,mobile,{mobile}]',
+	// 				'message' => 'required'
+	// 			],
+	// 			[   // Errors
+	// 				'fullname' => [
+	// 					'required' => lang('forms.contactUs.fullName.errorRequired'),
+	// 					'min_length' => lang('forms.contactUs.fullName.errorMinlength')
+	// 				],
+	// 				'email' => [
+	// 					'required' => lang('forms.contactUs.emailAddress.errorRequired')
+	// 				],
+	// 				'mobile' => [
+	// 					'required' => lang('forms.contactUs.mobile.errorRequired'),
+	// 					'numeric' => lang('forms.contactUs.mobile.errorNumeric'),
+	// 					'exact_length' => lang('forms.contactUs.mobile.errorMinlength'),
+	// 				],
+	// 				'otp' => [
+	// 					'required' => lang('forms.contactUs.otp.errorRequired'),
+	// 					'is_not_unique' => lang('forms.contactUs.otp.errorInvalid'),
+	// 				],
+	// 				'message' => [
+	// 					'required' => lang('forms.contactUs.message.errorRequired')
+	// 				]
+	// 			]
+	// 		);
 
-			$valid = $validation->run($requestData);
-			if (!$valid) {
+	// 		$valid = $validation->run($requestData);
+	// 		if (!$valid) {
 
-				return $this->fail($validation->getErrors(), 400);
-			}
-			$save_data = [
-				'fullname' => $requestData['fullname'],
-				'email' => $requestData['email'],
-				'phone' => $requestData['mobile'],
-				'message' => $requestData['message'],
-			];
+	// 			return $this->fail($validation->getErrors(), 400);
+	// 		}
+	// 		$save_data = [
+	// 			'fullname' => $requestData['fullname'],
+	// 			'email' => $requestData['email'],
+	// 			'phone' => $requestData['mobile'],
+	// 			'message' => $requestData['message'],
+	// 		];
 
-			if (!$contactusModel->save($save_data)) {
+	// 		if (!$contactusModel->save($save_data)) {
 
-				return $this->fail(['messages' => "Something Went Wrong."], 400);
-			}
+	// 			return $this->fail(['messages' => "Something Went Wrong."], 400);
+	// 		}
 
 
-			sendEmail_contactUs($save_data['fullname'], $save_data['email'], $save_data['phone'], $save_data['message']);
+	// 		sendEmail_contactUs($save_data['fullname'], $save_data['email'], $save_data['phone'], $save_data['message']);
 
-			return $this->respond(['success' => lang('forms.contactUs.successMessage')]);
-		}
-	}
+	// 		return $this->respond(['success' => lang('forms.contactUs.successMessage')]);
+	// 	}
+	// }
 
 	public function getDashboardDetails(){
 

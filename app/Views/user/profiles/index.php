@@ -29,7 +29,7 @@
                     </div>
                 </div>
             </div>
-        
+
 
         </div><!-- /.container-fluid -->
 
@@ -39,17 +39,17 @@
                 <div class="modal-content">
                     <!-- Modal header -->
                     <div class="modal-header bg-primary">
-                            <div class="col-sm-4"><small><label for="">Date of creation: </label> {{profile.created_at}}</small></div>
-                            <div class="col-sm-4"><small><label for="">Last modified: </label> {{profile.updated_at | timeAgo}}</small></div>
-                            <div class="col-sm-3"><small><label for="">Updated By: </label> {{profile.updated_by}}</small></div>
-                        
+                        <div class="col-sm-4"><small><label for="">Date of creation: </label> {{profile.created_at}}</small></div>
+                        <div class="col-sm-4"><small><label for="">Last modified: </label> {{profile.updated_at | timeAgo}}</small></div>
+                        <div class="col-sm-3"><small><label for="">Updated By: </label> {{profile.updated_by}}</small></div>
+
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <!-- Modal body -->
                     <div class="modal-body">
-                        
+
                         <div class="form-group row">
                             <label class="col-sm-3" for="inputName">Candidate full name </label>
                             <div class="col-sm-3">{{profile.candidate_name}}</div>
@@ -68,12 +68,12 @@
                                 {{profile.mobile_alternate}}
                             </div>
                         </div>
-                        
+
 
                         <div class="form-group row">
                             <label class="col-sm-3" for="inputName">Email (primary) </label>
                             <div class="col-sm-3">
-                               {{profile.email_primary}}
+                                {{profile.email_primary}}
                             </div>
                             <label class="col-sm-3" for="inputName">Email (alternate)</label>
                             <div class="col-sm-3">
@@ -81,7 +81,7 @@
                             </div>
                         </div>
 
-                        
+
                         <div class="form-group row">
                             <label class="col-sm-3" for="inputName">Resume</label>
                             <div class="col-sm-3">
@@ -95,55 +95,97 @@
                                 </div>
                             </div>
                         </div>
-                        
 
 
-                        <div class="form-group row">
+
+                        <div ng-show="profile.preferred_work_locations.length" class="form-group row">
                             <label class="col-sm-3" for="inputName">Preferred work locations </label>
                             <div class="col-sm-9">
-                               <span class="badge badge-secondary ml-1" ng-repeat="work_location in profile.preferred_work_locations">{{work_location}}</span>
+                                <span class="badge badge-secondary ml-1" ng-repeat="work_location in profile.preferred_work_locations">{{work_location}}</span>
                             </div>
                         </div>
-                        <div class="form-group row">
+
+                        <div ng-show="profile.categories.length" class="form-group row">
                             <label class="col-sm-3" for="inputName">Categories </label>
                             <div class="col-sm-9">
-                               <span class="badge badge-secondary ml-1" ng-repeat="categorie in profile.categories">{{categorie}}</span>
+                                <span class="badge badge-secondary ml-1" ng-repeat="categorie in profile.categories">{{categorie}}</span>
                             </div>
                         </div>
 
-                        <div class="form-group row">
+                        <div ng-show="profile.top_skills.length" class="form-group row">
                             <label class="col-sm-3" for="topSkills">Top Skills</label>
                             <div class="col-sm-9">
-                            <span class="badge badge-secondary ml-1" ng-repeat="skill in profile.top_skills">{{skill}}</span>
-                               
+                                <span class="badge badge-secondary ml-1" ng-repeat="skill in profile.top_skills">{{skill}}</span>
+
                             </div>
                         </div>
 
-                        <div class="form-group row">
+                        <div ng-show="profile.middle_skills.length" class="form-group row">
                             <label class="col-sm-3" for="middleSkills">Middle Skills</label>
                             <div class="col-sm-9">
-                            <span class="badge badge-secondary ml-1" ng-repeat="skill in profile.middle_skills">{{skill}}</span>
-                              
+                                <span class="badge badge-secondary ml-1" ng-repeat="skill in profile.middle_skills">{{skill}}</span>
+
                             </div>
                         </div>
 
-                        <div class="form-group row">
+                        <div ng-show="profile.foundation_skills.length" class="form-group row">
                             <label class="col-sm-3" for="foundationSkills">Foundation Skills</label>
                             <div class="col-sm-9">
-                            <span class="badge badge-secondary ml-1" ng-repeat="skill in profile.foundation_skills">{{skill}}</span>
-                               
+                                <span class="badge badge-secondary ml-1" ng-repeat="skill in profile.foundation_skills">{{skill}}</span>
+
                             </div>
                         </div>
-                        <div class="form-group row">
+                        <div ng-show="profile.certifications.length" class="form-group row">
                             <h4>Certifications</h4>
                         </div>
-                        <div class="certifications">
+                        <div ng-show="profile.certifications.length" class="certifications">
                             <ol>
                                 <!-- <label class="col-sm-3" for="foundationSkills"></label> -->
                                 <li ng-repeat="certification in profile.certifications">
                                     {{certification.description}}
                                 </li>
                             </ol>
+                        </div>
+
+                        <div ng-show="profile.work_experience.length" class="form-group row">
+                            <h4>Work Experience</h4>
+                        </div>
+
+                        <div ng-show="profile.work_experience.length" class="work-experience">
+
+                            <div class="form-group row">
+                                <table class="table table-bordered table-stripped">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Company</th>
+                                            <th>From Date</th>
+                                            <th>To Date</th>
+                                            <th style="width: 50%;">Responsibility</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="experience in profile.work_experience">
+                                            <td>
+                                                {{$index+1}}
+                                            </td>
+                                            <td>
+                                                {{experience.company_name}}
+                                            </td>
+                                            <td>
+                                                {{experience.from_date}}
+                                            </td>
+                                            <td>
+                                                {{experience.to_date}}
+                                            </td>
+                                            <td>
+                                                {{experience.responsibility}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                            </div>
                         </div>
 
                     </div>
@@ -156,8 +198,8 @@
                 </div>
             </div>
         </div>
-</section>
-<!-- /.content -->
+    </section>
+    <!-- /.content -->
 </div>
 
 
@@ -196,7 +238,7 @@
         vm.dtColumns = [
             DTColumnBuilder.newColumn("id").withTitle('ID'),
             DTColumnBuilder.newColumn("").withTitle('Full Name').withTitle('Candidate name').renderWith(function(data, type, full) {
-                return "<a role='button' class='text-primary' href='" + base_url + "/profile/" + full.id + "/edit'  >"+ full.candidate_name +"</a>";
+                return "<a role='button' class='text-primary' href='" + base_url + "/profile/" + full.id + "/edit'  >" + full.candidate_name + "</a>";
             }),
             DTColumnBuilder.newColumn("mobile_primary").withTitle('Mobile'),
             DTColumnBuilder.newColumn("top_skills").withTitle('Top Skils'),
@@ -226,7 +268,7 @@
             }).then(function(response) {
                 console.log(response);
                 $scope.profile = response.data;
-                $scope.profile.editUrl = base_url + "/profile/" + $scope.profile.id+"/edit";
+                $scope.profile.editUrl = base_url + "/profile/" + $scope.profile.id + "/edit";
             }, function(response) {
 
 

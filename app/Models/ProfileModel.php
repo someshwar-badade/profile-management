@@ -6,7 +6,7 @@ class ProfileModel extends Model
 {
     protected $table = 'profiles';
     protected $primaryKey = 'id';
-    protected $allowedFields =  ['candidate_name', 'mobile_primary', 'mobile_alternate', 'email_primary', 'email_alternate', 'gender', 'photo', 'resume_pdf', 'resume_pdf_name', 'resume_doc', 'resume_doc_name', 'preferred_work_locations','categories', 'top_skills', 'middle_skills', 'foundation_skills','certifications', 'created_by', 'updated_by', 'status'];
+    protected $allowedFields =  ['candidate_name', 'mobile_primary', 'mobile_alternate', 'email_primary', 'email_alternate', 'gender', 'photo', 'resume_pdf', 'resume_pdf_name', 'resume_doc', 'resume_doc_name', 'preferred_work_locations','categories', 'top_skills', 'middle_skills', 'foundation_skills','certifications','work_experience', 'created_by', 'updated_by', 'status'];
     
     protected $useTimestamps = true;
     protected $createdField  = 'created_at';

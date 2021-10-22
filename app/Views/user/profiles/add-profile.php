@@ -142,7 +142,7 @@
               <label class="col-sm-3" for="inputName">Preferred work locations </label>
               <div class="col-sm-9">
                 <tags-input ng-model="profile.preferred_work_locations" use-strings="true" replace-spaces-with-dashes="false"></tags-input>
-                
+
               </div>
             </div>
 
@@ -150,7 +150,7 @@
               <label class="col-sm-3" for="inputName">Categories </label>
               <div class="col-sm-9">
                 <tags-input ng-model="profile.categories" use-strings="true" replace-spaces-with-dashes="false"></tags-input>
-                
+
               </div>
             </div>
 
@@ -181,9 +181,11 @@
                 </tags-input>
               </div>
             </div>
+
             <div class="form-group row">
               <h4>Certifications</h4>
             </div>
+
             <div class="certifications">
               <div class="form-group row " ng-repeat="certification in profile.certifications">
                 <!-- <label class="col-sm-3" for="foundationSkills"></label> -->
@@ -197,6 +199,53 @@
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
               <a role="button" class="text-primary float-right" ng-click="addNewCertification()"><i class="fa fa-plus"></i> Add new certification</a>
             </div>
+            <div class="form-group row">
+              <h4>Work Experience</h4>
+            </div>
+
+            <div class="work-experience">
+
+              <div class="form-group row">
+                    <table class="table table-bordered table-stripped">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Company</th>
+                          <th>From Date</th>
+                          <th>To Date</th>
+                          <th style="width: 50%;">Responsibility</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr ng-repeat="experience in profile.work_experience">
+                          <td>
+                          {{$index+1}}
+                          </td>
+                          <td>
+                          <input type="text"  ng-model="profile.work_experience[$index].company_name" maxlength="30"  class="form-control">
+                          </td>
+                          <td>
+                          <input type="text"  ng-model="profile.work_experience[$index].from_date" maxlength="30"  class="form-control">
+                          </td>
+                          <td>
+                          <input type="text"  ng-model="profile.work_experience[$index].to_date" maxlength="30"  class="form-control">
+                          </td>
+                          <td>
+                          <input type="text"  ng-model="profile.work_experience[$index].responsibility" maxlength="1000"  class="form-control">
+                          </td>
+                        </tr>
+                      </tbody>
+                      <tfoot>
+                        <tr>
+                          <td colspan="5">
+                          <a role="button" class="text-primary float-right" ng-click="addNewExperience()"><i class="fa fa-plus"></i> Add new experience</a>
+                          </td>
+                        </tr>
+                      </tfoot>
+                    </table>
+              </div>
+            </div>
+
 
 
             <!-- </div> -->
@@ -224,6 +273,7 @@
     $scope.successMessage = '';
     $scope.profile = {}
     $scope.profile.certifications = [];
+    $scope.profile.work_experience = [];
     $scope.resume_pdf_change = false;
     $scope.resume_doc_change = false;
     // $scope.slugify = function() {
@@ -245,6 +295,22 @@
     $scope.removeDescription = function(index) {
       $scope.profile.certifications.splice(index, 1);
     }
+
+
+    $scope.addNewExperience = function() {
+      $scope.profile.work_experience.push({
+        "company_name": "",
+        "from_date": "",
+        "to_date": "",
+        "responsibility": ""
+      });
+    }
+
+    $scope.removeExperience = function(index) {
+      $scope.profile.work_experience.splice(index, 1);
+    }
+
+
 
     $scope.clickChangeResumePdf = function() {
       $scope.resume_pdf_change = !$scope.resume_pdf_change;

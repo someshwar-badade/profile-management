@@ -175,6 +175,9 @@ class Profiles extends ResourceController
         if (isset($requestData['certifications'])) {
             $requestData['certifications'] = json_encode($requestData['certifications']);
         }
+        if (isset($requestData['work_experience'])) {
+            $requestData['work_experience'] = json_encode($requestData['work_experience']);
+        }
        
         $requestData['created_by'] = $user['id'];
         $requestData['updated_by'] = $user['id'];
@@ -183,6 +186,10 @@ class Profiles extends ResourceController
         // echo  $model->getLastQuery()->getQuery();
         if (isset($requestData['certifications'])) {
             $requestData['certifications'] = json_decode($requestData['certifications'], true);
+        }
+        
+        if (isset($requestData['work_experience'])) {
+            $requestData['work_experience'] = json_decode($requestData['work_experience'], true);
         }
         
         //action log
@@ -328,6 +335,10 @@ class Profiles extends ResourceController
         if (isset($requestData['certifications'])) {
             $requestData['certifications'] = json_encode($requestData['certifications']);
         }
+
+        if (isset($requestData['work_experience'])) {
+            $requestData['work_experience'] = json_encode($requestData['work_experience']);
+        }
        
         $requestData['updated_by'] = $user['id'];
 
@@ -389,6 +400,12 @@ class Profiles extends ResourceController
             $data['certifications'] = [];
         }
 
+        if(!empty($data['work_experience'])){
+            $data['work_experience'] = json_decode($data['work_experience']);
+        }else{
+            $data['work_experience'] = [];
+        }
+
 
         $data['resume_pdf'] = trim($data['resume_pdf']);
         $data['resume_doc'] = trim($data['resume_doc']);
@@ -432,6 +449,8 @@ class Profiles extends ResourceController
         }else{
             $data['foundation_skills']=[];
         }
+        
+       
         
         $createdByDetails = $userModel->find($data['created_by']);
         $updatedByDetails = $userModel->find($data['updated_by']);
