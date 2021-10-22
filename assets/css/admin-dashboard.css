@@ -1,0 +1,220 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,200;0,300;0,400;1,200;1,300;1,400&display=swap');
+ @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700&display=swap');
+@font-face {
+	font-family: 'icomoon';
+	src: url('../fonts/icomoon.eot?tgt6sl');
+	src: url('../fonts/icomoon.eot?tgt6sl#iefix') format('embedded-opentype'), url('../fonts/icomoon.ttf?tgt6sl') format('truetype'), url('../fonts/icomoon.woff?tgt6sl') format('woff'), url('../fonts/icomoon.svg?tgt6sl#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+	font-display: block;
+}
+ [class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+ speak: never;
+ font-style: normal;
+ font-weight: normal;
+ font-variant: normal;
+ text-transform: none;
+ line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+ -moz-osx-font-smoothing: grayscale;
+}
+.icon-back:before {
+	content: "\e900";
+}
+.icon-forward:before {
+	content: "\e901";
+}
+body {
+	font-size: 14px;
+	font-family: 'Jost', sans-serif;
+	color: #2a2a2a;
+}
+* {
+	margin: 0px;
+	padding: 0px;
+}
+a {
+	transition: all linear 0.2s;
+}
+
+.knowmore {
+	background: var(--primary-color);
+	color: #fff;
+	position: relative;
+	overflow: hidden;
+	z-index: 0;
+}
+.knowmore i {
+	font-size: 12px;
+	margin-left: 5px
+}
+.knowmore:hover {
+	color: #fff;
+}
+.btn.knowmore:before {
+	content: "";
+	background: #333;
+	position: absolute;
+	left: 0px;
+	height: 100%;
+	top: 0px;
+	width: 0%;
+	display: block;
+	transition: all linear 0.3s;
+	z-index: -1;
+}
+.btn.knowmore:hover:before {
+	width: 100%;
+}
+.dashboard_section {
+	background: #f4f7fc;
+	min-height: 80vh;
+	padding: 0px 0px 0px 0px;
+}
+.dashboard_header {
+	min-height: 60px;
+	background: #fff;
+}
+.userinfo-left, .userinfo-right {
+	background: #fff;
+	min-height: 90vh;
+	padding: 30px;
+}
+.dashboard_main {
+	padding: 15px 0px;
+}
+.dashboard_section .navbar {
+	padding: 0px 15px
+}
+.profileimg {
+	width: 100%;
+	height: 200px;
+	margin: 0px auto;
+	position: relative;
+}
+.profileimg img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+.usename {
+	font-size: 22px;
+	text-align: center;
+	padding: 15px 0px;
+	font-weight: 600;
+}
+.profileinfo ul {
+	padding: 0px;
+	margin: 0px;
+	list-style-type: none;
+}
+.profileinfo ul li {
+	display: flex;
+	padding: 8px 0px;
+	font-size: 16px;
+	justify-content: space-between;
+	border-top: solid 1px #ddd;
+}
+.profileinfo ul li span:first-child {
+	font-weight: 600;
+	color: #000;
+}
+.profileinfo ul li span {
+	display: inline-block;
+}
+.proheader h4 {
+	margin: 0px
+}
+.proheader {
+	justify-content: space-between;
+	display: flex;
+}
+.proheader a {
+	color: #F30;
+	font-size: 20px;
+}
+.proheader a i {
+	font-size: 18px;
+}
+.proheader a:hover {
+	text-decoration: none;
+}
+.dashboard_header .dropdown-menu {
+	right: 0px;
+	left: inherit;
+	top: 120%;
+}
+.dashboard_header .nav-link {
+	color: #303030;
+	font-size: 16px;
+}
+.editphoto {
+	position: absolute;
+	width: 40px;
+	height: 40px;
+	bottom: 0px;
+	right: 0px;
+	background: #333;
+}
+.editphoto .fleup {
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+}
+.editphoto i {
+	font-size: 21px;
+	color: #fff;
+	position: absolute;
+	left: 10px;
+	pointer-events: none;
+	top: 4px;
+}
+.form-control {
+	border-radius: 1px;
+}
+.editprofile-form label {
+	font-size: 16px;
+}
+.dashboard-footer {
+	background: #fff;
+	border-top: solid 1px #ececec;
+	padding: 15px 0px;
+}
+.admindashboard {
+}
+.admin-apps h2 {
+	margin-bottom: 30px;
+}
+.apps i {
+	font-size: 50px;
+}
+.apps {
+	padding: 20px 10px;
+	background: #fff;
+	text-align: center;
+	margin-bottom: 30px;
+	display: block;
+	color: #323232;
+	border-radius: 3px;
+}
+.apps:hover {
+	text-decoration: none;
+	color: #323232;
+}
+.apps h4 {
+	font-size: 18px;
+	font-weight: 600;
+	color: #323232;
+	margin-top: 15px;
+}
+.apps p {
+	font-size: 14px;
+	color: #999;
+	margin: 0px;
+}
+
+.admin-table-listing h2 { margin:0px 0px 30px 0px;}

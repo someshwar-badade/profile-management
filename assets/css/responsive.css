@@ -1,0 +1,57 @@
+@media (max-width:767px){
+body { overflow-x: hidden}  
+header .navbar { padding:0px 15px;}
+header .navbar-brand img {} 
+.banner-text {width: 100%;text-align: center;right: 0;top: 20%;padding: 15px;}
+.banner-text h1 {font-size: 23px;}
+.bannerBg { height:50vh; z-index:inherit;}
+.abutsSection, .productSect {padding: 30px 0px;}
+.productSect { text-align:center; padding: 30px 20px;}
+.productDescription, .productImg{ width:100%; padding:0px;}
+#popularCategory .owl-nav {bottom: 0px;right: 0;}
+.productDescription p {text-align: justify;}
+.left-t { padding:0px;}
+.ref_img {margin: 20px -5px;flex-direction: row;flex-wrap: wrap;justify-content: center;text-align:center;}
+.left-t {text-align:center;}
+.left-t > img {	width: 250px;	object-fit: contain;}
+.contactus-section {padding: 30px 0px;}
+header .navbar ul li { text-align:left; margin:0px 10px 0px 0px; padding:5px 0px;}
+.footer { padding:30px 0px;}
+.ft-right ul li { margin:0px 3px 15px 3px;	}
+.ft-right ul li a{ font-size:12px;}
+header .navbar-brand img {    height: 50px;}
+.navbar-light .navbar-toggler {	background: var(--primary-color);}
+.navbar-collapse { background: rgba(0,0,0,0.7); padding:30px;}
+.fixHeader .navbar-collapse {background: rgba(0,0,0,0);}
+.banner-slider { height:100%;}   
+.banner-slider img { height:100%;}
+.productDescription h4 { margin:10px 0px;}
+.productSect .heading h2 {	font-size: 24px;}.productSect .heading { padding-bottom:0px;}
+.footlogo img { height:65px;}
+.ft-right ul { text-align:center;} .regiterLeft { display:none;}
+
+}
+
+@media screen and (min-width: 768px) and (max-width: 991px)  {
+  .offset-sm-0  { margin-left:0px;}
+  .col-sm-12 { width:100%}
+  .navbar-light .navbar-toggler {	background: var(--primary-color);}
+  header .navbar ul li { text-align:left; margin:0px 10px 0px 0px; padding:5px 0px;}
+  .abutsSection, .productSect, .contactus-section { padding:50px 0px;}
+  .ct-form { padding:20px;}
+  .left-t { padding-right:0px;} .rimg {	padding: 0px 5px;	width: 33.33%;}
+   .rimg img{ width:100%; object-fit:contain;}
+   .footer { padding:50px 0px; } .footlogo img { height:65px;}
+   .heading { padding-bottom:0px;} .banner-text { width:60%;}
+   .loginSlider h2, .RegitserForm h2 { font-size:22px;}
+  
+}
+
+@media screen and (min-width: 992px) and (max-width: 1260px)  {
+header .navbar ul li {	margin: 0px 12px;} 
+header .navbar ul li a.nav-link {font-size: 14px;letter-spacing: 1px;}
+ .abutsSection, .productSect, .contactus-section { padding:50px 0px;}
+ .footer { padding:50px 0px; } .footlogo img { height:65px;}
+ header .navbar-brand img { height:80px;}
+
+}
