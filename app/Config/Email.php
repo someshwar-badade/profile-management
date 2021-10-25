@@ -33,7 +33,7 @@ class Email extends BaseConfig
 	 *
 	 * @var string
 	 */
-	public $protocol = 'mail';
+	public $protocol = 'smtp';//'smtp';//
 
 	/**
 	 * The server path to Sendmail.
@@ -47,35 +47,35 @@ class Email extends BaseConfig
 	 *
 	 * @var string
 	 */
-	public $SMTPHost;
+	public $SMTPHost = 'mail.bitstringit.in';
 
 	/**
 	 * SMTP Username
 	 *
 	 * @var string
 	 */
-	public $SMTPUser;
+	public $SMTPUser='somesh@bitstringit.in';
 
 	/**
 	 * SMTP Password
 	 *
 	 * @var string
 	 */
-	public $SMTPPass;
+	public $SMTPPass='Someshwar@123';
 
 	/**
 	 * SMTP Port
 	 *
 	 * @var integer
 	 */
-	public $SMTPPort = 25;
+	public $SMTPPort = 587;//465;// 25;
 
 	/**
 	 * SMTP Timeout (in seconds)
 	 *
 	 * @var integer
 	 */
-	public $SMTPTimeout = 5;
+	public $SMTPTimeout = 15;
 
 	/**
 	 * Enable persistent SMTP connections
@@ -110,7 +110,7 @@ class Email extends BaseConfig
 	 *
 	 * @var string
 	 */
-	public $mailType = 'text';
+	public $mailType = 'html';//'text';
 
 	/**
 	 * Character set (utf-8, iso-8859-1, etc.)

@@ -66,9 +66,21 @@ function sendSms($mobile,$message){
     return $output;
 }
 
-function getProductImageUrl($filename){
-    return base_url(PRODUCT_IMAGE_FILE_PATH.'/' .$filename);
-}
-function getProductImageThumbeUrl($filename){
-    return base_url(PRODUCT_IMAGE_THUMB_FILE_PATH.$filename);
+// function getProductImageUrl($filename){
+//     return base_url(PRODUCT_IMAGE_FILE_PATH.'/' .$filename);
+// }
+// function getProductImageThumbeUrl($filename){
+//     return base_url(PRODUCT_IMAGE_THUMB_FILE_PATH.$filename);
+// }
+
+function sendEmail_common($to,$message,$subject){
+    $email = \Config\Services::email();
+
+    $email->setFrom('connect@bitstringit.in', 'Bitstringit');
+    $email->setTo($to);
+
+    $email->setSubject($subject);
+    $email->setMessage($message);
+
+      return  $email->send();
 }

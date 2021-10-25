@@ -62,4 +62,48 @@ class Profiles extends BaseController
 		return view('user/profiles/edit-profile',$data);
 	}
 
+	public function sendJoiningForm(){
+		$user = checkUserToken();
+
+		if(!$user){
+			//redirct to login
+			setcookie("a_token", "", time() - 3600,'/');//delete cookie
+			setcookie("r_token", "", time() - 3600,'/');//delete cookie
+			return redirect()->route('logout');
+		}
+
+		$data = [
+			'page_title' => 'Send Joining Form',
+			'active_nav_parent'=>'send-joining-form',
+			'active_nav'=>'send-joining-form',
+			'pageHeading'=>"Send Joining Form"
+		];
+		return view('user/employee/sendJoiningForm',$data);
+	}
+
+	public function emailTest()
+    {
+
+        $email = \Config\Services::email();
+
+        // $config['protocol'] = 'smtp';
+        // $config['SMTPHost'] = 'mail.bitstringit.in';
+        // $config['SMTPUser'] = 'somesh@bitstringit.in';
+        // $config['SMTPPass'] = 'Someshwar@123';
+        // $config['SMTPPort'] = '465';
+
+        // $email->initialize($config);
+
+    //     $email->setFrom('someshbadade@gmail.com', 'Someshwar');
+    //     $email->setTo('somesh@bitstringit.in');
+
+    //     $email->setSubject('Email Test');
+    //     $email->setMessage('Testing the email class.');
+
+    //   echo  $email->send();
+	$message = view('email-templates/send-joining-form-link',['first_name'=>'someshwar','link'=>'http://bitstringit.in','verification_code'=>'123456']);
+	echo sendEmail_common('someshbadade@gmail.com',$message,'Bitstringit - Verification code');
+      die;
+    }
+
 }

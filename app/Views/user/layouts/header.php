@@ -69,6 +69,15 @@
             </a>
           </li>
 
+          <li class="nav-item">
+            <a href="<?= base_url(route_to('sendJoiningForm')) ?>" class="nav-link <?=$active_nav=='send-joining-form'?' active ':'';?>">
+              <i class="nav-icon fa fa-id-card"></i>
+              <p>
+              Send Joining Form
+              </p>
+            </a>
+          </li>
+
 
           <li class="nav-item">
             <a href="<?=base_url(route_to('user-settings'))?>" class="nav-link <?=$active_nav_parent=='settings'?' active ':'';?>">
