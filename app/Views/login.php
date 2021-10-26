@@ -17,8 +17,13 @@
         </div>
       </div>
       <div ng-controller="loginCtrl" class="col-md-4 p-0">
-        <div class="RegitserForm justify-content-center">
-          <h2><?=lang('forms.login.formHeading')?></h2>
+        <div class=" justify-content-center">
+
+        <div class="card">
+        <div class="card-header text-center">
+        <h2><?=lang('forms.login.formHeading')?></h2>
+                        </div>
+          <div class="card-body">
           <form>
             <div class="form-group">
               <!--<label>Mobile Number</label>-->
@@ -57,7 +62,9 @@
             </div>
 
           </form>
+          </div>
           <div class="register"><?=lang('forms.login.footerText_1')?> <a href="<?=base_url(route_to('register'))?>" class="registerNow"><?=lang('forms.login.footerText_2')?></a></div>
+        </div>
         </div>
         
       </div>

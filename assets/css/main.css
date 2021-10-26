@@ -40,6 +40,7 @@ body {
 	font-size: 14px;
 	font-family: "Open Sans", sans-serif;
 	color: #2a2a2a;
+	background-color: #f2f2ee;
 }
 * {
 	margin: 0px;
@@ -1325,7 +1326,7 @@ data-owl-carousel .owl-nav{
 }
 
 footer {
-	background-color: var(--primary-color);
+	background-color: var(--dark);
 	padding: 20px 0;
 }
 
@@ -1340,5 +1341,12 @@ footer {
 	box-shadow: 0 0 13px rgba(0, 0, 0, 0.35);
 }
 
+nav.navbar .navbar-brand span {
+	color:#ed2024;
+	font-size: 2em;
+	vertical-align: middle;
+}
 
-
+.wrapper{
+	min-height: calc(100vh - 40px);
+}

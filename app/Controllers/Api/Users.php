@@ -128,7 +128,7 @@ class Users extends  Controllers\BaseController
 					[   // Errors
 
 						'email' => [
-							'required' => lang('forms.login.emailAddress.errorRequired')
+							'required' => lang('forms.login.email.errorRequired')
 						],
 						'password' => [
 							'required' => lang('forms.login.password.errorRequired')

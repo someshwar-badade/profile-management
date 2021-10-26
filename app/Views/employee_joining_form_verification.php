@@ -6,11 +6,14 @@
         <div class="row justify-content-center">
 
             <div class="col-md-8 p-0">
-                <div class="RegitserForm justify-content-center">
-                    <h2>Verification</h2>
+                <div class="justify-content-center">
+                   
                     <?php $validation =  \Config\Services::validation(); ?>
                     
                     <div class="card card-primary">
+                        <div class="card-header text-center">
+                        <h2>Verification</h2>
+                        </div>
                         <div class="card-body">
                             <div class="row">
                             <?=$error_message?>

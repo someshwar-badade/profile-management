@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="<?=base_url('assets/js/toastr/toastr.min.css')?>">
 <!-- <link rel="stylesheet" href="<?=base_url('assets/js/angular-datatables-0.6.2/css/angular-datatables.min.css')?>"> -->
 <link rel="stylesheet" href="<?=base_url('assets/js/datatables/datatables.min.css')?>">
-<link rel="stylesheet" href="<?=base_url('assets/css/main.css?v1.3')?>">
+<link rel="stylesheet" href="<?=base_url('assets/css/main.css?v1.4')?>">
 <script src="<?= base_url('assets/js/jquery-3.2.1.slim.min.js') ?>"></script>
 
 <script src="<?= base_url('assets/js/angular/angular.min.js') ?>"></script>
