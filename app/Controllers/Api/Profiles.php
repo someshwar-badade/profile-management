@@ -438,7 +438,12 @@ class Profiles extends ResourceController
         if ($update) {
 
             //send email
-            $message = view('email-templates/send-joining-form-link',['first_name'=>$requestData['first_name'],'link'=>'http://bitstringit.in','verification_code'=>$requestData['verification_code']]);
+            $templateData = [
+                'first_name'=>$requestData['first_name'],
+                'link'=>base_url(route_to('joiningFormVerification',base64_encode($requestData['email_primary']))),
+                'verification_code'=>$requestData['verification_code']
+            ];
+            $message = view('email-templates/send-joining-form-link',$templateData);
             $isEmailSent =  sendEmail_common($requestData['email_primary'],$message,'Bitstringit - Joining Form');
 
             //Respond with 200 status code

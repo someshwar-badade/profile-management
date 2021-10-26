@@ -12,7 +12,7 @@
     <p>Hello <?= $first_name ?>,</p>
     <p>Please click bellow link to fill up your joing form and use Verification Code: <strong style="letter-spacing: 5px;"><?= $verification_code ?></strong> </p>
 
-    <p>Link: <a href="<?= $link ?>"><?= $link ?></a></p>
+    <p>Link: <a target="_blank" href="<?= $link ?>"><?= $link ?></a></p>
     <p></p>
 
     <p>Thanks and Regards,</p>

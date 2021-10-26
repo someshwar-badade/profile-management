@@ -13,4 +13,16 @@ class EmployeeJoinigDetailsModel extends Model
     protected $updatedField  = 'updated_at';
     protected $deletedField  = 'deleted_at';
 
+    public function verifyJoinigForm($email,$adharPan,$verificationCode){
+
+        $db = \Config\Database::connect();
+		$builder = $db->table('employee_joining_form_details');
+		$builder->select('id');
+        $builder->where("verification_code='$verificationCode' AND email_primary='$email' AND (aadhar_number='$adharPan' OR pan_number='$adharPan')");
+        $builder->limit(1, 0);
+
+        $query   = $builder->get();
+        $data = $query->getRow();
+        return $data;
+    }
 }
