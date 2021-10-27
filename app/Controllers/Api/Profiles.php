@@ -363,6 +363,49 @@ class Profiles extends ResourceController
         return $this->fail(['error' => 'Record not updated'], 400);
     }
 
+    public function joiningFormList()
+    {
+
+        $model = new EmployeeJoinigDetailsModel();
+
+        $start = (int)$this->request->getVar('start');
+        $length = (int)$this->request->getVar('length');
+
+        // $iSearch = [];
+        $searchKey = $this->request->getVar('search'); //$_POST['search'];
+        $columns = $this->request->getVar('columns'); // $_POST['columns'];
+        $order = $this->request->getVar('order'); //$_POST['order'];
+        $orderBy = $columns[$order[0]['column']]['data'] . ' ' . $order[0]['dir'];
+
+        $iSearch_str = '';
+        if (!empty($searchKey['value'])) {
+            foreach ($columns as $row) {
+                if (!empty($row['data'] && $row['searchable'] == 'true')) {
+                    $iSearch[] = " " . $row['data'] . "  LIKE '%" . $searchKey['value'] . "%' ";
+                }
+            }
+
+            // $iSearch[] = " `candidate_name`  LIKE '%" . $searchKey['value'] . "%' OR  SOUNDEX(`candidate_name`) = SOUNDEX('" . $searchKey['value'] . "') ";
+            $iSearch[] = " `first_name` LIKE '%" . $searchKey['value'] . "%' ";
+            $iSearch[] = " `last_name` LIKE '%" . $searchKey['value'] . "%' ";
+            $iSearch[] = " `email_primary` LIKE '%" . $searchKey['value'] . "%' ";
+            $iSearch[] = " `mobile_primary` LIKE '%" . $searchKey['value'] . "%' ";
+
+            $iSearch_str = implode(' OR ', $iSearch);
+        }
+
+        $filter = array();
+
+        if (isset($_POST['filter'])) {
+            $filter = $_POST['filter'];
+        }
+        
+        $data = $model->getList($filter, $iSearch_str, $start, $length, $orderBy);
+
+        return $this->respond($data);
+
+    }
+
     public function sendJoiningForm()
     {
 

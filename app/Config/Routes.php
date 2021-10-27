@@ -49,6 +49,11 @@ $routes->post('/api/send-joining-form','Api\Profiles::sendJoiningForm');
 $routes->get('/profiles', 'Profiles::index',['as'=>'profiles']);
 $routes->get('/profile', 'Profiles::create',['as'=>'createprofile']);
 $routes->get('/send-joining-form', 'Profiles::sendJoiningForm',['as'=>'sendJoiningForm']);
+
+$routes->get('/api/joining-form-list', 'Api\Profiles::joiningFormList',['as'=>'joiningFormList']);
+$routes->get('/joining-form-list/(:num)/edit', 'Profiles::create/$1',['as'=>'editjoiningFormList']);
+$routes->post('/api/joining-form-list/(:num)','Api\Profiles::update/$1');
+
 $routes->get('/email-test', 'Profiles::emailTest');
 $routes->get('/profile/(:num)/edit', 'Profiles::create/$1',['as'=>'editprofile']);
 
