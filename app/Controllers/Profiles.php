@@ -91,6 +91,7 @@ class Profiles extends BaseController
 	public function joiningFormVerification($email)
 	{
 
+
 		helper(['form', 'url']);
 		$session = session();
 
@@ -130,14 +131,14 @@ class Profiles extends BaseController
 				);
 
 				if (empty($employeeDetails)) {
-					$data['error_message'] = <<<EOT
-						<div class="col-md-12 alert alert-danger alert-dismissible fade show" role="alert">
-						Joinig form Details not found.
-						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-						</div>
-						EOT;
+					$data['error_message'] = <<<'EOD'
+<div class="col-md-12 alert alert-danger alert-dismissible fade show" role="alert">
+Joinig form Details not found.
+<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	<span aria-hidden="true">&times;</span>
+</button>
+</div>
+EOD;
 				} else {
 					//set session
 					// print_r($employeeDetails);
@@ -158,30 +159,33 @@ class Profiles extends BaseController
 		return view('employee_joining_form_verification', $data);
 	}
 
+	public function downloadJoiningForm($joinigFormId)
+	{
+		$user = checkUserToken();
+
+		if (!$user) {
+			//redirct to login
+			setcookie("a_token", "", time() - 3600, '/'); //delete cookie
+			setcookie("r_token", "", time() - 3600, '/'); //delete cookie
+			return redirect()->route('logout');
+		}
+
+		//get joining form details by id
+		$model = new EmployeeJoinigDetailsModel();
+		$joiningFormDetails = $model->find($joinigFormId);
+		$dompdf = new \Dompdf\Dompdf(); 
+        $dompdf->loadHtml(view('pdf-templates/joining-form',['joiningFormDetails'=>$joiningFormDetails]));
+		$dompdf->setPaper('A4', 'p');
+        $dompdf->set_option('isRemoteEnabled', true);
+        $dompdf->render();
+		$canvas = $dompdf->get_canvas();
+     	$canvas->page_text(512, 820, "Page: {PAGE_NUM} of {PAGE_COUNT}",'', 8, array(0,0,0)); 
+        $dompdf->stream("joining_form.pdf",array("Attachment" => 0));
+		// $dompdf->output();
+	}
 
 
 	public function emailTest()
 	{
-
-		$email = \Config\Services::email();
-
-		// $config['protocol'] = 'smtp';
-		// $config['SMTPHost'] = 'mail.bitstringit.in';
-		// $config['SMTPUser'] = 'somesh@bitstringit.in';
-		// $config['SMTPPass'] = 'Someshwar@123';
-		// $config['SMTPPort'] = '465';
-
-		// $email->initialize($config);
-
-		//     $email->setFrom('someshbadade@gmail.com', 'Someshwar');
-		//     $email->setTo('somesh@bitstringit.in');
-
-		//     $email->setSubject('Email Test');
-		//     $email->setMessage('Testing the email class.');
-
-		//   echo  $email->send();
-		// $message = view('email-templates/send-joining-form-link',['first_name'=>'someshwar','link'=>'http://bitstringit.in','verification_code'=>'123456']);
-		// echo sendEmail_common('someshbadade@gmail.com',$message,'Bitstringit - Verification code');
-		//   die;
 	}
 }

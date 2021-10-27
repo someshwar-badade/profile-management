@@ -44,6 +44,7 @@ class Autoload extends AutoloadConfig
 		'Config'      => APPPATH . 'Config',
 		'Firebase'   => APPPATH . 'ThirdParty/Firebase',
 		'Barcode'   => APPPATH . 'ThirdParty/Barcode/picqer/php-barcode-generator/src',
+		
 	];
 
 	/**

@@ -3,8 +3,7 @@
     <!-- Image and text -->
 <nav class="navbar navbar-light bg-light">
   <a class="navbar-brand" href="#">
-    <img src="<?=base_url('assets/images/bitstring-logo.png')?>" width="50" height="50" class="d-inline-block align-top" alt="">
-    <span>BitString</span>
+    <img src="<?=base_url('assets/images/bitstring-logo.png')?>" width="200" class="d-inline-block align-top" alt="">
   </a>
 </nav>
     <script>
