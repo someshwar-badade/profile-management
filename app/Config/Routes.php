@@ -42,6 +42,9 @@ $routes->get('/login', 'Users::login',['as'=>'login']);
 $routes->get('/logout', 'Users::logout',['as'=>'logout']);
 $routes->get('/user-dashboard', 'Users::userDashboard',['as'=>'user-dashboard']);
 $routes->get('/user-settings', 'Users::settings',['as'=>'user-settings']);
+// $routes->get('/employee_form', ['as'=>'employee_joining_form']);
+$routes->get('/employee-joining-form', 'EmployeeForm::index',['as'=>'forms']);
+
 
 $routes->resource('/api/profiles',['controller'=>'api\Profiles']);
 $routes->post('/api/profiles/(:num)','Api\Profiles::update/$1');

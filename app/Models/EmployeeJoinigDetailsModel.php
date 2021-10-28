@@ -63,5 +63,4 @@ class EmployeeJoinigDetailsModel extends Model
         return ['recordsTotal' => $recordsTotal, 'recordsFiltered' => $recordsFiltered, 'data' => $data];
     }
 
-
 }
