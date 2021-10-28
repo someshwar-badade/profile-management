@@ -163,7 +163,8 @@
         }
 
         label {
-            font-weight: bold;
+            font-weight: normal;
+            color: #555;
         }
 
         table.table.no-border td,
@@ -201,7 +202,11 @@
 <body>
     <!-- Tracking start -->
 
-
+    <?php
+    // echo "<pre>";
+    // print_r($joiningFormDetails);
+    // die;
+    ?>
 
     <header>
         <img src="<?= base_url('/assets/images/bitstring-logo.jpeg') ?>" style="width:200px; ">
@@ -219,6 +224,8 @@
     <p>
         Please complete the form in <strong>BLOCK CAPITALS</strong> as fully as possible using sign. No section should be left blank. The information you provide in this form will be subject to verification by the company.
     </p>
+
+    <!--table:employe details start-->
     <table class="table table-inner table-bordered">
         <tbody>
             <tr>
@@ -227,95 +234,95 @@
             <tr>
                 <td colspan="2">
                     <label>First Name:</label>
-                    <span><?=$joiningFormDetails['first_name']?></span>
+                    <span><?= $joiningFormDetails['first_name'] ?></span>
                 </td>
             </tr>
             <tr>
                 <td colspan="2">
                     <label>Last Name:</label>
-                    <span><?=$joiningFormDetails['last_name']?></span>
+                    <span><?= $joiningFormDetails['last_name'] ?></span>
                 </td>
             </tr>
             <tr>
                 <td>
                     <label>Father’s Name:</label>
-                    <span><?=$joiningFormDetails['father_name']?></span>
+                    <span><?= $joiningFormDetails['father_name'] ?></span>
                 </td>
                 <td>
                     <label>Mother’s Name:</label>
-                    <span><?=$joiningFormDetails['mother_name']?></span>
+                    <span><?= $joiningFormDetails['mother_name'] ?></span>
                 </td>
             </tr>
             <tr>
                 <td>
                     <label>Marital Status:</label>
-                    <span></span>
+                    <span><?= $joiningFormDetails['employee_other_details']['marital_status'] ?></span>
                 </td>
                 <td>
                     <label>Spouse’s Name (if applicable):</label>
-                    <span><?=$joiningFormDetails['spouse_name']?></span>
+                    <span><?= $joiningFormDetails['spouse_name'] ?></span>
                 </td>
             </tr>
             <tr>
                 <td colspan="2">
                     <label>Kid(s) Name (if applicable):</label>
-                    <span><?=$joiningFormDetails['kids_name']?></span>
+                    <span><?= $joiningFormDetails['kids_name'] ?></span>
                 </td>
             </tr>
             <tr>
                 <td>
                     <label>Home Tel. No.:</label>
-                    <span></span>
+                    <span><?= $joiningFormDetails['employee_other_details']['home_tel_no'] ?></span>
                 </td>
                 <td>
                     <label>Mobile Tel. No.:</label>
-                    <span><?=$joiningFormDetails['mobile_primary']?></span>
+                    <span><?= $joiningFormDetails['mobile_primary'] ?></span>
                 </td>
             </tr>
             <tr>
                 <td>
                     <label>Emergency Contact Name:</label>
-                    <span></span><br>
+                    <span><?= $joiningFormDetails['employee_other_details']['emergency_contact_name'] ?></span><br>
                     <label>Relation:</label>
-                    <span></span><br>
+                    <span><?= $joiningFormDetails['employee_other_details']['emergency_contact_relation'] ?></span><br>
 
                 </td>
                 <td>
                     <label>Emergency Mobile No.:</label>
-                    <span></span>
+                    <span><?= $joiningFormDetails['employee_other_details']['emergency_contact_mobile'] ?></span>
                 </td>
             </tr>
             <tr>
                 <td>
                     <label>PAN No:</label>
-                    <span><?=$joiningFormDetails['pan_number']?></span>
+                    <span><?= $joiningFormDetails['pan_number'] ?></span>
 
                 </td>
                 <td>
                     <label>Aadhar No.:</label>
-                    <span><?=$joiningFormDetails['aadhar_number']?></span>
+                    <span><?= $joiningFormDetails['aadhar_number'] ?></span>
                 </td>
             </tr>
             <tr>
                 <td>
                     <label>UAN No:</label>
-                    <span></span>
+                    <span><?= $joiningFormDetails['employee_other_details']['uan_no'] ?></span>
 
                 </td>
                 <td>
                     <label>Bank Name & Branch.:</label>
-                    <span></span>
+                    <span><?= $joiningFormDetails['employee_other_details']['bank_name_branch'] ?></span>
                 </td>
             </tr>
             <tr>
                 <td>
                     <label>Bank A/c No:</label>
-                    <span></span>
+                    <span><?= $joiningFormDetails['employee_other_details']['bank_account_number'] ?></span>
 
                 </td>
                 <td>
                     <label>IFS Code:</label>
-                    <span></span>
+                    <span><?= $joiningFormDetails['employee_other_details']['bank_ifsc_code'] ?></span>
                 </td>
             </tr>
             <tr>
@@ -326,80 +333,119 @@
                 </td>
                 <td>
                     <label>Blood Group:</label>
-                    <span></span><br>
+                    <span><?= $joiningFormDetails['employee_other_details']['blood_group'] ?></span><br>
                     <label>Medical conditions, if any:</label>
-                    <span></span>
+                    <span><?= $joiningFormDetails['employee_other_details']['medical_condition'] ?></span>
                 </td>
             </tr>
             <tr>
                 <td colspan="2">
                     <label>Present Address:</label>
-                    <span></span>
+                    <span><?= $joiningFormDetails['employee_other_details']['present_address'] ?></span>
 
                 </td>
             </tr>
             <tr>
                 <td>
                     <label>Postcode:</label>
-                    <span></span>
+                    <span><?= $joiningFormDetails['employee_other_details']['present_address_postcode'] ?></span>
 
                 </td>
                 <td>
                     <label>For how long are you residing at this address (Year/Months):</label>
-                    <span></span>
+                    <span><?= $joiningFormDetails['employee_other_details']['present_address_residing_duration'] ?></span>
                 </td>
             </tr>
             <tr>
                 <td colspan="2">
                     <label>Permanent Address:</label>
-                    <span></span>
+                    <span><?= $joiningFormDetails['employee_other_details']['permanent_address'] ?></span>
 
                 </td>
             </tr>
             <tr>
                 <td colspan="2">
                     <label>Postcode:</label>
-                    <span></span>
+                    <span><?= $joiningFormDetails['employee_other_details']['permanent_address_postcode'] ?></span>
 
                 </td>
             </tr>
             <tr>
                 <td colspan="2">
                     <label>Email Id:</label>
-                    <span><?=$joiningFormDetails['email_primary']?></span>
+                    <span><?= $joiningFormDetails['email_primary'] ?></span>
 
                 </td>
             </tr>
             <tr>
                 <td>
                     <label>Date of Birth (DD/MM/YY):</label>
-                    <span></span>
+                    <span><?= $joiningFormDetails['dob'] ? date('d/m/Y', strtotime($joiningFormDetails['dob'])) : '' ?></span>
 
                 </td>
                 <td>
                     <label>Place of Birth (Town/Country):</label>
-                    <span></span>
+                    <span><?= $joiningFormDetails['place_of_birth'] ?></span>
 
                 </td>
             </tr>
             <tr>
                 <td colspan="2">
                     <label>Nationality (both, if dual national):</label>
-                    <span></span>
+                    <span><?= $joiningFormDetails['nationality'] ?></span>
 
                 </td>
             </tr>
             <tr>
                 <td colspan="2">
                     <label>Nature of Job hired for (Permanent/Contractual):</label>
-                    <span></span>
+                    <span><?= $joiningFormDetails['employee_other_details']['nature_of_job_hired'] ?></span>
 
                 </td>
             </tr>
 
         </tbody>
     </table>
+    <!--table:employe details end-->
 
+    <!--table:educational qualification start-->
+    <table class="table table-inner table-bordered">
+        <tbody>
+            <tr>
+                <th colspan="7">Educational Qualifications</th>
+            </tr>
+            <tr>
+                <td><b>Degree / Course</b></td>
+                <td><b>Course Titlealong with Board / University</b></td>
+                <td style="width: 25%;"><b>Name and full address of school/Institution </b></td>
+                <td><b>From (MM/YYYY)</b></td>
+                <td><b>To (MM/YYYY)</b></td>
+                <td><b>Full time / Part Time/ off campus / Open Univ.</b></td>
+                <td><b>%age/ CGPA</b></td>
+            </tr>
+            <?php if (!empty($joiningFormDetails['education_qualification'])) { ?>
+                <?php foreach ($joiningFormDetails['education_qualification'] as $e_qualification) { ?>
+                    <tr>
+                        <td><?= $e_qualification->degree ?></td>
+                        <td><?= $e_qualification->university ?></td>
+                        <td><?= $e_qualification->institution ?></td>
+                        <td><?= $e_qualification->from_date ?></td>
+                        <td><?= $e_qualification->to_date ?></td>
+                        <td><?= $e_qualification->course_type ?></td>
+                        <td><?= $e_qualification->percentage ?></td>
+                    </tr>
+
+                <?php } ?>
+            <?php } else { ?>
+                <tr>
+                    <td colspan="7"> No data available </td>
+                </tr>
+            <?php } ?>
+        </tbody>
+    </table>
+    <!--table:educational qualification end-->
+
+    <!--table:Professional qualification start-->
     <table class="table table-inner table-bordered">
         <tbody>
             <tr>
@@ -417,39 +463,22 @@
                 <td><b>Category/Membership level</b></td>
                 <td><b>Dates (MM/YY)</b></td>
             </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
+            <?php if (!empty($joiningFormDetails['professional_qualification'])) { ?>
+                <?php foreach ($joiningFormDetails['professional_qualification'] as $p_qualification) { ?>
+                    <tr>
+                        <td><?= $p_qualification->qualification ?></td>
+                        <td><?= $p_qualification->category ?></td>
+                        <td><?= $p_qualification->date ?></td>
+                    </tr>
+                <?php } ?>
+            <?php } else { ?>
+                <tr>
+                    <td colspan="3"> No data available </td>
+                </tr>
+            <?php } ?>
         </tbody>
     </table>
-
-    <table class="table table-inner table-bordered">
-        <tbody>
-            <tr>
-                <th colspan="7">Educational Qualifications</th>
-            </tr>
-            <tr>
-                <td><b>Degree / Course</b></td>
-                <td><b>Course Titlealong with Board / University</b></td>
-                <td style="width: 25%;"><b>Name and full address of school/Institution </b></td>
-                <td><b>From (MM/YYYY)</b></td>
-                <td><b>To (MM/YYYY)</b></td>
-                <td><b>Full time / Part Time/ off campus / Open Univ.</b></td>
-                <td><b>%age/ CGPA</b></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-        </tbody>
-    </table>
+    <!--table:Professional qualification end-->
 
     <table class="table table-inner table-bordered">
         <tbody>
@@ -1066,7 +1095,7 @@
             </tr>
             <tr>
                 <td colspan="6">
-                    <p>I certify that to the best of my knowledge all the information given in this form is true and complete. I understand that any appointment offered will be subject to the information given on this form being correct. I understand that any offer of employment is conditional upon the verification of any or all of the information I have supplied.  I understand and accept that the provision of misleading, false or inaccurate information or the omission of a material fact may be legitimate cause for the immediate withdrawal of any offer of employment or, if I am already employed, for disciplinary action up to and including dismissal.</p>
+                    <p>I certify that to the best of my knowledge all the information given in this form is true and complete. I understand that any appointment offered will be subject to the information given on this form being correct. I understand that any offer of employment is conditional upon the verification of any or all of the information I have supplied. I understand and accept that the provision of misleading, false or inaccurate information or the omission of a material fact may be legitimate cause for the immediate withdrawal of any offer of employment or, if I am already employed, for disciplinary action up to and including dismissal.</p>
                     <p>I authorize BitString IT Services Pvt Ltdor any agent thereof to verify information presented on this form and to make inquiries of the school, college or university where a qualification was gained as well as approach previous employers and personal references for verification of my employment records. I acknowledge that all referees are disclosing the above information at my express request and that I will make no claim whatsoever against such referee, its agents and/or employees arising out of disclosure of such information. This shall be the case whether the content of any such document obtained is accurate or inaccurate and/or any information is true or untrue.</p>
                 </td>
             </tr>
@@ -1086,36 +1115,36 @@
 
 
     <div style="page-break-before: always;">
-    <h3><u>Annexure</u></h3>
-<b>List of Documents to be submitted on Joining:</b>
-<ol>
-    <li>Education documents
-        <ul>
-            <li>Your degree/s - Graduation or Post Graduation (last highest degree) certificate photocopy & final year/ semester mark sheet</li>
-        </ul>
-    </li>
-    <li>Employment documents
-        <ul>
-            <li>Resignation email/letter copy of the last company.</li>
-            <li>Last 3 months salary slip</li>
-            <li>Full & Final settlement letter</li>
-            <li>Relieving & Experience letter copies of last 2 employment</li>
-            <li>Internship/Apprentice letter, if applicable</li>
-        </ul>
-    </li>
-    <li>Identification documents required:
-        <ul>
-            <li>Pan card & Aadhar Card copy, or</li>
-            <li>Passport copy, or</li>
-            <li>Class 10th (X th) certificate</li>
-        </ul>
-    </li>
-</ol>
+        <h3><u>Annexure</u></h3>
+        <b>List of Documents to be submitted on Joining:</b>
+        <ol>
+            <li>Education documents
+                <ul>
+                    <li>Your degree/s - Graduation or Post Graduation (last highest degree) certificate photocopy & final year/ semester mark sheet</li>
+                </ul>
+            </li>
+            <li>Employment documents
+                <ul>
+                    <li>Resignation email/letter copy of the last company.</li>
+                    <li>Last 3 months salary slip</li>
+                    <li>Full & Final settlement letter</li>
+                    <li>Relieving & Experience letter copies of last 2 employment</li>
+                    <li>Internship/Apprentice letter, if applicable</li>
+                </ul>
+            </li>
+            <li>Identification documents required:
+                <ul>
+                    <li>Pan card & Aadhar Card copy, or</li>
+                    <li>Passport copy, or</li>
+                    <li>Class 10th (X th) certificate</li>
+                </ul>
+            </li>
+        </ol>
 
 
-<p>Please Note: If you “DO NOT” have a PAN card, apply for it immediately, by logging to the below link <a target="_blank" href="https://tin.tin.nsdl.com/pan/index.html">https://tin.tin.nsdl.com/pan/index.html</a></p>
+        <p>Please Note: If you “DO NOT” have a PAN card, apply for it immediately, by logging to the below link <a target="_blank" href="https://tin.tin.nsdl.com/pan/index.html">https://tin.tin.nsdl.com/pan/index.html</a></p>
 
-<p>Any delays in submitting the PAN number, may delay our payroll team in processing your salary.</p>
+        <p>Any delays in submitting the PAN number, may delay our payroll team in processing your salary.</p>
 
     </div>
 

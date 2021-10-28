@@ -172,7 +172,10 @@ EOD;
 
 		//get joining form details by id
 		$model = new EmployeeJoinigDetailsModel();
-		$joiningFormDetails = $model->find($joinigFormId);
+		$joiningFormDetails = (array)$model->find($joinigFormId);
+		$joiningFormDetails['employee_other_details'] = $joiningFormDetails['employee_other_details']?(array)json_decode($joiningFormDetails['employee_other_details']):null;
+		$joiningFormDetails['education_qualification'] = $joiningFormDetails['education_qualification']?(array)json_decode($joiningFormDetails['education_qualification']):null;
+		$joiningFormDetails['professional_qualification'] = $joiningFormDetails['professional_qualification']?(array)json_decode($joiningFormDetails['professional_qualification']):null;
 		$dompdf = new \Dompdf\Dompdf(); 
         $dompdf->loadHtml(view('pdf-templates/joining-form',['joiningFormDetails'=>$joiningFormDetails]));
 		$dompdf->setPaper('A4', 'p');

@@ -359,7 +359,8 @@
                 // return full.gender + ' ' + full.id;
                 //href='" + base_url + "/profile/" + full.id + "/edit'
                 return "<a role='button' class='text-primary' ng-click='showCase.viewProfile(" + full.id + ")' >View</a>" +
-                    "<a role='button' class='mx-1 text-danger' ng-click='showCase.deleteClick(" + full.id + ")' >Delete</a>";
+                    "<a role='button' class='mx-1 text-danger' ng-click='showCase.deleteClick(" + full.id + ")' >Delete</a>"+
+                    "<a target='_blank' class='mx-1 text-info' href='"+base_url+"/download-joining-form/" + full.id + "' >Download</a>";
 
             }).notSortable(),
 

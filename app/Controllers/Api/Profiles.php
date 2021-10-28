@@ -496,6 +496,129 @@ class Profiles extends ResourceController
         return $this->fail(['error' => 'Failed to send Joining form.'], 400);
     }
 
+    public function joiningFormSaveEmployeeDetails(){
+        $requestData = (array) $this->request->getJSON();
+        //$requestData = $this->request->getRawInput();
+        $model = new EmployeeJoinigDetailsModel();
+        $joiningFormId = 11;
+
+        $allowedColums = [
+            'first_name' => '',
+            'last_name' => '',
+            'father_name' => '',
+            'mother_name' => '',
+            'spouse_name' => '',
+            'kids_name' => '',
+            'email_primary' => '',
+            'mobile_primary' => '',
+            'aadhar_number' => '',
+            'pan_number' => '',
+            'dob' => '',
+            'place_of_birth' => '',
+            'nationality' => '',
+            'employee_other_details' => '',
+        ];
+        $requestData = array_intersect_key($requestData, $allowedColums);
+        
+        //validation
+        $validation =  \Config\Services::validation();
+        
+        $rules = [
+            // 'email' => 'required',
+            'first_name' => ['label' => 'First Name', 'rules' => 'required'],
+            'last_name' => ['label' => 'Last Name', 'rules' => 'required'],
+            'aadhar_number' => ['label' => 'Aadhar Number', 'rules' => 'required|numeric|exact_length[12]'],
+            'pan_number' => ['label' => 'PAN Number', 'rules' => 'required|alpha_numeric|exact_length[10]'],
+            'email_primary' => ['label' => 'Email', 'rules' => 'required|valid_email|is_unique[employee_joining_form_details.email_primary,id,'.$joiningFormId.']'],
+        ];
+
+        $validation->setRules(
+            $rules
+        );
+
+        $valid = $validation->run($requestData);
+        if (!$valid) {
+            return $this->fail($validation->getErrors(), 400);
+        }
+
+        $requestData['employee_other_details'] = $requestData['employee_other_details']?json_encode($requestData['employee_other_details']):null;
+        $id =  $model->update($joiningFormId, $requestData);
+
+        $response = [
+            'id'   => $joiningFormId,
+            'action_type' => 'Updated',
+            'error'    => null,
+            'messages' => [
+                'success' => 'Data Updated'
+            ]
+        ];
+        return $this->respondUpdated($response);
+
+
+    }
+
+    public function joiningFormSaveEducationDetails(){
+        $requestData = (array) $this->request->getJSON();
+        //$requestData = $this->request->getRawInput();
+        $allowedColums = [
+            'education_qualification' => ''
+        ];
+        $requestData = array_intersect_key($requestData, $allowedColums);
+
+        $model = new EmployeeJoinigDetailsModel();
+        $joiningFormId = 11;
+       
+
+        $requestData['education_qualification'] = $requestData['education_qualification']?json_encode($requestData['education_qualification']):null;
+        $id =  $model->update($joiningFormId, $requestData);
+
+        $response = [
+            'id'   => $joiningFormId,
+            'action_type' => 'Updated',
+            'error'    => null,
+            'messages' => [
+                'success' => 'Data Updated'
+            ]
+        ];
+        return $this->respondUpdated($response);
+
+    }
+
+    public function joiningFormSaveProfetionalQualification(){
+        $requestData = (array) $this->request->getJSON();
+        //$requestData = $this->request->getRawInput();
+        $allowedColums = [
+            'professional_qualification' => ''
+        ];
+        $requestData = array_intersect_key($requestData, $allowedColums);
+
+        $model = new EmployeeJoinigDetailsModel();
+        $joiningFormId = 11;
+       
+        // $joiningFormDetails = $model->find(7);
+        // $totalFieldCount = count($joiningFormDetails);
+        // $totalFilledCount = count(array_filter($joiningFormDetails));
+        // $formColpletion = number_format(($totalFilledCount/$totalFieldCount*100));
+        // echo "totalFieldCount:$totalFieldCount totalFilledCount:$totalFilledCount Form Completion: $formColpletion%";
+
+        // echo"<pre>";
+        // print_r($joiningFormDetails);
+        // die;
+        $requestData['professional_qualification'] = $requestData['professional_qualification']?json_encode($requestData['professional_qualification']):null;
+        $id =  $model->update($joiningFormId, $requestData);
+
+        $response = [
+            'id'   => $joiningFormId,
+            'action_type' => 'Updated',
+            'error'    => null,
+            'messages' => [
+                'success' => 'Data Updated'
+            ]
+        ];
+        return $this->respondUpdated($response);
+
+    }
+
     // delete animal details
     public function delete($id = null)
     {

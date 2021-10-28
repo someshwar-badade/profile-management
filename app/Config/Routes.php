@@ -52,7 +52,9 @@ $routes->get('/send-joining-form', 'Profiles::sendJoiningForm',['as'=>'sendJoini
 
 $routes->match(['get', 'post'],'/joining-form-verification/(:any)', 'Profiles::joiningFormVerification/$1',['as'=>'joiningFormVerification']);
 $routes->get('/download-joining-form/(:any)', 'Profiles::downloadJoiningForm/$1',['as'=>'downloadJoiningForm']);
-
+$routes->post('/api/employee-joining-form/save-employee-details', 'Api\Profiles::joiningFormSaveEmployeeDetails',['as'=>'joiningFormSaveEmployeeDetails']);
+$routes->post('/api/employee-joining-form/save-education-details', 'Api\Profiles::joiningFormSaveEducationDetails',['as'=>'joiningFormSaveEducationDetails']);
+$routes->post('/api/employee-joining-form/save-profetional-qualification', 'Api\Profiles::joiningFormSaveProfetionalQualification',['as'=>'joiningFormSaveProfetionalQualification']);
 
 $routes->get('/api/joining-form-list', 'Api\Profiles::joiningFormList',['as'=>'joiningFormList']);
 $routes->get('/joining-form-list/(:num)/edit', 'Profiles::create/$1',['as'=>'editjoiningFormList']);
