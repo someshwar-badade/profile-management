@@ -44,6 +44,26 @@ class Profiles extends BaseController
 		return view('user/profiles/add-profile',$data);
 	}
 
+	public function createJoiningForm($id=''){
+		$user = checkUserToken();
+
+		if(!$user){
+			//redirct to login
+			setcookie("a_token", "", time() - 3600,'/');//delete cookie
+			setcookie("r_token", "", time() - 3600,'/');//delete cookie
+			return redirect()->route('logout');
+		}
+
+		$data = [
+			'page_title' => 'Send Joining Form',
+			'active_nav_parent'=>'send-joining-form',
+			'active_nav'=>'send-joining-form',
+			'id'=>$id,
+			'pageHeading'=>$id?"Edit Joining Form":"Add new profile"
+		];
+		return view('user/employee/editJoiningForm',$data);
+	}
+
 	public function edit($id){
 		$user = checkUserToken();
 
