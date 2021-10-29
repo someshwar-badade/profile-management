@@ -46,164 +46,243 @@
 
                 <div class="tab-pane active" id="details">
                     <form class="row g-3" action="">
-                        <div class="row border g-0 rounded shadow-sm" style="background: white; margin-top:20px">
+                        <table class="table ">
+                            <colgroup>
+                                <col width="25%">
+                                <col width="25%">
+                                <col width="25%">
+                                <col width="25%">
+                            </colgroup>
+                            <tbody>
+                                <tr>
+                                    <th colspan="4">
+                                        <h4>Details</h4>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <label for="" class="form-label">First Name</label>
+                                        <input type="text" class="form-control">
+                                    </td>
+                                    <td colspan="2">
+                                        <label class="form-label">Last Name</label>
+                                        <input type="text" class="form-control">
+                                    </td>
 
-                            <div class="col-md-6">
-                                <label for="" class="form-label">First Name</label>
-                                <input type="text" class="form-control">
-                            </div>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <label>Father's Name</label>
+                                        <input type="text" class="form-control">
+                                    </td>
+                                    <td colspan="2">
+                                        <label>Mother's Name</label>
+                                        <input type="text" class="form-control">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="1">
+                                        <label for="">Marital Status</label>
+                                        <div class="" style="margin:auto">
+                                            <div class="icheck-primary d-inline mr-5 col-sm-3">
+                                                <input type="radio" id="yes" value="" name="status">
+                                                <label for="yes"> Yes
+                                                </label>
+                                            </div>
+                                            <div class="icheck-primary d-inline">
+                                                <input type="radio" id="no" value="" name="status">
+                                                <label for="no"> No
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <!-- <label for="">Marital Status</label> -->
+                                        <!-- <div class="form-check align-items-end"> -->
+                                        <!-- <label for="yes">Yes</label> -->
+                                        <!-- <input class="form-control" type="radio" name="status" id="yes" value="" checked> -->
 
-                            <div class="col-md-6">
-                                <label class="form-label">Last Name</label>
-                                <input type="text" class="form-control">
-                            </div>
+                                        <!-- </div> -->
+                                        <!-- <div class="form-check"> -->
+                                        <!-- <label for="no">No</label> -->
+                                        <!-- <input class="form-control" type="radio" name="status" id="no" value=""> -->
+                                        <!-- </div> -->
+                                    </td>
+                                    <td colspan="3">
+                                        <label>Spouse’s Full Name (if applicable)</label>
+                                        <input type="text" class="form-control">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"> <label for="">Kids Name (if applicable)</label>
+                                        <input type="text" class="form-control">
+                                    </td>
+                                </tr>
 
-                            <div class="col-md-6">
-                                <label>Father's Name</label>
-                                <input type="text" class="form-control">
-                            </div>
-                            <div class="col-md-6">
-                                <label>Mother's Name</label>
-                                <!-- <div class="editable"> -->
-                                <input type="text" class="form-control">
-                            </div>
-                            <!-- <legend class="col-form-label col-sm-2 pt-0">Marital Status</legend> -->
-                            <div class="col-md-6">
-                                <label for="">Marital Status</label>
-                                <div class="form-check" class="align-items-end">
-                                    <input class="form-check-input" type="radio" name="status" id="yes" value="" checked>
-                                    <label class="form-check-label" for="yes">
-                                        Yes
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="status" id="no" value="">
-                                    <label class="form-check-label" for="no">
-                                        No
-                                    </label>
-                                </div>
-                            </div>
+                                <tr>
+                                    <td colspan="2">
+                                        <label for="">Home Tel No.</label>
+                                        <input type="text" class="form-control">
+                                    </td>
+                                    <td colspan="2">
+                                        <label for="">Mobile No.</label>
+                                        <input type="text" class="form-control">
+                                    </td>
+                                </tr>
 
-                            <div class="col-md-6">
-                                <label>Spouse’s Name (if applicable)</label>
-                                <!-- <div class="editable"> -->
-                                <input type="text" class="form-control">
-                            </div>
+                                <tr>
+                                    <td colspan="2">
+                                        <label for="">Emergency Contact Name</label>
+                                        <input type="text" class="form-control">
+                                    </td>
 
-                            <div class="col-md-6">
-                                <label for="">Kids Name (if applicable)</label>
-                                <input type="text" class="form-control">
-                            </div>
+                                    <td><label for="">Relation</label>
+                                        <input type="text" class="form-control">
+                                    </td>
+                                    <td>
+                                        <label for="">Emergency Mobile No</label>
+                                        <input type="text" class="form-control">
+                                    </td>
+                                </tr>
 
-                            <div class="col-md-6">
-                                <label for="">Home Tel No.</label>
-                                <input type="text" class="form-control">
-                            </div>
+                                <tr>
+                                    <td colspan="2">
+                                        <label for="">PAN No</label>
+                                        <input type="text" class="form-control">
+                                    </td>
+                                    <td colspan="2">
+                                        <label for="">Adhar No</label>
+                                        <input type="text" class="form-control">
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="2">
+                                        <label for="">UAN No</label>
+                                        <input type="text" class="form-control">
+                                    </td>
+                                    <td colspan="2">
+                                        <label for="">Bank Name & Branch</label>
+                                        <input type="text" class="form-control">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <label for="">Bank A/c No</label>
+                                        <input type="text" class="form-control">
+                                    </td>
+                                    <td colspan="2">
+                                        <label for="">IFSC Code</label>
+                                        <input type="text" class="form-control">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label for="">Total Experience</label>
+                                        <input type="text" class="form-control">
+                                    </td>
+                                    <td>
+                                        <label for="">Blood Group</label>
+                                        <input type="text" class="form-control">
+                                    </td>
+                                    <td colspan="2">
+                                        <label for="">Medical conditions, if any</label>
+                                        <input type="text" class="form-control">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td> <label for="">Present Address</label>
+                                        <input type="text" class="form-control">
+                                    </td>
+                                    <td>
+                                        <label for="">State</label>
+                                        <select class="form-control" name="" id="">
+                                            <option value="" selected>Please select state</option>
+                                        </select>
+                                    </td>
+                                    <td> <label for="">District</label>
+                                        <select class="form-control" name="" id="">
+                                            <option value="" selected>Please Select District</option>
+                                        </select>
+                                    </td>
+                                    <td> <label for="">Postal Code</label>
+                                        <input type="text" class="form-control">
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td> <label for="">Permanent Address</label>
+                                        <input type="text" class="form-control">
+                                    </td>
+                                    <td>
+                                        <label for="">State</label>
+                                        <select class="form-control" name="" id="">
+                                            <option value="" selected>Please select state</option>
+                                        </select>
+                                    </td>
+                                    <td> <label for="">District</label>
+                                        <select class="form-control" name="" id="">
+                                            <option value="" selected>Please Select District</option>
+                                        </select>
+                                    </td>
+
+                                    <td> <label for="">Postal Code</label>
+                                        <input type="text" class="form-control">
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="2">
+                                        <label for="">For how long are you residing at Present address (Years)</label>
+                                        <input type="text" class="form-control">
+                                    </td>
+                                    <td colspan="2">
+                                        <label for="">Email</label>
+                                        <input type="email" class="form-control">
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="2">
+                                        <label for="">Date of Birth</label>
+                                        <input type="date" class="date-picker form-control">
+                                    </td>
+                                    <td colspan="2">
+                                        <label for="">Place of Birth (Town/Country)</label>
+                                        <input type="text" class="form-control">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <label for="">Nationality (both, if dual national)</label>
+                                        <input type="text" class="form-control">
+                                    </td>
+                                    <td colspan="2">
+                                        <label for="">Nature of Job hired for (Permanent/Contractual)</label>
+                                        <input type="text" class="form-control">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <div style="text-align: right;"> <a class="text-secondary delete-education-row-btn" href="javascript:void(0);" title="Delete"><i class="fa fa-trash fa-lg"> Delete</i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="5" class="text-left">
+                                        <a class="btn btn-sm text-primary add-new-employer"><i class="fa fa-plus"></i> Add New</a>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
 
 
-                            <div class="col-md-6">
-                                <label for="">Mobile Tel.No</label>
-                                <input type="text" class="form-control">
-                            </div>
+                        <center>
+                            <input type="submit" value="Save" name="submitBtn" class="btn btn-success">
+                            <input type="submit" value="Cancel" name="submitBtn" class="btn btn-secondary">
+                        </center>
 
-                            <div class="col-md-6">
-                                <label for="">Emergency Contact Name</label>
-                                <input type="text" class="form-control">
-                                <label for="">Relation</label>
-                                <input type="text" class="form-control">
-                            </div>
 
-                            <div class="col-md-6">
-                                <label for="">Emergency Mobile No</label>
-                                <input type="text" class="form-control">
-                            </div>
-
-                            <div class="col-md-6">
-                                <label for="">PAN No</label>
-                                <input type="text" class="form-control">
-                            </div>
-
-                            <div class="col-md-6">
-                                <label for="">Adhar No</label>
-                                <input type="text" class="form-control">
-                            </div>
-
-                            <div class="col-md-6">
-                                <label for="">UAN No</label>
-                                <input type="text" class="form-control">
-                            </div>
-
-                            <div class="col-md-6">
-                                <label for="">Bank Name & Branch</label>
-                                <input type="text" class="form-control">
-                            </div>
-
-                            <div class="col-md-6">
-                                <label for="">Bank A/c No</label>
-                                <input type="text" class="form-control">
-                            </div>
-
-                            <div class="col-md-6">
-                                <label for="">IFSC Code</label>
-                                <input type="text" class="form-control">
-                            </div>
-
-                            <div class="col-md-6">
-                                <label for="">Total Experience</label>
-                                <input type="text" class="form-control">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="">Permanent Address</label>
-                                <input type="text" class="form-control">
-                            </div>
-
-                            <div class="col-md-6">
-                                <label for="">Present Address</label>
-                                <input type="text" class="form-control">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="">Blood Group</label>
-                                <input type="text" class="form-control">
-                                <label for="">Medical conditions, if any</label>
-                                <input type="text" class="form-control">
-                            </div>
-
-                            <div class="col-md-6">
-                                <label for="">Postal Code</label>
-                                <input type="text" class="form-control">
-                            </div>
-
-                            <div class="col-md-6">
-                                <label for="">For how long are you residing at this address (Years)</label>
-                                <input type="text" class="form-control">
-                            </div>
-
-                            <div class="col-md-6">
-                                <label for="">Email</label>
-                                <input type="email" class="form-control">
-                            </div>
-
-                            <div class="col-md-6">
-                                <label for="">Date of Birth</label>
-                                <input type="date" class="date-picker form-control">
-                            </div>
-
-                            <div class="col-md-6">
-                                <label for="">Place of Birth (Town/Country)</label>
-                                <input type="text" class="form-control">
-                            </div>
-
-                            <div class="col-md-6">
-                                <label for="">Nationality (both, if dual national)</label>
-                                <input type="text" class="form-control">
-                            </div>
-
-                            <div class="col-md-6">
-                                <label for="">Nature of Job hired for (Permanent/Contractual)</label>
-                                <input type="text" class="form-control">
-                            </div>
-
-                        </div>
                     </form>
                 </div>
 
@@ -217,15 +296,17 @@
                                 <table class="table table-bordered education-table">
                                     <!-- <div style="text-align: center;"> -->
                                     <thead>
-                                        <th class="fix-width-60"> Sr.No.</th>
-                                        <th class="fix-width-60">Degree/Course</th>
-                                        <th class="fix-width-60">Course Title with University</th>
-                                        <th class="fix-width-60">Name of Institute</th>
-                                        <th class="fix-width-60">Duration</th>
-                                        <!-- <th class="fix-width-60">To</th> -->
-                                        <th class="fix-width-60">Course Type</th>
-                                        <th class="fix-width-60">Percentage/ Grades</th>
-                                        <th class="fix-width-60"></th>
+                                        <tr>
+                                            <th class="fix-width-60"> Sr.No.</th>
+                                            <th class="fix-width-60">Degree/Course</th>
+                                            <th class="fix-width-60">Course Title with University</th>
+                                            <th class="fix-width-60">Name of Institute</th>
+                                            <th class="fix-width-60">Duration</th>
+                                            <!-- <th class="fix-width-60">To</th> -->
+                                            <th class="fix-width-60">Course Type</th>
+                                            <th class="fix-width-60">Percentage/ Grades</th>
+                                            <th class="fix-width-60"></th>
+                                        </tr>
                                     </thead>
                                     <!-- </div> -->
                                     <tbody>
@@ -241,7 +322,6 @@
                                                     <option value="">Others(any)</option>
                                                 </select>
                                             </td>
-
                                             <td class=""><textarea name="" id="" cols="30" rows="" class="form-control"></textarea></td>
                                             <td class=""><input type="text" name="" id="" class="form-control">
                                             </td>
@@ -289,9 +369,10 @@
                             </div>
                             <div class="row border g-3 rounded shadow-sm " style="background: white; text-align: center; margin: auto;">
 
-                                <table class="table table-bordered education-table">
-                                    <div style="text-align: center;">
-                                        <thead>
+                                <table class="table table-bordered qualification-table">
+                                    <!-- <div style="text-align: center;"> -->
+                                    <thead>
+                                        <tr>
                                             <th class="fix-width-120"> Sr.No.</th>
                                             <th class="fix-width-120">Qualification/Body/Institute/Licence</th>
                                             <th class="fix-width-120">Category/Membership level</th>
@@ -299,8 +380,9 @@
                                             <!-- <th class="fix-width-60" >From</th> -->
                                             <!-- <th class="fix-width-60">To</th> -->
                                             <th class="fix-width-60"></th>
-                                        </thead>
-                                    </div>
+                                        </tr>
+                                    </thead>
+                                    <!-- </div> -->
                                     <tbody>
 
                                         <tr id="{education_id}">
@@ -328,7 +410,7 @@
                 </div>
 
                 <div class="tab-pane " id="emphistory">
-                    <div class="container" id="{container_uid}">
+                    <div class="container" id="">
                         <form class="row g-3" action="">
                             <p style="margin-top: 20px;"> Starting with your most recent employer please give details of your complete employment history since you
                                 left full time education. Include any periods of self-employment, unemployment, maternity leave or military service.
@@ -336,151 +418,576 @@
                                 state clearly if you were a partner or had an ownership interest in any of the employing companies, or if the position was
                                 part time. If you are aware that one of your employers has changed its trading name, please provide the former name first,
                                 followed by the new name.</p>
-                            <div class="row border g-3 rounded shadow-sm " style="background: white; margin: auto;">
-                                <form class="row g-3" id="" action="" method="POST" style="margin-top: 20px;">
+                            <!-- <div class="row border g-3 rounded shadow-sm " style="background: white; margin: auto;"> -->
 
-                                    <table class="table ">
-                                        <colgroup>
-                                            <col width="25%">
-                                            <col width="25%">
-                                            <col width="25%">
-                                            <col width="25%">
-                                        </colgroup>
-                                        <tbody>
-                                            <th colspan="4">
-                                                <h4>Previous Employee</h4>
-                                            </th>
-                                            <tr>
-                                                <td colspan="2">
-                                                    <label for="">Position Held</label>
-                                                    <input type="text" class="form-control">
-                                                </td>
-                                                <td>
-                                                    <label for="">From:</label>
-                                                    <input type="date" class="form-control date-picker">
-                                                </td>
-                                                <td>
-                                                    <label for="">To:</label>
-                                                    <input type="date" class="form-control date-picker">
-                                                </td>
-                                                <!-- <td colspan="2"><label for="">Dates</label></td> -->
-                                            </tr>
-                                            <tr>
-                                                <td colspan="4">
-                                                    <label for="">Company</label>
-                                                    <input type="text" class="form-control">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2">
-                                                    <label for="">Department</label>
-                                                    <input type="text" class="form-control">
-                                                </td>
-                                                <td colspan="2">
-                                                    <label for="">Nature Of Job</label>
-                                                    <input type="text" class="form-control">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="4"> <label for="">Address</label>
-                                                    <textarea name="" id="" cols="10" rows="3" class="form-control"></textarea>
-                                                </td>
-                                            </tr>
+                            <table class="table ">
+                                <colgroup>
+                                    <col width="25%">
+                                    <col width="25%">
+                                    <col width="25%">
+                                    <col width="25%">
+                                </colgroup>
+                                <tbody>
+                                    <tr>
+                                        <th colspan="4">
+                                            <h4>Previous Employee</h4>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <label for="">Position Held</label>
+                                            <input type="text" class="form-control">
+                                        </td>
+                                        <td>
+                                            <label for="">From:</label>
+                                            <input type="date" class="form-control date-picker">
+                                        </td>
+                                        <td>
+                                            <label for="">To:</label>
+                                            <input type="date" class="form-control date-picker">
+                                        </td>
+                                        <!-- <td colspan="2"><label for="">Dates</label></td> -->
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4">
+                                            <label for="">Company</label>
+                                            <input type="text" class="form-control">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <label for="">Department</label>
+                                            <input type="text" class="form-control">
+                                        </td>
+                                        <td colspan="2">
+                                            <label for="">Nature Of Job</label>
+                                            <input type="text" class="form-control">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4"> <label for="">Address</label>
+                                            <textarea name="" id="" cols="10" rows="3" class="form-control"></textarea>
+                                        </td>
+                                    </tr>
 
-                                            <tr>
-                                                <td colspan="2">
-                                                    <label for="">City</label>
-                                                    <input type="text" class="form-control">
-                                                </td>
-                                                <td colspan="2">
-                                                    <label for="">Phone</label>
-                                                    <input type="text" class="form-control">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                            <tr>
-                                                <td colspan="4"> <label for="">Main Job Responsibilities</label>
-                                                    <textarea name="" id="" cols="10" rows="3" class="form-control"></textarea>
-                                                </td>
-                                            </tr>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2">
-                                                    <label for="">Annual CTC(in Lacs)</label>
-                                                    <input type="text" class="form-control">
-                                                </td>
-                                                <td colspan="2">
-                                                    <label for="">Name of Reporting Manager</label>
-                                                    <input type="text" class="form-control">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2">
-                                                    <label for="">Contact number of Manager</label>
-                                                    <input type="text" class="form-control">
-                                                </td>
-                                                <td colspan="2">
-                                                    <label for="">Email ID of Manager</label>
-                                                    <input type="email" class="form-control">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                            <tr>
-                                                <td colspan="4">
-                                                    <label for="">Reason of Leaving</label>
-                                                    <input type="text" class="form-control">
-                                                </td>
-                                            </tr>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="4">
-                                                    <div style="text-align: right;"> <a class="text-secondary delete-education-row-btn" href="javascript:void(0);" title="Delete"><i class="fa fa-trash fa-lg"> Delete</i></a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <td colspan="5" class="text-left">
-                                                    <a class="btn btn-sm text-primary add-new-employer"><i class="fa fa-plus"></i> Add New</a>
-                                                </td>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
+                                    <tr>
+                                        <td colspan="2">
+                                            <label for="">City</label>
+                                            <input type="text" class="form-control">
+                                        </td>
+                                        <td colspan="2">
+                                            <label for="">Phone</label>
+                                            <input type="text" class="form-control">
+                                        </td>
+                                    </tr>
 
-                                   
-                                    <center>
-                                        <input type="submit" value="Save" name="submitBtn" class="btn btn-success">
-                                        <input type="submit" value="Cancel" name="submitBtn" class="btn btn-secondary">
-                                    </center>
+                                    <tr>
+                                        <td colspan="4"> <label for="">Main Job Responsibilities</label>
+                                            <textarea name="" id="" cols="10" rows="3" class="form-control"></textarea>
+                                        </td>
+                                    </tr>
 
-                                </form>
-                            </div>
+                                    <tr>
+                                        <td colspan="2">
+                                            <label for="">Annual CTC(in Lacs)</label>
+                                            <input type="text" class="form-control">
+                                        </td>
+                                        <td colspan="2">
+                                            <label for="">Name of Reporting Manager</label>
+                                            <input type="text" class="form-control">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <label for="">Contact number of Manager</label>
+                                            <input type="text" class="form-control">
+                                        </td>
+                                        <td colspan="2">
+                                            <label for="">Email ID of Manager</label>
+                                            <input type="email" class="form-control">
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="4">
+                                            <label for="">Reason of Leaving</label>
+                                            <input type="text" class="form-control">
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="4">
+                                            <div style="text-align: right;"> <a class="text-secondary delete-education-row-btn" href="javascript:void(0);" title="Delete"><i class="fa fa-trash fa-lg"> Delete</i></a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="5" class="text-left">
+                                            <a class="btn btn-sm text-primary add-new-employer"><i class="fa fa-plus"></i> Add New</a>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+
+                            <table class="table table-bordered gap-table">
+                                <colgroup>
+                                    <col width="20%">
+                                    <col width="20%">
+                                    <col width="20%">
+                                    <col width="20%">
+                                    <col width="20%">
+                                </colgroup>
+                                <tbody>
+
+                                    <tr>
+                                        <td colspan="5">
+                                            <h4>Gap Declaration </h4>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Sr. No</th>
+                                        <th>Particulars (Reason)</th>
+                                        <th>Gap Period From</th>
+                                        <th>Gap Period To</th>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <td class=" sr-no"></td>
+                                        <td class=""><input type="text" name="" id="" class="form-control"></td>
+                                        <td class=""><input type="date" class="date-picker form-control" name="" id=""></td>
+                                        <td class=""><input type="date" class="date-picker form-control" name="" id=""></td>
+                                        <td><a class="text-secondary delete-education-row-btn" href="javascript:void(0);" title="Remove Line"><i class="fa fa-trash fa-lg"></i></a></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="5">
+                                            <a class="btn btn-sm text-primary add-new-education"><i class="fa fa-plus"></i> Add new line</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <center>
+                                <input type="submit" value="Save" name="submitBtn" class="btn btn-success">
+                                <input type="submit" value="Cancel" name="submitBtn" class="btn btn-secondary">
+                            </center>
 
 
+                            <!-- </div> -->
                         </form>
                     </div>
                 </div>
 
                 <div class="tab-pane " id="hrreference">
-                    <div class="row border g-0 rounded shadow-sm">
-                        <div class="col">
-                            <h3>Reference</h3>
-                            <p>HI there</p>
-                        </div>
+                    <div class="container" id="">
+                        <form class="row g-3" action="">
+                            <table class="table  hrreference-table">
+                                <colgroup>
+                                    <col width="50%">
+                                    <col width="50%">
+                                </colgroup>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="2">
+                                            <h4>HR Reference </h4>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">Please give the details of HR (from previous organizations) including contact details and company details.
+
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td> <label for="">Reference No.:</label>
+
+                                        </td>
+                                        <td class="sr-no"></td>
+                                    </tr>
+                                    <tr>
+                                        <td> <label for="">Name</label>
+                                            <input type="text" class="form-control">
+                                        </td>
+                                        <td>
+                                            <label for="">Designation</label>
+                                            <input type="text" class="form-control">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><label for="">Company</label>
+                                            <input type="text" class="form-control">
+                                        </td>
+                                        <td><label for="">Company Address</label>
+                                            <input type="text" class="form-control">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label for="">HR Contact No.</label>
+                                            <input type="text" class="form-control">
+                                        </td>
+                                        <td>
+                                            <label for="">Email-ID</label>
+                                            <input type="email" class="form-control">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><a class="text-secondary delete-education-row-btn" href="javascript:void(0);" title="Remove Line"><i class="fa fa-trash fa-lg"></i></a></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <a class="btn btn-sm text-primary add-new-education"><i class="fa fa-plus"></i> Add new line</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <center>
+                                <input type="submit" value="Save" name="submitBtn" class="btn btn-success">
+                                <input type="submit" value="Cancel" name="submitBtn" class="btn btn-secondary">
+                            </center>
+
+                        </form>
                     </div>
                 </div>
 
-                <div class="tab-pane " id="backinfo">
-                    <div class="row border g-0 rounded shadow-sm">
-                        <div class="col">
-                            <h3>Background</h3>
-                            <p>HI there</p>
-                        </div>
+                <div class="tab-pane " id="backinfo"  >
+                    <div class="container">
+                        <form class="row g-3" action="">
+                            <div style="margin-top: 20px;">
+                                <h4>Background Information</h4><br>
+                                <h5>If you respond ‘yes’ to any of the questions please provide full details on a separate sheet and attach to this application.</h5>
+                            </div>
+                            <div style="text-align: center;">
+                            <table class="table">
+                                <colgroup>
+                                    <col width="50%">
+                                    <col width="50%">
+                                </colgroup>
+                                <tbody>
+
+                                    <tr>
+                                        <td colspan="2"><label for="" style="font-size: 20px;">Criminal & Civil Record</label></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Have you ever been convicted of a criminal offence? </td>
+                                        <td>
+                                            <div class="" style="margin:auto">
+                                                <div class="icheck-primary d-inline mr-5 col-sm-3">
+                                                    <input type="radio" id="yes" value="" name="status">
+                                                    <label for="yes"> Yes
+                                                    </label>
+                                                </div>
+                                                <div class="icheck-primary d-inline">
+                                                    <input type="radio" id="no" value="" name="status">
+                                                    <label for="no"> No
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Are there any criminal or disciplinary charges pending against you?</td>
+                                        <td>
+                                            <div class="" style="margin:auto">
+                                                <div class="icheck-primary d-inline mr-5 col-sm-3">
+                                                    <input type="radio" id="yes" value="" name="status">
+                                                    <label for="yes"> Yes
+                                                    </label>
+                                                </div>
+                                                <div class="icheck-primary d-inline">
+                                                    <input type="radio" id="no" value="" name="status">
+                                                    <label for="no"> No
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p>Are you currently engaged in or have you ever been involved in litigation with your current or former employer,
+                                                which has resulted or may result in action in a court or tribunal or a settlement by negotiation,
+                                                arbitration, mediation or alternative dispute resolution procedure?</p>
+                                        </td>
+                                        <td>
+                                            <div class="" style="margin:auto">
+                                                <div class="icheck-primary d-inline mr-5 col-sm-3">
+                                                    <input type="radio" id="yes" value="" name="status">
+                                                    <label for="yes"> Yes
+                                                    </label>
+                                                </div>
+                                                <div class="icheck-primary d-inline">
+                                                    <input type="radio" id="no" value="" name="status">
+                                                    <label for="no"> No
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Have you ever been the subject of a civil action that resulted in a finding e.g. a fine or judgement against you in India or elsewhere?</td>
+                                        <td>
+                                            <div class="" style="margin:auto">
+                                                <div class="icheck-primary d-inline mr-5 col-sm-3">
+                                                    <input type="radio" id="yes" value="" name="status">
+                                                    <label for="yes"> Yes
+                                                    </label>
+                                                </div>
+                                                <div class="icheck-primary d-inline">
+                                                    <input type="radio" id="no" value="" name="status">
+                                                    <label for="no"> No
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Have you ever had a judgement debt (including a county court judgement) made under a court order in India or elsewhere or an individual voluntary arrangement with creditors?</td>
+                                        <td>
+                                            <div class="" style="margin:auto">
+                                                <div class="icheck-primary d-inline mr-5 col-sm-3">
+                                                    <input type="radio" id="yes" value="" name="status">
+                                                    <label for="yes"> Yes
+                                                    </label>
+                                                </div>
+                                                <div class="icheck-primary d-inline">
+                                                    <input type="radio" id="no" value="" name="status">
+                                                    <label for="no"> No
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Have you ever entered into a deed of arrangement with creditors?</td>
+                                        <td>
+                                            <div class="" style="margin:auto">
+                                                <div class="icheck-primary d-inline mr-5 col-sm-3">
+                                                    <input type="radio" id="yes" value="" name="status">
+                                                    <label for="yes"> Yes
+                                                    </label>
+                                                </div>
+                                                <div class="icheck-primary d-inline">
+                                                    <input type="radio" id="no" value="" name="status">
+                                                    <label for="no"> No
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Have you ever failed to satisfy any such judgement debts within one year of the making of the order?</td>
+                                        <td>
+                                            <div class="" style="margin:auto">
+                                                <div class="icheck-primary d-inline mr-5 col-sm-3">
+                                                    <input type="radio" id="yes" value="" name="status">
+                                                    <label for="yes"> Yes
+                                                    </label>
+                                                </div>
+                                                <div class="icheck-primary d-inline">
+                                                    <input type="radio" id="no" value="" name="status">
+                                                    <label for="no"> No
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Have you ever been declared bankrupt or had your estate sequestrated, been the subject of such proceedings, or is any such action pending?</td>
+                                        <td>
+                                            <div class="" style="margin:auto">
+                                                <div class="icheck-primary d-inline mr-5 col-sm-3">
+                                                    <input type="radio" id="yes" value="" name="status">
+                                                    <label for="yes"> Yes
+                                                    </label>
+                                                </div>
+                                                <div class="icheck-primary d-inline">
+                                                    <input type="radio" id="no" value="" name="status">
+                                                    <label for="no"> No
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            </div>
+                            <div style="text-align: center;">
+                            <table class="table">
+                                <colgroup>
+                                    <col width="50%">
+                                    <col width="50%">
+                                </colgroup>
+                                <tbody>
+
+                                    <tr>
+                                        <td colspan="2"><label for="" style="font-size: 20px;">Business Interests</label></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p>Are you, or have you ever been, an officer (either as director or company secretary) or a partner of any company other than in a capacity specified in the employment history section?</p>
+                                        </td>
+                                        <td>
+                                            <div class="" style="margin:auto">
+                                                <div class="icheck-primary d-inline mr-5 col-sm-3">
+                                                    <input type="radio" id="yes" value="" name="status">
+                                                    <label for="yes"> Yes
+                                                    </label>
+                                                </div>
+                                                <div class="icheck-primary d-inline">
+                                                    <input type="radio" id="no" value="" name="status">
+                                                    <label for="no"> No
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Do you own more than 15% of any corporate body?</td>
+                                        <td>
+                                            <div class="" style="margin:auto">
+                                                <div class="icheck-primary d-inline mr-5 col-sm-3">
+                                                    <input type="radio" id="yes" value="" name="status">
+                                                    <label for="yes"> Yes
+                                                    </label>
+                                                </div>
+                                                <div class="icheck-primary d-inline">
+                                                    <input type="radio" id="no" value="" name="status">
+                                                    <label for="no"> No
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td> Are you currently engaged in any other outside business activity or employment not stated elsewhere in this form?</td>
+                                        <td>
+                                            <div class="" style="margin:auto">
+                                                <div class="icheck-primary d-inline mr-5 col-sm-3">
+                                                    <input type="radio" id="yes" value="" name="status">
+                                                    <label for="yes"> Yes
+                                                    </label>
+                                                </div>
+                                                <div class="icheck-primary d-inline">
+                                                    <input type="radio" id="no" value="" name="status">
+                                                    <label for="no"> No
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Do you, or any member of your family, have a business interest, employment obligations or are there any other situations that would conflict, or appear to
+                                            conflict, with the employment for which you are applying?</td>
+                                        <td>
+                                            <div class="" style="margin:auto">
+                                                <div class="icheck-primary d-inline mr-5 col-sm-3">
+                                                    <input type="radio" id="yes" value="" name="status">
+                                                    <label for="yes"> Yes
+                                                    </label>
+                                                </div>
+                                                <div class="icheck-primary d-inline">
+                                                    <input type="radio" id="no" value="" name="status">
+                                                    <label for="no"> No
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            </div>
+                            <div style="text-align: center;">
+                            <table class="table">
+                                <colgroup>
+                                    <col width="50%">
+                                    <col width="50%">
+                                </colgroup>
+                                <tbody>
+
+                                    <tr>
+                                        <td colspan="2"><label for="" style="font-size: 20px;">Other actions and disqualifications</label></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Have you ever been or are you currently the subject of any investigation or disciplinary procedure in relation to your business or professional activities?
+                                        </td>
+                                        <td>
+                                            <div class="" style="margin:auto">
+                                                <div class="icheck-primary d-inline mr-5 col-sm-3">
+                                                    <input type="radio" id="yes" value="" name="status">
+                                                    <label for="yes"> Yes
+                                                    </label>
+                                                </div>
+                                                <div class="icheck-primary d-inline">
+                                                    <input type="radio" id="no" value="" name="status">
+                                                    <label for="no"> No
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Have you ever been criticised, censured or disciplined by any organisation or body in relation to your business or professional activities?</td>
+                                        <td>
+                                            <div class="" style="margin:auto">
+                                                <div class="icheck-primary d-inline mr-5 col-sm-3">
+                                                    <input type="radio" id="yes" value="" name="status">
+                                                    <label for="yes"> Yes
+                                                    </label>
+                                                </div>
+                                                <div class="icheck-primary d-inline">
+                                                    <input type="radio" id="no" value="" name="status">
+                                                    <label for="no"> No
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Have you ever been refused or had revoked membership of any professional body or organisation of which you have been, or applied to be, a member?</td>
+                                        <td>
+                                            <div class="" style="margin:auto">
+                                                <div class="icheck-primary d-inline mr-5 col-sm-3">
+                                                    <input type="radio" id="yes" value="" name="status">
+                                                    <label for="yes"> Yes
+                                                    </label>
+                                                </div>
+                                                <div class="icheck-primary d-inline">
+                                                    <input type="radio" id="no" value="" name="status">
+                                                    <label for="no"> No
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Have you ever been disqualified by a court from acting as a director of a company or from being concerned with the management of any company, partnership or unincorporated body?</td>
+                                        <td>
+                                            <div class="" style="margin:auto">
+                                                <div class="icheck-primary d-inline mr-5 col-sm-3">
+                                                    <input type="radio" id="yes" value="" name="status">
+                                                    <label for="yes"> Yes
+                                                    </label>
+                                                </div>
+                                                <div class="icheck-primary d-inline">
+                                                    <input type="radio" id="no" value="" name="status">
+                                                    <label for="no"> No
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            </div>
+                        </form>
                     </div>
+                    
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </section>
 
