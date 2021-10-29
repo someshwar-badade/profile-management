@@ -358,9 +358,11 @@
             DTColumnBuilder.newColumn('').withTitle('Actions').renderWith(function(data, type, full) {
                 // return full.gender + ' ' + full.id;
                 //href='" + base_url + "/profile/" + full.id + "/edit'
-                return "<a role='button' class='text-primary' ng-click='showCase.viewProfile(" + full.id + ")' >View</a>" +
-                    "<a role='button' class='mx-1 text-danger' ng-click='showCase.deleteClick(" + full.id + ")' >Delete</a>"+
-                    "<a target='_blank' class='mx-1 text-info' href='"+base_url+"/download-joining-form/" + full.id + "' >Download</a>";
+
+                return "<a role='button' class='text-primary' href='editJoiningForm/" + full.id + "' >View</a>" +
+                    "<a role='button' class='mx-1 text-danger' ng-click='showCase.deleteClick(" + full.id + ")' >Delete</a>" +
+                    "<a target='_blank' class='mx-1 text-info' href='" + base_url + "/download-joining-form/" + full.id + "' >Download</a>";
+
 
             }).notSortable(),
 
@@ -381,7 +383,7 @@
             }).then(function(response) {
                 console.log(response);
                 $scope.profile = response.data;
-                $scope.profile.editUrl = base_url + "/joining-form-list/" + $scope.profile.id + "/edit";
+                $scope.profile.editUrl = base_url + "/editJoiningForm/" + $scope.profile.id + "/edit";
             }, function(response) {
 
 

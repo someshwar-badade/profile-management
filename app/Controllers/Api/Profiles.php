@@ -729,3 +729,10 @@ class Profiles extends ResourceController
 
     
 }
+
+
+// personal email
+// company email id
+// employee id
+// click on name link
+// combine fname & Lname
