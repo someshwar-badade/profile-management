@@ -122,12 +122,12 @@
                             </div>
                         </div>
 
-                        <!-- <div class="form-group row">
-                            <label class="col-sm-3" for="inputName">Email (alternate)</label>
+                        <div class="form-group row">
+                            <label class="col-sm-3" for="inputName">Email (company)</label>
                             <div class="col-sm-9">
                                 <input type="email" id="emailAlternate" ng-model="profile.email_alternate" maxlength="100" name="email_alternate" class="form-control">
                             </div>
-                        </div> -->
+                        </div>
 
                         <div class="form-group row">
                             <label class="col-sm-3" for="inputName">Aadhar Card Number <sup class="text-danger">*</sup></label>

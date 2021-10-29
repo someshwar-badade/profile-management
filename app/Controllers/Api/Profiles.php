@@ -363,6 +363,22 @@ class Profiles extends ResourceController
         return $this->fail(['error' => 'Record not updated'], 400);
     }
 
+    public function getJoiningFormDetails($id)
+    {
+
+
+        $model = new EmployeeJoinigDetailsModel();
+        $user = $model->find($id);
+        // echo $user;
+        // die;
+        if ($user) {
+            //Respond with 200 status code
+            return $this->respond(['user' => $user]);
+        }
+        //error
+        return $this->fail(['referral_id' => lang('forms.register.referralId.errorNotExist')]);
+    }
+
     public function joiningFormList()
     {
 
@@ -399,11 +415,10 @@ class Profiles extends ResourceController
         if (isset($_POST['filter'])) {
             $filter = $_POST['filter'];
         }
-        
+
         $data = $model->getList($filter, $iSearch_str, $start, $length, $orderBy);
 
         return $this->respond($data);
-
     }
 
     public function sendJoiningForm()
@@ -482,12 +497,12 @@ class Profiles extends ResourceController
 
             //send email
             $templateData = [
-                'first_name'=>$requestData['first_name'],
-                'link'=>base_url(route_to('joiningFormVerification',base64_encode($requestData['email_primary']))),
-                'verification_code'=>$requestData['verification_code']
+                'first_name' => $requestData['first_name'],
+                'link' => base_url(route_to('joiningFormVerification', base64_encode($requestData['email_primary']))),
+                'verification_code' => $requestData['verification_code']
             ];
-            $message = view('email-templates/send-joining-form-link',$templateData);
-            $isEmailSent =  sendEmail_common($requestData['email_primary'],$message,'Bitstringit - Joining Form');
+            $message = view('email-templates/send-joining-form-link', $templateData);
+            $isEmailSent =  sendEmail_common($requestData['email_primary'], $message, 'Bitstringit - Joining Form');
 
             //Respond with 200 status code
             return $this->respond(['success' => 'Sent Joining form.']);
@@ -496,7 +511,8 @@ class Profiles extends ResourceController
         return $this->fail(['error' => 'Failed to send Joining form.'], 400);
     }
 
-    public function joiningFormSaveEmployeeDetails(){
+    public function joiningFormSaveEmployeeDetails()
+    {
         $requestData = (array) $this->request->getJSON();
         //$requestData = $this->request->getRawInput();
         $model = new EmployeeJoinigDetailsModel();
@@ -519,17 +535,17 @@ class Profiles extends ResourceController
             'employee_other_details' => '',
         ];
         $requestData = array_intersect_key($requestData, $allowedColums);
-        
+
         //validation
         $validation =  \Config\Services::validation();
-        
+
         $rules = [
             // 'email' => 'required',
             'first_name' => ['label' => 'First Name', 'rules' => 'required'],
             'last_name' => ['label' => 'Last Name', 'rules' => 'required'],
             'aadhar_number' => ['label' => 'Aadhar Number', 'rules' => 'required|numeric|exact_length[12]'],
             'pan_number' => ['label' => 'PAN Number', 'rules' => 'required|alpha_numeric|exact_length[10]'],
-            'email_primary' => ['label' => 'Email', 'rules' => 'required|valid_email|is_unique[employee_joining_form_details.email_primary,id,'.$joiningFormId.']'],
+            'email_primary' => ['label' => 'Email', 'rules' => 'required|valid_email|is_unique[employee_joining_form_details.email_primary,id,' . $joiningFormId . ']'],
         ];
 
         $validation->setRules(
@@ -541,7 +557,7 @@ class Profiles extends ResourceController
             return $this->fail($validation->getErrors(), 400);
         }
 
-        $requestData['employee_other_details'] = $requestData['employee_other_details']?json_encode($requestData['employee_other_details']):null;
+        $requestData['employee_other_details'] = $requestData['employee_other_details'] ? json_encode($requestData['employee_other_details']) : null;
         $id =  $model->update($joiningFormId, $requestData);
 
         $response = [
@@ -553,11 +569,10 @@ class Profiles extends ResourceController
             ]
         ];
         return $this->respondUpdated($response);
-
-
     }
 
-    public function joiningFormSaveEducationDetails(){
+    public function joiningFormSaveEducationDetails()
+    {
         $requestData = (array) $this->request->getJSON();
         //$requestData = $this->request->getRawInput();
         $allowedColums = [
@@ -567,9 +582,9 @@ class Profiles extends ResourceController
 
         $model = new EmployeeJoinigDetailsModel();
         $joiningFormId = 11;
-       
 
-        $requestData['education_qualification'] = $requestData['education_qualification']?json_encode($requestData['education_qualification']):null;
+
+        $requestData['education_qualification'] = $requestData['education_qualification'] ? json_encode($requestData['education_qualification']) : null;
         $id =  $model->update($joiningFormId, $requestData);
 
         $response = [
@@ -581,10 +596,10 @@ class Profiles extends ResourceController
             ]
         ];
         return $this->respondUpdated($response);
-
     }
 
-    public function joiningFormSaveProfetionalQualification(){
+    public function joiningFormSaveProfetionalQualification()
+    {
         $requestData = (array) $this->request->getJSON();
         //$requestData = $this->request->getRawInput();
         $allowedColums = [
@@ -594,7 +609,7 @@ class Profiles extends ResourceController
 
         $model = new EmployeeJoinigDetailsModel();
         $joiningFormId = 11;
-       
+
         // $joiningFormDetails = $model->find(7);
         // $totalFieldCount = count($joiningFormDetails);
         // $totalFilledCount = count(array_filter($joiningFormDetails));
@@ -604,7 +619,7 @@ class Profiles extends ResourceController
         // echo"<pre>";
         // print_r($joiningFormDetails);
         // die;
-        $requestData['professional_qualification'] = $requestData['professional_qualification']?json_encode($requestData['professional_qualification']):null;
+        $requestData['professional_qualification'] = $requestData['professional_qualification'] ? json_encode($requestData['professional_qualification']) : null;
         $id =  $model->update($joiningFormId, $requestData);
 
         $response = [
@@ -616,7 +631,6 @@ class Profiles extends ResourceController
             ]
         ];
         return $this->respondUpdated($response);
-
     }
 
     // delete animal details
@@ -725,14 +739,11 @@ class Profiles extends ResourceController
         $result = $model->getAutocompleteList($query);
         return $this->respond($result);
     }
-
-
-    
 }
 
 
 // personal email
 // company email id
 // employee id
-// click on name link
 // combine fname & Lname
+// click on name link
