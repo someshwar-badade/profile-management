@@ -26,6 +26,20 @@ class EmployeeJoinigDetailsModel extends Model
         return $data;
     }
 
+    public function getJoiningFormDetails($id){
+
+        $result = $this->find($id);
+        if(empty($result)){
+            return;
+        }
+        $result['joining_date'] = date(SITE_DATE_FORMAT,strtotime($result['joining_date']));
+        $result['referralDetails'] = $this->select('id,first_name,last_name,father_name,mother_name,spouse_name,kids_name,mobile_primary,email_primary,aadhar_number,pan_number,education_qualification,professional_qualification,employment_history,background_info,employee_other_details')->find($id);
+        // ,DATE_FORMAT(joining_date, "'.SITE_DATE_FORMAT_SQL.'") as joining_date
+       
+       
+        return $result;
+    }
+
     public function getList($filter=array(),$searchQuery='',$start=0,$length=10,$orderBy='id ASC'){
         $db = \Config\Database::connect();
 		$builder = $db->table('employee_joining_form_details');

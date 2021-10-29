@@ -205,7 +205,7 @@ EOD;
 		$canvas = $dompdf->get_canvas();
      	$canvas->page_text(512, 820, "Page: {PAGE_NUM} of {PAGE_COUNT}",'', 8, array(0,0,0)); 
         $dompdf->stream("joining_form.pdf",array("Attachment" => 0));
-		// $dompdf->output();
+		// $dompdf->output(); 
 	}
 
 
