@@ -2,6 +2,7 @@
 
 <?= $this->section('content') ?>
 
+
 <?=view('user/employee/joining-form',['id'=>$id])?>
 
 <?= $this->endSection() ?>
