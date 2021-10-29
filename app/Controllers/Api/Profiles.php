@@ -549,7 +549,7 @@ class Profiles extends ResourceController
             'action_type' => 'Updated',
             'error'    => null,
             'messages' => [
-                'success' => 'Data Updated'
+                'success' => 'Done'
             ]
         ];
         return $this->respondUpdated($response);
@@ -577,7 +577,7 @@ class Profiles extends ResourceController
             'action_type' => 'Updated',
             'error'    => null,
             'messages' => [
-                'success' => 'Data Updated'
+                'success' => 'Done'
             ]
         ];
         return $this->respondUpdated($response);
@@ -612,11 +612,36 @@ class Profiles extends ResourceController
             'action_type' => 'Updated',
             'error'    => null,
             'messages' => [
-                'success' => 'Data Updated'
+                'success' => 'Done'
             ]
         ];
         return $this->respondUpdated($response);
 
+    }
+
+    public function getJoingformDetails($id){
+        $user = checkUserToken();
+
+        $session = session();
+
+        if(empty($session->get('employee_joining_form_id')) && empty($user)){
+            if (empty($session->get('employee_joining_form_id'))) {
+                //redirect
+                return $this->fail(['messages' => 'Please verify details.'], 400);
+            }
+    
+            if (!$user) {
+                return $this->fail(['messages' => 'Please login.'], 400);
+            }
+        }
+
+
+        $model = new EmployeeJoinigDetailsModel();
+        $joiningFormDetails = (array)$model->find($id);
+        $joiningFormDetails['employee_other_details'] = $joiningFormDetails['employee_other_details']?(array)json_decode($joiningFormDetails['employee_other_details']):[];
+        $joiningFormDetails['education_qualification'] = $joiningFormDetails['education_qualification']?(array)json_decode($joiningFormDetails['education_qualification']):[];
+        $joiningFormDetails['professional_qualification'] = $joiningFormDetails['professional_qualification']?(array)json_decode($joiningFormDetails['professional_qualification']):[];
+        return $this->respond(['joiningFormDetails'=>$joiningFormDetails]);
     }
 
     // delete animal details

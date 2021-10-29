@@ -10,20 +10,27 @@ class EmployeeForm extends BaseController
     public function index()
     {
 
-        $user = checkUserToken();
+        helper(['form', 'url']);
+		$session = session();
 
-        if (!$user) {
-            //redirct to login
-            setcookie("a_token", "", time() - 3600, '/'); //delete cookie
-            setcookie("r_token", "", time() - 3600, '/'); //delete cookie
-            return redirect()->route('logout');
-        }
+        if (!$session->get('employee_joining_form_id')) {
+			//redirect
+			return redirect()->to(base_url(route_to('joiningFormVerification')));
+		}
+
+        
+        //get joining form details
+        $joingFormId = $session->get('employee_joining_form_id');
+        $model = new EmployeeJoinigDetailsModel();
+        $joiningFormDetails = $model->find($joingFormId);
 
         $data = [
-            'page_title' => 'Profiles',
+            'page_title' => 'Joining Form',
             'active_nav_parent' => 'forms',
             'active_nav' => 'forms',
+            'id'=> $joingFormId,
         ];
+       
 
         return view('employee_joining_form', $data);
     }
