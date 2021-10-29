@@ -119,7 +119,7 @@ class Profiles extends BaseController
 		if ($session->get('employee_joining_form_id')) {
 			$session->get('employee_joining_form_id');
 			//redirect
-			return redirect()->to(base_url());
+			return redirect()->to(base_url(route_to('employeeJoiningForm')));
 		}
 		$data = [
 			'page_title' => 'Joining Form',
@@ -169,7 +169,7 @@ EOD;
 
 					$session->get('employee_joining_form_id');
 					//redirect
-					return redirect()->to(base_url());
+					return redirect()->to(base_url(route_to('employeeJoiningForm')));
 				}
 			}
 		}

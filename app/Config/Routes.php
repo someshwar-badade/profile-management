@@ -43,7 +43,8 @@ $routes->get('/logout', 'Users::logout',['as'=>'logout']);
 $routes->get('/user-dashboard', 'Users::userDashboard',['as'=>'user-dashboard']);
 $routes->get('/user-settings', 'Users::settings',['as'=>'user-settings']);
 // $routes->get('/employee_form', ['as'=>'employee_joining_form']);
-$routes->get('/employee-joining-form', 'EmployeeForm::index',['as'=>'forms']);
+$routes->get('/employee-joining-form', 'EmployeeForm::index',['as'=>'employeeJoiningForm']);
+$routes->get('/api/employee-joining-form/(:num)', 'Api\Profiles::getJoingformDetails/$1',['as'=>'getJoingformDetails']);
 
 
 $routes->resource('/api/profiles',['controller'=>'api\Profiles']);
