@@ -578,11 +578,11 @@ class Profiles extends ResourceController
         $allowedColums = [
             'education_qualification' => ''
         ];
+        $joiningFormId = $requestData['id'];
         $requestData = array_intersect_key($requestData, $allowedColums);
 
         $model = new EmployeeJoinigDetailsModel();
 
-        $joiningFormId = $requestData['id'];
 
 
         $requestData['education_qualification'] = $requestData['education_qualification'] ? json_encode($requestData['education_qualification']) : null;
@@ -606,11 +606,60 @@ class Profiles extends ResourceController
         $allowedColums = [
             'professional_qualification' => ''
         ];
+        $joiningFormId = $requestData['id'];
         $requestData = array_intersect_key($requestData, $allowedColums);
 
         $model = new EmployeeJoinigDetailsModel();
-        $joiningFormId = $requestData['id'];
         $requestData['professional_qualification'] = $requestData['professional_qualification'] ? json_encode($requestData['professional_qualification']) : null;
+        $id =  $model->update($joiningFormId, $requestData);
+
+        $response = [
+            'id'   => $joiningFormId,
+            'action_type' => 'Updated',
+            'error'    => null,
+            'messages' => [
+                'success' => 'Done'
+            ]
+        ];
+        return $this->respondUpdated($response);
+    }
+    public function joiningFormSaveEmploymentHistory()
+    {
+        $requestData = (array) $this->request->getJSON();
+        //$requestData = $this->request->getRawInput();
+        $allowedColums = [
+            'employment_history' => ''
+        ];
+        $joiningFormId = $requestData['id'];
+        $requestData = array_intersect_key($requestData, $allowedColums);
+
+        $model = new EmployeeJoinigDetailsModel();
+        $requestData['employment_history'] = $requestData['employment_history'] ? json_encode($requestData['employment_history']) : null;
+        $id =  $model->update($joiningFormId, $requestData);
+
+        $response = [
+            'id'   => $joiningFormId,
+            'action_type' => 'Updated',
+            'error'    => null,
+            'messages' => [
+                'success' => 'Done'
+            ]
+        ];
+        return $this->respondUpdated($response);
+    }
+
+    public function joiningFormSaveBackgroundInfo()
+    {
+        $requestData = (array) $this->request->getJSON();
+        //$requestData = $this->request->getRawInput();
+        $allowedColums = [
+            'background_info' => ''
+        ];
+        $joiningFormId = $requestData['id'];
+        $requestData = array_intersect_key($requestData, $allowedColums);
+
+        $model = new EmployeeJoinigDetailsModel();
+        $requestData['background_info'] = $requestData['background_info'] ? json_encode($requestData['background_info']) : null;
         $id =  $model->update($joiningFormId, $requestData);
 
         $response = [
@@ -653,9 +702,82 @@ class Profiles extends ResourceController
             'bank_account_number' => '',
             'bank_ifsc_code' => '',
         ];
+        $employment_history = [
+            'employment_summary'=>[],
+            'previous_employer'=>[
+                'position_held'=>'',
+                'from_date'=>'',
+                'to_date'=>'',
+                'company'=>'',
+                'department'=>'',
+                'nature_of_job'=>'',
+                'address'=>'',
+                'city'=>'',
+                'telephone'=>'',
+                'job_responsibilities'=>'',
+                'annual_ctc'=>'',
+                'reporting_manager'=>'',
+                'contact_number_manager'=>'',
+                'email_manager'=>'',
+                'reason_of_leaving'=>'',
+                'hr_name'=>'',
+                'hr_contact_number'=>'',
+                'hr_email'=>'',
+            ],
+            'previous_to_previous_employer'=>[
+                'position_held'=>'',
+                'from_date'=>'',
+                'to_date'=>'',
+                'company'=>'',
+                'department'=>'',
+                'nature_of_job'=>'',
+                'address'=>'',
+                'city'=>'',
+                'telephone'=>'',
+                'job_responsibilities'=>'',
+                'annual_ctc'=>'',
+                'reporting_manager'=>'',
+                'contact_number_manager'=>'',
+                'email_manager'=>'',
+                'reason_of_leaving'=>'',
+                'hr_name'=>'',
+                'hr_contact_number'=>'',
+                'hr_email'=>'',
+            ],
+        ];
+
+        $backGroundInfo = [
+            'criminal_and_civil_record'=>[
+                "C01"=>0,
+                "C02"=>0,
+                "C03"=>0,
+                "C04"=>0,
+                "C05"=>0,
+                "C06"=>0,
+                "C07"=>0,
+                "C08"=>0,
+            ],
+            'business_interest'=>[
+                "B01"=>0,
+                "B02"=>0,
+                "B03"=>0,
+                "B04"=>0,
+            ],
+            'other_disqualification'=>[
+                "O01"=>0,
+                "O02"=>0,
+                "O03"=>0,
+                "O04"=>0,
+            ],
+            'previous_address'=>[]
+
+        ];
+
         $joiningFormDetails['employee_other_details'] = $joiningFormDetails['employee_other_details'] ? (array)json_decode($joiningFormDetails['employee_other_details']) : $employee_other_details;
         $joiningFormDetails['education_qualification'] = $joiningFormDetails['education_qualification'] ? (array)json_decode($joiningFormDetails['education_qualification']) : [];
         $joiningFormDetails['professional_qualification'] = $joiningFormDetails['professional_qualification'] ? (array)json_decode($joiningFormDetails['professional_qualification']) : [];
+        $joiningFormDetails['employment_history'] = $joiningFormDetails['employment_history'] ? (array)json_decode($joiningFormDetails['employment_history']) : $employment_history;
+        $joiningFormDetails['background_info'] = $joiningFormDetails['background_info'] ? (array)json_decode($joiningFormDetails['background_info']) : $backGroundInfo;
 
         $totalFieldCount = count($joiningFormDetails);
         $totalFieldCount_other = count($joiningFormDetails['employee_other_details']);
