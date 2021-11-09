@@ -672,6 +672,31 @@ class Profiles extends ResourceController
         ];
         return $this->respondUpdated($response);
     }
+    public function joiningFormAcceptDeclaration()
+    {
+        $requestData = (array) $this->request->getJSON();
+        //$requestData = $this->request->getRawInput();
+        $allowedColums = [
+            'is_accept_declaration' => ''
+        ];
+        $joiningFormId = $requestData['id'];
+        $requestData = array_intersect_key($requestData, $allowedColums);
+
+        $model = new EmployeeJoinigDetailsModel();
+        $requestData['is_accept_declaration'] = 1;
+        $id =  $model->update($joiningFormId, $requestData);
+
+        $response = [
+            'id'   => $joiningFormId,
+            'action_type' => 'Updated',
+            'error'    => null,
+            'messages' => [
+                'success' => 'Done'
+            ]
+            
+        ];
+        return $this->respondUpdated($response);
+    }
 
     public function getJoingformDetails($id)
     {
@@ -779,10 +804,21 @@ class Profiles extends ResourceController
         $joiningFormDetails['employment_history'] = $joiningFormDetails['employment_history'] ? (array)json_decode($joiningFormDetails['employment_history']) : $employment_history;
         $joiningFormDetails['background_info'] = $joiningFormDetails['background_info'] ? (array)json_decode($joiningFormDetails['background_info']) : $backGroundInfo;
 
-        $totalFieldCount = count($joiningFormDetails);
-        $totalFieldCount_other = count($joiningFormDetails['employee_other_details']);
-        $totalFilledCount = count(array_filter($joiningFormDetails));
-        $totalFilledCount_other = count(array_filter($joiningFormDetails['employee_other_details']));
+        $countDetails = $joiningFormDetails;
+
+        unset($countDetails['id']);//remove for calculation
+        unset($countDetails['verification_code']);//remove for calculation
+        unset($countDetails['created_by']);//remove for calculation
+        unset($countDetails['updated_by']);//remove for calculation
+        unset($countDetails['status']);//remove for calculation
+        unset($countDetails['created_at']);//remove for calculation
+        unset($countDetails['updated_at']);//remove for calculation
+        unset($countDetails['deleted_at']);//remove for calculation
+
+        $totalFieldCount = count($countDetails);
+        $totalFieldCount_other = count($countDetails['employee_other_details']);
+        $totalFilledCount = count(array_filter($countDetails));
+        $totalFilledCount_other = count(array_filter($countDetails['employee_other_details']));
         $formComlpletion = number_format((($totalFilledCount + $totalFilledCount_other) / ($totalFieldCount + $totalFieldCount_other) * 100));
         // echo "totalFieldCount:$totalFieldCount totalFilledCount:$totalFilledCount Form Completion: $formColpletion%";
 

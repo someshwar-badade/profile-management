@@ -54,6 +54,7 @@ $routes->get('/profiles', 'Profiles::index',['as'=>'profiles']);
 $routes->get('/profile', 'Profiles::create',['as'=>'createprofile']);
 $routes->get('/send-joining-form', 'Profiles::sendJoiningForm',['as'=>'sendJoiningForm']);
 
+$routes->match(['get', 'post'],'/joining-form-verification', 'Profiles::joiningFormVerification',['as'=>'joiningFormVerification2']);
 $routes->match(['get', 'post'],'/joining-form-verification/(:any)', 'Profiles::joiningFormVerification/$1',['as'=>'joiningFormVerification']);
 $routes->get('/download-joining-form/(:any)', 'Profiles::downloadJoiningForm/$1',['as'=>'downloadJoiningForm']);
 $routes->post('/api/employee-joining-form/save-employee-details', 'Api\Profiles::joiningFormSaveEmployeeDetails',['as'=>'joiningFormSaveEmployeeDetails']);
@@ -61,6 +62,7 @@ $routes->post('/api/employee-joining-form/save-education-details', 'Api\Profiles
 $routes->post('/api/employee-joining-form/save-profetional-qualification', 'Api\Profiles::joiningFormSaveProfetionalQualification',['as'=>'joiningFormSaveProfetionalQualification']);
 $routes->post('/api/employee-joining-form/save-employment-history', 'Api\Profiles::joiningFormSaveEmploymentHistory',['as'=>'joiningFormSaveEmploymentHistory']);
 $routes->post('/api/employee-joining-form/save-background-information', 'Api\Profiles::joiningFormSaveBackgroundInfo',['as'=>'joiningFormSaveBackgroundInfo']);
+$routes->post('/api/employee-joining-form/accept-declaration', 'Api\Profiles::joiningFormAcceptDeclaration',['as'=>'joiningFormAcceptDeclaration']);
 
 $routes->get('/api/joining-form-list', 'Api\Profiles::joiningFormList',['as'=>'joiningFormList']);
 $routes->get('/editJoiningForm/(:num)', 'Profiles::createJoiningForm/$1',['as'=>'editJoiningForm']);

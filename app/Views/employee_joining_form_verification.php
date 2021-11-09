@@ -21,6 +21,17 @@
                             <form method="POST" action="" class="not-hide-submit-btn1">
                                 
                                 <div class="form-group row">
+                                    <label class="col-sm-4" for="email">Email <sup class="text-danger">*</sup></label>
+                                    <div class="col-sm-8">
+                                        <input type="text" id="email" placeholder="Email"  maxlength="60" name="email" value="<?php echo set_value('email',$email); ?>" class="form-control">
+                                       <?php if($validation->getError('email')){?>
+                                        <div class="text-danger"><?=$validation->getError('email')?></div>
+                                        <?php }?>
+                                    </div>
+                                    
+                                </div>
+
+                                <div class="form-group row">
                                     <label class="col-sm-4" for="aadhar_pan_number">Aadhar/PAN Number <sup class="text-danger">*</sup></label>
                                     <div class="col-sm-8">
                                         <input type="text" id="aadhar_pan_number" placeholder="Aadhar or PAN number"  maxlength="12" name="aadhar_pan_number" value="<?php echo set_value('aadhar_pan_number'); ?>" class="form-control">

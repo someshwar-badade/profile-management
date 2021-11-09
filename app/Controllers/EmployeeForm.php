@@ -15,7 +15,7 @@ class EmployeeForm extends BaseController
 
         if (!$session->get('employee_joining_form_id')) {
 			//redirect
-			return redirect()->to(base_url(route_to('joiningFormVerification')));
+			return redirect()->to(base_url(route_to('joiningFormVerification2')));
 		}
 
         
@@ -31,9 +31,14 @@ class EmployeeForm extends BaseController
             'id'=> $joingFormId,
         ];
        
+        if($joiningFormDetails['is_accept_declaration']){
+            $session->remove('employee_joining_form_id');
+            return view('employee_joining_form_success', $data);
+        }
 
         return view('employee_joining_form', $data);
     }
+
     // public function create($id=''){
     // 	$user = checkUserToken();
 

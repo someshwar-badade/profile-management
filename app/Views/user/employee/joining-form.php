@@ -50,6 +50,9 @@
                     <li class="nav-item">
                         <a class="nav-link" id="backgroundInfo-tab" data-toggle="tab" href="#backgroundInfo" role="tab" aria-controls="backgroundInfo" aria-selected="false">Background Information</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="declaration-tab" data-toggle="tab" href="#declaration" role="tab" aria-controls="declaration" aria-selected="false">Declaration & Authorization</a>
+                    </li>
                 </ul>
                 <div class="tab-content" id="myTabContent" style="background-color: white;padding:20px;">
                     <div class="tab-pane fade show active" id="employeeDetails" role="tabpanel" aria-labelledby="employeeDetails-tab">
@@ -845,6 +848,25 @@
                         </div>
                     </div>
 
+                    <div class="tab-pane fade" id="declaration" role="tabpanel" aria-labelledby="declaration-tab">
+                        <div class="table-responsive">
+                            <form class="">
+                                <fieldset class="form-group p-3">
+                                    <div>
+                                    <p>I certify that to the best of my knowledge all the information given in this form is true and complete. I understand that any appointment offered will be subject to the information given on this form being correct. I understand that any offer of employment is conditional upon the verification of any or all of the information I have supplied. I understand and accept that the provision of misleading, false or inaccurate information or the omission of a material fact may be legitimate cause for the immediate withdrawal of any offer of employment or, if I am already employed, for disciplinary action up to and including dismissal.</p>
+                                    <p>I authorize BitString IT Services Pvt Ltdor any agent thereof to verify information presented on this form and to make inquiries of the school, college or university where a qualification was gained as well as approach previous employers and personal references for verification of my employment records. I acknowledge that all referees are disclosing the above information at my express request and that I will make no claim whatsoever against such referee, its agents and/or employees arising out of disclosure of such information. This shall be the case whether the content of any such document obtained is accurate or inaccurate and/or any information is true or untrue.</p>
+                
+                                    </div>
+                                </fieldset>
+
+                                <center>
+                                <button type="button" class="btn btn-primary" ng-click="submitForm('accept-declaration')">
+                                    <div ng-show="loading" class="css-animated-loader"></div>Accept and Submit Form
+                                </button>
+                                </center>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

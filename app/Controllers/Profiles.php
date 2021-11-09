@@ -109,7 +109,7 @@ class Profiles extends BaseController
 		return view('user/employee/sendJoiningForm', $data);
 	}
 
-	public function joiningFormVerification($email)
+	public function joiningFormVerification($email='')
 	{
 
 
@@ -125,7 +125,8 @@ class Profiles extends BaseController
 			'page_title' => 'Joining Form',
 			'active_nav_parent' => 'send-joining-form',
 			'active_nav' => 'send-joining-form',
-			'pageHeading' => "Joining Form"
+			'pageHeading' => "Joining Form",
+			'email'=>$email?base64_decode($email):''
 		];
 		$employeeDetails = null;
 
@@ -137,6 +138,7 @@ class Profiles extends BaseController
 
 		if ($_POST) {
 			$input = $this->validate([
+				'email' => ['label' => 'email', 'rules' => 'required|valid_email'],
 				'aadhar_pan_number' => ['label' => 'Aadhar/PAN Number', 'rules' => 'required|exact_length[12,10]'],
 				'verification_code' => ['label' => 'Verification Code', 'rules' => 'required|exact_length[8]'],
 			]);
@@ -146,7 +148,7 @@ class Profiles extends BaseController
 			} else {
 				//get employee details
 				$employeeDetails = $model->verifyJoinigForm(
-					base64_decode($email),
+					$this->request->getPost('email'),
 					$this->request->getPost('aadhar_pan_number'),
 					$this->request->getPost('verification_code')
 				);
