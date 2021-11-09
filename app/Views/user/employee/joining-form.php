@@ -20,10 +20,12 @@
 </style>
 <section class="abutsSection clearfix" ng-controller="joiningFormCtrl">
     <div class="container-fluid mt-5">
+        <?php if(!$showTitle){ ?>
         <div class="row justify-content-center">
             <h2>Joining Form</h2>
         </div>
-      
+      <?php }?>
+     
         <div class="row mt-5">
             <div class="col-md-12">
                 <p>Please complete the form in <strong>BLOCK CAPITALS</strong> as fully as possible using sign. No section should be left blank. The information you provide in this form will be subject to verification by the company.</p>
@@ -335,7 +337,7 @@
             console.log($scope.profile);
             var apiUrl = base_url + '/api/employee-joining-form/' + formType;
             var method = "POST";
-
+console.log($scope.joiningForm);
             $http({
                 method: method,
                 url: apiUrl,

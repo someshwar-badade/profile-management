@@ -93,6 +93,7 @@
 <link rel="stylesheet" href="<?= base_url('assets/js/jquery-datetime-picker/jquery.datetimepicker.min.css') ?>">
 <script src="<?= base_url('assets/js/jquery-datetime-picker/jquery.datetimepicker.full.min.js') ?>"></script>
 
+<script src="<?= base_url('assets/js/toastr/toastr.min.js') ?>"></script>
 <script>
 $(document).ready(function(){
 

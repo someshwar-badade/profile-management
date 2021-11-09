@@ -30,6 +30,9 @@
   <!-- summernote -->
   <link rel="stylesheet" href="<?=base_url('assets/admin/plugins/summernote/summernote-bs4.min.css')?>">
 
+  
+<link rel="stylesheet" href="<?=base_url('assets/js/toastr/toastr.min.css')?>">
+
   <link rel="stylesheet" href="<?=base_url('assets/js/datatables/datatables.min.css')?>">
 <script src="<?= base_url('assets/js/angular/angular.min.js') ?>"></script>
 <script src="<?= base_url('assets/js/ui-bootstrap-2.5.0.min.js') ?>"></script>

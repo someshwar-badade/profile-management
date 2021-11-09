@@ -500,7 +500,7 @@ class Profiles extends ResourceController
         $requestData = (array) $this->request->getJSON();
         //$requestData = $this->request->getRawInput();
         $model = new EmployeeJoinigDetailsModel();
-        $joiningFormId = 11;
+        $joiningFormId = $requestData['id'];
 
         $allowedColums = [
             'first_name' => '',
@@ -566,7 +566,7 @@ class Profiles extends ResourceController
         $requestData = array_intersect_key($requestData, $allowedColums);
 
         $model = new EmployeeJoinigDetailsModel();
-        $joiningFormId = 11;
+        $joiningFormId = $requestData['id'];
        
 
         $requestData['education_qualification'] = $requestData['education_qualification']?json_encode($requestData['education_qualification']):null;
@@ -593,7 +593,7 @@ class Profiles extends ResourceController
         $requestData = array_intersect_key($requestData, $allowedColums);
 
         $model = new EmployeeJoinigDetailsModel();
-        $joiningFormId = 11;
+        $joiningFormId = $requestData['id'];
        
         // $joiningFormDetails = $model->find(7);
         // $totalFieldCount = count($joiningFormDetails);
@@ -638,7 +638,16 @@ class Profiles extends ResourceController
 
         $model = new EmployeeJoinigDetailsModel();
         $joiningFormDetails = (array)$model->find($id);
-        $joiningFormDetails['employee_other_details'] = $joiningFormDetails['employee_other_details']?(array)json_decode($joiningFormDetails['employee_other_details']):[];
+        $employee_other_details = [
+            'marital_status'=>'',
+            'uan_number'=>'',
+            'emergency_contact_name'=>'',
+            'emergency_contact_mobile'=>'',
+            'bank_name_branch'=>'',
+            'bank_account_number'=>'',
+            'bank_ifsc_code'=>'',
+        ];
+        $joiningFormDetails['employee_other_details'] = $joiningFormDetails['employee_other_details']?(array)json_decode($joiningFormDetails['employee_other_details']):$employee_other_details;
         $joiningFormDetails['education_qualification'] = $joiningFormDetails['education_qualification']?(array)json_decode($joiningFormDetails['education_qualification']):[];
         $joiningFormDetails['professional_qualification'] = $joiningFormDetails['professional_qualification']?(array)json_decode($joiningFormDetails['professional_qualification']):[];
         return $this->respond(['joiningFormDetails'=>$joiningFormDetails]);
