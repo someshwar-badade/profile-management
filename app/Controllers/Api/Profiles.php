@@ -610,16 +610,6 @@ class Profiles extends ResourceController
 
         $model = new EmployeeJoinigDetailsModel();
         $joiningFormId = $requestData['id'];
-        
-        // $joiningFormDetails = $model->find(7);
-        // $totalFieldCount = count($joiningFormDetails);
-        // $totalFilledCount = count(array_filter($joiningFormDetails));
-        // $formColpletion = number_format(($totalFilledCount/$totalFieldCount*100));
-        // echo "totalFieldCount:$totalFieldCount totalFilledCount:$totalFilledCount Form Completion: $formColpletion%";
-
-        // echo"<pre>";
-        // print_r($joiningFormDetails);
-        // die;
         $requestData['professional_qualification'] = $requestData['professional_qualification'] ? json_encode($requestData['professional_qualification']) : null;
         $id =  $model->update($joiningFormId, $requestData);
 
@@ -634,17 +624,18 @@ class Profiles extends ResourceController
         return $this->respondUpdated($response);
     }
 
-    public function getJoingformDetails($id){
+    public function getJoingformDetails($id)
+    {
         $user = checkUserToken();
 
         $session = session();
 
-        if(empty($session->get('employee_joining_form_id')) && empty($user)){
+        if (empty($session->get('employee_joining_form_id')) && empty($user)) {
             if (empty($session->get('employee_joining_form_id'))) {
                 //redirect
                 return $this->fail(['messages' => 'Please verify details.'], 400);
             }
-    
+
             if (!$user) {
                 return $this->fail(['messages' => 'Please login.'], 400);
             }
@@ -654,18 +645,26 @@ class Profiles extends ResourceController
         $model = new EmployeeJoinigDetailsModel();
         $joiningFormDetails = (array)$model->find($id);
         $employee_other_details = [
-            'marital_status'=>'',
-            'uan_number'=>'',
-            'emergency_contact_name'=>'',
-            'emergency_contact_mobile'=>'',
-            'bank_name_branch'=>'',
-            'bank_account_number'=>'',
-            'bank_ifsc_code'=>'',
+            'marital_status' => '',
+            'uan_number' => '',
+            'emergency_contact_name' => '',
+            'emergency_contact_mobile' => '',
+            'bank_name_branch' => '',
+            'bank_account_number' => '',
+            'bank_ifsc_code' => '',
         ];
-        $joiningFormDetails['employee_other_details'] = $joiningFormDetails['employee_other_details']?(array)json_decode($joiningFormDetails['employee_other_details']):$employee_other_details;
-        $joiningFormDetails['education_qualification'] = $joiningFormDetails['education_qualification']?(array)json_decode($joiningFormDetails['education_qualification']):[];
-        $joiningFormDetails['professional_qualification'] = $joiningFormDetails['professional_qualification']?(array)json_decode($joiningFormDetails['professional_qualification']):[];
-        return $this->respond(['joiningFormDetails'=>$joiningFormDetails]);
+        $joiningFormDetails['employee_other_details'] = $joiningFormDetails['employee_other_details'] ? (array)json_decode($joiningFormDetails['employee_other_details']) : $employee_other_details;
+        $joiningFormDetails['education_qualification'] = $joiningFormDetails['education_qualification'] ? (array)json_decode($joiningFormDetails['education_qualification']) : [];
+        $joiningFormDetails['professional_qualification'] = $joiningFormDetails['professional_qualification'] ? (array)json_decode($joiningFormDetails['professional_qualification']) : [];
+
+        $totalFieldCount = count($joiningFormDetails);
+        $totalFieldCount_other = count($joiningFormDetails['employee_other_details']);
+        $totalFilledCount = count(array_filter($joiningFormDetails));
+        $totalFilledCount_other = count(array_filter($joiningFormDetails['employee_other_details']));
+        $formComlpletion = number_format((($totalFilledCount + $totalFilledCount_other) / ($totalFieldCount + $totalFieldCount_other) * 100));
+        // echo "totalFieldCount:$totalFieldCount totalFilledCount:$totalFilledCount Form Completion: $formColpletion%";
+
+        return $this->respond(['joiningFormDetails' => $joiningFormDetails,'formComlpletion'=>$formComlpletion]);
     }
 
     // delete animal details

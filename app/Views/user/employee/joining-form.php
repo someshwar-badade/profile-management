@@ -25,9 +25,14 @@
             <h2>Joining Form</h2>
         </div>
       <?php }?>
-     
-        <div class="row mt-5">
+      <div class="row mt-5">
+            
+            
             <div class="col-md-12">
+                Form Completed:
+            <div class="progress">
+            <div class="progress-bar bg-success" ng-style="{'width':formComlpletion+'%'}">{{formComlpletion}}%</div>
+            </div> 
                 <p>Please complete the form in <strong>BLOCK CAPITALS</strong> as fully as possible using sign. No section should be left blank. The information you provide in this form will be subject to verification by the company.</p>
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item">
@@ -287,6 +292,7 @@
         $scope.errors = '';
         $scope.successMessage = '';
         $scope.joiningForm = null;
+        $scope.formComlpletion = 0;
         //$scope.joiningForm.education_qualification = new Array();
 
 
@@ -296,6 +302,7 @@
             url: base_url + '/api/employee-joining-form/' + '<?= $id ? $id : '0' ?>',
         }).then(function(response) {
             $scope.joiningForm = response.data.joiningFormDetails;
+            $scope.formComlpletion = response.data.formComlpletion;
             console.log($scope.joiningForm);
         }, function(response) {
             console.log(response);
