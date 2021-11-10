@@ -164,7 +164,7 @@
                             </fieldset>
 
 
-                            <button type="button" class="btn btn-primary" ng-click="submitForm('save-employee-details')">
+                            <button type="button" class="btn btn-primary" ng-click="submitForm('save-employee-details','#educationalQualifications')">
                                 <div ng-show="loading" class="css-animated-loader"></div>Save
                             </button>
                         </form>
@@ -224,7 +224,7 @@
                                         </tfoot>
                                     </table>
                                 </fieldset>
-                                <button type="button" class="btn btn-primary" ng-click="submitForm('save-education-details')">
+                                <button type="button" class="btn btn-primary" ng-click="submitForm('save-education-details','#professionalQualifications')">
                                     <div ng-show="loading" class="css-animated-loader"></div>Save
                                 </button>
                             </form>
@@ -280,7 +280,7 @@
                                     </table>
                                 </fieldset>
 
-                                <button type="button" class="btn btn-primary" ng-click="submitForm('save-profetional-qualification')">
+                                <button type="button" class="btn btn-primary" ng-click="submitForm('save-profetional-qualification','#employmentHistory')">
                                     <div ng-show="loading" class="css-animated-loader"></div>Save
                                 </button>
                             </form>
@@ -530,7 +530,7 @@
                                 </fieldset>
 
 
-                                <button type="button" class="btn btn-primary" ng-click="submitForm('save-employment-history')">
+                                <button type="button" class="btn btn-primary" ng-click="submitForm('save-employment-history','#backgroundInfo')">
                                     <div ng-show="loading" class="css-animated-loader"></div>Save
                                 </button>
                             </form>
@@ -841,7 +841,7 @@
                                         </table>
                                     </div>
                                 </fieldset>
-                                <button type="button" class="btn btn-primary" ng-click="submitForm('save-background-information')">
+                                <button type="button" class="btn btn-primary" ng-click="submitForm('save-background-information','#declaration')">
                                     <div ng-show="loading" class="css-animated-loader"></div>Save
                                 </button>
                             </form>
@@ -860,7 +860,7 @@
                                 </fieldset>
 
                                 <center>
-                                <button type="button" class="btn btn-primary" ng-click="submitForm('accept-declaration')">
+                                <button type="button" class="btn btn-primary" ng-click="submitForm('accept-declaration','',true)">
                                     <div ng-show="loading" class="css-animated-loader"></div>Accept and Submit Form
                                 </button>
                                 </center>
@@ -951,7 +951,7 @@
 
 
 
-        $scope.submitForm = function(formType) {
+        $scope.submitForm = function(formType,nextTab='',reload=false) {
 
             $scope.errors = '';
             $scope.otpSuccessMsg = '';
@@ -970,6 +970,12 @@
                 $scope.loading = false;
                 $scope.successMessage = response.data.messages.success;
                 toastr.success(response.data.messages.success);
+                if(nextTab!=''){
+                    $('#myTab a[href="'+nextTab+'"]').tab('show');
+                }
+                if(reload){
+                    window.location.reload();
+                }
                 // window.location = base_url + '/profiles';
             }, function(response) {
 
