@@ -416,7 +416,7 @@
             </tr>
             <tr>
                 <td><b>Degree / Course</b></td>
-                <td><b>Course Titlealong with Board / University</b></td>
+                <td><b>Course Title along with Board / University</b></td>
                 <td style="width: 25%;"><b>Name and full address of school/Institution </b></td>
                 <td><b>From (MM/YYYY)</b></td>
                 <td><b>To (MM/YYYY)</b></td>
@@ -429,8 +429,8 @@
                         <td><?= $e_qualification->degree ?></td>
                         <td><?= $e_qualification->university ?></td>
                         <td><?= $e_qualification->institution ?></td>
-                        <td><?= $e_qualification->from_date ?></td>
-                        <td><?= $e_qualification->to_date ?></td>
+                        <td><?= $e_qualification->from_date?date('d/m/Y', strtotime($e_qualification->from_date)):'' ?></td>
+                        <td><?= $e_qualification->to_date?date('d/m/Y', strtotime($e_qualification->to_date)):'' ?></td>
                         <td><?= $e_qualification->course_type ?></td>
                         <td><?= $e_qualification->percentage ?></td>
                     </tr>
@@ -468,7 +468,7 @@
                     <tr>
                         <td><?= $p_qualification->qualification ?></td>
                         <td><?= $p_qualification->category ?></td>
-                        <td><?= $p_qualification->date ?></td>
+                        <td><?= $p_qualification->date?date('d/m/Y', strtotime($p_qualification->date)):'' ?></td>
                     </tr>
                 <?php } ?>
             <?php } else { ?>
@@ -480,6 +480,7 @@
     </table>
     <!--table:Professional qualification end-->
 
+    <!--table:employment history start-->
     <table class="table table-inner table-bordered">
         <tbody>
             <tr>
@@ -495,7 +496,9 @@
             </tr>
         </tbody>
     </table>
+    <!--table:employment history end-->
 
+    <!--table:employment summary start-->
     <table class="table table-inner table-bordered">
         <tbody>
             <tr>
@@ -513,15 +516,29 @@
                 <td><b>From</b></td>
                 <td><b>To</b></td>
             </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
+
+            <?php if (!empty($joiningFormDetails['employment_history']['employment_summary'])) { ?>
+                <?php foreach ($joiningFormDetails['employment_history']['employment_summary'] as $e_summary) { ?>
+                    <tr>
+                        <td><?= $e_summary->date_from?date('d/m/Y', strtotime($e_summary->date_from)):'' ?></td>
+                        <td><?= $e_summary->date_to?date('d/m/Y', strtotime($e_summary->date_to)):'' ?></td>
+                        <td><?= $e_summary->company ?></td>
+                        <td><?= $e_summary->reason_for_leaving ?></td>
+                        <td><?= $e_summary->gap ?></td>
+                    </tr>
+                <?php } ?>
+            <?php } else { ?>
+                <tr>
+                    <td colspan="5"> No data available </td>
+                </tr>
+            <?php } ?>
+
         </tbody>
     </table>
+    <!--table:employment summary end-->
+
+    <!--table:previous employer start-->
+    <?php $p_employer =  $joiningFormDetails['employment_history']['previous_employer'] ? (array)$joiningFormDetails['employment_history']['previous_employer'] : null; ?>
 
     <table class="table table-inner table-bordered">
         <tbody>
@@ -533,178 +550,183 @@
             <tr>
                 <td>
                     <label>Position held:</label>
-                    <span></span>
+                    <span><?= $p_employer['position_held'] ?></span>
                 </td>
                 <td>
                     <label for="">Dates (MM/YYYY)</label>
                 </td>
                 <td>
                     <label for="">From:</label>
-                    <span></span>
+                    <span><?= $p_employer['from_date']?date('d/m/Y', strtotime($p_employer['from_date'])):''  ?></span>
                 </td>
                 <td>
                     <label for="">To:</label>
-                    <span></span>
+                    <span><?= $p_employer['to_date']?date('d/m/Y', strtotime($p_employer['to_date'])):''  ?></span>
                 </td>
             </tr>
             <tr>
                 <td colspan="4">
                     <label for="">Company:</label>
-                    <span></span>
+                    <span><?= $p_employer['company'] ?></span>
                 </td>
             </tr>
             <tr>
                 <td colspan="2">
                     <label for="">Department:</label>
-                    <span></span>
+                    <span><?= $p_employer['department'] ?></span>
                 </td>
                 <td colspan="2">
                     <label for="">Nature of Job:</label>
-                    <span></span>
+                    <span><?= $p_employer['nature_of_job'] ?></span>
                 </td>
             </tr>
             <tr>
                 <td colspan="4">
                     <label for="">Address:</label>
-                    <span></span>
+                    <span><?= $p_employer['address'] ?></span>
                 </td>
             </tr>
             <tr>
                 <td colspan="2">
                     <label for="">City:</label>
-                    <span></span>
+                    <span><?= $p_employer['city'] ?></span>
                 </td>
                 <td colspan="2">
                     <label for="">Telephone:</label>
-                    <span></span>
+                    <span><?= $p_employer['telephone'] ?></span>
                 </td>
             </tr>
             <tr>
                 <td colspan="4">
                     <label for="">Main Job Responsibilities:</label>
-                    <span></span>
+                    <span><?= $p_employer['job_responsibilities'] ?></span>
                 </td>
             </tr>
             <tr>
                 <td colspan="2">
                     <label for="">Annual CTC(in Lacs):</label>
-                    <span></span>
+                    <span><?= $p_employer['annual_ctc'] ?></span>
                 </td>
                 <td colspan="2">
                     <label for="">Name of Reporting Manager:</label>
-                    <span></span>
+                    <span><?= $p_employer['reporting_manager'] ?></span>
                 </td>
             </tr>
             <tr>
                 <td colspan="2">
                     <label for="">Contact No. of Manager:</label>
-                    <span></span>
+                    <span><?= $p_employer['contact_number_manager'] ?></span>
                 </td>
                 <td colspan="2">
                     <label for="">E-Mail ID of Manager:</label>
-                    <span></span>
+                    <span><?= $p_employer['email_manager'] ?></span>
                 </td>
             </tr>
             <tr>
                 <td colspan="4">
                     <label for="">Reason for leaving:</label>
-                    <span></span>
+                    <span><?= $p_employer['reason_of_leaving'] ?></span>
                 </td>
             </tr>
         </tbody>
     </table>
+    <!--table:previous employer end-->
 
+    <!--table:previous-to-previous employer start-->
+    <?php $p_to_p_employer =  $joiningFormDetails['employment_history']['previous_to_previous_employer'] ? (array)$joiningFormDetails['employment_history']['previous_to_previous_employer'] : null; ?>
     <table class="table table-inner table-bordered">
         <tbody>
             <tr>
                 <th colspan="4">
-                    Previous-to-previous Employer
+                    Previous to Previous Employer
                 </th>
             </tr>
             <tr>
                 <td>
                     <label>Position held:</label>
-                    <span></span>
+                    <span><?= $p_to_p_employer['position_held'] ?></span>
                 </td>
                 <td>
                     <label for="">Dates (MM/YYYY)</label>
                 </td>
                 <td>
                     <label for="">From:</label>
-                    <span></span>
+                    <span><?= $p_to_p_employer['from_date']?date('d/m/Y', strtotime($p_to_p_employer['from_date'])):'' ?></span>
                 </td>
                 <td>
                     <label for="">To:</label>
-                    <span></span>
+                    <span><?= $p_to_p_employer['to_date']?date('d/m/Y', strtotime($p_to_p_employer['to_date'])):'' ?></span>
                 </td>
             </tr>
             <tr>
                 <td colspan="4">
                     <label for="">Company:</label>
-                    <span></span>
+                    <span><?= $p_to_p_employer['company'] ?></span>
                 </td>
             </tr>
             <tr>
                 <td colspan="2">
                     <label for="">Department:</label>
-                    <span></span>
+                    <span><?= $p_to_p_employer['department'] ?></span>
                 </td>
                 <td colspan="2">
                     <label for="">Nature of Job:</label>
-                    <span></span>
+                    <span><?= $p_to_p_employer['nature_of_job'] ?></span>
                 </td>
             </tr>
             <tr>
                 <td colspan="4">
                     <label for="">Address:</label>
-                    <span></span>
+                    <span><?= $p_to_p_employer['address'] ?></span>
                 </td>
             </tr>
             <tr>
                 <td colspan="2">
                     <label for="">City:</label>
-                    <span></span>
+                    <span><?= $p_to_p_employer['city'] ?></span>
                 </td>
                 <td colspan="2">
                     <label for="">Telephone:</label>
-                    <span></span>
+                    <span><?= $p_to_p_employer['telephone'] ?></span>
                 </td>
             </tr>
             <tr>
                 <td colspan="4">
                     <label for="">Main Job Responsibilities:</label>
-                    <span></span>
+                    <span><?= $p_to_p_employer['job_responsibilities'] ?></span>
                 </td>
             </tr>
             <tr>
                 <td colspan="2">
                     <label for="">Annual CTC(in Lacs):</label>
-                    <span></span>
+                    <span><?= $p_to_p_employer['annual_ctc'] ?></span>
                 </td>
                 <td colspan="2">
                     <label for="">Name of Reporting Manager:</label>
-                    <span></span>
+                    <span><?= $p_to_p_employer['reporting_manager'] ?></span>
                 </td>
             </tr>
             <tr>
                 <td colspan="2">
                     <label for="">Contact No. of Manager:</label>
-                    <span></span>
+                    <span><?= $p_to_p_employer['contact_number_manager'] ?></span>
                 </td>
                 <td colspan="2">
                     <label for="">E-Mail ID of Manager:</label>
-                    <span></span>
+                    <span><?= $p_to_p_employer['email_manager'] ?></span>
                 </td>
             </tr>
             <tr>
                 <td colspan="4">
                     <label for="">Reason for leaving:</label>
-                    <span></span>
+                    <span><?= $p_to_p_employer['reason_of_leaving'] ?></span>
                 </td>
             </tr>
         </tbody>
     </table>
+    <!--table:previous-to-previous employer end-->
 
+    <!--table:Gap declaration start-->
     <table class="table table-inner table-bordered">
         <tbody>
             <tr>
@@ -718,12 +740,20 @@
                 <td><b>Gap Period From</b></td>
                 <td><b>Gap Period To</b></td>
             </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
+            <?php if (!empty($joiningFormDetails['employment_history']['gap_declaration'])) { ?>
+                <?php foreach ($joiningFormDetails['employment_history']['gap_declaration'] as $key=>$gap) { ?>
+                    <tr>
+                        <td><?=$key+1?></td>
+                        <td><?= $gap->particular ?></td>
+                        <td><?= $gap->from_date?date('d/m/Y', strtotime($gap->from_date)):'' ?></td>
+                        <td><?= $gap->to_date?date('d/m/Y', strtotime($gap->to_date)):'' ?></td>
+                    </tr>
+                <?php } ?>
+            <?php } else { ?>
+                <tr>
+                    <td colspan="4"> No data available </td>
+                </tr>
+            <?php } ?>
             <tr>
                 <td colspan="4">
                     <p>* GAP Declaration to be filed when there is a time gap between two Employments OR between Education and Employment OR between Education and Education.</p>
@@ -732,7 +762,9 @@
             </tr>
         </tbody>
     </table>
+    <!--table:Gap declaration end-->
 
+    <!--table:hr references start-->
     <table class="table table-inner table-bordered">
         <tbody>
             <tr>
@@ -740,6 +772,7 @@
                     HR References
                 </th>
             </tr>
+
             <tr>
                 <td colspan="2">
                     <p>Please give the details of HR (from previous organizations) including contact details and company details.</p>
@@ -753,38 +786,39 @@
             <tr>
                 <td>
                     <label for="">Name:</label>
-                    <span></span>
+                    <span><?=$p_employer['hr_name']?></span>
                 </td>
                 <td>
                     <label for="">Designation:</label>
-                    <span></span>
+                    <span><?=$p_employer['hr_designation']?></span>
                 </td>
             </tr>
             <tr>
                 <td colspan="2">
                     <label for="">Company:</label>
-                    <span></span>
+                    <span><?=$p_employer['company']?></span>
                 </td>
             </tr>
             <tr>
                 <td colspan="2">
                     <label for="">Company's Address:</label>
-                    <span></span>
+                    <span><?=$p_employer['address']?></span>
                 </td>
             </tr>
             <tr>
                 <td>
                     <label for="">HR Contact No:</label>
-                    <span></span>
+                    <span><?=$p_employer['hr_contact_number']?></span>
                 </td>
                 <td>
                     <label for="">Email Id:</label>
-                    <span></span>
+                    <span><?=$p_employer['hr_email']?></span>
                 </td>
             </tr>
             <tr>
                 <td colspan="2"></td>
             </tr>
+
 
             <tr>
                 <td colspan="2">
@@ -794,40 +828,46 @@
             <tr>
                 <td>
                     <label for="">Name:</label>
-                    <span></span>
+                    <span><?=$p_to_p_employer['hr_name']?></span>
                 </td>
                 <td>
                     <label for="">Designation:</label>
-                    <span></span>
+                    <span><?=$p_to_p_employer['hr_designation']?></span>
                 </td>
             </tr>
             <tr>
                 <td colspan="2">
                     <label for="">Company:</label>
-                    <span></span>
+                    <span><?=$p_to_p_employer['company']?></span>
                 </td>
             </tr>
             <tr>
                 <td colspan="2">
                     <label for="">Company's Address:</label>
-                    <span></span>
+                    <span><?=$p_to_p_employer['address']?></span>
                 </td>
             </tr>
             <tr>
                 <td>
                     <label for="">HR Contact No:</label>
-                    <span></span>
+                    <span><?=$p_to_p_employer['hr_contact_number']?></span>
                 </td>
                 <td>
                     <label for="">Email Id:</label>
-                    <span></span>
+                    <span><?=$p_to_p_employer['hr_email']?></span>
                 </td>
             </tr>
 
         </tbody>
     </table>
+    <!--table:hr references end-->
 
+    <!--table:background information start-->
     <table class="table table-inner table-bordered">
+        <colgroup>
+            <col style="width: 90%;">
+            <col>
+        </colgroup>
         <tbody>
             <tr>
                 <th colspan="2">
@@ -843,51 +883,74 @@
             </tr>
             <tr>
                 <td style="width: 90%;">
-                    <p>Have you ever been convicted of a criminal offence?</p>
+                    <?= getBackgroundInformationQuestion('C01') ?>
                 </td>
-                <td><span></span></td>
+                <td>
+                    <?= $joiningFormDetails['background_info']['criminal_and_civil_record']->C01 ? "Yes" : "No" ?>
+                </td>
             </tr>
+
             <tr>
-                <td style="width: 90%;">
-                    <p>Are there any criminal or disciplinary charges pending against you?</p>
+                <td>
+                    <?= getBackgroundInformationQuestion('C02') ?>
                 </td>
-                <td><span></span></td>
+                <td>
+                    <?= $joiningFormDetails['background_info']['criminal_and_civil_record']->C02 ? "Yes" : "No" ?>
+                </td>
             </tr>
+
             <tr>
-                <td style="width: 90%;">
-                    <p>Are you currently engaged in or have you ever been involved in litigation with your current or former employer, which has resulted or may result in action in a court or tribunal or a settlement by negotiation, arbitration, mediation or alternative dispute resolution procedure?</p>
+                <td>
+                    <?= getBackgroundInformationQuestion('C03') ?>
                 </td>
-                <td><span></span></td>
+                <td>
+                    <?= $joiningFormDetails['background_info']['criminal_and_civil_record']->C03 ? "Yes" : "No" ?>
+                </td>
             </tr>
+
             <tr>
-                <td style="width: 90%;">
-                    <p>Have you ever been the subject of a civil action that resulted in a finding e.g. a fine or judgement against you in India or elsewhere?</p>
+                <td>
+                    <?= getBackgroundInformationQuestion('C04') ?>
                 </td>
-                <td><span></span></td>
+                <td>
+                    <?= $joiningFormDetails['background_info']['criminal_and_civil_record']->C04 ? "Yes" : "No" ?>
+                </td>
             </tr>
+
             <tr>
-                <td style="width: 90%;">
-                    <p>Have you ever had a judgement debt (including a county court judgement) made under a court order in India or elsewhere or an individual voluntary arrangement with creditors?</p>
+                <td>
+                    <?= getBackgroundInformationQuestion('C05') ?>
                 </td>
-                <td><span></span></td>
+                <td>
+                    <?= $joiningFormDetails['background_info']['criminal_and_civil_record']->C05 ? "Yes" : "No" ?>
+                </td>
             </tr>
+
             <tr>
-                <td style="width: 90%;">
-                    <p>Have you ever entered into a deed of arrangement with creditors?</p>
+                <td>
+                    <?= getBackgroundInformationQuestion('C06') ?>
                 </td>
-                <td><span></span></td>
+                <td>
+                    <?= $joiningFormDetails['background_info']['criminal_and_civil_record']->C06 ? "Yes" : "No" ?>
+                </td>
             </tr>
+
             <tr>
-                <td style="width: 90%;">
-                    <p>Have you ever failed to satisfy any such judgement debts within one year of the making of the order?</p>
+                <td>
+                    <?= getBackgroundInformationQuestion('C07') ?>
                 </td>
-                <td><span></span></td>
+                <td>
+                    <?= $joiningFormDetails['background_info']['criminal_and_civil_record']->C07 ? "Yes" : "No" ?>
+                </td>
             </tr>
+
             <tr>
-                <td style="width: 90%;">
-                    <p>Have you ever been declared bankrupt or had your estate sequestrated, been the subject of such proceedings, or is any such action pending?</p>
+                <td>
+                    <?= getBackgroundInformationQuestion('C08') ?>
                 </td>
-                <td><span></span></td>
+                <td>
+                    <?= $joiningFormDetails['background_info']['criminal_and_civil_record']->C08 ? "Yes" : "No" ?>
+                </td>
             </tr>
 
             <tr>
@@ -896,28 +959,36 @@
                 </th>
             </tr>
             <tr>
-                <td style="width: 90%;">
-                    <p>Are you, or have you ever been, an officer (either as director or company secretary) or a partner of any company other than in a capacity specified in the employment history section?</p>
+                <td>
+                    <?= getBackgroundInformationQuestion('B01') ?>
                 </td>
-                <td><span></span></td>
+                <td>
+                    <?= $joiningFormDetails['background_info']['business_interest']->B01 ? "Yes" : "No" ?>
+                </td>
             </tr>
             <tr>
-                <td style="width: 90%;">
-                    <p>Do you own more than 15% of any corporate body?</p>
+                <td>
+                    <?= getBackgroundInformationQuestion('B02') ?>
                 </td>
-                <td><span></span></td>
+                <td>
+                    <?= $joiningFormDetails['background_info']['business_interest']->B02 ? "Yes" : "No" ?>
+                </td>
             </tr>
             <tr>
-                <td style="width: 90%;">
-                    <p>Are you currently engaged in any other outside business activity or employment not stated elsewhere in this form?</p>
+                <td>
+                    <?= getBackgroundInformationQuestion('B03') ?>
                 </td>
-                <td><span></span></td>
+                <td>
+                    <?= $joiningFormDetails['background_info']['business_interest']->B03 ? "Yes" : "No" ?>
+                </td>
             </tr>
             <tr>
-                <td style="width: 90%;">
-                    <p>Do you, or any member of your family, have a business interest, employment obligations or are there any other situations that would conflict, or appear to conflict, with the employment for which you are applying?</p>
+                <td>
+                    <?= getBackgroundInformationQuestion('B04') ?>
                 </td>
-                <td><span></span></td>
+                <td>
+                    <?= $joiningFormDetails['background_info']['business_interest']->B04 ? "Yes" : "No" ?>
+                </td>
             </tr>
 
 
@@ -927,116 +998,119 @@
                 </th>
             </tr>
             <tr>
-                <td style="width: 90%;">
-                    <p>Have you ever been or are you currently the subject of any investigation or disciplinary procedure in relation to your business or professional activities?</p>
+                <td>
+                    <?= getBackgroundInformationQuestion('O01') ?>
                 </td>
-                <td><span></span></td>
+                <td>
+                    <?= $joiningFormDetails['background_info']['other_disqualification']->O01 ? "Yes" : "No" ?>
+                </td>
             </tr>
             <tr>
-                <td style="width: 90%;">
-                    <p>Have you ever been criticised, censured or disciplined by any organisation or body in relation to your business or professional activities?</p>
+                <td>
+                    <?= getBackgroundInformationQuestion('O02') ?>
                 </td>
-                <td><span></span></td>
+                <td>
+                    <?= $joiningFormDetails['background_info']['other_disqualification']->O02 ? "Yes" : "No" ?>
+                </td>
             </tr>
             <tr>
-                <td style="width: 90%;">
-                    <p>Have you ever been refused or had revoked membership of any professional body or organisation of which you have been, or applied to be, a member?</p>
+                <td>
+                    <?= getBackgroundInformationQuestion('O03') ?>
                 </td>
-                <td><span></span></td>
+                <td>
+                    <?= $joiningFormDetails['background_info']['other_disqualification']->O03 ? "Yes" : "No" ?>
+                </td>
             </tr>
             <tr>
-                <td style="width: 90%;">
-                    <p>Have you ever been disqualified by a court from acting as a director of a company or from being concerned with the management of any company, partnership or unincorporated body?</p>
+                <td>
+                    <?= getBackgroundInformationQuestion('O04') ?>
                 </td>
-                <td><span></span></td>
+                <td>
+                    <?= $joiningFormDetails['background_info']['other_disqualification']->O04 ? "Yes" : "No" ?>
+                </td>
             </tr>
 
         </tbody>
     </table>
+    <!--table:background information end-->
 
+    <!--table:previous addresses start-->
     <table class="table table-inner table-bordered">
         <tbody>
             <tr>
-                <th colspan="6">Previous Addresses</th>
+                <th colspan="3">Previous Addresses</th>
             </tr>
             <tr>
-                <td colspan="6">
+                <td colspan="3">
                     <p>Please include full personal address history to cover the last 7 years including dates.</p>
                 </td>
             </tr>
-            <tr>
-                <td colspan="6">
-                    <label for="">Address</label>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <label for="">Postcode:</label>
-                    <span></span>
-                </td>
-                <td colspan="4">
-                    <label for="">Dates resident at this address (from and to):</label>
-                </td>
-            </tr>
 
             <tr>
-                <td colspan="6">
-                    <label for="">Address</label>
-                </td>
+                <td style="width: 50%;">Address</td>
+                <td>Postcode</td>
+                <td>Dates resident at this address (from and to)</td>
             </tr>
-            <tr>
-                <td colspan="2">
-                    <label for="">Postcode:</label>
-                    <span></span>
-                </td>
-                <td colspan="4">
-                    <label for="">Dates resident at this address (from and to):</label>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="6">
-                    <label for="">Address</label>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <label for="">Postcode:</label>
-                    <span></span>
-                </td>
-                <td colspan="4">
-                    <label for="">Dates resident at this address (from and to):</label>
-                </td>
-            </tr>
+
+            <?php if (!empty($joiningFormDetails['background_info']['previous_address'])) { ?>
+                <?php foreach ($joiningFormDetails['background_info']['previous_address'] as $key=>$address) { ?>
+                    <tr>
+                       
+                        <td><?= $address->address ?></td>
+                        <td><?= $address->postcode ?></td>
+                        <td><?= $address->dates ?></td>
+                    </tr>
+                <?php } ?>
+            <?php } else { ?>
+                <tr>
+                    <td colspan="3"> No data available </td>
+                </tr>
+            <?php } ?>
+
         </tbody>
     </table>
+    <!--table:previous addresses end-->
 
+    <!--table:mediclam/medical insurance start-->
     <table class="table table-inner table-bordered">
         <tbody>
             <tr>
-                <th colspan="6">Mediclaim / Medical Insurance</th>
+                <th colspan="4">Mediclaim / Medical Insurance</th>
             </tr>
 
             <tr>
-                <td colspan="4">
+                <td>
                     <b>Full Name </b>
                 </td>
                 <td>
                     <b>Relationship</b>
                 </td>
                 <td>
-                    <b>Age / Date of Birth</b>
+                    <b>Date of Birth</b>
+                </td>
+                <td>
+                    <b>Age</b>
                 </td>
             </tr>
-            <tr>
-                <td colspan="4"></td>
-                <td></td>
-                <td></td>
-            </tr>
+            <?php if (!empty($joiningFormDetails['background_info']['mediclaim'])) { ?>
+                <?php foreach ($joiningFormDetails['background_info']['mediclaim'] as $key=>$mediclaim) { ?>
+                    <tr>
+                        <td><?= $mediclaim->name ?></td>
+                        <td><?= $mediclaim->relationship ?></td>
+                        <td><?= $mediclaim->dob?date('d/m/Y', strtotime($mediclaim->dob)):'' ?></td>
+                        <td><?= $mediclaim->age ?></td>
+                    </tr>
+                <?php } ?>
+            <?php } else { ?>
+                <tr>
+                    <td colspan="4"> No data available </td>
+                </tr>
+            <?php } ?>
         </tbody>
     </table>
 
     <p>* Please submit passport size photograph of all the members mentioned above.</p>
-
+    <!--table:mediclam/medical insurance end-->
 
     <table class="table table-inner table-bordered">
         <tbody>
@@ -1063,6 +1137,7 @@
         </tbody>
     </table>
 
+    <!--table:declaration start-->
     <table class="table table-inner table-bordered">
         <tbody>
             <tr>
@@ -1112,8 +1187,9 @@
             </tr>
         </tbody>
     </table>
+    <!--table:declaration end-->
 
-
+    <!--table:Annexure start-->
     <div style="page-break-before: always;">
         <h3><u>Annexure</u></h3>
         <b>List of Documents to be submitted on Joining:</b>
@@ -1147,7 +1223,7 @@
         <p>Any delays in submitting the PAN number, may delay our payroll team in processing your salary.</p>
 
     </div>
-
+    <!--table:Annexure end-->
 
 </body>
 

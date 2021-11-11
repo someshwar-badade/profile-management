@@ -199,6 +199,8 @@ EOD;
 		$joiningFormDetails['employee_other_details'] = $joiningFormDetails['employee_other_details']?(array)json_decode($joiningFormDetails['employee_other_details']):null;
 		$joiningFormDetails['education_qualification'] = $joiningFormDetails['education_qualification']?(array)json_decode($joiningFormDetails['education_qualification']):null;
 		$joiningFormDetails['professional_qualification'] = $joiningFormDetails['professional_qualification']?(array)json_decode($joiningFormDetails['professional_qualification']):null;
+		$joiningFormDetails['employment_history'] = $joiningFormDetails['employment_history']?(array)json_decode($joiningFormDetails['employment_history']):null;
+		$joiningFormDetails['background_info'] = $joiningFormDetails['background_info']?(array)json_decode($joiningFormDetails['background_info']):null;
 		$dompdf = new \Dompdf\Dompdf(); 
         $dompdf->loadHtml(view('pdf-templates/joining-form',['joiningFormDetails'=>$joiningFormDetails]));
 		$dompdf->setPaper('A4', 'p');

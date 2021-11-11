@@ -61,27 +61,27 @@
                                 <legend class="w-auto px-2">Personal details</legend>
                                 <div class="form-row">
                                     <div class="form-group col-md-3">
-                                        <label for="inputEmail4">First Name<sup class="text-danger">*</sup></label>
+                                        <label >First Name<sup class="text-danger">*</sup></label>
                                         <input type="text" maxlength="50" class="form-control" placeholder="First Name" ng-model="joiningForm.first_name">
                                         <div class="text-danger" ng-show="errors.first_name">{{errors.first_name}}</div>
                                     </div>
                                     <div class="form-group col-md-3">
-                                        <label for="inputEmail4">Last Name<sup class="text-danger">*</sup></label>
+                                        <label >Last Name<sup class="text-danger">*</sup></label>
                                         <input type="text" maxlength="50" class="form-control" placeholder="Last Name" ng-model="joiningForm.last_name">
                                         <div class="text-danger" ng-show="errors.last_name">{{errors.last_name}}</div>
                                     </div>
                                     <div class="form-group col-md-3">
-                                        <label for="inputEmail4">Father's Name</label>
+                                        <label >Father's Name</label>
                                         <input type="text" maxlength="50" class="form-control" placeholder="Father's Name" ng-model="joiningForm.father_name">
                                     </div>
                                     <div class="form-group col-md-3">
-                                        <label for="inputEmail4">Mother's Name</label>
+                                        <label >Mother's Name</label>
                                         <input type="text" maxlength="50" class="form-control" placeholder="Mother's Name" ng-model="joiningForm.mother_name">
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-3">
-                                        <label for="inputEmail4">Marital Status</label>
+                                        <label >Marital Status</label>
                                         <div>
                                             <div class="custom-control custom-radio custom-control-inline">
                                                 <input type="radio" id="customRadioInline1" name="marital_status" value="Yes" ng-model="joiningForm.employee_other_details.marital_status" class="custom-control-input">
@@ -94,51 +94,78 @@
                                         </div>
                                     </div>
                                     <div class="form-group col-md-3">
-                                        <label for="inputEmail4">Spouse's Name</label>
+                                        <label >Spouse's Name</label>
                                         <input type="text" maxlength="50" class="form-control" placeholder="Spouse's Name" ng-model="joiningForm.spouse_name">
                                     </div>
                                     <div class="form-group col-md-3">
-                                        <label for="inputEmail4">Kid(s) Name</label>
+                                        <label >Kid(s) Name</label>
                                         <input type="text" maxlength="50" class="form-control" placeholder="Kid(s) Name" ng-model="joiningForm.kids_name">
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label >Nationality (both, if dual national)</label>
+                                        <input type="text" maxlength="50" class="form-control" placeholder="Indian" ng-model="joiningForm.nationality">
                                     </div>
                                 </div>
                                 <div class="form-row">
 
                                     <div class="form-group col-md-3">
-                                        <label for="inputEmail4">PAN Number<sup class="text-danger">*</sup></label>
+                                        <label >PAN Number<sup class="text-danger">*</sup></label>
                                         <input type="text" maxlength="10" class="form-control" placeholder="PAN Number" ng-model="joiningForm.pan_number">
                                         <div class="text-danger" ng-show="errors.pan_number">{{errors.pan_number}}</div>
                                     </div>
                                     <div class="form-group col-md-3">
-                                        <label for="inputEmail4">Aadhar Number<sup class="text-danger">*</sup></label>
+                                        <label >Aadhar Number<sup class="text-danger">*</sup></label>
                                         <input type="text" maxlength="12" class="form-control" placeholder="Aadhar Number" ng-model="joiningForm.aadhar_number">
                                         <div class="text-danger" ng-show="errors.aadhar_number">{{errors.aadhar_number}}</div>
                                     </div>
                                     <div class="form-group col-md-3">
-                                        <label for="inputEmail4">UAN Number</label>
+                                        <label >UAN Number</label>
                                         <input type="text" maxlength="50" class="form-control" placeholder="UAN Number" ng-model="joiningForm.employee_other_details.uan_number">
                                     </div>
                                 </div>
+
+                                <div class="form-row">
+
+                                    <div class="form-group col-md-3">
+                                        <label >Date of Birth</label>
+                                        <input type="date"  class="form-control" placeholder="Date of Birth" ng-model="joiningForm.dob" value="{{joiningForm.dob|date:'yyyy-MM-dd'}}">
+                                        
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label >Place of Birth</label>
+                                        <input type="text" maxlength="50" class="form-control" placeholder="Place of Birth" ng-model="joiningForm.place_of_birth">
+                                        
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label >Blood Group</label>
+                                        <input type="text" maxlength="5" class="form-control" placeholder="Blood Group" ng-model="joiningForm.employee_other_details.blood_group">
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label >Medical conditions, if any</label>
+                                        <input type="text" maxlength="50" class="form-control"  ng-model="joiningForm.employee_other_details.medical_condition">
+                                    </div>
+                                </div>
+
                             </fieldset>
 
                             <fieldset class="form-group p-3">
                                 <legend class="w-auto px-2">Contact details</legend>
                                 <div class="form-row">
                                     <div class="form-group col-md-3">
-                                        <label for="inputEmail4">Email (primary)<sup class="text-danger">*</sup></label>
+                                        <label >Email (primary)<sup class="text-danger">*</sup></label>
                                         <input type="email" maxlength="50" class="form-control" placeholder="Email" ng-model="joiningForm.email_primary">
                                         <div class="text-danger" ng-show="errors.email_primary">{{errors.email_primary}}</div>
                                     </div>
                                     <div class="form-group col-md-3">
-                                        <label for="inputEmail4">Mobile</label>
+                                        <label >Mobile</label>
                                         <input type="text" maxlength="15" class="form-control" placeholder="Mobile" ng-model="joiningForm.mobile_primary">
                                     </div>
                                     <div class="form-group col-md-3">
-                                        <label for="inputEmail4">Emergency Contact Name and Relation</label>
+                                        <label >Emergency Contact Name and Relation</label>
                                         <input type="text" maxlength="50" class="form-control" placeholder="Emergency Contact Name" ng-model="joiningForm.employee_other_details.emergency_contact_name">
                                     </div>
                                     <div class="form-group col-md-3">
-                                        <label for="inputEmail4">Emergency Mobile No</label>
+                                        <label >Emergency Mobile No</label>
                                         <input type="text" maxlength="50" class="form-control" placeholder="Emergency Mobile No" ng-model="joiningForm.employee_other_details.emergency_contact_mobile">
                                     </div>
                                 </div>
@@ -148,15 +175,15 @@
                                 <legend class="w-auto px-2">Bank details</legend>
                                 <div class="form-row">
                                     <div class="form-group col-md-3">
-                                        <label for="inputEmail4">Bank Name & Branch</label>
+                                        <label >Bank Name & Branch</label>
                                         <input type="text" maxlength="50" class="form-control" placeholder="Bank Name & Branch" ng-model="joiningForm.employee_other_details.bank_name_branch">
                                     </div>
                                     <div class="form-group col-md-3">
-                                        <label for="inputEmail4">Bank A/c No</label>
+                                        <label >Bank A/c No</label>
                                         <input type="text" maxlength="20" class="form-control" placeholder="Bank A/c No" ng-model="joiningForm.employee_other_details.bank_account_number">
                                     </div>
                                     <div class="form-group col-md-3">
-                                        <label for="inputEmail4">IFS Code</label>
+                                        <label >IFS Code</label>
                                         <input type="text" maxlength="10" class="form-control" placeholder="IFS Code" ng-model="joiningForm.employee_other_details.bank_ifsc_code">
                                     </div>
                                 </div>
@@ -178,7 +205,7 @@
                                         <thead>
                                             <tr>
                                                 <td><b>Degree / Course</b></td>
-                                                <td><b>Course Titlealong with Board / University</b></td>
+                                                <td><b>Course Title along with Board / University</b></td>
                                                 <td style="width: 25%;"><b>Name and full address of school/Institution </b></td>
                                                 <td><b>From (MM/YYYY)</b></td>
                                                 <td><b>To (MM/YYYY)</b></td>
@@ -199,10 +226,10 @@
                                                     <input type="text" class="form-control" maxlength="30" ng-model="joiningForm.education_qualification[$index].institution">
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control" maxlength="30" ng-model="joiningForm.education_qualification[$index].from_date">
+                                                    <input type="date" class="form-control"  ng-model="joiningForm.education_qualification[$index].from_date" value="{{joiningForm.education_qualification[$index].from_date|date:'yyyy-MM-dd'}}">
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control" maxlength="30" ng-model="joiningForm.education_qualification[$index].to_date">
+                                                    <input type="date" class="form-control"  ng-model="joiningForm.education_qualification[$index].to_date" value="{{joiningForm.education_qualification[$index].to_date|date:'yyyy-MM-dd'}}">
                                                 </td>
                                                 <td>
                                                     <input type="text" class="form-control" maxlength="30" ng-model="joiningForm.education_qualification[$index].course_type">
@@ -263,7 +290,7 @@
                                                     <input type="text" class="form-control" maxlength="30" ng-model="joiningForm.professional_qualification[$index].category">
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control" maxlength="30" ng-model="joiningForm.professional_qualification[$index].date">
+                                                    <input type="date" class="form-control"  ng-model="joiningForm.professional_qualification[$index].date" value="{{joiningForm.professional_qualification[$index].date|date:'yyyy-MM-dd'}}">
                                                 </td>
                                                 <td>
                                                     <a role="button" class="fa fa-trash" ng-click="remove_p_qualification($index)"></a>
@@ -315,10 +342,10 @@
                                         <tbody>
                                             <tr ng-repeat="summary in joiningForm.employment_history.employment_summary">
                                                 <td>
-                                                    <input type="text" class="form-control" maxlength="30" ng-model="joiningForm.employment_history.employment_summary[$index].date_from">
+                                                    <input type="date" class="form-control"  ng-model="joiningForm.employment_history.employment_summary[$index].date_from" value="{{joiningForm.employment_history.employment_summary[$index].date_from|date:'yyyy-MM-dd'}}">
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control" maxlength="30" ng-model="joiningForm.employment_history.employment_summary[$index].date_to">
+                                                    <input type="date" class="form-control"  ng-model="joiningForm.employment_history.employment_summary[$index].date_to" value="{{joiningForm.employment_history.employment_summary[$index].date_to|date:'yyyy-MM-dd'}}">
                                                 </td>
                                                 <td>
                                                     <input type="text" class="form-control" maxlength="30" ng-model="joiningForm.employment_history.employment_summary[$index].company">
@@ -349,88 +376,92 @@
                                     <legend class="w-auto px-2">Previous Employer</legend>
                                     <div class="form-row">
                                         <div class="form-group col-md-3">
-                                            <label for="inputEmail4">Position held</label>
+                                            <label >Position held</label>
                                             <input type="text" maxlength="50" class="form-control" placeholder="Position held" ng-model="joiningForm.employment_history.previous_employer.position_held">
                                         </div>
                                         <div class="form-group col-md-3">
-                                            <label for="inputEmail4">From Date</label>
-                                            <input type="text" maxlength="20" class="form-control" placeholder="From Date" ng-model="joiningForm.employment_history.previous_employer.from_date">
+                                            <label >From Date</label>
+                                            <input type="date"  class="form-control" placeholder="From Date" ng-model="joiningForm.employment_history.previous_employer.from_date" value="{{joiningForm.employment_history.previous_employer.from_date|date:'yyyy-MM-dd'}}">
                                         </div>
                                         <div class="form-group col-md-3">
-                                            <label for="inputEmail4">To Date</label>
-                                            <input type="text" maxlength="10" class="form-control" placeholder="To Date" ng-model="joiningForm.employment_history.previous_employer.to_date">
+                                            <label >To Date</label>
+                                            <input type="date"  class="form-control" placeholder="To Date" ng-model="joiningForm.employment_history.previous_employer.to_date" value="{{joiningForm.employment_history.previous_employer.to_date|date:'yyyy-MM-dd'}}">
                                         </div>
                                     </div>
 
                                     <div class="form-row">
                                         <div class="form-group col-md-3">
-                                            <label for="inputEmail4">Company</label>
+                                            <label >Company</label>
                                             <input type="text" maxlength="50" class="form-control" placeholder="Company" ng-model="joiningForm.employment_history.previous_employer.company">
                                         </div>
                                         <div class="form-group col-md-3">
-                                            <label for="inputEmail4">Department</label>
+                                            <label >Department</label>
                                             <input type="text" maxlength="20" class="form-control" placeholder="Department" ng-model="joiningForm.employment_history.previous_employer.department">
                                         </div>
                                         <div class="form-group col-md-3">
-                                            <label for="inputEmail4">Nature of Job</label>
+                                            <label >Nature of Job</label>
                                             <input type="text" maxlength="30" class="form-control" placeholder="Nature of Job" ng-model="joiningForm.employment_history.previous_employer.nature_of_job">
                                         </div>
                                         <div class="form-group col-md-3">
-                                            <label for="inputEmail4">Annual CTC (in Lacs)</label>
+                                            <label >Annual CTC (in Lacs)</label>
                                             <input type="text" maxlength="30" class="form-control" placeholder="Annual CTC" ng-model="joiningForm.employment_history.previous_employer.annual_ctc">
                                         </div>
                                     </div>
 
                                     <div class="form-row">
                                         <div class="form-group col-md-3">
-                                            <label for="inputEmail4">Address</label>
+                                            <label >Address</label>
                                             <input type="text" maxlength="50" class="form-control" placeholder="Address" ng-model="joiningForm.employment_history.previous_employer.address">
                                         </div>
                                         <div class="form-group col-md-3">
-                                            <label for="inputEmail4">City</label>
+                                            <label >City</label>
                                             <input type="text" maxlength="50" class="form-control" placeholder="City" ng-model="joiningForm.employment_history.previous_employer.city">
                                         </div>
                                         <div class="form-group col-md-3">
-                                            <label for="inputEmail4">Telephone</label>
+                                            <label >Telephone</label>
                                             <input type="text" maxlength="15" class="form-control" placeholder="Telephone" ng-model="joiningForm.employment_history.previous_employer.telephone">
                                         </div>
                                         <div class="form-group col-md-3">
-                                            <label for="inputEmail4">Main Job Responsibilities</label>
+                                            <label >Main Job Responsibilities</label>
                                             <input type="text" maxlength="50" class="form-control" placeholder="Job Responsibilities" ng-model="joiningForm.employment_history.previous_employer.job_responsibilities">
                                         </div>
                                     </div>
 
                                     <div class="form-row">
                                         <div class="form-group col-md-3">
-                                            <label for="inputEmail4">Name of Reporting Manager</label>
+                                            <label >Name of Reporting Manager</label>
                                             <input type="text" maxlength="50" class="form-control" placeholder="Name of Reporting Manager" ng-model="joiningForm.employment_history.previous_employer.reporting_manager">
                                         </div>
                                         <div class="form-group col-md-3">
-                                            <label for="inputEmail4">Contact Number</label>
+                                            <label >Contact Number</label>
                                             <input type="text" maxlength="15" class="form-control" placeholder="Contact Number" ng-model="joiningForm.employment_history.previous_employer.contact_number_manager">
                                         </div>
                                         <div class="form-group col-md-3">
-                                            <label for="inputEmail4">Email</label>
+                                            <label >Email</label>
                                             <input type="email" maxlength="50" class="form-control" placeholder="Email" ng-model="joiningForm.employment_history.previous_employer.email_manager">
                                         </div>
                                         <div class="form-group col-md-3">
-                                            <label for="inputEmail4">Reason for Leaving</label>
+                                            <label >Reason for Leaving</label>
                                             <input type="text" maxlength="50" class="form-control" placeholder="Reason for Leaving" ng-model="joiningForm.employment_history.previous_employer.reason_of_leaving">
                                         </div>
                                     </div>
 
                                     <div class="form-row">
                                         <div class="form-group col-md-3">
-                                            <label for="inputEmail4">HR Name</label>
+                                            <label >HR Name</label>
                                             <input type="text" maxlength="50" class="form-control" placeholder="HR Name" ng-model="joiningForm.employment_history.previous_employer.hr_name">
                                         </div>
                                         <div class="form-group col-md-3">
-                                            <label for="inputEmail4">HR Contact Number</label>
+                                            <label >HR Contact Number</label>
                                             <input type="text" maxlength="15" class="form-control" placeholder="HR Contact Number" ng-model="joiningForm.employment_history.previous_employer.hr_contact_number">
                                         </div>
                                         <div class="form-group col-md-3">
-                                            <label for="inputEmail4">HR Email</label>
+                                            <label >HR Email</label>
                                             <input type="email" maxlength="50" class="form-control" placeholder="HR Email" ng-model="joiningForm.employment_history.previous_employer.hr_email">
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label >HR Designation</label>
+                                            <input type="text" maxlength="20" class="form-control" placeholder="HR Designation" ng-model="joiningForm.employment_history.previous_employer.hr_designation">
                                         </div>
 
                                     </div>
@@ -441,98 +472,147 @@
                                     <legend class="w-auto px-2">Previous to Previous Employer</legend>
                                     <div class="form-row">
                                         <div class="form-group col-md-3">
-                                            <label for="inputEmail4">Position held</label>
+                                            <label >Position held</label>
                                             <input type="text" maxlength="50" class="form-control" placeholder="Position held" ng-model="joiningForm.employment_history.previous_to_previous_employer.position_held">
                                         </div>
                                         <div class="form-group col-md-3">
-                                            <label for="inputEmail4">From Date</label>
-                                            <input type="text" maxlength="20" class="form-control" placeholder="From Date" ng-model="joiningForm.employment_history.previous_to_previous_employer.from_date">
+                                            <label >From Date</label>
+                                            <input type="date"  class="form-control" placeholder="From Date" ng-model="joiningForm.employment_history.previous_to_previous_employer.from_date" value="{{joiningForm.employment_history.previous_to_previous_employer.from_date|date:'yyyy-MM-dd'}}">
                                         </div>
                                         <div class="form-group col-md-3">
-                                            <label for="inputEmail4">To Date</label>
-                                            <input type="text" maxlength="10" class="form-control" placeholder="To Date" ng-model="joiningForm.employment_history.previous_to_previous_employer.to_date">
+                                            <label >To Date</label>
+                                            <input type="date" class="form-control" placeholder="To Date" ng-model="joiningForm.employment_history.previous_to_previous_employer.to_date" value="{{joiningForm.employment_history.previous_to_previous_employer.to_date|date:'yyyy-MM-dd'}}">
                                         </div>
                                     </div>
 
                                     <div class="form-row">
                                         <div class="form-group col-md-3">
-                                            <label for="inputEmail4">Company</label>
+                                            <label >Company</label>
                                             <input type="text" maxlength="50" class="form-control" placeholder="Company" ng-model="joiningForm.employment_history.previous_to_previous_employer.company">
                                         </div>
                                         <div class="form-group col-md-3">
-                                            <label for="inputEmail4">Department</label>
+                                            <label >Department</label>
                                             <input type="text" maxlength="20" class="form-control" placeholder="Department" ng-model="joiningForm.employment_history.previous_to_previous_employer.department">
                                         </div>
                                         <div class="form-group col-md-3">
-                                            <label for="inputEmail4">Nature of Job</label>
+                                            <label >Nature of Job</label>
                                             <input type="text" maxlength="30" class="form-control" placeholder="Nature of Job" ng-model="joiningForm.employment_history.previous_to_previous_employer.nature_of_job">
                                         </div>
                                         <div class="form-group col-md-3">
-                                            <label for="inputEmail4">Annual CTC (in Lacs)</label>
+                                            <label >Annual CTC (in Lacs)</label>
                                             <input type="text" maxlength="30" class="form-control" placeholder="Annual CTC" ng-model="joiningForm.employment_history.previous_to_previous_employer.annual_ctc">
                                         </div>
                                     </div>
 
                                     <div class="form-row">
                                         <div class="form-group col-md-3">
-                                            <label for="inputEmail4">Address</label>
+                                            <label >Address</label>
                                             <input type="text" maxlength="50" class="form-control" placeholder="Address" ng-model="joiningForm.employment_history.previous_to_previous_employer.address">
                                         </div>
                                         <div class="form-group col-md-3">
-                                            <label for="inputEmail4">City</label>
+                                            <label >City</label>
                                             <input type="text" maxlength="50" class="form-control" placeholder="City" ng-model="joiningForm.employment_history.previous_to_previous_employer.city">
                                         </div>
                                         <div class="form-group col-md-3">
-                                            <label for="inputEmail4">Telephone</label>
+                                            <label >Telephone</label>
                                             <input type="text" maxlength="15" class="form-control" placeholder="Telephone" ng-model="joiningForm.employment_history.previous_to_previous_employer.telephone">
                                         </div>
                                         <div class="form-group col-md-3">
-                                            <label for="inputEmail4">Main Job Responsibilities</label>
+                                            <label >Main Job Responsibilities</label>
                                             <input type="text" maxlength="50" class="form-control" placeholder="Job Responsibilities" ng-model="joiningForm.employment_history.previous_to_previous_employer.job_responsibilities">
                                         </div>
                                     </div>
 
                                     <div class="form-row">
                                         <div class="form-group col-md-3">
-                                            <label for="inputEmail4">Name of Reporting Manager</label>
+                                            <label >Name of Reporting Manager</label>
                                             <input type="text" maxlength="50" class="form-control" placeholder="Name of Reporting Manager" ng-model="joiningForm.employment_history.previous_to_previous_employer.reporting_manager">
                                         </div>
                                         <div class="form-group col-md-3">
-                                            <label for="inputEmail4">Contact Number</label>
+                                            <label >Contact Number</label>
                                             <input type="text" maxlength="15" class="form-control" placeholder="Contact Number" ng-model="joiningForm.employment_history.previous_to_previous_employer.contact_number_manager">
                                         </div>
                                         <div class="form-group col-md-3">
-                                            <label for="inputEmail4">Email</label>
+                                            <label >Email</label>
                                             <input type="email" maxlength="50" class="form-control" placeholder="Email" ng-model="joiningForm.employment_history.previous_to_previous_employer.email_manager">
                                         </div>
                                         <div class="form-group col-md-3">
-                                            <label for="inputEmail4">Reason for Leaving</label>
+                                            <label >Reason for Leaving</label>
                                             <input type="text" maxlength="50" class="form-control" placeholder="Reason for Leaving" ng-model="joiningForm.employment_history.previous_to_previous_employer.reason_of_leaving">
                                         </div>
                                     </div>
 
                                     <div class="form-row">
                                         <div class="form-group col-md-3">
-                                            <label for="inputEmail4">HR Name</label>
+                                            <label >HR Name</label>
                                             <input type="text" maxlength="50" class="form-control" placeholder="HR Name" ng-model="joiningForm.employment_history.previous_to_previous_employer.hr_name">
                                         </div>
                                         <div class="form-group col-md-3">
-                                            <label for="inputEmail4">HR Contact Number</label>
+                                            <label >HR Contact Number</label>
                                             <input type="text" maxlength="15" class="form-control" placeholder="HR Contact Number" ng-model="joiningForm.employment_history.previous_to_previous_employer.hr_contact_number">
                                         </div>
                                         <div class="form-group col-md-3">
-                                            <label for="inputEmail4">HR Email</label>
+                                            <label >HR Email</label>
                                             <input type="email" maxlength="50" class="form-control" placeholder="HR Email" ng-model="joiningForm.employment_history.previous_to_previous_employer.hr_email">
                                         </div>
-
+                                        <div class="form-group col-md-3">
+                                            <label >HR Designation</label>
+                                            <input type="text" maxlength="20" class="form-control" placeholder="HR Designation" ng-model="joiningForm.employment_history.previous_to_previous_employer.hr_designation">
+                                        </div>
                                     </div>
 
                                 </fieldset>
 
+                                <fieldset class="form-group p-3">
+                                    <legend class="w-auto px-2">Gap Declaration</legend>
+                                    <table class="table table-bordered table-stripped">
+                                        <thead>
+
+                                            <tr>
+                                                
+                                                <th><b>Sr. No.</b></th>
+                                                <th style="width: 40%;"><b>Particulars (Reason)</b></th>
+                                                <th><b>From</b></th>
+                                                <th><b>to</b></th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="gap in joiningForm.employment_history.gap_declaration">
+                                                <td>
+                                                    {{$index+1}}
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" maxlength="50" ng-model="joiningForm.employment_history.gap_declaration[$index].particular">
+                                                </td>
+                                                <td>
+                                                    <input type="date" class="form-control"  ng-model="joiningForm.employment_history.gap_declaration[$index].from_date" value="{{joiningForm.employment_history.gap_declaration[$index].from_date|date:'yyyy-MM-dd'}}">
+                                                </td>
+                                                <td>
+                                                    <input type="date" class="form-control" ng-model="joiningForm.employment_history.gap_declaration[$index].to_date" value="{{joiningForm.employment_history.gap_declaration[$index].to_date|date:'yyyy-MM-dd'}}">
+                                                </td>
+
+                                                <td>
+                                                    <a role="button" class="fa fa-trash" ng-click="remove_gap_declartion($index)"></a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="6">
+                                                    <a role="button" class="text-primary" ng-click="addGapDeclaration()"> <i class="fa fa-plus"></i> Add new line</a>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                    <p>*  GAP Declaration to be filed when there is a time gap between two Employments OR between Education and Employment OR between Education and Education.</p>
+                                    <p>* Any gap of more than 3 months to be filled in with complete details and supporting documents.</p>
+                                </fieldset>
 
                                 <button type="button" class="btn btn-primary" ng-click="submitForm('save-employment-history','#backgroundInfo')">
                                     <div ng-show="loading" class="css-animated-loader"></div>Save
                                 </button>
+
                             </form>
                         </div>
                     </div>
@@ -795,7 +875,7 @@
 
                                 <fieldset class="form-group p-3">
                                     <legend class="w-auto px-2">Previous Addresses</legend>
-
+                                    <p>Please include full personal address history to cover the last 7 years including dates.</p>
                                     <div class="form-row">
 
                                         <table class="table table-bordered">
@@ -825,7 +905,7 @@
                                                         <input type="text" class="form-control" maxlength="25" ng-model="joiningForm.background_info.previous_address[$index].dates">
                                                     </td>
                                                     <td>
-                                                    <a role="button" class="fa fa-trash" ng-click="remove_p_address($index)"></a>
+                                                        <a role="button" class="fa fa-trash" ng-click="remove_p_address($index)"></a>
                                                     </td>
                                                 </tr>
 
@@ -834,13 +914,103 @@
                                             <tfoot>
                                                 <tr>
                                                     <td colspan="4">
-                                                    <a role="button" class="text-primary" ng-click="addPreviousAddress()"> <i class="fa fa-plus"></i> Add new line</a>
+                                                        <a role="button" class="text-primary" ng-click="addPreviousAddress()"> <i class="fa fa-plus"></i> Add new line</a>
                                                     </td>
                                                 </tr>
                                             </tfoot>
                                         </table>
                                     </div>
                                 </fieldset>
+
+                                <fieldset class="form-group p-3">
+                                    <legend class="w-auto px-2">Mediclaim / Medical Insurance</legend>
+                                    <table class="table table-bordered table-stripped">
+                                        <thead>
+
+                                            <tr>
+                                                
+                                                <th><b>Name</b></th>
+                                                <th><b>Relationship</b></th>
+                                                <th><b>Date of Birth</b></th>
+                                                <th><b>Age</b></th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="gap in joiningForm.background_info.mediclaim">
+                                                
+                                                <td>
+                                                    <input type="text" class="form-control" maxlength="50" ng-model="joiningForm.background_info.mediclaim[$index].name">
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" maxlength="20" ng-model="joiningForm.background_info.mediclaim[$index].relationship">
+                                                </td>
+                                                <td>
+                                                    <input type="date" class="form-control"  ng-model="joiningForm.background_info.mediclaim[$index].dob" value="{{joiningForm.background_info.mediclaim[$index].dob|date:'yyyy-MM-dd'}}">
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" maxlength="3" ng-model="joiningForm.background_info.mediclaim[$index].age">
+                                                </td>
+
+                                                <td>
+                                                    <a role="button" class="fa fa-trash" ng-click="remove_mediclaim($index)"></a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="6">
+                                                    <a role="button" class="text-primary" ng-click="addMediclaim()"> <i class="fa fa-plus"></i> Add new line</a>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                    <p>* Please submit passport size photograph of all the members mentioned above.</p>
+                                </fieldset>
+
+                                <fieldset class="form-group p-3">
+                                    <legend class="w-auto px-2">Employees Close Relatives working with BitString, if any</legend>
+                                    <table class="table table-bordered table-stripped">
+                                        <thead>
+
+                                            <tr>
+                                                
+                                                <th><b>Name</b></th>
+                                                <th><b>Relationship</b></th>
+                                                <th><b>Position</b></th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="gap in joiningForm.background_info.relative_with_bitstring">
+                                                
+                                                <td>
+                                                    <input type="text" class="form-control" maxlength="50" ng-model="joiningForm.background_info.relative_with_bitstring[$index].name">
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" maxlength="20" ng-model="joiningForm.background_info.relative_with_bitstring[$index].relationship">
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" maxlength="20" ng-model="joiningForm.background_info.relative_with_bitstring[$index].position">
+                                                </td>
+                                                
+
+                                                <td>
+                                                    <a role="button" class="fa fa-trash" ng-click="remove_relative_bitstring($index)"></a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="6">
+                                                    <a role="button" class="text-primary" ng-click="addRelativeBitstring()"> <i class="fa fa-plus"></i> Add new line</a>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                    
+                                </fieldset>
+
                                 <button type="button" class="btn btn-primary" ng-click="submitForm('save-background-information','#declaration')">
                                     <div ng-show="loading" class="css-animated-loader"></div>Save
                                 </button>
@@ -851,18 +1021,27 @@
                     <div class="tab-pane fade" id="declaration" role="tabpanel" aria-labelledby="declaration-tab">
                         <div class="table-responsive">
                             <form class="">
-                                <fieldset class="form-group p-3">
+                            <fieldset class="form-group p-3">
+                                    <legend class="w-auto px-2">Data Protection</legend>
                                     <div>
-                                    <p>I certify that to the best of my knowledge all the information given in this form is true and complete. I understand that any appointment offered will be subject to the information given on this form being correct. I understand that any offer of employment is conditional upon the verification of any or all of the information I have supplied. I understand and accept that the provision of misleading, false or inaccurate information or the omission of a material fact may be legitimate cause for the immediate withdrawal of any offer of employment or, if I am already employed, for disciplinary action up to and including dismissal.</p>
-                                    <p>I authorize BitString IT Services Pvt Ltdor any agent thereof to verify information presented on this form and to make inquiries of the school, college or university where a qualification was gained as well as approach previous employers and personal references for verification of my employment records. I acknowledge that all referees are disclosing the above information at my express request and that I will make no claim whatsoever against such referee, its agents and/or employees arising out of disclosure of such information. This shall be the case whether the content of any such document obtained is accurate or inaccurate and/or any information is true or untrue.</p>
-                
+                                        <p>I hereby give my consent to the employer or any agent thereof to process the data supplied in this application form for the purposes of recruitment and selection. I accept that this data may be sent and processed in or outside India.</p>
+                                        <p>You have the right to apply for a copy of our information and to have any inaccuracies corrected.</p>
+
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group p-3">
+                                    <legend class="w-auto px-2">Declaration & Authorization</legend>
+                                    <div>
+                                        <p>I certify that to the best of my knowledge all the information given in this form is true and complete. I understand that any appointment offered will be subject to the information given on this form being correct. I understand that any offer of employment is conditional upon the verification of any or all of the information I have supplied. I understand and accept that the provision of misleading, false or inaccurate information or the omission of a material fact may be legitimate cause for the immediate withdrawal of any offer of employment or, if I am already employed, for disciplinary action up to and including dismissal.</p>
+                                        <p>I authorize BitString IT Services Pvt Ltdor any agent thereof to verify information presented on this form and to make inquiries of the school, college or university where a qualification was gained as well as approach previous employers and personal references for verification of my employment records. I acknowledge that all referees are disclosing the above information at my express request and that I will make no claim whatsoever against such referee, its agents and/or employees arising out of disclosure of such information. This shall be the case whether the content of any such document obtained is accurate or inaccurate and/or any information is true or untrue.</p>
+
                                     </div>
                                 </fieldset>
 
                                 <center>
-                                <button type="button" class="btn btn-primary" ng-click="submitForm('accept-declaration','',true)">
-                                    <div ng-show="loading" class="css-animated-loader"></div>Accept and Submit Form
-                                </button>
+                                    <button type="button" class="btn btn-primary" ng-click="submitForm('accept-declaration','',true)">
+                                        <div ng-show="loading" class="css-animated-loader"></div>Accept and Submit Form
+                                    </button>
                                 </center>
                             </form>
                         </div>
@@ -881,7 +1060,7 @@
         $scope.loading = false;
         $scope.errors = '';
         $scope.successMessage = '';
-        $scope.joiningForm = null;
+        $scope.joiningForm = {employment_history:null};
         $scope.formComlpletion = 0;
         //$scope.joiningForm.education_qualification = new Array();
 
@@ -893,7 +1072,7 @@
         }).then(function(response) {
             $scope.joiningForm = response.data.joiningFormDetails;
             $scope.formComlpletion = response.data.formComlpletion;
-            console.log($scope.joiningForm);
+            
         }, function(response) {
             console.log(response);
 
@@ -926,6 +1105,7 @@
         }
 
         $scope.addEmploymentSummary = function() {
+
             $scope.joiningForm.employment_history.employment_summary.push({
                 "date_from": "",
                 "date_to": "",
@@ -949,18 +1129,69 @@
             $scope.joiningForm.background_info.previous_address.splice(index, 1);
         }
 
+        $scope.addGapDeclaration = function() {
+           
+            if(!('gap_declaration' in $scope.joiningForm.employment_history) ){
+                $scope.joiningForm.employment_history.gap_declaration = [];
+                
+            }
+            
+            $scope.joiningForm.employment_history.gap_declaration.push({
+                "particular": "",
+                "from_date": "",
+                "to_date": ""
+            });
+        }
+        $scope.remove_gap_declartion = function(index) {
+            $scope.joiningForm.employment_history.gap_declaration.splice(index, 1);
+        }
+
+        $scope.addMediclaim = function() {
+           
+            if(!('mediclaim' in $scope.joiningForm.background_info) ){
+                $scope.joiningForm.background_info.mediclaim = [];
+                
+            }
+            
+            $scope.joiningForm.background_info.mediclaim.push({
+                "name": "",
+                "relationship": "",
+                "dob": "",
+                "age": ""
+            });
+        }
+        $scope.remove_mediclaim = function(index) {
+            $scope.joiningForm.background_info.mediclaim.splice(index, 1);
+        }
+
+        $scope.addRelativeBitstring = function() {
+           
+           if(!('relative_with_bitstring' in $scope.joiningForm.background_info) ){
+               $scope.joiningForm.background_info.relative_with_bitstring = [];
+               
+           }
+           
+           $scope.joiningForm.background_info.relative_with_bitstring.push({
+               "name": "",
+               "relationship": "",
+               "position": ""
+           });
+       }
+       $scope.remove_relative_bitstring = function(index) {
+           $scope.joiningForm.background_info.relative_with_bitstring.splice(index, 1);
+       }
 
 
-        $scope.submitForm = function(formType,nextTab='',reload=false) {
+        $scope.submitForm = function(formType, nextTab = '', reload = false) {
 
             $scope.errors = '';
             $scope.otpSuccessMsg = '';
             $scope.loading = true;
             $scope.successMessage = '';
-            console.log($scope.profile);
+            // console.log($scope.profile);
             var apiUrl = base_url + '/api/employee-joining-form/' + formType;
             var method = "POST";
-            console.log($scope.joiningForm);
+            // console.log($scope.joiningForm);
             $http({
                 method: method,
                 url: apiUrl,
@@ -970,10 +1201,10 @@
                 $scope.loading = false;
                 $scope.successMessage = response.data.messages.success;
                 toastr.success(response.data.messages.success);
-                if(nextTab!=''){
-                    $('#myTab a[href="'+nextTab+'"]').tab('show');
+                if (nextTab != '') {
+                    $('#myTab a[href="' + nextTab + '"]').tab('show');
                 }
-                if(reload){
+                if (reload) {
                     window.location.reload();
                 }
                 // window.location = base_url + '/profiles';
@@ -982,8 +1213,8 @@
                 $scope.loading = false;
                 $scope.errors = response.data.messages;
                 toastr.error("Something went wrong !!");
-                console.log($scope.errors);
-                console.log($scope.errors['lang.en.title']);
+                // console.log($scope.errors);
+                // console.log($scope.errors['lang.en.title']);
             });
 
         }

@@ -748,6 +748,7 @@ class Profiles extends ResourceController
                 'hr_name'=>'',
                 'hr_contact_number'=>'',
                 'hr_email'=>'',
+                'hr_designation'=>'',
             ],
             'previous_to_previous_employer'=>[
                 'position_held'=>'',
@@ -768,7 +769,9 @@ class Profiles extends ResourceController
                 'hr_name'=>'',
                 'hr_contact_number'=>'',
                 'hr_email'=>'',
+                'hr_designation'=>'',
             ],
+            'gap_declaration'=>[]
         ];
 
         $backGroundInfo = [
@@ -794,7 +797,9 @@ class Profiles extends ResourceController
                 "O03"=>0,
                 "O04"=>0,
             ],
-            'previous_address'=>[]
+            'previous_address'=>[],
+            'mediclaim'=>[],
+            'relative_with_bitstring'=>[]
 
         ];
 

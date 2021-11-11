@@ -19,8 +19,9 @@
         <div class="container-fluid">
 
             <div class="row mb-2">
-                <div>
-                    <h1><?= $pageHeading ?></h1>
+                <div class="col-md-12">
+                    <h1><?= $pageHeading ?> <a target="_blank" title="Download Joining Form" href="<?=base_url(route_to('downloadJoiningForm',$id))?>" class="fa fa-download pull-right" style="float: right;font-size:1rem;"></a></h1>
+                    
                 </div>
             </div>
 

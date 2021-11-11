@@ -73,7 +73,7 @@
             <a href="<?= base_url(route_to('sendJoiningForm')) ?>" class="nav-link <?=$active_nav=='send-joining-form'?' active ':'';?>">
               <i class="nav-icon fa fa-id-card"></i>
               <p>
-              Send Joining Form
+              Joining Details
               </p>
             </a>
           </li>
