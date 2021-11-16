@@ -19,4 +19,14 @@ class CustomValidation
        
         return true;
     }
+    public function valid_ifsc(string $str, string &$error = null): bool
+    {
+
+        if (!preg_match("/^[A-Z]{4}0[A-Z0-9]{6}$/", $str)) {
+            $error = "Invalid IFS Code";
+            return false;
+          }
+       
+        return true;
+    }
 }

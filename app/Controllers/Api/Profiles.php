@@ -549,6 +549,13 @@ class Profiles extends ResourceController
             'email_primary' => ['label' => 'Email', 'rules' => 'required|valid_email|is_unique[employee_joining_form_details.email_primary,id,' . $joiningFormId . ']'],
         ];
 
+        // echo '<pre>';print_r($requestData);die;
+        $requestData['employee_other_details'] = (array)$requestData['employee_other_details'];
+        if (strlen($requestData['employee_other_details']['bank_ifsc_code'])) {
+            //
+            $rules['employee_other_details.bank_ifsc_code'] = ['label' => 'PAN Number', 'rules' => 'valid_ifsc'];
+        }
+
         $validation->setRules(
             $rules
         );
@@ -715,8 +722,8 @@ class Profiles extends ResourceController
             ]
         ];
         // print_r($requestData['employment_history']);
-        if(!empty($requestData['employment_history']->gap_declaration)){
-            
+        if (!empty($requestData['employment_history']->gap_declaration)) {
+
             foreach ($requestData['employment_history']->gap_declaration as $key => $item) {
 
 
@@ -724,18 +731,17 @@ class Profiles extends ResourceController
                 array_push($validationData['gap_declaration']['from_date'], $item->from_date);
                 array_push($validationData['gap_declaration']['to_date'], $item->to_date);
             }
-    
+
             $rules = [
                 'gap_declaration.particular.*' => ['label' => 'Particulars ', 'rules' => 'required'],
                 'gap_declaration.from_date.*' => ['label' => 'From', 'rules' => 'required'],
                 'gap_declaration.to_date.*' => ['label' => 'To', 'rules' => 'required'],
             ];
-           
         }
 
-      
 
-        if($rules){
+
+        if ($rules) {
             $validation->setRules(
                 $rules
             );
@@ -788,7 +794,7 @@ class Profiles extends ResourceController
                 'age' => array(),
             ]
         ];
-    
+
 
 
         if (!empty($requestData['background_info']->previous_address)) {
@@ -834,14 +840,14 @@ class Profiles extends ResourceController
             'mediclaim.dob.*' => ['label' => 'Date of Birth', 'rules' => 'required'],
             'mediclaim.age.*' => ['label' => 'Age', 'rules' => 'required'],
         ];
-       
+
         $validation->setRules(
             $rules
         );
 
-        
+
         $valid = $validation->run($validationData);
-        
+
         if (!$valid) {
             // return $this->fail($validation->getErrors(), 400);
 
@@ -923,9 +929,9 @@ class Profiles extends ResourceController
 
         if (isset($document)) {
             $pathToUpload = "form_" . $id;
-            if (!file_exists(str_replace(APPPATH,'',DOCUMENTS_PATH).$pathToUpload)) {
-                mkdir(str_replace(APPPATH,'',DOCUMENTS_PATH).$pathToUpload, 0777, true);
-                fopen(str_replace(APPPATH,'',DOCUMENTS_PATH).$pathToUpload . "/index.html", 'w');
+            if (!file_exists(str_replace(APPPATH, '', DOCUMENTS_PATH) . $pathToUpload)) {
+                mkdir(str_replace(APPPATH, '', DOCUMENTS_PATH) . $pathToUpload, 0777, true);
+                fopen(str_replace(APPPATH, '', DOCUMENTS_PATH) . $pathToUpload . "/index.html", 'w');
             }
 
             $newName = $document->getRandomName();

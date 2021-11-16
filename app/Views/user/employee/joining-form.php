@@ -195,7 +195,8 @@
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>IFS Code</label>
-                                        <input type="text" maxlength="10" class="form-control" placeholder="IFS Code" ng-model="joiningForm.employee_other_details.bank_ifsc_code">
+                                        <input type="text" maxlength="11" class="form-control" placeholder="IFS Code" ng-model="joiningForm.employee_other_details.bank_ifsc_code">
+                                        <div class="text-danger" ng-show="errors['employee_other_details.bank_ifsc_code']">{{errors['employee_other_details.bank_ifsc_code']}}</div> 
                                     </div>
                                 </div>
 
