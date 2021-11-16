@@ -441,7 +441,7 @@ class Profiles extends ResourceController
             //'father_name' => 'required',
             'email_primary' => 'required|valid_email|is_unique[employee_joining_form_details.email_primary,id,{id}]',
             'aadhar_number' => 'required|numeric|exact_length[12]',
-            'pan_number' => 'required|alpha_numeric|exact_length[10]'
+            'pan_number' => 'required|alpha_numeric|exact_length[10]|valid_pan'
         ];
 
 
@@ -543,8 +543,9 @@ class Profiles extends ResourceController
             // 'email' => 'required',
             'first_name' => ['label' => 'First Name', 'rules' => 'required'],
             'last_name' => ['label' => 'Last Name', 'rules' => 'required'],
+            'dob' => ['label' => 'Date of Birth', 'rules' => 'required'],
             'aadhar_number' => ['label' => 'Aadhar Number', 'rules' => 'required|numeric|exact_length[12]'],
-            'pan_number' => ['label' => 'PAN Number', 'rules' => 'required|alpha_numeric|exact_length[10]'],
+            'pan_number' => ['label' => 'PAN Number', 'rules' => 'required|alpha_numeric|exact_length[10]|valid_pan'],
             'email_primary' => ['label' => 'Email', 'rules' => 'required|valid_email|is_unique[employee_joining_form_details.email_primary,id,' . $joiningFormId . ']'],
         ];
 
@@ -581,6 +582,45 @@ class Profiles extends ResourceController
         $joiningFormId = $requestData['id'];
         $requestData = array_intersect_key($requestData, $allowedColums);
 
+        //validation
+        $validation =  \Config\Services::validation();
+        $rules = [];
+        $validationData = [
+            'degree' => [],
+            'university' => [],
+            'institution' => [],
+            'from_date' => [],
+            'to_date' => [],
+            'percentage' => [],
+        ];
+        foreach ($requestData['education_qualification'] as $key => $item) {
+
+            array_push($validationData['degree'], $item->degree);
+            array_push($validationData['university'], $item->university);
+            array_push($validationData['institution'], $item->institution);
+            array_push($validationData['from_date'], $item->from_date);
+            array_push($validationData['to_date'], $item->to_date);
+            array_push($validationData['percentage'], $item->percentage);
+        }
+
+        $rules = [
+            'degree.*' => ['label' => 'Degree/course', 'rules' => 'required'],
+            'university.*' => ['label' => 'Course Title along with Board / University', 'rules' => 'required'],
+            'institution.*' => ['label' => 'address of school/Institution', 'rules' => 'required'],
+            'from_date.*' => ['label' => 'From', 'rules' => 'required'],
+            'to_date.*' => ['label' => 'To', 'rules' => 'required'],
+            'percentage.*' => ['label' => 'Percentage/CGPA', 'rules' => 'required'],
+        ];
+        $validation->setRules(
+            $rules
+        );
+
+        $valid = $validation->run($validationData);
+        if (!$valid) {
+            //  return $this->fail($validation->getErrors(), 400);
+            return $this->fail(['education_qualification' => "Please fill all the fields."], 400);
+        }
+
         $model = new EmployeeJoinigDetailsModel();
 
 
@@ -609,6 +649,37 @@ class Profiles extends ResourceController
         $joiningFormId = $requestData['id'];
         $requestData = array_intersect_key($requestData, $allowedColums);
 
+        //validation
+        $validation =  \Config\Services::validation();
+        $rules = [];
+        $validationData = [
+            'qualification' => [],
+            'category' => [],
+            'date' => [],
+        ];
+        foreach ($requestData['professional_qualification'] as $key => $item) {
+
+            array_push($validationData['qualification'], $item->qualification);
+            array_push($validationData['category'], $item->category);
+            array_push($validationData['date'], $item->date);
+        }
+
+        $rules = [
+            'qualification.*' => ['label' => 'Qualification/Body/Institute / Licence', 'rules' => 'required'],
+            'category.*' => ['label' => 'Category/Membership level', 'rules' => 'required'],
+            'date.*' => ['label' => 'Dates', 'rules' => 'required'],
+        ];
+        $validation->setRules(
+            $rules
+        );
+
+        $valid = $validation->run($validationData);
+        if (!$valid) {
+            //  return $this->fail($validation->getErrors(), 400);
+            return $this->fail(['professional_qualification' => "Please fill all the fields."], 400);
+        }
+
+
         $model = new EmployeeJoinigDetailsModel();
         $requestData['professional_qualification'] = $requestData['professional_qualification'] ? json_encode($requestData['professional_qualification']) : null;
         $id =  $model->update($joiningFormId, $requestData);
@@ -632,6 +703,49 @@ class Profiles extends ResourceController
         ];
         $joiningFormId = $requestData['id'];
         $requestData = array_intersect_key($requestData, $allowedColums);
+        $valid = true;
+        //validation
+        $validation =  \Config\Services::validation();
+        $rules = [];
+        $validationData = [
+            'gap_declaration' => [
+                'particular' => [],
+                'from_date' => [],
+                'to_date' => [],
+            ]
+        ];
+        // print_r($requestData['employment_history']);
+        if(!empty($requestData['employment_history']->gap_declaration)){
+            
+            foreach ($requestData['employment_history']->gap_declaration as $key => $item) {
+
+
+                array_push($validationData['gap_declaration']['particular'], $item->particular);
+                array_push($validationData['gap_declaration']['from_date'], $item->from_date);
+                array_push($validationData['gap_declaration']['to_date'], $item->to_date);
+            }
+    
+            $rules = [
+                'gap_declaration.particular.*' => ['label' => 'Particulars ', 'rules' => 'required'],
+                'gap_declaration.from_date.*' => ['label' => 'From', 'rules' => 'required'],
+                'gap_declaration.to_date.*' => ['label' => 'To', 'rules' => 'required'],
+            ];
+           
+        }
+
+      
+
+        if($rules){
+            $validation->setRules(
+                $rules
+            );
+            $valid = $validation->run($validationData);
+        }
+
+        if (!$valid) {
+            //  return $this->fail($validation->getErrors(), 400);
+            return $this->fail(['gap_declaration' => "Please fill all the fields."], 400);
+        }
 
         $model = new EmployeeJoinigDetailsModel();
         $requestData['employment_history'] = $requestData['employment_history'] ? json_encode($requestData['employment_history']) : null;
@@ -658,9 +772,103 @@ class Profiles extends ResourceController
         $joiningFormId = $requestData['id'];
         $requestData = array_intersect_key($requestData, $allowedColums);
 
+        //validation
+        $validation =  \Config\Services::validation();
+        $rules = [];
+        $validationData = [
+            'previous_address' => [
+                'address' => array(),
+                'postcode' => array(),
+                'dates' => array(),
+            ],
+            'mediclaim' => [
+                'name' => array(),
+                'relationship' => array(),
+                'dob' => array(),
+                'age' => array(),
+            ]
+        ];
+    
+
+
+        if (!empty($requestData['background_info']->previous_address)) {
+            foreach ($requestData['background_info']->previous_address as $key => $item) {
+
+
+                array_push($validationData['previous_address']['address'], $item->address);
+                array_push($validationData['previous_address']['postcode'], $item->postcode);
+                array_push($validationData['previous_address']['dates'], $item->dates);
+            }
+
+            // array_push($rules, [
+            //     'previous_address.address.*' => ['label' => 'Address ', 'rules' => 'required'],
+            //     'previous_address.postcode.*' => ['label' => 'Postcode', 'rules' => 'required'],
+            //     'previous_address.dates.*' => ['label' => 'Dates', 'rules' => 'required'],
+            // ]);
+        }
+
+        if (!empty($requestData['background_info']->mediclaim)) {
+
+            foreach ($requestData['background_info']->mediclaim as $key => $item2) {
+                array_push($validationData['mediclaim']['name'], $item2->name);
+                array_push($validationData['mediclaim']['relationship'], $item2->relationship);
+                array_push($validationData['mediclaim']['dob'], $item2->dob);
+                array_push($validationData['mediclaim']['age'], $item2->age);
+            }
+
+            // array_push($rules, [
+            //     'mediclaim.name.*' => ['label' => 'Name ', 'rules' => 'required'],
+            //     'mediclaim.relationship.*' => ['label' => 'Relationship', 'rules' => 'required'],
+            //     'mediclaim.dob.*' => ['label' => 'Date of Birth', 'rules' => 'required'],
+            //     'mediclaim.age.*' => ['label' => 'Age', 'rules' => 'required'],
+            // ]);
+        }
+
+        $rules = [
+            'previous_address.address.*' => ['label' => 'Address ', 'rules' => 'required'],
+            'previous_address.postcode.*' => ['label' => 'Postcode', 'rules' => 'required'],
+            'previous_address.dates.*' => ['label' => 'Dates', 'rules' => 'required'],
+
+            'mediclaim.name.*' => ['label' => 'Name ', 'rules' => 'required'],
+            'mediclaim.relationship.*' => ['label' => 'Relationship', 'rules' => 'required'],
+            'mediclaim.dob.*' => ['label' => 'Date of Birth', 'rules' => 'required'],
+            'mediclaim.age.*' => ['label' => 'Age', 'rules' => 'required'],
+        ];
+       
+        $validation->setRules(
+            $rules
+        );
+
+        
+        $valid = $validation->run($validationData);
+        
+        if (!$valid) {
+            // return $this->fail($validation->getErrors(), 400);
+
+            $errors = [
+                'previous_address' => "",
+                'mediclaim' => ""
+            ];
+
+            foreach ($validation->getErrors() as $key => $value) {
+                if (preg_match('#^previous_address#i', $key)) {
+                    $errors['previous_address'] = "Please fill all the fields.";
+                }
+                if (preg_match('#^mediclaim#i', $key)) {
+                    $errors['mediclaim'] = "Please fill all the fields.";
+                }
+            }
+            $errors = array_filter($errors);
+            return $this->fail(
+                $errors,
+                400
+            );
+        }
+
+
         $model = new EmployeeJoinigDetailsModel();
         $requestData['background_info'] = $requestData['background_info'] ? json_encode($requestData['background_info']) : null;
-        $id =  $model->update($joiningFormId, $requestData);
+        $model->update($joiningFormId, $requestData);
 
         $response = [
             'id'   => $joiningFormId,
@@ -672,6 +880,115 @@ class Profiles extends ResourceController
         ];
         return $this->respondUpdated($response);
     }
+
+    public function joiningUploadDocument()
+    {
+
+
+
+
+        $document = $this->request->getFile('document');
+        $requestData = $this->request->getPost();
+        $id = $this->request->getPost('id'); // json_decode($_POST['requestData'], true);
+        $documentName = $this->request->getPost('documentName'); // json_decode($_POST['requestData'], true);
+        helper('form');
+        $validation =  \Config\Services::validation();
+
+        $rules = [
+            'documentName' => ['label' => 'Document Name', 'rules' => 'required'],
+            // 'document' => 'uploaded[document]|max_size[document,500]|mime_in[image,image/png,image/jpg,image/jpeg,image/bmp]',
+            'document' => ['label' => 'Document', 'rules' => 'uploaded[document]|max_size[document,1000]|mime_in[document,image/png,image/jpg,image/jpeg,image/bmp,application/pdf,application/force-download,application/x-download,application/msword,application/vnd.ms-office,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/zip,application/x-zip]'],
+        ];
+
+
+
+        $validation->setRules($rules, [
+            'document' => [
+                'uploaded' => 'Please select a file.',
+                'max_size' => 'File size is more than 1MB.',
+                'mime_in' => 'Please upload an image/pdf/doc/docx file.',
+            ]
+        ]);
+        $valid = $validation->run($requestData);
+        if (!$valid) {
+
+            return $this->fail($validation->getErrors(), 400);
+        }
+
+
+        //get document list
+        $model = new EmployeeJoinigDetailsModel();
+        $joiningFormDetails = (array)$model->find($id);
+        $documentDetails = $joiningFormDetails['documents'] ? (array)json_decode($joiningFormDetails['documents']) : [];
+
+        if (isset($document)) {
+            $pathToUpload = "form_" . $id;
+            if (!file_exists(str_replace(APPPATH,'',DOCUMENTS_PATH).$pathToUpload)) {
+                mkdir(str_replace(APPPATH,'',DOCUMENTS_PATH).$pathToUpload, 0777, true);
+                fopen(str_replace(APPPATH,'',DOCUMENTS_PATH).$pathToUpload . "/index.html", 'w');
+            }
+
+            $newName = $document->getRandomName();
+            $document->move(DOCUMENTS_PATH . $pathToUpload, $newName);
+            //remove old document
+
+            if (isset($documentDetails[$documentName])) {
+                if (file_exists(DOCUMENTS_PATH . $documentDetails[$documentName]->path)) {
+                    unlink(ROOTPATH . $documentDetails[$documentName]->path);
+                }
+            }
+            $doc['path'] = $pathToUpload . '/' . $newName;
+            $doc['file_name'] = $document->getClientName();
+            $documentDetails[$documentName] = $doc;
+        }
+
+
+        $saveData['documents'] = $documentDetails ? json_encode($documentDetails) : null;
+        $model->update($id, $saveData);
+        $response = [
+            'id'   => $id,
+            'action_type' => 'Updated',
+            'error'    => null,
+            'documentList' => $documentDetails,
+            'messages' => [
+                'success' => 'Done',
+            ]
+        ];
+        return $this->respondUpdated($response);
+    }
+
+    public function removeDocument()
+    {
+        $requestData = (array) $this->request->getJSON();
+
+        //get document details
+        $model = new EmployeeJoinigDetailsModel();
+        $joiningFormDetails = (array)$model->find($requestData['id']);
+        $joiningFormDetails['documents'] = $joiningFormDetails['documents'] ? (array)json_decode($joiningFormDetails['documents']) : [];
+        $documentDetails = $joiningFormDetails['documents'];
+
+        //unlink document
+        if (file_exists(DOCUMENTS_PATH . $documentDetails[$requestData['document']]->path)) {
+            unlink(DOCUMENTS_PATH . $documentDetails[$requestData['document']]->path);
+        }
+        unset($documentDetails[$requestData['document']]);
+
+
+        $saveData['documents'] = $documentDetails ? json_encode($documentDetails) : null;
+        $model->update($requestData['id'], $saveData);
+
+        $response = [
+            'id'   => $requestData['id'],
+            'action_type' => 'delete',
+            'error'    => null,
+            'documentList' => $documentDetails,
+            'messages' => [
+                'success' => 'Document removed.',
+            ]
+        ];
+        return $this->respondUpdated($response);
+    }
+
     public function joiningFormAcceptDeclaration()
     {
         $requestData = (array) $this->request->getJSON();
@@ -693,7 +1010,7 @@ class Profiles extends ResourceController
             'messages' => [
                 'success' => 'Done'
             ]
-            
+
         ];
         return $this->respondUpdated($response);
     }
@@ -728,78 +1045,79 @@ class Profiles extends ResourceController
             'bank_ifsc_code' => '',
         ];
         $employment_history = [
-            'employment_summary'=>[],
-            'previous_employer'=>[
-                'position_held'=>'',
-                'from_date'=>'',
-                'to_date'=>'',
-                'company'=>'',
-                'department'=>'',
-                'nature_of_job'=>'',
-                'address'=>'',
-                'city'=>'',
-                'telephone'=>'',
-                'job_responsibilities'=>'',
-                'annual_ctc'=>'',
-                'reporting_manager'=>'',
-                'contact_number_manager'=>'',
-                'email_manager'=>'',
-                'reason_of_leaving'=>'',
-                'hr_name'=>'',
-                'hr_contact_number'=>'',
-                'hr_email'=>'',
-                'hr_designation'=>'',
+            'employment_summary' => [],
+            'employers' => [],
+            'previous_employer' => [
+                'position_held' => '',
+                'from_date' => '',
+                'to_date' => '',
+                'company' => '',
+                'department' => '',
+                'nature_of_job' => '',
+                'address' => '',
+                'city' => '',
+                'telephone' => '',
+                'job_responsibilities' => '',
+                'annual_ctc' => '',
+                'reporting_manager' => '',
+                'contact_number_manager' => '',
+                'email_manager' => '',
+                'reason_of_leaving' => '',
+                'hr_name' => '',
+                'hr_contact_number' => '',
+                'hr_email' => '',
+                'hr_designation' => '',
             ],
-            'previous_to_previous_employer'=>[
-                'position_held'=>'',
-                'from_date'=>'',
-                'to_date'=>'',
-                'company'=>'',
-                'department'=>'',
-                'nature_of_job'=>'',
-                'address'=>'',
-                'city'=>'',
-                'telephone'=>'',
-                'job_responsibilities'=>'',
-                'annual_ctc'=>'',
-                'reporting_manager'=>'',
-                'contact_number_manager'=>'',
-                'email_manager'=>'',
-                'reason_of_leaving'=>'',
-                'hr_name'=>'',
-                'hr_contact_number'=>'',
-                'hr_email'=>'',
-                'hr_designation'=>'',
+            'previous_to_previous_employer' => [
+                'position_held' => '',
+                'from_date' => '',
+                'to_date' => '',
+                'company' => '',
+                'department' => '',
+                'nature_of_job' => '',
+                'address' => '',
+                'city' => '',
+                'telephone' => '',
+                'job_responsibilities' => '',
+                'annual_ctc' => '',
+                'reporting_manager' => '',
+                'contact_number_manager' => '',
+                'email_manager' => '',
+                'reason_of_leaving' => '',
+                'hr_name' => '',
+                'hr_contact_number' => '',
+                'hr_email' => '',
+                'hr_designation' => '',
             ],
-            'gap_declaration'=>[]
+            'gap_declaration' => []
         ];
 
         $backGroundInfo = [
-            'criminal_and_civil_record'=>[
-                "C01"=>0,
-                "C02"=>0,
-                "C03"=>0,
-                "C04"=>0,
-                "C05"=>0,
-                "C06"=>0,
-                "C07"=>0,
-                "C08"=>0,
+            'criminal_and_civil_record' => [
+                "C01" => 0,
+                "C02" => 0,
+                "C03" => 0,
+                "C04" => 0,
+                "C05" => 0,
+                "C06" => 0,
+                "C07" => 0,
+                "C08" => 0,
             ],
-            'business_interest'=>[
-                "B01"=>0,
-                "B02"=>0,
-                "B03"=>0,
-                "B04"=>0,
+            'business_interest' => [
+                "B01" => 0,
+                "B02" => 0,
+                "B03" => 0,
+                "B04" => 0,
             ],
-            'other_disqualification'=>[
-                "O01"=>0,
-                "O02"=>0,
-                "O03"=>0,
-                "O04"=>0,
+            'other_disqualification' => [
+                "O01" => 0,
+                "O02" => 0,
+                "O03" => 0,
+                "O04" => 0,
             ],
-            'previous_address'=>[],
-            'mediclaim'=>[],
-            'relative_with_bitstring'=>[]
+            'previous_address' => [],
+            'mediclaim' => [],
+            'relative_with_bitstring' => []
 
         ];
 
@@ -808,17 +1126,18 @@ class Profiles extends ResourceController
         $joiningFormDetails['professional_qualification'] = $joiningFormDetails['professional_qualification'] ? (array)json_decode($joiningFormDetails['professional_qualification']) : [];
         $joiningFormDetails['employment_history'] = $joiningFormDetails['employment_history'] ? (array)json_decode($joiningFormDetails['employment_history']) : $employment_history;
         $joiningFormDetails['background_info'] = $joiningFormDetails['background_info'] ? (array)json_decode($joiningFormDetails['background_info']) : $backGroundInfo;
+        $joiningFormDetails['documents'] = $joiningFormDetails['documents'] ? (array)json_decode($joiningFormDetails['documents']) : [];
 
         $countDetails = $joiningFormDetails;
 
-        unset($countDetails['id']);//remove for calculation
-        unset($countDetails['verification_code']);//remove for calculation
-        unset($countDetails['created_by']);//remove for calculation
-        unset($countDetails['updated_by']);//remove for calculation
-        unset($countDetails['status']);//remove for calculation
-        unset($countDetails['created_at']);//remove for calculation
-        unset($countDetails['updated_at']);//remove for calculation
-        unset($countDetails['deleted_at']);//remove for calculation
+        unset($countDetails['id']); //remove for calculation
+        unset($countDetails['verification_code']); //remove for calculation
+        unset($countDetails['created_by']); //remove for calculation
+        unset($countDetails['updated_by']); //remove for calculation
+        unset($countDetails['status']); //remove for calculation
+        unset($countDetails['created_at']); //remove for calculation
+        unset($countDetails['updated_at']); //remove for calculation
+        unset($countDetails['deleted_at']); //remove for calculation
 
         $totalFieldCount = count($countDetails);
         $totalFieldCount_other = count($countDetails['employee_other_details']);
@@ -827,7 +1146,7 @@ class Profiles extends ResourceController
         $formComlpletion = number_format((($totalFilledCount + $totalFilledCount_other) / ($totalFieldCount + $totalFieldCount_other) * 100));
         // echo "totalFieldCount:$totalFieldCount totalFilledCount:$totalFilledCount Form Completion: $formColpletion%";
 
-        return $this->respond(['joiningFormDetails' => $joiningFormDetails,'formComlpletion'=>$formComlpletion]);
+        return $this->respond(['joiningFormDetails' => $joiningFormDetails, 'formComlpletion' => $formComlpletion]);
     }
 
     // delete animal details

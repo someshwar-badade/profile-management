@@ -380,7 +380,7 @@
             <tr>
                 <td>
                     <label>Date of Birth (DD/MM/YY):</label>
-                    <span><?= $joiningFormDetails['dob'] ? date('d/m/Y', strtotime($joiningFormDetails['dob'])) : '' ?></span>
+                    <span><?= $joiningFormDetails['dob'] ?></span>
 
                 </td>
                 <td>
@@ -429,8 +429,8 @@
                         <td><?= $e_qualification->degree ?></td>
                         <td><?= $e_qualification->university ?></td>
                         <td><?= $e_qualification->institution ?></td>
-                        <td><?= $e_qualification->from_date?date('d/m/Y', strtotime($e_qualification->from_date)):'' ?></td>
-                        <td><?= $e_qualification->to_date?date('d/m/Y', strtotime($e_qualification->to_date)):'' ?></td>
+                        <td><?= $e_qualification->from_date ?></td>
+                        <td><?= $e_qualification->to_date ?></td>
                         <td><?= $e_qualification->course_type ?></td>
                         <td><?= $e_qualification->percentage ?></td>
                     </tr>
@@ -468,7 +468,7 @@
                     <tr>
                         <td><?= $p_qualification->qualification ?></td>
                         <td><?= $p_qualification->category ?></td>
-                        <td><?= $p_qualification->date?date('d/m/Y', strtotime($p_qualification->date)):'' ?></td>
+                        <td><?= $p_qualification->date ?></td>
                     </tr>
                 <?php } ?>
             <?php } else { ?>
@@ -520,8 +520,8 @@
             <?php if (!empty($joiningFormDetails['employment_history']['employment_summary'])) { ?>
                 <?php foreach ($joiningFormDetails['employment_history']['employment_summary'] as $e_summary) { ?>
                     <tr>
-                        <td><?= $e_summary->date_from?date('d/m/Y', strtotime($e_summary->date_from)):'' ?></td>
-                        <td><?= $e_summary->date_to?date('d/m/Y', strtotime($e_summary->date_to)):'' ?></td>
+                        <td><?= $e_summary->date_from ?></td>
+                        <td><?= $e_summary->date_to ?></td>
                         <td><?= $e_summary->company ?></td>
                         <td><?= $e_summary->reason_for_leaving ?></td>
                         <td><?= $e_summary->gap ?></td>
@@ -557,11 +557,11 @@
                 </td>
                 <td>
                     <label for="">From:</label>
-                    <span><?= $p_employer['from_date']?date('d/m/Y', strtotime($p_employer['from_date'])):''  ?></span>
+                    <span><?= $p_employer['from_date']  ?></span>
                 </td>
                 <td>
                     <label for="">To:</label>
-                    <span><?= $p_employer['to_date']?date('d/m/Y', strtotime($p_employer['to_date'])):''  ?></span>
+                    <span><?= $p_employer['to_date']  ?></span>
                 </td>
             </tr>
             <tr>
@@ -651,11 +651,11 @@
                 </td>
                 <td>
                     <label for="">From:</label>
-                    <span><?= $p_to_p_employer['from_date']?date('d/m/Y', strtotime($p_to_p_employer['from_date'])):'' ?></span>
+                    <span><?= $p_to_p_employer['from_date'] ?></span>
                 </td>
                 <td>
                     <label for="">To:</label>
-                    <span><?= $p_to_p_employer['to_date']?date('d/m/Y', strtotime($p_to_p_employer['to_date'])):'' ?></span>
+                    <span><?= $p_to_p_employer['to_date'] ?></span>
                 </td>
             </tr>
             <tr>
@@ -745,8 +745,8 @@
                     <tr>
                         <td><?=$key+1?></td>
                         <td><?= $gap->particular ?></td>
-                        <td><?= $gap->from_date?date('d/m/Y', strtotime($gap->from_date)):'' ?></td>
-                        <td><?= $gap->to_date?date('d/m/Y', strtotime($gap->to_date)):'' ?></td>
+                        <td><?= $gap->from_date ?></td>
+                        <td><?= $gap->to_date ?></td>
                     </tr>
                 <?php } ?>
             <?php } else { ?>
@@ -1097,7 +1097,7 @@
                     <tr>
                         <td><?= $mediclaim->name ?></td>
                         <td><?= $mediclaim->relationship ?></td>
-                        <td><?= $mediclaim->dob?date('d/m/Y', strtotime($mediclaim->dob)):'' ?></td>
+                        <td><?= $mediclaim->dob ?></td>
                         <td><?= $mediclaim->age ?></td>
                     </tr>
                 <?php } ?>

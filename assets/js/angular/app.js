@@ -121,8 +121,8 @@ app.run(function($rootScope,$http) {
                   // console.log(files);
                    $parse(attrs.fileInput).assign($scope, element[0].files);
                    $scope.$apply();
-                   console.log($scope.resumepdf);
-                   console.log($scope.resumeword);
+                   console.log($scope.document);
+                  //  console.log($scope.resumeword);
               });
          }
     }

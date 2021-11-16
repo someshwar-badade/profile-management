@@ -22,6 +22,8 @@
 <script src="<?= base_url('assets/js/angularjs-dropdown-multiselect.min.js') ?>"></script>
 <script src="<?= base_url('assets/js/angular-datatables-0.6.2/angular-datatables.min.js') ?>"></script>
 
+<link rel="stylesheet" href="<?= base_url('assets/js/jquery-datetime-picker/jquery.datetimepicker.min.css') ?>">
+<script src="<?= base_url('assets/js/jquery-datetime-picker/jquery.datetimepicker.full.min.js') ?>"></script>
 
 <script src="<?= base_url('assets/js/angular/controllers/headerCtrl.js?v=1.0') ?>"></script>
 <?= $this->renderSection('javascript') ?>

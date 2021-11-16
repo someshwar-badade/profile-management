@@ -84,3 +84,4 @@ define('SITE_TITLE','Profile Management');
 
 define('SITE_DATE_FORMAT','d M Y');
 define('SITE_DATE_TIME_FORMAT','d M Y h:i A');
+define('DOCUMENTS_PATH',ROOTPATH.'assets/joining_form_documents/');
