@@ -196,6 +196,19 @@
         table.table.table-inner tr td {
             border: solid 1px #cccccc;
         }
+
+        .mx-5 {
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+
+        .ml-5 {
+            margin-left: 5px;
+        }
+
+        .mr-5 {
+            margin-right: 5px;
+        }
     </style>
 </head>
 
@@ -221,33 +234,27 @@
         <h2>JOINING FORM</h2>
     </center>
 
-    <p>
+    <!-- <p>
         Please complete the form in <strong>BLOCK CAPITALS</strong> as fully as possible using sign. No section should be left blank. The information you provide in this form will be subject to verification by the company.
-    </p>
+    </p> -->
 
     <!--table:employe details start-->
+    <div style="position: absolute;top:-70px;right:0;">
+        <b><?= $joiningFormDetails['first_name'] . ' ' . $joiningFormDetails['last_name'] ?></b><br>
+        <b><?= $joiningFormDetails['mobile_primary'] ?></b><br>
+        <b><?= $joiningFormDetails['email_primary'] ?></b>
+    </div>
     <table class="table table-inner table-bordered">
         <tbody>
             <tr>
-                <th colspan="2">Employee Details</th>
+                <th colspan="4">Employee Details</th>
             </tr>
             <tr>
-                <td colspan="2">
-                    <label>First Name:</label>
-                    <span><?= $joiningFormDetails['first_name'] ?></span>
+                <td colspan="3">
+                    <label>Full Name:</label>
+                    <span><?= $joiningFormDetails['first_name'] ?> <?= $joiningFormDetails['father_name'] ?> <?= $joiningFormDetails['last_name'] ?> </span>
                 </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <label>Last Name:</label>
-                    <span><?= $joiningFormDetails['last_name'] ?></span>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label>Father’s Name:</label>
-                    <span><?= $joiningFormDetails['father_name'] ?></span>
-                </td>
+
                 <td>
                     <label>Mother’s Name:</label>
                     <span><?= $joiningFormDetails['mother_name'] ?></span>
@@ -259,13 +266,12 @@
                     <span><?= $joiningFormDetails['employee_other_details']['marital_status'] ?></span>
                 </td>
                 <td>
-                    <label>Spouse’s Name (if applicable):</label>
+                    <label>Spouse’s Name:</label>
                     <span><?= $joiningFormDetails['spouse_name'] ?></span>
                 </td>
-            </tr>
-            <tr>
+
                 <td colspan="2">
-                    <label>Kid(s) Name (if applicable):</label>
+                    <label>Kid(s) Name:</label>
                     <span><?= $joiningFormDetails['kids_name'] ?></span>
                 </td>
             </tr>
@@ -278,8 +284,7 @@
                     <label>Mobile Tel. No.:</label>
                     <span><?= $joiningFormDetails['mobile_primary'] ?></span>
                 </td>
-            </tr>
-            <tr>
+
                 <td>
                     <label>Emergency Contact Name:</label>
                     <span><?= $joiningFormDetails['employee_other_details']['emergency_contact_name'] ?></span><br>
@@ -293,6 +298,29 @@
                 </td>
             </tr>
             <tr>
+                <td colspan="1">
+                    <label>Email Id:</label>
+                    <span><?= $joiningFormDetails['email_primary'] ?></span>
+
+                </td>
+
+                <td>
+                    <label>Date of Birth:</label>
+                    <span><?= $joiningFormDetails['dob'] ?></span>
+
+                </td>
+                <td>
+                    <label>Place of Birth:</label>
+                    <span><?= $joiningFormDetails['place_of_birth'] ?></span>
+
+                </td>
+                <td>
+                    <label>Nationality:</label>
+                    <span><?= $joiningFormDetails['nationality'] ?></span>
+
+                </td>
+            </tr>
+            <tr>
                 <td>
                     <label>PAN No:</label>
                     <span><?= $joiningFormDetails['pan_number'] ?></span>
@@ -302,104 +330,71 @@
                     <label>Aadhar No.:</label>
                     <span><?= $joiningFormDetails['aadhar_number'] ?></span>
                 </td>
-            </tr>
-            <tr>
+
                 <td>
                     <label>UAN No:</label>
                     <span><?= $joiningFormDetails['employee_other_details']['uan_no'] ?></span>
 
                 </td>
-                <td>
-                    <label>Bank Name & Branch.:</label>
-                    <span><?= $joiningFormDetails['employee_other_details']['bank_name_branch'] ?></span>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label>Bank A/c No:</label>
-                    <span><?= $joiningFormDetails['employee_other_details']['bank_account_number'] ?></span>
 
-                </td>
-                <td>
-                    <label>IFS Code:</label>
-                    <span><?= $joiningFormDetails['employee_other_details']['bank_ifsc_code'] ?></span>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label>Total Experience:</label>
-                    <span></span>
-
-                </td>
                 <td>
                     <label>Blood Group:</label>
                     <span><?= $joiningFormDetails['employee_other_details']['blood_group'] ?></span><br>
                     <label>Medical conditions, if any:</label>
                     <span><?= $joiningFormDetails['employee_other_details']['medical_condition'] ?></span>
                 </td>
+
             </tr>
             <tr>
+                <td colspan="4">
+
+                    <label for="">Bank details</label>
+                    <div>
+                        <label for="">Name:</label>
+                        <span><?= $joiningFormDetails['employee_other_details']['bank_name_branch'] ?></span>
+                        <label class="ml-5">A/c No:</label>
+                        <span><?= $joiningFormDetails['employee_other_details']['bank_account_number'] ?></span>
+                        <label for="" class="ml-5">IFS Code:</label>
+                        <span><?= $joiningFormDetails['employee_other_details']['bank_ifsc_code'] ?></span>
+                    </div>
+                </td>
+            </tr>
+
+
+            <tr>
+
                 <td colspan="2">
                     <label>Present Address:</label>
                     <span><?= $joiningFormDetails['employee_other_details']['present_address'] ?></span>
-
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label>Postcode:</label>
+                    <label class="ml-5">Postcode:</label>
                     <span><?= $joiningFormDetails['employee_other_details']['present_address_postcode'] ?></span>
-
                 </td>
-                <td>
+
+                <td colspan="2">
                     <label>For how long are you residing at this address (Year/Months):</label>
                     <span><?= $joiningFormDetails['employee_other_details']['present_address_residing_duration'] ?></span>
                 </td>
             </tr>
             <tr>
-                <td colspan="2">
+                <td colspan="4">
                     <label>Permanent Address:</label>
                     <span><?= $joiningFormDetails['employee_other_details']['permanent_address'] ?></span>
-
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <label>Postcode:</label>
+                    <label class="ml-5">Postcode:</label>
                     <span><?= $joiningFormDetails['employee_other_details']['permanent_address_postcode'] ?></span>
-
                 </td>
             </tr>
-            <tr>
-                <td colspan="2">
-                    <label>Email Id:</label>
-                    <span><?= $joiningFormDetails['email_primary'] ?></span>
 
-                </td>
-            </tr>
             <tr>
-                <td>
-                    <label>Date of Birth (DD/MM/YY):</label>
-                    <span><?= $joiningFormDetails['dob'] ?></span>
 
-                </td>
-                <td>
-                    <label>Place of Birth (Town/Country):</label>
-                    <span><?= $joiningFormDetails['place_of_birth'] ?></span>
 
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <label>Nationality (both, if dual national):</label>
-                    <span><?= $joiningFormDetails['nationality'] ?></span>
-
-                </td>
-            </tr>
-            <tr>
                 <td colspan="2">
                     <label>Nature of Job hired for (Permanent/Contractual):</label>
                     <span><?= $joiningFormDetails['employee_other_details']['nature_of_job_hired'] ?></span>
+
+                </td>
+                <td colspan="2">
+                    <label>Total Experience(Years):</label>
+                    <span><span><?= $joiningFormDetails['employee_other_details']['total_experience'] ?></span></span>
 
                 </td>
             </tr>
@@ -426,13 +421,13 @@
             <?php if (!empty($joiningFormDetails['education_qualification'])) { ?>
                 <?php foreach ($joiningFormDetails['education_qualification'] as $e_qualification) { ?>
                     <tr>
-                        <td><?= $e_qualification->degree ?></td>
-                        <td><?= $e_qualification->university ?></td>
-                        <td><?= $e_qualification->institution ?></td>
-                        <td><?= $e_qualification->from_date ?></td>
-                        <td><?= $e_qualification->to_date ?></td>
-                        <td><?= $e_qualification->course_type ?></td>
-                        <td><?= $e_qualification->percentage ?></td>
+                        <td><?= $e_qualification['degree'] ?></td>
+                        <td><?= $e_qualification['university'] ?></td>
+                        <td><?= $e_qualification['institution'] ?></td>
+                        <td><?= $e_qualification['from_date'] ?></td>
+                        <td><?= $e_qualification['to_date'] ?></td>
+                        <td><?= $e_qualification['course_type'] ?></td>
+                        <td><?= $e_qualification['percentage'] ?></td>
                     </tr>
 
                 <?php } ?>
@@ -466,9 +461,9 @@
             <?php if (!empty($joiningFormDetails['professional_qualification'])) { ?>
                 <?php foreach ($joiningFormDetails['professional_qualification'] as $p_qualification) { ?>
                     <tr>
-                        <td><?= $p_qualification->qualification ?></td>
-                        <td><?= $p_qualification->category ?></td>
-                        <td><?= $p_qualification->date ?></td>
+                        <td><?= $p_qualification['qualification'] ?></td>
+                        <td><?= $p_qualification['category'] ?></td>
+                        <td><?= $p_qualification['date'] ?></td>
                     </tr>
                 <?php } ?>
             <?php } else { ?>
@@ -498,233 +493,123 @@
     </table>
     <!--table:employment history end-->
 
-    <!--table:employment summary start-->
-    <table class="table table-inner table-bordered">
-        <tbody>
-            <tr>
-                <th colspan="5">
-                    Employment Summary
-                </th>
-            </tr>
-            <tr>
-                <td colspan="2"><b>Dates (MM/YYYY)</b></td>
-                <td rowspan="2" style="width: 40%;"><b>Name of Organization</b></td>
-                <td rowspan="2"><b>Reason for Leaving</b></td>
-                <td rowspan="2"><b>Explain Employment gap (if Any)</b></td>
-            </tr>
-            <tr>
-                <td><b>From</b></td>
-                <td><b>To</b></td>
-            </tr>
 
-            <?php if (!empty($joiningFormDetails['employment_history']['employment_summary'])) { ?>
-                <?php foreach ($joiningFormDetails['employment_history']['employment_summary'] as $e_summary) { ?>
-                    <tr>
-                        <td><?= $e_summary->date_from ?></td>
-                        <td><?= $e_summary->date_to ?></td>
-                        <td><?= $e_summary->company ?></td>
-                        <td><?= $e_summary->reason_for_leaving ?></td>
-                        <td><?= $e_summary->gap ?></td>
-                    </tr>
-                <?php } ?>
-            <?php } else { ?>
-                <tr>
-                    <td colspan="5"> No data available </td>
-                </tr>
-            <?php } ?>
-
-        </tbody>
-    </table>
-    <!--table:employment summary end-->
 
     <!--table:previous employer start-->
-    <?php $p_employer =  $joiningFormDetails['employment_history']['previous_employer'] ? (array)$joiningFormDetails['employment_history']['previous_employer'] : null; ?>
+    <?php $employers =  $joiningFormDetails['employment_history']['employers'] ? (array)$joiningFormDetails['employment_history']['employers'] : null; ?>
 
-    <table class="table table-inner table-bordered">
-        <tbody>
-            <tr>
-                <th colspan="4">
-                    Previous Employer
-                </th>
-            </tr>
-            <tr>
-                <td>
-                    <label>Position held:</label>
-                    <span><?= $p_employer['position_held'] ?></span>
-                </td>
-                <td>
-                    <label for="">Dates (MM/YYYY)</label>
-                </td>
-                <td>
-                    <label for="">From:</label>
-                    <span><?= $p_employer['from_date']  ?></span>
-                </td>
-                <td>
-                    <label for="">To:</label>
-                    <span><?= $p_employer['to_date']  ?></span>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="4">
-                    <label for="">Company:</label>
-                    <span><?= $p_employer['company'] ?></span>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <label for="">Department:</label>
-                    <span><?= $p_employer['department'] ?></span>
-                </td>
-                <td colspan="2">
-                    <label for="">Nature of Job:</label>
-                    <span><?= $p_employer['nature_of_job'] ?></span>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="4">
-                    <label for="">Address:</label>
-                    <span><?= $p_employer['address'] ?></span>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <label for="">City:</label>
-                    <span><?= $p_employer['city'] ?></span>
-                </td>
-                <td colspan="2">
-                    <label for="">Telephone:</label>
-                    <span><?= $p_employer['telephone'] ?></span>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="4">
-                    <label for="">Main Job Responsibilities:</label>
-                    <span><?= $p_employer['job_responsibilities'] ?></span>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <label for="">Annual CTC(in Lacs):</label>
-                    <span><?= $p_employer['annual_ctc'] ?></span>
-                </td>
-                <td colspan="2">
-                    <label for="">Name of Reporting Manager:</label>
-                    <span><?= $p_employer['reporting_manager'] ?></span>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <label for="">Contact No. of Manager:</label>
-                    <span><?= $p_employer['contact_number_manager'] ?></span>
-                </td>
-                <td colspan="2">
-                    <label for="">E-Mail ID of Manager:</label>
-                    <span><?= $p_employer['email_manager'] ?></span>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="4">
-                    <label for="">Reason for leaving:</label>
-                    <span><?= $p_employer['reason_of_leaving'] ?></span>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <?php foreach ($employers as $key => $p_employer) {
+        $p_employer = (array)$p_employer ?>
+        <table class="table table-inner table-bordered">
+            <tbody>
+                <tr>
+                    <th colspan="4">
+                        Employer <?= $key + 1 ?>
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        <label>From:</label>
+                        <span><?= $p_employer['from_date']  ?></span>
+                    </td>
+                    <td>
+                        <label>To:</label>
+                        <span><?= $p_employer['to_date']  ?></span>
+                    </td>
+                    <td>
+                        <label>Company:</label>
+                        <span><?= $p_employer['company'] ?></span>
+                    </td>
+
+                    <td>
+                        <label>Position held:</label>
+                        <span><?= $p_employer['position_held'] ?></span>
+                    </td>
+
+
+                </tr>
+
+                <tr>
+                    <td colspan="2">
+                        <label>Address:</label>
+                        <span><?= $p_employer['address'] ?></span>
+                    </td>
+
+                    <td colspan="1">
+                        <label>City:</label>
+                        <span><?= $p_employer['city'] ?></span>
+                    </td>
+                    <td colspan="1">
+                        <label>Telephone:</label>
+                        <span><?= $p_employer['telephone'] ?></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label>Department:</label>
+                        <span><?= $p_employer['department'] ?></span>
+                    </td>
+                    <td>
+                        <label>Nature of Job:</label>
+                        <span><?= $p_employer['nature_of_job'] ?></span>
+                    </td>
+
+                    <td colspan="2">
+                        <label>Main Job Responsibilities:</label>
+                        <span><?= $p_employer['job_responsibilities'] ?></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="1">
+                        <label>Annual CTC(in Lacs):</label>
+                        <span><?= $p_employer['annual_ctc'] ?></span>
+                    </td>
+                    <td colspan="1">
+                        <label>Name of Reporting Manager:</label>
+                        <span><?= $p_employer['reporting_manager'] ?></span>
+                    </td>
+
+                    <td colspan="1">
+                        <label>Contact No. of Manager:</label>
+                        <span><?= $p_employer['contact_number_manager'] ?></span>
+                    </td>
+                    <td colspan="1">
+                        <label>E-Mail ID of Manager:</label>
+                        <span><?= $p_employer['email_manager'] ?></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <label>Reason for leaving:</label>
+                        <span><?= $p_employer['reason_of_leaving'] ?></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label>HR Name:</label>
+                        <span><?= $p_employer['hr_name'] ?></span>
+                    </td>
+                    <td>
+                        <label>HR Designation:</label>
+                        <span><?= $p_employer['hr_designation'] ?></span>
+                    </td>
+
+
+                    <td>
+                        <label>HR Contact No:</label>
+                        <span><?= $p_employer['hr_contact_number'] ?></span>
+                    </td>
+                    <td>
+                        <label>HR Email:</label>
+                        <span><?= $p_employer['hr_email'] ?></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    <?php } ?>
     <!--table:previous employer end-->
-
-    <!--table:previous-to-previous employer start-->
-    <?php $p_to_p_employer =  $joiningFormDetails['employment_history']['previous_to_previous_employer'] ? (array)$joiningFormDetails['employment_history']['previous_to_previous_employer'] : null; ?>
-    <table class="table table-inner table-bordered">
-        <tbody>
-            <tr>
-                <th colspan="4">
-                    Previous to Previous Employer
-                </th>
-            </tr>
-            <tr>
-                <td>
-                    <label>Position held:</label>
-                    <span><?= $p_to_p_employer['position_held'] ?></span>
-                </td>
-                <td>
-                    <label for="">Dates (MM/YYYY)</label>
-                </td>
-                <td>
-                    <label for="">From:</label>
-                    <span><?= $p_to_p_employer['from_date'] ?></span>
-                </td>
-                <td>
-                    <label for="">To:</label>
-                    <span><?= $p_to_p_employer['to_date'] ?></span>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="4">
-                    <label for="">Company:</label>
-                    <span><?= $p_to_p_employer['company'] ?></span>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <label for="">Department:</label>
-                    <span><?= $p_to_p_employer['department'] ?></span>
-                </td>
-                <td colspan="2">
-                    <label for="">Nature of Job:</label>
-                    <span><?= $p_to_p_employer['nature_of_job'] ?></span>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="4">
-                    <label for="">Address:</label>
-                    <span><?= $p_to_p_employer['address'] ?></span>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <label for="">City:</label>
-                    <span><?= $p_to_p_employer['city'] ?></span>
-                </td>
-                <td colspan="2">
-                    <label for="">Telephone:</label>
-                    <span><?= $p_to_p_employer['telephone'] ?></span>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="4">
-                    <label for="">Main Job Responsibilities:</label>
-                    <span><?= $p_to_p_employer['job_responsibilities'] ?></span>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <label for="">Annual CTC(in Lacs):</label>
-                    <span><?= $p_to_p_employer['annual_ctc'] ?></span>
-                </td>
-                <td colspan="2">
-                    <label for="">Name of Reporting Manager:</label>
-                    <span><?= $p_to_p_employer['reporting_manager'] ?></span>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <label for="">Contact No. of Manager:</label>
-                    <span><?= $p_to_p_employer['contact_number_manager'] ?></span>
-                </td>
-                <td colspan="2">
-                    <label for="">E-Mail ID of Manager:</label>
-                    <span><?= $p_to_p_employer['email_manager'] ?></span>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="4">
-                    <label for="">Reason for leaving:</label>
-                    <span><?= $p_to_p_employer['reason_of_leaving'] ?></span>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <!--table:previous-to-previous employer end-->
 
     <!--table:Gap declaration start-->
     <table class="table table-inner table-bordered">
@@ -740,13 +625,13 @@
                 <td><b>Gap Period From</b></td>
                 <td><b>Gap Period To</b></td>
             </tr>
-            <?php if (!empty($joiningFormDetails['employment_history']['gap_declaration'])) { ?>
-                <?php foreach ($joiningFormDetails['employment_history']['gap_declaration'] as $key=>$gap) { ?>
+            <?php if (!empty($joiningFormDetails['gap_declaration'])) { ?>
+                <?php foreach ($joiningFormDetails['gap_declaration'] as $key => $gap) { ?>
                     <tr>
-                        <td><?=$key+1?></td>
-                        <td><?= $gap->particular ?></td>
-                        <td><?= $gap->from_date ?></td>
-                        <td><?= $gap->to_date ?></td>
+                        <td><?= $key + 1 ?></td>
+                        <td><?= $gap['particular'] ?></td>
+                        <td><?= $gap['from_date'] ?></td>
+                        <td><?= $gap['to_date'] ?></td>
                     </tr>
                 <?php } ?>
             <?php } else { ?>
@@ -764,275 +649,8 @@
     </table>
     <!--table:Gap declaration end-->
 
-    <!--table:hr references start-->
-    <table class="table table-inner table-bordered">
-        <tbody>
-            <tr>
-                <th colspan="2">
-                    HR References
-                </th>
-            </tr>
-
-            <tr>
-                <td colspan="2">
-                    <p>Please give the details of HR (from previous organizations) including contact details and company details.</p>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <b>Reference 1</b> (<i>from previous organization</i>)
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="">Name:</label>
-                    <span><?=$p_employer['hr_name']?></span>
-                </td>
-                <td>
-                    <label for="">Designation:</label>
-                    <span><?=$p_employer['hr_designation']?></span>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <label for="">Company:</label>
-                    <span><?=$p_employer['company']?></span>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <label for="">Company's Address:</label>
-                    <span><?=$p_employer['address']?></span>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="">HR Contact No:</label>
-                    <span><?=$p_employer['hr_contact_number']?></span>
-                </td>
-                <td>
-                    <label for="">Email Id:</label>
-                    <span><?=$p_employer['hr_email']?></span>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2"></td>
-            </tr>
 
 
-            <tr>
-                <td colspan="2">
-                    <b>Reference 2</b> (<i>from previous-to-previous organization</i>)
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="">Name:</label>
-                    <span><?=$p_to_p_employer['hr_name']?></span>
-                </td>
-                <td>
-                    <label for="">Designation:</label>
-                    <span><?=$p_to_p_employer['hr_designation']?></span>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <label for="">Company:</label>
-                    <span><?=$p_to_p_employer['company']?></span>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <label for="">Company's Address:</label>
-                    <span><?=$p_to_p_employer['address']?></span>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="">HR Contact No:</label>
-                    <span><?=$p_to_p_employer['hr_contact_number']?></span>
-                </td>
-                <td>
-                    <label for="">Email Id:</label>
-                    <span><?=$p_to_p_employer['hr_email']?></span>
-                </td>
-            </tr>
-
-        </tbody>
-    </table>
-    <!--table:hr references end-->
-
-    <!--table:background information start-->
-    <table class="table table-inner table-bordered">
-        <colgroup>
-            <col style="width: 90%;">
-            <col>
-        </colgroup>
-        <tbody>
-            <tr>
-                <th colspan="2">
-                    <p><b>Background Information</b></p>
-                    <p>If you respond ‘yes’ to any of the questions please provide full details on a separate sheet and attach to this application.</p>
-
-                </th>
-            </tr>
-            <tr>
-                <th colspan="2">
-                    Criminal and civil record
-                </th>
-            </tr>
-            <tr>
-                <td style="width: 90%;">
-                    <?= getBackgroundInformationQuestion('C01') ?>
-                </td>
-                <td>
-                    <?= $joiningFormDetails['background_info']['criminal_and_civil_record']->C01 ? "Yes" : "No" ?>
-                </td>
-            </tr>
-
-            <tr>
-                <td>
-                    <?= getBackgroundInformationQuestion('C02') ?>
-                </td>
-                <td>
-                    <?= $joiningFormDetails['background_info']['criminal_and_civil_record']->C02 ? "Yes" : "No" ?>
-                </td>
-            </tr>
-
-            <tr>
-                <td>
-                    <?= getBackgroundInformationQuestion('C03') ?>
-                </td>
-                <td>
-                    <?= $joiningFormDetails['background_info']['criminal_and_civil_record']->C03 ? "Yes" : "No" ?>
-                </td>
-            </tr>
-
-            <tr>
-                <td>
-                    <?= getBackgroundInformationQuestion('C04') ?>
-                </td>
-                <td>
-                    <?= $joiningFormDetails['background_info']['criminal_and_civil_record']->C04 ? "Yes" : "No" ?>
-                </td>
-            </tr>
-
-            <tr>
-                <td>
-                    <?= getBackgroundInformationQuestion('C05') ?>
-                </td>
-                <td>
-                    <?= $joiningFormDetails['background_info']['criminal_and_civil_record']->C05 ? "Yes" : "No" ?>
-                </td>
-            </tr>
-
-            <tr>
-                <td>
-                    <?= getBackgroundInformationQuestion('C06') ?>
-                </td>
-                <td>
-                    <?= $joiningFormDetails['background_info']['criminal_and_civil_record']->C06 ? "Yes" : "No" ?>
-                </td>
-            </tr>
-
-            <tr>
-                <td>
-                    <?= getBackgroundInformationQuestion('C07') ?>
-                </td>
-                <td>
-                    <?= $joiningFormDetails['background_info']['criminal_and_civil_record']->C07 ? "Yes" : "No" ?>
-                </td>
-            </tr>
-
-            <tr>
-                <td>
-                    <?= getBackgroundInformationQuestion('C08') ?>
-                </td>
-                <td>
-                    <?= $joiningFormDetails['background_info']['criminal_and_civil_record']->C08 ? "Yes" : "No" ?>
-                </td>
-            </tr>
-
-            <tr>
-                <th colspan="2">
-                    Business Interests
-                </th>
-            </tr>
-            <tr>
-                <td>
-                    <?= getBackgroundInformationQuestion('B01') ?>
-                </td>
-                <td>
-                    <?= $joiningFormDetails['background_info']['business_interest']->B01 ? "Yes" : "No" ?>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <?= getBackgroundInformationQuestion('B02') ?>
-                </td>
-                <td>
-                    <?= $joiningFormDetails['background_info']['business_interest']->B02 ? "Yes" : "No" ?>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <?= getBackgroundInformationQuestion('B03') ?>
-                </td>
-                <td>
-                    <?= $joiningFormDetails['background_info']['business_interest']->B03 ? "Yes" : "No" ?>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <?= getBackgroundInformationQuestion('B04') ?>
-                </td>
-                <td>
-                    <?= $joiningFormDetails['background_info']['business_interest']->B04 ? "Yes" : "No" ?>
-                </td>
-            </tr>
-
-
-            <tr>
-                <th colspan="2">
-                    Other actions and disqualifications
-                </th>
-            </tr>
-            <tr>
-                <td>
-                    <?= getBackgroundInformationQuestion('O01') ?>
-                </td>
-                <td>
-                    <?= $joiningFormDetails['background_info']['other_disqualification']->O01 ? "Yes" : "No" ?>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <?= getBackgroundInformationQuestion('O02') ?>
-                </td>
-                <td>
-                    <?= $joiningFormDetails['background_info']['other_disqualification']->O02 ? "Yes" : "No" ?>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <?= getBackgroundInformationQuestion('O03') ?>
-                </td>
-                <td>
-                    <?= $joiningFormDetails['background_info']['other_disqualification']->O03 ? "Yes" : "No" ?>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <?= getBackgroundInformationQuestion('O04') ?>
-                </td>
-                <td>
-                    <?= $joiningFormDetails['background_info']['other_disqualification']->O04 ? "Yes" : "No" ?>
-                </td>
-            </tr>
-
-        </tbody>
-    </table>
-    <!--table:background information end-->
 
     <!--table:previous addresses start-->
     <table class="table table-inner table-bordered">
@@ -1053,9 +671,9 @@
             </tr>
 
             <?php if (!empty($joiningFormDetails['background_info']['previous_address'])) { ?>
-                <?php foreach ($joiningFormDetails['background_info']['previous_address'] as $key=>$address) { ?>
+                <?php foreach ($joiningFormDetails['background_info']['previous_address'] as $key => $address) { ?>
                     <tr>
-                       
+
                         <td><?= $address->address ?></td>
                         <td><?= $address->postcode ?></td>
                         <td><?= $address->dates ?></td>
@@ -1092,13 +710,13 @@
                     <b>Age</b>
                 </td>
             </tr>
-            <?php if (!empty($joiningFormDetails['background_info']['mediclaim'])) { ?>
-                <?php foreach ($joiningFormDetails['background_info']['mediclaim'] as $key=>$mediclaim) { ?>
+            <?php if (!empty($joiningFormDetails['mediclaim'])) { ?>
+                <?php foreach ($joiningFormDetails['mediclaim'] as $key => $mediclaim) { ?>
                     <tr>
-                        <td><?= $mediclaim->name ?></td>
-                        <td><?= $mediclaim->relationship ?></td>
-                        <td><?= $mediclaim->dob ?></td>
-                        <td><?= $mediclaim->age ?></td>
+                        <td><?= $mediclaim['name'] ?></td>
+                        <td><?= $mediclaim['relationship'] ?></td>
+                        <td><?= $mediclaim['dob'] ?></td>
+                        <td><?= $mediclaim['age'] ?></td>
                     </tr>
                 <?php } ?>
             <?php } else { ?>
@@ -1115,11 +733,11 @@
     <table class="table table-inner table-bordered">
         <tbody>
             <tr>
-                <th colspan="6">Employees Close Relatives working with BitString, if any</th>
+                <th colspan="3">Employees Close Relatives working with BitString, if any</th>
             </tr>
 
             <tr>
-                <td colspan="4">
+                <td>
                     <b>Name </b>
                 </td>
                 <td>
@@ -1129,13 +747,192 @@
                     <b>Position</b>
                 </td>
             </tr>
-            <tr>
-                <td colspan="4"></td>
-                <td></td>
-                <td></td>
-            </tr>
+            <?php if (!empty($joiningFormDetails['background_info']['relative_with_bitstring'])) { ?>
+                <?php foreach ($joiningFormDetails['background_info']['relative_with_bitstring'] as $key => $relative) {
+                    $relative = (array)$relative; ?>
+                    <tr>
+                        <td><?= $relative['name'] ?></td>
+                        <td><?= $relative['relationship'] ?></td>
+                        <td><?= $relative['position'] ?></td>
+                    </tr>
+                <?php } ?>
+            <?php } else { ?>
+                <tr>
+                    <td colspan="3"> No data available </td>
+                </tr>
+            <?php } ?>
         </tbody>
     </table>
+
+
+    <!--table:background information start-->
+    <table class="table table-inner table-bordered">
+        
+        <tbody>
+            <tr>
+                <th colspan="12">
+                    <p><b>Background Information</b></p>
+                    <p>If you respond ‘yes’ to any of the questions please provide full details on a separate sheet and attach to this application.</p>
+
+                </th>
+            </tr>
+            <tr>
+                <th colspan="12">
+                    Criminal and civil record
+                </th>
+            </tr>
+            <tr>
+                <td colspan="11">
+                    <?= getBackgroundInformationQuestion('C01') ?>
+                </td>
+                <td>
+                    <?= $joiningFormDetails['background_info']['criminal_and_civil_record']->C01 ? "Yes" : "No" ?>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="11">
+                    <?= getBackgroundInformationQuestion('C02') ?>
+                </td>
+                <td>
+                    <?= $joiningFormDetails['background_info']['criminal_and_civil_record']->C02 ? "Yes" : "No" ?>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="11">
+                    <?= getBackgroundInformationQuestion('C03') ?>
+                </td>
+                <td>
+                    <?= $joiningFormDetails['background_info']['criminal_and_civil_record']->C03 ? "Yes" : "No" ?>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="11">
+                    <?= getBackgroundInformationQuestion('C04') ?>
+                </td>
+                <td>
+                    <?= $joiningFormDetails['background_info']['criminal_and_civil_record']->C04 ? "Yes" : "No" ?>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="11">
+                    <?= getBackgroundInformationQuestion('C05') ?>
+                </td>
+                <td>
+                    <?= $joiningFormDetails['background_info']['criminal_and_civil_record']->C05 ? "Yes" : "No" ?>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="11">
+                    <?= getBackgroundInformationQuestion('C06') ?>
+                </td>
+                <td>
+                    <?= $joiningFormDetails['background_info']['criminal_and_civil_record']->C06 ? "Yes" : "No" ?>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="11">
+                    <?= getBackgroundInformationQuestion('C07') ?>
+                </td>
+                <td>
+                    <?= $joiningFormDetails['background_info']['criminal_and_civil_record']->C07 ? "Yes" : "No" ?>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="11">
+                    <?= getBackgroundInformationQuestion('C08') ?>
+                </td>
+                <td>
+                    <?= $joiningFormDetails['background_info']['criminal_and_civil_record']->C08 ? "Yes" : "No" ?>
+                </td>
+            </tr>
+
+            <tr>
+                <th colspan="12">
+                    Business Interests
+                </th>
+            </tr>
+            <tr>
+                <td colspan="11">
+                    <?= getBackgroundInformationQuestion('B01') ?>
+                </td>
+                <td>
+                    <?= $joiningFormDetails['background_info']['business_interest']->B01 ? "Yes" : "No" ?>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="11">
+                    <?= getBackgroundInformationQuestion('B02') ?>
+                </td>
+                <td>
+                    <?= $joiningFormDetails['background_info']['business_interest']->B02 ? "Yes" : "No" ?>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="11">
+                    <?= getBackgroundInformationQuestion('B03') ?>
+                </td>
+                <td>
+                    <?= $joiningFormDetails['background_info']['business_interest']->B03 ? "Yes" : "No" ?>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="11">
+                    <?= getBackgroundInformationQuestion('B04') ?>
+                </td>
+                <td>
+                    <?= $joiningFormDetails['background_info']['business_interest']->B04 ? "Yes" : "No" ?>
+                </td>
+            </tr>
+
+
+            <tr>
+                <th colspan="12">
+                    Other actions and disqualifications
+                </th>
+            </tr>
+            <tr>
+                <td colspan="11">
+                    <?= getBackgroundInformationQuestion('O01') ?>
+                </td>
+                <td>
+                    <?= $joiningFormDetails['background_info']['other_disqualification']->O01 ? "Yes" : "No" ?>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="11">
+                    <?= getBackgroundInformationQuestion('O02') ?>
+                </td>
+                <td>
+                    <?= $joiningFormDetails['background_info']['other_disqualification']->O02 ? "Yes" : "No" ?>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="11">
+                    <?= getBackgroundInformationQuestion('O03') ?>
+                </td>
+                <td>
+                    <?= $joiningFormDetails['background_info']['other_disqualification']->O03 ? "Yes" : "No" ?>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="11">
+                    <?= getBackgroundInformationQuestion('O04') ?>
+                </td>
+                <td>
+                    <?= $joiningFormDetails['background_info']['other_disqualification']->O04 ? "Yes" : "No" ?>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <!--table:background information end-->
 
     <!--table:declaration start-->
     <table class="table table-inner table-bordered">
@@ -1153,12 +950,14 @@
             <tr>
                 <td colspan="6">
                     <b>Applicant’s signature: </b>
+                    <br>
+                    <br>
                 </td>
             </tr>
 
             <tr>
-                <td colspan="5"><label for="">Full Name:</label></td>
-                <td><label for="">Date:</label></td>
+                <td colspan="5"><label>Full Name:</label></td>
+                <td><label>Date:</label></td>
             </tr>
         </tbody>
     </table>
@@ -1178,12 +977,14 @@
             <tr>
                 <td colspan="6">
                     <b>Employee's signature: </b>
+                    <br>
+                    <br>
                 </td>
             </tr>
 
             <tr>
-                <td colspan="5"><label for="">Full Name:</label></td>
-                <td><label for="">Date:</label></td>
+                <td colspan="5"><label>Full Name:</label></td>
+                <td><label>Date:</label></td>
             </tr>
         </tbody>
     </table>

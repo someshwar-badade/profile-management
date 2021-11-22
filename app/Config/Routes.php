@@ -60,7 +60,13 @@ $routes->match(['get', 'post'],'/joining-form-verification/(:any)', 'Profiles::j
 $routes->get('/download-joining-form/(:any)', 'Profiles::downloadJoiningForm/$1',['as'=>'downloadJoiningForm']);
 $routes->post('/api/employee-joining-form/save-employee-details', 'Api\Profiles::joiningFormSaveEmployeeDetails',['as'=>'joiningFormSaveEmployeeDetails']);
 $routes->post('/api/employee-joining-form/save-education-details', 'Api\Profiles::joiningFormSaveEducationDetails',['as'=>'joiningFormSaveEducationDetails']);
-$routes->post('/api/employee-joining-form/save-profetional-qualification', 'Api\Profiles::joiningFormSaveProfetionalQualification',['as'=>'joiningFormSaveProfetionalQualification']);
+$routes->post('/api/employee-joining-form/remove-education-details', 'Api\Profiles::joiningFormRemoveEducationDetails',['as'=>'joiningFormRemoveEducationDetails']);
+$routes->post('/api/employee-joining-form/save-gap-declaration', 'Api\Profiles::joiningFormSaveGapdeclaration',['as'=>'joiningFormSaveGapdeclaration']);
+$routes->post('/api/employee-joining-form/remove-gap-declaration', 'Api\Profiles::joiningFormRemoveGapdeclaration',['as'=>'joiningFormRemoveGapdeclaration']);
+$routes->post('/api/employee-joining-form/save-mediclaim', 'Api\Profiles::joiningFormSaveMediclaim',['as'=>'joiningFormSaveMediclaim']);
+$routes->post('/api/employee-joining-form/remove-mediclaim', 'Api\Profiles::joiningFormRemoveMediclaim',['as'=>'joiningFormRemoveMediclaim']);
+$routes->post('/api/employee-joining-form/save-professional-qualification', 'Api\Profiles::joiningFormSaveProfetionalQualification',['as'=>'joiningFormSaveProfetionalQualification']);
+$routes->post('/api/employee-joining-form/remove-professional-qualification', 'Api\Profiles::joiningFormRemoveProfetionalQualification',['as'=>'joiningFormRemoveProfetionalQualification']);
 $routes->post('/api/employee-joining-form/save-employment-history', 'Api\Profiles::joiningFormSaveEmploymentHistory',['as'=>'joiningFormSaveEmploymentHistory']);
 $routes->post('/api/employee-joining-form/save-background-information', 'Api\Profiles::joiningFormSaveBackgroundInfo',['as'=>'joiningFormSaveBackgroundInfo']);
 $routes->post('/api/employee-joining-form/accept-declaration', 'Api\Profiles::joiningFormAcceptDeclaration',['as'=>'joiningFormAcceptDeclaration']);

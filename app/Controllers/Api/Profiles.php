@@ -7,7 +7,12 @@ use CodeIgniter\API\ResponseTrait;
 use App\Models\ProfileModel;
 use App\Models\UserModel;
 use App\Models\EmployeeJoinigDetailsModel;
+use App\Models\EducationQualificationModel;
+use App\Models\GapDeclarationModel;
+use App\Models\MediclaimModel;
+use App\Models\ProfessionalQualificationModel;
 use App\Models\SkillsModel;
+use DateTime;
 
 class Profiles extends ResourceController
 {
@@ -535,7 +540,7 @@ class Profiles extends ResourceController
             'employee_other_details' => '',
         ];
         $requestData = array_intersect_key($requestData, $allowedColums);
-
+        $requestData['employee_other_details'] = (array)$requestData['employee_other_details'];
         //validation
         $validation =  \Config\Services::validation();
 
@@ -547,14 +552,26 @@ class Profiles extends ResourceController
             'aadhar_number' => ['label' => 'Aadhar Number', 'rules' => 'required|numeric|exact_length[12]'],
             'pan_number' => ['label' => 'PAN Number', 'rules' => 'required|alpha_numeric|exact_length[10]|valid_pan'],
             'email_primary' => ['label' => 'Email', 'rules' => 'required|valid_email|is_unique[employee_joining_form_details.email_primary,id,' . $joiningFormId . ']'],
+            'mobile_primary' => ['label' => 'Mobile', 'rules' => 'required|exact_length[10]'],
+
+            'employee_other_details.bank_ifsc_code' => ['label' => 'PAN Number', 'rules' => 'required|valid_ifsc'],
+            'employee_other_details.bank_name_branch' => ['label' => 'Bank Name & Branch', 'rules' => 'required'],
+            'employee_other_details.bank_account_number' => ['label' => 'Bank A/c No', 'rules' => 'required'],
+
+            'employee_other_details.gender' => ['label' => 'Gender', 'rules' => 'required'],
+            'employee_other_details.marital_status' => ['label' => 'Marital Status', 'rules' => 'required'],
+            'employee_other_details.blood_group' => ['label' => 'Blood Group', 'rules' => 'required'],
+            'employee_other_details.emergency_contact_name' => ['label' => 'Emergency Contact Name and Relation', 'rules' => 'required'],
+            'employee_other_details.emergency_contact_mobile' => ['label' => 'Emergency Mobile No', 'rules' => 'required'],
+            
+            'employee_other_details.present_address' => ['label' => 'Present Address', 'rules' => 'required'],
+            'employee_other_details.present_address_postcode' => ['label' => 'Postcode', 'rules' => 'required'],
+            'employee_other_details.present_address_residing_duration' => ['label' => 'For how long', 'rules' => 'required'],
+
+            'employee_other_details.permanent_address' => ['label' => 'Permanent Address', 'rules' => 'required'],
+            'employee_other_details.permanent_address_postcode' => ['label' => 'Postcode', 'rules' => 'required'],
         ];
 
-        // echo '<pre>';print_r($requestData);die;
-        $requestData['employee_other_details'] = (array)$requestData['employee_other_details'];
-        if (strlen($requestData['employee_other_details']['bank_ifsc_code'])) {
-            //
-            $rules['employee_other_details.bank_ifsc_code'] = ['label' => 'PAN Number', 'rules' => 'valid_ifsc'];
-        }
 
         $validation->setRules(
             $rules
@@ -581,66 +598,365 @@ class Profiles extends ResourceController
 
     public function joiningFormSaveEducationDetails()
     {
-        $requestData = (array) $this->request->getJSON();
+
+        $document = $this->request->getFile('edudocument');
+        $requestData =  json_decode($_POST['requestData'], true);
         //$requestData = $this->request->getRawInput();
         $allowedColums = [
-            'education_qualification' => ''
+            'id' => '',
+            'joining_form_id' => '',
+            'degree' => '',
+            'university' => '',
+            'institution' => '',
+            'from_date' => '',
+            'to_date' => '',
+            'course_type' => '',
+            'percentage' => '',
+            'document_path' => '',
         ];
-        $joiningFormId = $requestData['id'];
+        // $joiningFormId = $requestData['joining_form_id'];
         $requestData = array_intersect_key($requestData, $allowedColums);
-
+        $joiningFormId = $requestData['joining_form_id'];
         //validation
         $validation =  \Config\Services::validation();
-        $rules = [];
-        $validationData = [
-            'degree' => [],
-            'university' => [],
-            'institution' => [],
-            'from_date' => [],
-            'to_date' => [],
-            'percentage' => [],
-        ];
-        foreach ($requestData['education_qualification'] as $key => $item) {
 
-            array_push($validationData['degree'], $item->degree);
-            array_push($validationData['university'], $item->university);
-            array_push($validationData['institution'], $item->institution);
-            array_push($validationData['from_date'], $item->from_date);
-            array_push($validationData['to_date'], $item->to_date);
-            array_push($validationData['percentage'], $item->percentage);
-        }
 
         $rules = [
-            'degree.*' => ['label' => 'Degree/course', 'rules' => 'required'],
-            'university.*' => ['label' => 'Course Title along with Board / University', 'rules' => 'required'],
-            'institution.*' => ['label' => 'address of school/Institution', 'rules' => 'required'],
-            'from_date.*' => ['label' => 'From', 'rules' => 'required'],
-            'to_date.*' => ['label' => 'To', 'rules' => 'required'],
-            'percentage.*' => ['label' => 'Percentage/CGPA', 'rules' => 'required'],
+            'degree' => ['label' => 'Degree/course', 'rules' => 'required'],
+            'university' => ['label' => 'Course Title along with Board / University', 'rules' => 'required'],
+            'institution' => ['label' => 'address of school/Institution', 'rules' => 'required'],
+            'from_date' => ['label' => 'From', 'rules' => 'required'],
+            'to_date' => ['label' => 'To', 'rules' => 'required'],
+            'course_type' => ['label' => 'To', 'rules' => 'required'],
+            'percentage' => ['label' => 'Percentage/CGPA', 'rules' => 'required'],
         ];
+        
+        if(empty($requestData['document_path']) || !file_exists(DOCUMENTS_PATH . $requestData['document_path']) ){
+            $rules['edudocument'] = ['label' => 'Document', 'rules' => 'uploaded[edudocument]|max_size[edudocument,1000]|mime_in[edudocument,image/png,image/jpg,image/jpeg,image/bmp,application/pdf,application/force-download,application/x-download,application/msword,application/vnd.ms-office,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/zip,application/x-zip]'];
+        }
+
+        if (!file_exists(DOCUMENTS_PATH . $requestData['document_path'])) {
+
+            $rules['edudocument'] = ['label' => 'Document', 'rules' => 'uploaded[edudocument]|max_size[edudocument,1000]|mime_in[edudocument,image/png,image/jpg,image/jpeg,image/bmp,application/pdf,application/force-download,application/x-download,application/msword,application/vnd.ms-office,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/zip,application/x-zip]'];
+        }
+        
+
         $validation->setRules(
             $rules
         );
 
-        $valid = $validation->run($validationData);
+
+
+
+        $valid = $validation->run($requestData);
         if (!$valid) {
-            //  return $this->fail($validation->getErrors(), 400);
-            return $this->fail(['education_qualification' => "Please fill all the fields."], 400);
+            return $this->fail($validation->getErrors(), 400);
+            // return $this->fail(['education_qualification' => "Please fill all the fields."], 400);
         }
 
-        $model = new EmployeeJoinigDetailsModel();
+
+        if (isset($document)) {
+            $pathToUpload = "form_" . $joiningFormId;
+
+            if (!file_exists(str_replace(APPPATH, '', DOCUMENTS_PATH) . $pathToUpload)) {
+                mkdir(str_replace(APPPATH, '', DOCUMENTS_PATH) . $pathToUpload, 0777, true);
+                fopen(str_replace(APPPATH, '', DOCUMENTS_PATH) . $pathToUpload . "/index.html", 'w');
+            }
+
+            $newName = $document->getRandomName();
+            $document->move(DOCUMENTS_PATH . $pathToUpload, $newName);
+            //remove old document
+
+            if (isset($requestData['document_path'])) {
+                if (file_exists(DOCUMENTS_PATH . $requestData['document_path']) && !empty($requestData['document_path'])) {
+
+                    unlink(DOCUMENTS_PATH . $requestData['document_path']);
+                }
+            }
+
+            $requestData['document_path'] = $pathToUpload . '/' . $newName;
+        }
+
+        $model = new EducationQualificationModel();
 
 
+        //$requestData['education_qualification'] = $requestData['education_qualification'] ? json_encode($requestData['education_qualification']) : null;
+        if (empty($requestData['id'])) {
+            $model->insert($requestData);
+        } else {
+            $model->save($requestData);
+        }
 
-        $requestData['education_qualification'] = $requestData['education_qualification'] ? json_encode($requestData['education_qualification']) : null;
-        $id =  $model->update($joiningFormId, $requestData);
 
         $response = [
-            'id'   => $joiningFormId,
+            'list' => $model->where('joining_form_id', $joiningFormId)->find(),
             'action_type' => 'Updated',
             'error'    => null,
             'messages' => [
                 'success' => 'Done'
+            ]
+        ];
+        return $this->respondUpdated($response);
+    }
+
+    public function joiningFormRemoveEducationDetails()
+    {
+        $requestData =  $this->request->getJSON(true);
+        $id = $requestData['id'];
+
+        $model = new EducationQualificationModel();
+        $educationDetails = (array)$model->find($id);
+        $model->delete($id);
+        $joiningFormId = $educationDetails['joining_form_id'];
+        //remove document
+
+        if (file_exists(DOCUMENTS_PATH . $educationDetails['document_path']) && !empty($educationDetails['document_path'])) {
+            unlink(DOCUMENTS_PATH . $educationDetails['document_path']);
+        }
+
+        $response = [
+            'list' => $model->where('joining_form_id', $joiningFormId)->find(),
+            'action_type' => 'Updated',
+            'error'    => null,
+            'messages' => [
+                'success' => 'Deleted'
+            ]
+        ];
+        return $this->respondUpdated($response);
+    }
+
+    public function joiningFormSaveGapdeclaration()
+    {
+        $document = $this->request->getFile('gapdocument');
+        $requestData =  json_decode($_POST['requestData'], true);
+        //$requestData = $this->request->getRawInput();
+        $allowedColums = [
+            'id' => '',
+            'joining_form_id' => '',
+            'particular' => '',
+            'from_date' => '',
+            'to_date' => '',
+            'document_path' => '',
+        ];
+        // $joiningFormId = $requestData['joining_form_id'];
+        $requestData = array_intersect_key($requestData, $allowedColums);
+        $joiningFormId = $requestData['joining_form_id'];
+        //validation
+        $validation =  \Config\Services::validation();
+
+
+        $rules = [
+            'particular' => ['label' => 'Particulars', 'rules' => 'required'],
+            'from_date' => ['label' => 'From', 'rules' => 'required'],
+            'to_date' => ['label' => 'To', 'rules' => 'required'],
+        ];
+        if (empty($requestData['document_path']) || !file_exists(DOCUMENTS_PATH . $requestData['document_path'])) {
+
+            $rules['gapdocument'] = ['label' => 'Certificate', 'rules' => 'uploaded[gapdocument]|max_size[gapdocument,1000]|mime_in[gapdocument,image/png,image/jpg,image/jpeg,image/bmp,application/pdf,application/force-download,application/x-download,application/msword,application/vnd.ms-office,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/zip,application/x-zip]'];
+        }
+       
+
+        $validation->setRules(
+            $rules
+        );
+
+
+
+
+        $valid = $validation->run($requestData);
+        if (!$valid) {
+            return $this->fail($validation->getErrors(), 400);
+            // return $this->fail(['education_qualification' => "Please fill all the fields."], 400);
+        }
+
+
+        if (isset($document)) {
+            $pathToUpload = "form_" . $joiningFormId;
+
+            if (!file_exists(str_replace(APPPATH, '', DOCUMENTS_PATH) . $pathToUpload)) {
+                mkdir(str_replace(APPPATH, '', DOCUMENTS_PATH) . $pathToUpload, 0777, true);
+                fopen(str_replace(APPPATH, '', DOCUMENTS_PATH) . $pathToUpload . "/index.html", 'w');
+            }
+
+            $newName = $document->getRandomName();
+            $document->move(DOCUMENTS_PATH . $pathToUpload, $newName);
+            //remove old document
+
+            if (isset($requestData['document_path'])) {
+                if (file_exists(DOCUMENTS_PATH . $requestData['document_path']) && !empty($requestData['document_path'])) {
+
+                    unlink(DOCUMENTS_PATH . $requestData['document_path']);
+                }
+            }
+
+            $requestData['document_path'] = $pathToUpload . '/' . $newName;
+        }
+
+        $model = new GapDeclarationModel();
+
+
+        //$requestData['education_qualification'] = $requestData['education_qualification'] ? json_encode($requestData['education_qualification']) : null;
+        if (empty($requestData['id'])) {
+            $model->insert($requestData);
+        } else {
+            $model->save($requestData);
+        }
+
+
+        $response = [
+            'list' => $model->where('joining_form_id', $joiningFormId)->find(),
+            'action_type' => 'Updated',
+            'error'    => null,
+            'messages' => [
+                'success' => 'Done'
+            ]
+        ];
+        return $this->respondUpdated($response);
+    }
+
+    public function joiningFormRemoveGapdeclaration()
+    {
+        $requestData =  $this->request->getJSON(true);
+        $id = $requestData['id'];
+
+       $model = new GapDeclarationModel();
+        
+        $educationDetails = (array)$model->find($id);
+        $model->delete($id);
+        $joiningFormId = $educationDetails['joining_form_id'];
+        //remove document
+
+        if (file_exists(DOCUMENTS_PATH . $educationDetails['document_path']) && !empty($educationDetails['document_path'])) {
+            unlink(DOCUMENTS_PATH . $educationDetails['document_path']);
+        }
+
+        $response = [
+            'list' => $model->where('joining_form_id', $joiningFormId)->find(),
+            'action_type' => 'Updated',
+            'error'    => null,
+            'messages' => [
+                'success' => 'Deleted'
+            ]
+        ];
+        return $this->respondUpdated($response);
+    }
+
+    public function joiningFormSaveMediclaim()
+    {
+        $document = $this->request->getFile('mediclaimdocumentPhoto');
+        $requestData =  json_decode($_POST['requestData'], true);
+        //$requestData = $this->request->getRawInput();
+        $allowedColums = [
+            'id' => '',
+            'joining_form_id' => '',
+            'name' => '',
+            'relationship' => '',
+            'dob' => '',
+            'age' => '',
+            'document_path' => '',
+        ];
+        // $joiningFormId = $requestData['joining_form_id'];
+        $requestData = array_intersect_key($requestData, $allowedColums);
+        $joiningFormId = $requestData['joining_form_id'];
+        //validation
+        $validation =  \Config\Services::validation();
+
+
+        $rules = [
+            'name' => ['label' => 'Name', 'rules' => 'required'],
+            'relationship' => ['label' => 'Relationship', 'rules' => 'required'],
+            'dob' => ['label' => 'Date of Birth', 'rules' => 'required'],
+        ];
+        if (empty($requestData['document_path']) || !file_exists(DOCUMENTS_PATH . $requestData['document_path'])) {
+
+            $rules['mediclaimdocumentPhoto'] = ['label' => 'Photo', 'rules' => 'uploaded[mediclaimdocumentPhoto]|max_size[mediclaimdocumentPhoto,1000]|mime_in[mediclaimdocumentPhoto,image/png,image/jpg,image/jpeg,image/bmp,application/pdf,application/force-download,application/x-download,application/msword,application/vnd.ms-office,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/zip,application/x-zip]'];
+        }
+      
+
+        $validation->setRules(
+            $rules
+        );
+
+
+
+
+        $valid = $validation->run($requestData);
+        if (!$valid) {
+            return $this->fail($validation->getErrors(), 400);
+            // return $this->fail(['education_qualification' => "Please fill all the fields."], 400);
+        }
+
+
+        if (isset($document)) {
+            $pathToUpload = "form_" . $joiningFormId;
+
+            if (!file_exists(str_replace(APPPATH, '', DOCUMENTS_PATH) . $pathToUpload)) {
+                mkdir(str_replace(APPPATH, '', DOCUMENTS_PATH) . $pathToUpload, 0777, true);
+                fopen(str_replace(APPPATH, '', DOCUMENTS_PATH) . $pathToUpload . "/index.html", 'w');
+            }
+
+            $newName = $document->getRandomName();
+            $document->move(DOCUMENTS_PATH . $pathToUpload, $newName);
+            //remove old document
+
+            if (isset($requestData['document_path'])) {
+                if (file_exists(DOCUMENTS_PATH . $requestData['document_path']) && !empty($requestData['document_path'])) {
+
+                    unlink(DOCUMENTS_PATH . $requestData['document_path']);
+                }
+            }
+
+            $requestData['document_path'] = $pathToUpload . '/' . $newName;
+        }
+
+        $model = new MediclaimModel();
+
+        //calculate age from dob
+        $bday = new DateTime($requestData['dob']); // Your date of birth
+        $today = new Datetime(date('m.d.y'));
+        $diff = $today->diff($bday);
+        $requestData['age'] = $diff->y;
+        //$requestData['education_qualification'] = $requestData['education_qualification'] ? json_encode($requestData['education_qualification']) : null;
+        if (empty($requestData['id'])) {
+            $model->insert($requestData);
+        } else {
+            $model->save($requestData);
+        }
+
+
+        $response = [
+            'list' => $model->where('joining_form_id', $joiningFormId)->find(),
+            'action_type' => 'Updated',
+            'error'    => null,
+            'messages' => [
+                'success' => 'Done'
+            ]
+        ];
+        return $this->respondUpdated($response);
+    }
+
+    public function joiningFormRemoveMediclaim()
+    {
+        $requestData =  $this->request->getJSON(true);
+        $id = $requestData['id'];
+
+       $model = new MediclaimModel();
+        
+        $educationDetails = (array)$model->find($id);
+        $model->delete($id);
+        $joiningFormId = $educationDetails['joining_form_id'];
+        //remove document
+
+        if (file_exists(DOCUMENTS_PATH . $educationDetails['document_path']) && !empty($educationDetails['document_path'])) {
+            unlink(DOCUMENTS_PATH . $educationDetails['document_path']);
+        }
+
+        $response = [
+            'list' => $model->where('joining_form_id', $joiningFormId)->find(),
+            'action_type' => 'Updated',
+            'error'    => null,
+            'messages' => [
+                'success' => 'Deleted'
             ]
         ];
         return $this->respondUpdated($response);
@@ -648,51 +964,89 @@ class Profiles extends ResourceController
 
     public function joiningFormSaveProfetionalQualification()
     {
-        $requestData = (array) $this->request->getJSON();
+        $document = $this->request->getFile('professionalDocument');
+        $requestData =  json_decode($_POST['requestData'], true);
         //$requestData = $this->request->getRawInput();
         $allowedColums = [
-            'professional_qualification' => ''
+            'id' => '',
+            'joining_form_id' => '',
+            'qualification' => '',
+            'category' => '',
+            'date' => '',
+            'document_path' => '',
         ];
-        $joiningFormId = $requestData['id'];
+        // $joiningFormId = $requestData['joining_form_id'];
         $requestData = array_intersect_key($requestData, $allowedColums);
-
+        $joiningFormId = $requestData['joining_form_id'];
         //validation
         $validation =  \Config\Services::validation();
-        $rules = [];
-        $validationData = [
-            'qualification' => [],
-            'category' => [],
-            'date' => [],
-        ];
-        foreach ($requestData['professional_qualification'] as $key => $item) {
 
-            array_push($validationData['qualification'], $item->qualification);
-            array_push($validationData['category'], $item->category);
-            array_push($validationData['date'], $item->date);
-        }
 
         $rules = [
-            'qualification.*' => ['label' => 'Qualification/Body/Institute / Licence', 'rules' => 'required'],
-            'category.*' => ['label' => 'Category/Membership level', 'rules' => 'required'],
-            'date.*' => ['label' => 'Dates', 'rules' => 'required'],
+            'qualification' => ['label' => 'Qualification', 'rules' => 'required'],
+            'category' => ['label' => 'Category', 'rules' => 'required'],
+            'date' => ['label' => 'Date', 'rules' => 'required'],
         ];
+
+        if (empty($requestData['document_path']) || !file_exists(DOCUMENTS_PATH . $requestData['document_path'])) {
+
+            $rules['professionalDocument'] = ['label' => 'Certificate', 'rules' => 'uploaded[professionalDocument]|max_size[professionalDocument,1000]|mime_in[professionalDocument,image/png,image/jpg,image/jpeg,image/bmp,application/pdf,application/force-download,application/x-download,application/msword,application/vnd.ms-office,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/zip,application/x-zip]'];
+        }
+
+
         $validation->setRules(
             $rules
         );
 
-        $valid = $validation->run($validationData);
+
+
+
+        $valid = $validation->run($requestData);
         if (!$valid) {
-            //  return $this->fail($validation->getErrors(), 400);
-            return $this->fail(['professional_qualification' => "Please fill all the fields."], 400);
+            return $this->fail($validation->getErrors(), 400);
+            // return $this->fail(['education_qualification' => "Please fill all the fields."], 400);
         }
 
 
-        $model = new EmployeeJoinigDetailsModel();
-        $requestData['professional_qualification'] = $requestData['professional_qualification'] ? json_encode($requestData['professional_qualification']) : null;
-        $id =  $model->update($joiningFormId, $requestData);
+        if (isset($document)) {
+            $pathToUpload = "form_" . $joiningFormId;
+
+            if (!file_exists(str_replace(APPPATH, '', DOCUMENTS_PATH) . $pathToUpload)) {
+                mkdir(str_replace(APPPATH, '', DOCUMENTS_PATH) . $pathToUpload, 0777, true);
+                fopen(str_replace(APPPATH, '', DOCUMENTS_PATH) . $pathToUpload . "/index.html", 'w');
+            }
+
+            $newName = $document->getRandomName();
+            $document->move(DOCUMENTS_PATH . $pathToUpload, $newName);
+            //remove old document
+
+            if (isset($requestData['document_path'])) {
+                if (file_exists(DOCUMENTS_PATH . $requestData['document_path']) && !empty($requestData['document_path'])) {
+
+                    unlink(DOCUMENTS_PATH . $requestData['document_path']);
+                }
+            }
+
+            $requestData['document_path'] = $pathToUpload . '/' . $newName;
+        }
+
+        $model = new ProfessionalQualificationModel();
+
+        //calculate age from dob
+        $bday = new DateTime($requestData['dob']); // Your date of birth
+        $today = new Datetime(date('m.d.y'));
+        $diff = $today->diff($bday);
+        $requestData['age'] = $diff->y;
+        //$requestData['education_qualification'] = $requestData['education_qualification'] ? json_encode($requestData['education_qualification']) : null;
+        if (empty($requestData['id'])) {
+            $model->insert($requestData);
+        } else {
+            $model->save($requestData);
+        }
+
 
         $response = [
-            'id'   => $joiningFormId,
+            'list' => $model->where('joining_form_id', $joiningFormId)->find(),
             'action_type' => 'Updated',
             'error'    => null,
             'messages' => [
@@ -701,56 +1055,104 @@ class Profiles extends ResourceController
         ];
         return $this->respondUpdated($response);
     }
+
+    public function joiningFormRemoveProfetionalQualification()
+    {
+        $requestData =  $this->request->getJSON(true);
+        $id = $requestData['id'];
+
+       $model = new ProfessionalQualificationModel();
+        
+        $educationDetails = (array)$model->find($id);
+        $model->delete($id);
+        $joiningFormId = $educationDetails['joining_form_id'];
+        //remove document
+
+        if (file_exists(DOCUMENTS_PATH . $educationDetails['document_path']) && !empty($educationDetails['document_path'])) {
+            unlink(DOCUMENTS_PATH . $educationDetails['document_path']);
+        }
+
+        $response = [
+            'list' => $model->where('joining_form_id', $joiningFormId)->find(),
+            'action_type' => 'Updated',
+            'error'    => null,
+            'messages' => [
+                'success' => 'Deleted'
+            ]
+        ];
+        return $this->respondUpdated($response);
+    }
+
     public function joiningFormSaveEmploymentHistory()
     {
-        $requestData = (array) $this->request->getJSON();
+        $requestData = (array) $this->request->getJSON(true);
         //$requestData = $this->request->getRawInput();
         $allowedColums = [
             'employment_history' => ''
         ];
         $joiningFormId = $requestData['id'];
         $requestData = array_intersect_key($requestData, $allowedColums);
+
         $valid = true;
         //validation
         $validation =  \Config\Services::validation();
         $rules = [];
-        $validationData = [
-            'gap_declaration' => [
-                'particular' => [],
-                'from_date' => [],
-                'to_date' => [],
-            ]
-        ];
+        // $validationData = [
+        //     'gap_declaration' => [
+        //         'particular' => [],
+        //         'from_date' => [],
+        //         'to_date' => [],
+        //     ]
+        // ];
         // print_r($requestData['employment_history']);
-        if (!empty($requestData['employment_history']->gap_declaration)) {
+        // if (!empty($requestData['employment_history']->gap_declaration)) {
 
-            foreach ($requestData['employment_history']->gap_declaration as $key => $item) {
+        //     foreach ($requestData['employment_history']->gap_declaration as $key => $item) {
 
 
-                array_push($validationData['gap_declaration']['particular'], $item->particular);
-                array_push($validationData['gap_declaration']['from_date'], $item->from_date);
-                array_push($validationData['gap_declaration']['to_date'], $item->to_date);
+        //         array_push($validationData['gap_declaration']['particular'], $item->particular);
+        //         array_push($validationData['gap_declaration']['from_date'], $item->from_date);
+        //         array_push($validationData['gap_declaration']['to_date'], $item->to_date);
+        //     }
+
+        //     $rules = [
+        //         'gap_declaration.particular.*' => ['label' => 'Particulars ', 'rules' => 'required'],
+        //         'gap_declaration.from_date.*' => ['label' => 'From', 'rules' => 'required'],
+        //         'gap_declaration.to_date.*' => ['label' => 'To', 'rules' => 'required'],
+        //     ];
+        // }
+
+        if (!empty($requestData['employment_history']['employers'])) {
+            foreach ($requestData['employment_history']['employers'] as $key => $employer) {
+                $rules["employment_history.employers.$key.company"] = ['label' => 'Company', 'rules' => 'required'];
+                // $rules["employment_history.employers.$key.department"] = ['label' => 'Department', 'rules' => 'required'];
+                // $rules["employment_history.employers.$key.position_held"] = ['label' => 'Position Held', 'rules' => 'required'];
+                $rules["employment_history.employers.$key.nature_of_job"] = ['label' => 'Nature of Job', 'rules' => 'required'];
+                $rules["employment_history.employers.$key.reporting_manager"] = ['label' => 'Name of Reporting Manager', 'rules' => 'required'];
+                $rules["employment_history.employers.$key.contact_number_manager"] = ['label' => 'Contact Number', 'rules' => 'required'];
+                $rules["employment_history.employers.$key.email_manager"] = ['label' => 'Email', 'rules' => 'required'];
             }
-
-            $rules = [
-                'gap_declaration.particular.*' => ['label' => 'Particulars ', 'rules' => 'required'],
-                'gap_declaration.from_date.*' => ['label' => 'From', 'rules' => 'required'],
-                'gap_declaration.to_date.*' => ['label' => 'To', 'rules' => 'required'],
-            ];
         }
 
+        // if (!empty($requestData['employment_history']['gap_declaration'])) {
+        //     foreach ($requestData['employment_history']['gap_declaration'] as $key => $gap) {
+        //         $rules["employment_history.gap_declaration.$key.particular"] = ['label' => 'Particulars', 'rules' => 'required'];
+        //         $rules["employment_history.gap_declaration.$key.from_date"] = ['label' => 'From', 'rules' => 'required'];
+        //         $rules["employment_history.gap_declaration.$key.to_date"] = ['label' => 'To', 'rules' => 'required'];
+        //     }
+        // }
 
 
         if ($rules) {
             $validation->setRules(
                 $rules
             );
-            $valid = $validation->run($validationData);
+            $valid = $validation->run($requestData);
         }
 
         if (!$valid) {
-            //  return $this->fail($validation->getErrors(), 400);
-            return $this->fail(['gap_declaration' => "Please fill all the fields."], 400);
+            return $this->fail($validation->getErrors(), 400);
+            // return $this->fail(['gap_declaration' => "Please fill all the fields."], 400);
         }
 
         $model = new EmployeeJoinigDetailsModel();
@@ -1127,9 +1529,17 @@ class Profiles extends ResourceController
 
         ];
 
+        $educationModel = new EducationQualificationModel();
+        $gapDeclarationModel = new GapDeclarationModel();
+        $mediclaimModel = new MediclaimModel();
+        $professionalQualificationModel = new ProfessionalQualificationModel();
+
         $joiningFormDetails['employee_other_details'] = $joiningFormDetails['employee_other_details'] ? (array)json_decode($joiningFormDetails['employee_other_details']) : $employee_other_details;
-        $joiningFormDetails['education_qualification'] = $joiningFormDetails['education_qualification'] ? (array)json_decode($joiningFormDetails['education_qualification']) : [];
-        $joiningFormDetails['professional_qualification'] = $joiningFormDetails['professional_qualification'] ? (array)json_decode($joiningFormDetails['professional_qualification']) : [];
+        $joiningFormDetails['education_qualification'] = $educationModel->where('joining_form_id', $id)->find();
+        $joiningFormDetails['gap_declaration'] = $gapDeclarationModel->where('joining_form_id', $id)->find();
+        $joiningFormDetails['mediclaim'] = $mediclaimModel->where('joining_form_id', $id)->find();
+        $joiningFormDetails['professional_qualification'] = $professionalQualificationModel->where('joining_form_id', $id)->find();
+       // $joiningFormDetails['professional_qualification'] = $joiningFormDetails['professional_qualification'] ? (array)json_decode($joiningFormDetails['professional_qualification']) : [];
         $joiningFormDetails['employment_history'] = $joiningFormDetails['employment_history'] ? (array)json_decode($joiningFormDetails['employment_history']) : $employment_history;
         $joiningFormDetails['background_info'] = $joiningFormDetails['background_info'] ? (array)json_decode($joiningFormDetails['background_info']) : $backGroundInfo;
         $joiningFormDetails['documents'] = $joiningFormDetails['documents'] ? (array)json_decode($joiningFormDetails['documents']) : [];

@@ -1,5 +1,5 @@
 <?php
-ini_set('display_errors', 1);
+
 // Path to the front controller (this file)
 define('FCPATH', __DIR__ . DIRECTORY_SEPARATOR);
 

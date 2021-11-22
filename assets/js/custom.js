@@ -1,71 +1,3 @@
-$(document).ready(function(e) {
-$(".ctmmenu li ").click(function(){
-	$(".ctmmenu li ").removeClass("active");
-	$(this).addClass("active");
-	
-})
-
-
-
-
-
-$('#popularCategory').owlCarousel({
-	loop:true,
-	margin:0,
-	nav:true,
-	dots:false,
-	autoplay:true,
-	mouseDrag: true,
-	smartSpeed: 1500,
-	autoplayTimeout:2500,
-	//animateIn:'fadeIn ',
-	//animateOut:'fadeOut',
-	 navText: [
-            "<i class='icon-back'></i>",
-            "<i class='icon-forward'></i>"
-        ],
-    responsive:{
-        0:{
-            items:1
-        },
-        600:{
-            items:1
-        },
-        1000:{
-            items:1
-        }
-    }
-})
-
- $('.bxslider').bxSlider({
-	mode: 'vertical',
-    speed:300,
-	responsive:true,
-	auto:true,
-	infiniteLoop:true,
-    autoStart:true,
-    startSlide:0,
-	autoDirection: 'prev',
-  
-});
-
-
-
-$('#myTab a').on('click', function (e) {
-  e.preventDefault()
-  $(this).tab('show')
-})
-
-
-
-
-$(".ft-right ul li a ").click(function(){
-	$(".ft-right ul li a ").removeClass("activeft");
-	$(this).addClass("activeft");
-	
-})
-
-});
 
 $(".menuBtn").click(function(e) {
     $("body").toggleClass("menuOpen");
@@ -77,14 +9,7 @@ $(".menuBtn").click(function(e) {
        $("body").removeClass("menuOpen");
   });
 
-/*$(window).scroll(function(){
-  var sticky = $('header'),
-      scroll = $(window).scrollTop();
 
-  if (scroll >= 100) sticky.addClass('fixed');
-  else sticky.removeClass('fixed');
-});
-*/
 
     //STICKY HEADER
                 $(window).scroll(function () {
@@ -100,16 +25,6 @@ $(".menuBtn").click(function(e) {
 
 
 
-$("a[href^='#']").click(function(e) {
-	e.preventDefault();
-	
-	var position = $($(this).attr("href")).offset().top;
-
-	$("body, html").animate({
-		scrollTop: position
-	},1000 /* speed */ );
-	return false;
-});
 
 
 // css-animated-loader
@@ -188,4 +103,9 @@ function getParameterByName(name, url = window.location.href) {
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
 
+function calcAge(dateString) {
+
+    var birthday = +new Date(dateString.replace(/[-]/g,' '));
+    return ~~((Date.now() - birthday) / (31557600000));
+  }
 

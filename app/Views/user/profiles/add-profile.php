@@ -139,6 +139,62 @@
             </div>
 
             <div class="form-group row">
+              <label class="col-sm-3" for="inputName">Current Company</label>
+              <div class="col-sm-9">
+                <input type="text" id="current_company" ng-model="profile.current_company" maxlength="100" name="current_company" class="form-control">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-sm-3" for="inputName">Total Experience</label>
+              <div class="col-sm-9">
+                <input type="text" id="total_experience" ng-model="profile.total_experience" maxlength="20" name="total_experience" class="form-control">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-sm-3" for="inputName">Relevant Experience</label>
+              <div class="col-sm-9">
+                <input type="text" id="relevant_experience" ng-model="profile.relevant_experience" maxlength="20" name="relevant_experience" class="form-control">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-sm-3" for="inputName">Notice Period</label>
+              <div class="col-sm-9">
+                <input type="text" id="notice_period" ng-model="profile.notice_period" maxlength="20" name="notice_period" class="form-control">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-sm-3" for="inputName">Negotiable Notice Period</label>
+              <div class="col-sm-9">
+                <input type="text" id="negotiable_np" ng-model="profile.negotiable_np" maxlength="20" name="negotiable_np" class="form-control">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-sm-3" for="inputName">Current CTC</label>
+              <div class="col-sm-9">
+                <input type="text" id="ctc" ng-model="profile.ctc" maxlength="20" name="ctc" class="form-control">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-sm-3" for="inputName">Expected CTC</label>
+              <div class="col-sm-9">
+                <input type="text" id="expected_ctc" ng-model="profile.expected_ctc" maxlength="20" name="expected_ctc" class="form-control">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-sm-3" for="inputName">Negotiable CTC</label>
+              <div class="col-sm-9">
+                <input type="text" id="negotiable_ctc" ng-model="profile.negotiable_ctc" maxlength="20" name="negotiable_ctc" class="form-control">
+              </div>
+            </div>
+
+            <div class="form-group row">
               <label class="col-sm-3" for="inputName">Preferred work locations </label>
               <div class="col-sm-9">
                 <tags-input ng-model="profile.preferred_work_locations" use-strings="true" replace-spaces-with-dashes="false"></tags-input>
@@ -199,11 +255,12 @@
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
               <a role="button" class="text-primary float-right" ng-click="addNewCertification()"><i class="fa fa-plus"></i> Add new certification</a>
             </div>
-            <div class="form-group row">
-              <h4>Work Experience</h4>
-            </div>
 
-            <div class="work-experience">
+            <!-- <div class="form-group row">
+              <h4>Work Experience</h4>
+            </div> -->
+
+            <!-- <div class="work-experience">
 
               <div class="form-group row">
                     <table class="table table-bordered table-stripped">
@@ -244,7 +301,7 @@
                       </tfoot>
                     </table>
               </div>
-            </div>
+            </div> -->
 
 
 

@@ -65,3 +65,8 @@ transform: rotate(360deg);
 #myTabContent fieldset, #myTabContent fieldset input.form-control {
 	font-size: 0.8rem;
 }
+
+
+#myTabContent fieldset .table-bordered td, #myTabContent fieldset .table-bordered th {
+	border: 1px solid #ababab;
+}

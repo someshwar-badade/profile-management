@@ -47,7 +47,7 @@
 <script src="<?= base_url('assets/js/bootstrap.min.js') ?>"></script>
 <script src="<?= base_url('assets/js/owl.carousel.min.js') ?>"></script>
 <script src="<?= base_url('assets/js/jquery.bxslider.min.js') ?>"></script>
-<script src="<?= base_url('assets/js/custom.js?v=1.2') ?>"></script>
+
 <script src="<?= base_url('assets/js/jquery-ui.min.js') ?>"></script>
 <script src="<?= base_url('assets/js/overhang/overhang.js') ?>"></script> -->
 
@@ -92,6 +92,7 @@
 <script src="<?= base_url('assets/js/angular-datatables-0.6.2/angular-datatables.min.js') ?>"></script>
 <link rel="stylesheet" href="<?= base_url('assets/js/jquery-datetime-picker/jquery.datetimepicker.min.css') ?>">
 <script src="<?= base_url('assets/js/jquery-datetime-picker/jquery.datetimepicker.full.min.js') ?>"></script>
+<script src="<?= base_url('assets/js/custom.js?v=1.2') ?>"></script>
 
 <script src="<?= base_url('assets/js/toastr/toastr.min.js') ?>"></script>
 <script>

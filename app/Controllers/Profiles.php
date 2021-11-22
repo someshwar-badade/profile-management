@@ -4,6 +4,10 @@ namespace App\Controllers;
 
 use App\Models\UserModel;
 use App\Models\EmployeeJoinigDetailsModel;
+use App\Models\EducationQualificationModel;
+use App\Models\GapDeclarationModel;
+use App\Models\MediclaimModel;
+use App\Models\ProfessionalQualificationModel;
 
 class Profiles extends BaseController
 {
@@ -195,13 +199,22 @@ EOD;
 
 		//get joining form details by id
 		$model = new EmployeeJoinigDetailsModel();
+		$educationModel = new EducationQualificationModel();
+        $gapDeclarationModel = new GapDeclarationModel();
+        $mediclaimModel = new MediclaimModel();
+        $professionalQualificationModel = new ProfessionalQualificationModel();
 		$joiningFormDetails = (array)$model->find($joinigFormId);
 		$joiningFormDetails['employee_other_details'] = $joiningFormDetails['employee_other_details']?(array)json_decode($joiningFormDetails['employee_other_details']):null;
-		$joiningFormDetails['education_qualification'] = $joiningFormDetails['education_qualification']?(array)json_decode($joiningFormDetails['education_qualification']):null;
-		$joiningFormDetails['professional_qualification'] = $joiningFormDetails['professional_qualification']?(array)json_decode($joiningFormDetails['professional_qualification']):null;
+		$joiningFormDetails['education_qualification'] = $educationModel->where('joining_form_id', $joinigFormId)->find();
+        $joiningFormDetails['gap_declaration'] = $gapDeclarationModel->where('joining_form_id', $joinigFormId)->find();
+        $joiningFormDetails['mediclaim'] = $mediclaimModel->where('joining_form_id', $joinigFormId)->find();
+        $joiningFormDetails['professional_qualification'] = $professionalQualificationModel->where('joining_form_id', $joinigFormId)->find();
+		// $joiningFormDetails['education_qualification'] = $joiningFormDetails['education_qualification']?(array)json_decode($joiningFormDetails['education_qualification']):null;
+		// $joiningFormDetails['professional_qualification'] = $joiningFormDetails['professional_qualification']?(array)json_decode($joiningFormDetails['professional_qualification']):null;
 		$joiningFormDetails['employment_history'] = $joiningFormDetails['employment_history']?(array)json_decode($joiningFormDetails['employment_history']):null;
 		$joiningFormDetails['background_info'] = $joiningFormDetails['background_info']?(array)json_decode($joiningFormDetails['background_info']):null;
 		$dompdf = new \Dompdf\Dompdf(); 
+		// echo view('pdf-templates/joining-form',['joiningFormDetails'=>$joiningFormDetails]);die;
         $dompdf->loadHtml(view('pdf-templates/joining-form',['joiningFormDetails'=>$joiningFormDetails]));
 		$dompdf->setPaper('A4', 'p');
         $dompdf->set_option('isRemoteEnabled', true);
