@@ -15,81 +15,106 @@
         </div><!-- /.container-fluid -->
     </section>
     <!-- /.content-header -->
-    <section ng-cloak class="content" ng-controller="sendJoiningFormCtrl">
-        <div class="row">
-            <div class="col-md-10 offset-md-1">
-                <div class="card card-primary">
-                    <nav class="navbar navbar-expand sticky-form-header">
-                        <div ng-show="loading" class="spinner-border text-primary"></div>
-                        <div class="text-success">{{successMessage}}</div>
-                        <ul class="navbar-nav ml-auto">
-                            <li class="nav-item"><button class="btn btn-sm btn-success " ng-click="submitClick()">
-                                    Send</button>
-                            </li>
-                            <li class="nav-item">
-                                <a href="<?= base_url(route_to('user-dashboard')) ?>" class="btn btn-sm btn-secondary ml-2">Cancel</a>
 
-                            </li>
-                        </ul>
-                    </nav>
+    <?php if (hasCapability('joining_form/add')) { ?>
+        <section ng-cloak class="content" ng-controller="sendJoiningFormCtrl">
+            <div class="row">
+                <div class="col-md-10 offset-md-1">
+                    <div class="card card-primary">
+                        <nav class="navbar navbar-expand sticky-form-header">
+                            <div ng-show="loading" class="spinner-border text-primary"></div>
+                            <div class="text-success">{{successMessage}}</div>
+                            <ul class="navbar-nav ml-auto">
+                                <li class="nav-item"><button class="btn btn-sm btn-success " ng-click="submitClick()">
+                                        Send</button>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="<?= base_url(route_to('user-dashboard')) ?>" class="btn btn-sm btn-secondary ml-2">Cancel</a>
 
-                    <div class="card-body">
+                                </li>
+                            </ul>
+                        </nav>
 
-                        <div class="form-group row">
-                            <label class="col-sm-3" for="inputName">First Name <sup class="text-danger">*</sup></label>
-                            <div class="col-sm-9">
-                                <input type="text" id="candidateFullName" ng-model="joiningForm.first_name" maxlength="50" name="first_name" class="form-control">
-                                <div class="text-danger" ng-show="errors.first_name">{{errors.first_name}}</div>
+                        <div class="card-body">
+
+                            <div class="form-group row">
+                                <label class="col-sm-3" for="inputName">First Name <sup class="text-danger">*</sup></label>
+                                <div class="col-sm-9">
+                                    <input type="text" id="candidateFullName" ng-model="joiningForm.first_name" ng-init="joiningForm.first_name='<?= $profile['first_name']?>'" maxlength="50" name="first_name" class="form-control">
+                                    <div class="text-danger" ng-show="errors.first_name">{{errors.first_name}}</div>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group row">
-                            <label class="col-sm-3" for="inputName">Last Name <sup class="text-danger">*</sup></label>
-                            <div class="col-sm-9">
-                                <input type="text" id="candidateFullName" ng-model="joiningForm.last_name" maxlength="50" name="last_name" class="form-control">
-                                <div class="text-danger" ng-show="errors.last_name">{{errors.last_name}}</div>
+                            <div class="form-group row">
+                                <label class="col-sm-3" for="inputName">Last Name <sup class="text-danger">*</sup></label>
+                                <div class="col-sm-9">
+                                    <input type="text" id="candidateFullName" ng-model="joiningForm.last_name" ng-init="joiningForm.last_name='<?= $profile['last_name']?>'" maxlength="50" name="last_name" class="form-control">
+                                    <div class="text-danger" ng-show="errors.last_name">{{errors.last_name}}</div>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group row">
-                            <label class="col-sm-3" for="inputName">Email <sup class="text-danger">*</sup></label>
-                            <div class="col-sm-9">
-                                <input type="email" id="emailPrimary" ng-model="joiningForm.email_primary" maxlength="100" name="email_primary" class="form-control">
-                                <div class="text-danger" ng-show="errors.email_primary">{{errors.email_primary}}</div>
+                            <div class="form-group row">
+                                <label class="col-sm-3" for="inputName">E-mail <sup class="text-danger">*</sup></label>
+                                <div class="col-sm-9">
+                                    <input type="email" id="emailPrimary" ng-model="joiningForm.email_primary" ng-init="joiningForm.email_primary='<?= $profile['email_primary']?>'" maxlength="100" name="email_primary" class="form-control">
+                                    <div class="text-danger" ng-show="errors.email_primary">{{errors.email_primary}}</div>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group row">
-                            <label class="col-sm-3" for="inputName">Aadhar Number <sup class="text-danger">*</sup></label>
-                            <div class="col-sm-9">
-                                <input type="text" id="candidateFullName" ng-model="joiningForm.aadhar_number" maxlength="12" name="aadhar_number" class="form-control">
-                                <div class="text-danger" ng-show="errors.aadhar_number">{{errors.aadhar_number}}</div>
+                            <div class="form-group row">
+                                <label class="col-sm-3" for="inputName">Aadhar Number <sup class="text-danger">*</sup></label>
+                                <div class="col-sm-9">
+                                    <input type="text" id="candidateFullName" ng-model="joiningForm.aadhar_number" ng-init="joiningForm.aadhar_number='<?= $profile['aadhar_number']?>'" maxlength="12" name="aadhar_number" class="form-control">
+                                    <div class="text-danger" ng-show="errors.aadhar_number">{{errors.aadhar_number}}</div>
+                                </div>
                             </div>
-                        </div>
 
 
-                        <div class="form-group row">
-                            <label class="col-sm-3" for="inputName">PAN Number <sup class="text-danger">*</sup></label>
-                            <div class="col-sm-9">
-                                <input type="text" id="candidateFullName" ng-model="joiningForm.pan_number" maxlength="10" name="pan_number" class="form-control">
-                                <div class="text-danger" ng-show="errors.pan_number">{{errors.pan_number}}</div>
+                            <div class="form-group row">
+                                <label class="col-sm-3" for="inputName">PAN Number <sup class="text-danger">*</sup></label>
+                                <div class="col-sm-9">
+                                    <input type="text" id="candidateFullName" ng-model="joiningForm.pan_number" ng-init="joiningForm.pan_number='<?= $profile['pan_number']?>'" maxlength="10" name="pan_number" class="form-control">
+                                    <div class="text-danger" ng-show="errors.pan_number">{{errors.pan_number}}</div>
+                                </div>
                             </div>
+
+                            <!-- </div> -->
+
+
                         </div>
-
-                        <!-- </div> -->
-
-
+                        <!-- /.card-body -->
                     </div>
-                    <!-- /.card-body -->
-                </div>
-                <!-- /.card -->
+                    <!-- /.card -->
 
+                </div>
+            </div>
+
+
+            <div class="modal fade" id="approvalModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Approve Joining Form</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                  
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" ng-click="approveJoiningForm()" class="btn btn-primary">Approve</button>
+                </div>
             </div>
         </div>
-    </section>
+    </div>
 
+        </section>
+    <?php } ?>
 
-    <section class="content" ng-controller="ServerSideProcessingCtrl as showCase">
+    <section ng-cloak class="content" ng-controller="ServerSideProcessingCtrl as showCase">
         <div class="container-fluid">
 
             <div class="row m-0">
@@ -98,11 +123,25 @@
                     <h1>List</h1>
 
 
-
+                    <div>
+                        <div ng-show="tableAction.loader" class="spinner-border text-primary"></div>
+                        <div class="col-md-12 alert alert-success alert-dismissible fade show" role="alert" ng-show="tableAction.successMessage">
+                            {{tableAction.successMessage}}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="col-md-12 alert alert-danger alert-dismissible fade show" role="alert" ng-show="tableAction.errorMessage">
+                            {{tableAction.errorMessage}}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
                     <div class="table-action">
 
-                        <div>
-                            <table datatable="" dt-options="showCase.dtOptions" dt-columns="showCase.dtColumns" class="row-border hover"></table>
+                        <div class="table-responsive">
+                            <table datatable="" dt-options="showCase.dtOptions" dt-columns="showCase.dtColumns" dt-instance="dtInstance" class="row-border hover"></table>
                         </div>
 
                     </div>
@@ -112,201 +151,6 @@
 
         </div><!-- /.container-fluid -->
 
-        <!-- The Modal -->
-        <div class="modal" id="viewProfileModal">
-            <div class="modal-dialog modal-lg mw-100">
-                <div class="modal-content">
-                    <!-- Modal header -->
-                    <div class="modal-header bg-primary">
-                        <div class="col-sm-4"><small><label for="">Date of creation: </label> {{profile.created_at}}</small></div>
-                        <div class="col-sm-4"><small><label for="">Last modified: </label> {{profile.updated_at | timeAgo}}</small></div>
-                        <div class="col-sm-3"><small><label for="">Updated By: </label> {{profile.updated_by}}</small></div>
-
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <!-- Modal body -->
-                    <div class="modal-body">
-
-                        <!-- <div class="form-group row">
-                                <label class="col-sm-3" for="inputName">Candidate full name </label>
-                                <div class="col-sm-3">{{profile.candidate_name}}</div>
-
-                                <label class="col-sm-3" for="inputName">Gender </label>
-                                <div class="col-sm-3">
-                                    <span ng-show="profile.gender=='0'">Male</span>
-                                    <span ng-show="profile.gender=='1'">Female</span>
-                                </div>
-                            </div> -->
-
-                        <div class="form-group row">
-                            <label class="col-sm-3" for="inputName">First Name </label>
-                            <div class="col-sm-3">{{profile.first_name}}</div>
-
-                            <label class="col-sm-3" for="inputName">Last Name </label>
-                            <div class="col-sm-3">{{profile.candidate_name}}</div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-sm-3" for="inputName">Father Name </label>
-                            <div class="col-sm-3">{{profile.candidate_name}}</div>
-
-                            <label class="col-sm-3" for="inputName">Mother Name </label>
-                            <div class="col-sm-3">{{profile.candidate_name}}</div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-sm-3" for="inputName">Mobile Number (primary) </label>
-                            <div class="col-sm-3">{{profile.mobile_primary}}</div>
-                            <!-- <label class="col-sm-3" for="inputName">Mobile Number (alternate)</label>
-                                <div class="col-sm-3">
-                                    {{profile.mobile_alternate}}
-                                </div> -->
-                            <label class="col-sm-3" for="inputName">Email (primary) </label>
-                            <div class="col-sm-3">
-                                {{profile.email_primary}}
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-sm-3" for="inputName">Aadhar Card Number </label>
-                            <div class="col-sm-3">{{profile.mobile_primary}}</div>
-
-                            <label class="col-sm-3" for="inputName">PAN Card Number </label>
-                            <div class="col-sm-3">
-                                {{profile.email_primary}}
-                            </div>
-                        </div>
-
-                        <!-- <div class="form-group row">
-                                <label class="col-sm-3" for="inputName">Email (primary) </label>
-                                <div class="col-sm-3">
-                                    {{profile.email_primary}}
-                                </div>
-                                <label class="col-sm-3" for="inputName">Email (alternate)</label>
-                                <div class="col-sm-3">
-                                    {{profile.email_alternate}}
-                                </div>
-                            </div> -->
-
-
-                        <!-- <div class="form-group row">
-                                <label class="col-sm-3" for="inputName">Resume</label>
-                                <div class="col-sm-3">
-                                    <div ng-show="profile.resume_pdf">
-                                        <a class="iframe" ng-href="https://docs.google.com/gview?url={{profile.resume_pdf_url}}&embedded=true">{{profile.resume_pdf_name}}</a>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3">
-                                    <div ng-show="profile.resume_doc">
-                                        <a class="iframe" ng-href="https://docs.google.com/gview?url={{profile.resume_doc_url}}&embedded=true">{{profile.resume_doc_name}}</a>
-                                    </div>
-                                </div>
-                            </div> -->
-
-
-
-                        <div ng-show="profile.preferred_work_locations.length" class="form-group row">
-                            <label class="col-sm-3" for="inputName">Preferred work locations </label>
-                            <div class="col-sm-9">
-                                <span class="badge badge-secondary ml-1" ng-repeat="work_location in profile.preferred_work_locations">{{work_location}}</span>
-                            </div>
-                        </div>
-
-                        <div ng-show="profile.categories.length" class="form-group row">
-                            <label class="col-sm-3" for="inputName">Categories </label>
-                            <div class="col-sm-9">
-                                <span class="badge badge-secondary ml-1" ng-repeat="categorie in profile.categories">{{categorie}}</span>
-                            </div>
-                        </div>
-
-                        <div ng-show="profile.top_skills.length" class="form-group row">
-                            <label class="col-sm-3" for="topSkills">Top Skills</label>
-                            <div class="col-sm-9">
-                                <span class="badge badge-secondary ml-1" ng-repeat="skill in profile.top_skills">{{skill}}</span>
-
-                            </div>
-                        </div>
-
-                        <div ng-show="profile.middle_skills.length" class="form-group row">
-                            <label class="col-sm-3" for="middleSkills">Middle Skills</label>
-                            <div class="col-sm-9">
-                                <span class="badge badge-secondary ml-1" ng-repeat="skill in profile.middle_skills">{{skill}}</span>
-
-                            </div>
-                        </div>
-
-                        <div ng-show="profile.foundation_skills.length" class="form-group row">
-                            <label class="col-sm-3" for="foundationSkills">Foundation Skills</label>
-                            <div class="col-sm-9">
-                                <span class="badge badge-secondary ml-1" ng-repeat="skill in profile.foundation_skills">{{skill}}</span>
-
-                            </div>
-                        </div>
-                        <div ng-show="profile.certifications.length" class="form-group row">
-                            <h4>Certifications</h4>
-                        </div>
-                        <div ng-show="profile.certifications.length" class="certifications">
-                            <ol>
-                                <!-- <label class="col-sm-3" for="foundationSkills"></label> -->
-                                <li ng-repeat="certification in profile.certifications">
-                                    {{certification.description}}
-                                </li>
-                            </ol>
-                        </div>
-
-                        <div ng-show="profile.work_experience.length" class="form-group row">
-                            <h4>Work Experience</h4>
-                        </div>
-
-                        <div ng-show="profile.work_experience.length" class="work-experience">
-
-                            <div class="form-group row">
-                                <table class="table table-bordered table-stripped">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Company</th>
-                                            <th>From Date</th>
-                                            <th>To Date</th>
-                                            <th style="width: 50%;">Responsibility</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-repeat="experience in profile.work_experience">
-                                            <td>
-                                                {{$index+1}}
-                                            </td>
-                                            <td>
-                                                {{experience.company_name}}
-                                            </td>
-                                            <td>
-                                                {{experience.from_date}}
-                                            </td>
-                                            <td>
-                                                {{experience.to_date}}
-                                            </td>
-                                            <td>
-                                                {{experience.responsibility}}
-                                            </td>
-                                        </tr>
-                                    </tbody>
-
-                                </table>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-                        <a ng-href="{{profile.editUrl}}" class="btn btn-sm btn-primary">Edit</a>
-                        <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" aria-label="Close">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
     </section>
     <!-- /.content -->
 
@@ -319,11 +163,17 @@
 <script>
     app.controller('ServerSideProcessingCtrl', ServerSideProcessingCtrl);
 
-    function ServerSideProcessingCtrl($scope, DTOptionsBuilder, DTColumnBuilder, $compile, $http) {
+    function ServerSideProcessingCtrl($scope, DTOptionsBuilder, DTColumnBuilder, $compile, $http, $filter) {
         $scope.tableFilter = {};
         $scope.profile = {};
+        $scope.tableAction = {};
+        $scope.tableAction.loader = false;
+        $scope.tableAction.successMessage = '';
+        $scope.tableAction.errorMessage = '';
+
         // $scope.joiningForm = {};
         var vm = this;
+        $scope.dtInstance = {};
         vm.dtOptions = DTOptionsBuilder.newOptions()
             .withOption('ajax', {
                 // Either you specify the AjaxDataProp here
@@ -353,15 +203,51 @@
             // }),
             DTColumnBuilder.newColumn("email_primary").withTitle('Email'),
             DTColumnBuilder.newColumn("mobile_primary").withTitle('Mobile'),
-            // DTColumnBuilder.newColumn("top_skills").withTitle('Top Skils'),
-            // DTColumnBuilder.newColumn("middle_skills").withTitle('Middle Skils'),
+            DTColumnBuilder.newColumn("created_at").withTitle('Created Date').renderWith(function(data, type, full) {
+                return $filter('date')(new Date(data), 'dd-MMM-yyyy');
+            }),
+            DTColumnBuilder.newColumn("is_accept_declaration").withTitle('Form Submited Date').renderWith(function(data, type, full) {
+                if (!data) {
+                    return '';
+                }
+                return $filter('date')(new Date(data), 'dd-MMM-yyyy');
+            }),
+            DTColumnBuilder.newColumn("status").withTitle('Status').renderWith(function(data,type,full){
+                let html;
+                html="<span class='text-info'>New</span>";
+                    if(full.status=='1'){
+                        html="<span class='text-danger'>Approval Pending</span>";
+                    }
+                    if(full.status=='2'){
+                        html="<span class='text-success'>Approved</span>";
+                    }
+                return html;
+            }),
+            // DTColumnBuilder.newColumn("primary_skills").withTitle('Top Skils'),
+            // DTColumnBuilder.newColumn("secondary_skills").withTitle('Middle Skils'),
             DTColumnBuilder.newColumn('').withTitle('Actions').renderWith(function(data, type, full) {
                 // return full.gender + ' ' + full.id;
                 //href='" + base_url + "/profile/" + full.id + "/edit'
 
-                return "<a role='button' class='text-primary' href='editJoiningForm/" + full.id + "' >View</a>" +
-                    "<a role='button' class='mx-1 text-danger' ng-click='showCase.deleteClick(" + full.id + ")' >Delete</a>" +
-                    "<a target='_blank' class='mx-1 text-info' href='" + base_url + "/download-joining-form/" + full.id + "' >Download</a>";
+                var html = '<div class="dropdown">'+
+                        '<button class="btn" type="button" data-toggle="dropdown"><i class="fas fa-ellipsis-v"></i></button>'+
+                        '<ul class="dropdown-menu">'+
+                        "<li> <a role='button' class='mx-2 text-default' href='" + base_url + "/editJoiningForm/" + full.id + "' ><i class='far fa-eye'></i> View/Edit</a></li>" +
+                      // "<li> <a role='button' class='mx-2 text-default' ng-click='showCase.deleteClick(" + full.id + ")' ><i class='fas fa-trash-alt'></i> Delete</a></li>" +
+                       "<li> <a role='button' class='mx-2 text-default' ng-click='showCase.sendLink(" + full.id + ")' ><i class='far fa-paper-plane'></i> Send Link</a></li>" +
+                       "<li> <a target='_blank' class='mx-2 text-default' href='" + base_url + "/download-joining-form/" + full.id + "' ><i class='fas fa-download'></i> Download</a></li>"
+                       if(full.status=='1'){
+                        html +="<li> <a  class='mx-2 text-default' role='button'  ng-click='showCase.approveJoiningForm(" + full.id + ")' ><i class='fas fa-user-check'></i> Approve</a></li>"
+                       }
+                       if(full.status=='2'){
+
+                           html +="<li> <a  class='mx-2 text-default'  href='#' ><i class='far fa-user'></i> Create User</a></li>";
+                       }
+                       html +=  '</ul>'
+                    '</div>';
+
+                    
+                    return html;
 
 
             }).notSortable(),
@@ -411,6 +297,77 @@
                     console.log($scope.errors['lang.en.title']);
                 });
         }
+
+        vm.sendLink = function(id) {
+            $scope.tableAction.loader = true;
+            // if (!confirm("Do you want to delete this record (ID:" + id + ").")) return false;
+
+            $http({
+                    method: 'post',
+                    url: base_url + '/api/employee-joining-form/send-link',
+                    data: {
+                        id: id
+                    }
+                })
+                .then(function(response) {
+
+
+                    $scope.tableAction.loader = false;
+                    $scope.tableAction.successMessage = response.data.success;
+                    $scope.tableAction.errorMessage = '';
+                    // console.log(response);
+                    toastr.success(response.data.messages.success);
+                }, function(response) {
+
+                    $scope.tableAction.loader = false;
+                    $scope.tableAction.successMessage = '';
+
+                    if (response.data.status == 403) {
+                        $scope.tableAction.errorMessage = response.data.messages.errorMessage;
+                    } else {
+                        $scope.tableAction.errorMessage = "Something went wrong !!";
+
+                    }
+                });
+        }
+
+        vm.approveJoiningForm = function(id){
+
+            if(!confirm("You can not modify the details after approve this form!")){
+                return false;
+            }
+            $scope.tableAction.loader = true;
+            // if (!confirm("Do you want to delete this record (ID:" + id + ").")) return false;
+
+            $http({
+                    method: 'post',
+                    url: base_url + '/api/employee-joining-form/approve',
+                    data: {
+                        id: id
+                    }
+                })
+                .then(function(response) {
+
+                    console.log($scope.dtInstance);
+                    $scope.dtInstance._renderer.reloadData();
+                    $scope.tableAction.loader = false;
+                    $scope.tableAction.successMessage = response.data.success;
+                    $scope.tableAction.errorMessage = '';
+                    // console.log(response);
+                    toastr.success(response.data.messages.success);
+                }, function(response) {
+
+                    $scope.tableAction.loader = false;
+                    $scope.tableAction.successMessage = '';
+
+                    if (response.data.status == 403) {
+                        $scope.tableAction.errorMessage = response.data.messages.errorMessage;
+                    } else {
+                        $scope.tableAction.errorMessage = "Something went wrong !!";
+
+                    }
+                });
+        }       
     }
 
 
@@ -451,11 +408,17 @@
 
                 $scope.loading = false;
                 $scope.errors = response.data.messages;
-                console.log($scope.errors);
-                console.log($scope.errors['lang.en.title']);
+                if (response.data.status == 403) {
+                    toastr.error(response.data.messages.errorMessage);
+                } else {
+                    toastr.error("Something went wrong !!");
+                }
+
             });
 
         }
+
+        
     }]);
 </script>
 

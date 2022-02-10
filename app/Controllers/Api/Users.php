@@ -158,6 +158,9 @@ class Users extends  Controllers\BaseController
 					return $this->fail(['password' => lang('forms.login.password.errorInvalid')]);
 				}
 
+				if ($user['status']=='0') {
+					return $this->fail(['errorMessage'=>"Your account is deactivated. Please contact to admin"],403);
+				}
 
 				//valid user
 				$isValidUser = true;
@@ -304,6 +307,9 @@ class Users extends  Controllers\BaseController
 		}
 	}
 
+	public function getUserList(){
+
+	}
 	// public function requestOtp()
 	// {
 	// 	if ($this->request->getMethod() === 'post') {
@@ -383,6 +389,7 @@ class Users extends  Controllers\BaseController
 	{
 		return substr(number_format(time() * rand(), 0, '', ''), 0, $length);
 	}
+
 
 
 	// protected function isOtpExpired($mobile)

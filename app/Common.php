@@ -15,6 +15,11 @@
  */
 
 use App\Models\ActionLogModel;
+use App\Models\CapabilityModel;
+use App\Models\UserModel;
+use App\Models\UserRoleModel;
+// use Exception;
+use Firebase\JWT\JWT;
 
 function cart(bool $getShared = true)
 {
@@ -77,11 +82,11 @@ function sendSms($mobile, $message)
 //     return base_url(PRODUCT_IMAGE_THUMB_FILE_PATH.$filename);
 // }
 
-function sendEmail_common($to, $message, $subject)
+function sendEmail_common($to, $message, $subject,$from = 'connect@bitstringit.in')
 {
     $email = \Config\Services::email();
 
-    $email->setFrom('connect@bitstringit.in', 'Bitstringit');
+    $email->setFrom($from, 'Bitstringit');
     $email->setTo($to);
 
     $email->setSubject($subject);
@@ -113,3 +118,98 @@ function getBackgroundInformationQuestion($code = '')
     ];
     return $code ? $questions[$code] : $questions;
 }
+
+function checkUserToken(){
+    //get header cookies
+		$a_token = isset($_COOKIE['a_token'])?$_COOKIE['a_token']:'';
+		$r_token = isset($_COOKIE['r_token'])?$_COOKIE['r_token']:'';
+		$userId = -1;
+		try{
+			$payload = JWT::decode($a_token,JWT_SECRETE_KEY,['HS256']);
+			$userId = $payload->user_id;
+
+		} catch(Exception $e){
+			
+			//if access token expire check refresh token
+			try{
+				$payload = JWT::decode($r_token,JWT_SECRETE_KEY_2,['HS256']);
+				$userId = $payload->user_id;
+			}catch(Exception $e){
+				//redirct to login
+				setcookie("a_token", "", time() - 3600,'/');//delete cookie
+				setcookie("r_token", "", time() - 3600,'/');//delete cookie
+				return null;
+			}
+			
+		}
+		
+		if($userId){
+			$userModel = new UserModel();
+			$userRoleModel = new UserRoleModel();
+			$user = $userModel->find($userId);
+            // $user['roles'] = $userRoleModel->where('user_id',$user['id'])->find();
+            $user['roles'] = $userRoleModel->getRoles($user['id']);
+        }
+        
+        return $user;
+}
+
+function hasCapability($capability){
+    $m = new CapabilityModel();
+    $user = checkUserToken();
+    $session = session();
+    if(!empty($user)){
+        $roleId = $user['roles'][0]['role_id'];
+        if($user['roles'][0]['role_name']=='admin'){
+            return true;
+        }
+    }else if(!empty($session->get('employee_joining_form_id'))){
+        $roleId = 6;//guest_user role_id
+    }else if(!empty($session->get('profile_id'))){
+        $roleId = 6;//guest_user role_id
+    }else{
+        return false;
+    }
+
+    
+
+   return $m->hasCapability($capability,$roleId);
+}
+
+
+$combinationResult = array();
+$combination = array();
+
+function inner($start, $choose_, $arr, $n)
+{
+    global $combinationResult, $combination;
+
+    if ($choose_ == 0) array_push($combinationResult, $combination);
+    else for ($i = $start; $i <= $n - $choose_; ++$i) {
+        array_push($combination, $arr[$i]);
+        inner($i + 1, $choose_ - 1, $arr, $n);
+        array_pop($combination);
+    }
+}
+
+function combinations(array $myArray, $choose)
+{
+    global $combinationResult, $combination;
+
+    $n = count($myArray);
+    inner(0, $choose, $myArray, $n);
+    $newTemp = $combinationResult;
+    $combinationResult = array();
+    $combination = array();
+    return $newTemp;
+}
+
+
+function primary_regxp_fun($value)
+    {
+        return "primary_skills REGEXP '([[:blank:][:punct:]]|^)$value([[:blank:][:punct:]]|$)'";
+    }
+    function secondary_regxp_fun($value)
+    {
+        return "secondary_skills REGEXP '([[:blank:][:punct:]]|^)$value([[:blank:][:punct:]]|$)'";
+    }

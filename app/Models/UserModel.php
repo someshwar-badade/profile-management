@@ -26,6 +26,7 @@ class UserModel extends Model {
                                 'profile_picture',
                                 'ip_address',
                                 'last_login',
+                                'verification_code',
                                  'status'
                                 ];
 
@@ -48,8 +49,8 @@ class UserModel extends Model {
         if(empty($result)){
             return;
         }
-        $result['joining_date'] = date(SITE_DATE_FORMAT,strtotime($result['joining_date']));
-        $result['referralDetails'] = $this->select('id,first_name,middle_name,last_name,mobile,email,photo,DATE_FORMAT(joining_date, "'.SITE_DATE_FORMAT_SQL.'") as joining_date')->find($id);
+       // $result['joining_date'] = date(SITE_DATE_FORMAT,strtotime($result['joining_date']));
+       // $result['referralDetails'] = $this->select('id,first_name,middle_name,last_name,mobile,email,photo,DATE_FORMAT(joining_date, "'.SITE_DATE_FORMAT_SQL.'") as joining_date')->find($id);
 
        
        

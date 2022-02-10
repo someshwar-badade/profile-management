@@ -2,6 +2,7 @@
 
 // use App\Models\SettingsModel;
 use App\Models\UserModel;
+use App\Models\UserRoleModel;
 // use Exception;
 use Firebase\JWT\JWT;
 function getGlobalValues(){
@@ -71,37 +72,7 @@ function deleteFile($url){
     return null;
 }
 
-function checkUserToken(){
-    //get header cookies
-		$a_token = isset($_COOKIE['a_token'])?$_COOKIE['a_token']:'';
-		$r_token = isset($_COOKIE['r_token'])?$_COOKIE['r_token']:'';
-		$userId = -1;
-		try{
-			$payload = JWT::decode($a_token,JWT_SECRETE_KEY,['HS256']);
-			$userId = $payload->user_id;
 
-		} catch(Exception $e){
-			
-			//if access token expire check refresh token
-			try{
-				$payload = JWT::decode($r_token,JWT_SECRETE_KEY_2,['HS256']);
-				$userId = $payload->user_id;
-			}catch(Exception $e){
-				//redirct to login
-				setcookie("a_token", "", time() - 3600,'/');//delete cookie
-				setcookie("r_token", "", time() - 3600,'/');//delete cookie
-				return null;
-			}
-			
-		}
-		
-		if($userId){
-			$userModel = new UserModel();
-			$user = $userModel->find($userId);
-        }
-        
-        return $user;
-}
 
 function isAdmin($user){
     return in_array($user['user_type'],['admin','subadmin']);

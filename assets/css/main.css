@@ -1352,9 +1352,9 @@ a[role="button"]{
 	cursor: pointer;
 }
 
-#myTabContent fieldset, #myTabContent fieldset input.form-control {
+/* #myTabContent fieldset, #myTabContent fieldset input.form-control {
 	font-size: 0.8rem;
-}
+} */
 
 .animation{
 	animation: slide-up 0.4s ease;
@@ -1374,3 +1374,4 @@ a[role="button"]{
 #myTabContent fieldset .table-bordered td, #myTabContent fieldset .table-bordered th {
 	border: 1px solid #ababab;
 }
+

@@ -7,9 +7,11 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
 
-    <?php if (isset($_COOKIE['fname'])) { ?>
+    <?php
+    $user = checkUserToken();
+    if (isset($_COOKIE['fname'])) { ?>
             <li class="nav-item"> <a class="nav-link" href="<?= base_url(route_to('user-dashboard')) ?>">
-                <i class="flaticon-users"></i> Howdy, <?= ucfirst($_COOKIE['fname']) ?></a>
+                <i class="flaticon-users"></i> Howdy, <?= ucfirst($_COOKIE['fname']) ?> <small>[<?=$user['roles'][0]['display_name']?>]</small></a>
             </li>
           <?php } ?>
       
@@ -64,7 +66,8 @@
               </p>
             </a>
           </li>
-
+          
+          <?php if (hasCapability('profiles/view')) { ?>
           <li class="nav-item">
             <a href="<?= base_url(route_to('profiles')) ?>" class="nav-link <?=$active_nav=='profiles'?' active ':'';?>">
               <i class="nav-icon fa fa-id-card"></i>
@@ -73,7 +76,9 @@
               </p>
             </a>
           </li>
+          <?php }?>
 
+          <?php if (hasCapability('joining_form/view')) { ?>
           <li class="nav-item">
             <a href="<?= base_url(route_to('sendJoiningForm')) ?>" class="nav-link <?=$active_nav=='send-joining-form'?' active ':'';?>">
               <i class="nav-icon fa fa-id-card"></i>
@@ -82,7 +87,52 @@
               </p>
             </a>
           </li>
+          <?php }?>
 
+          <?php if (hasCapability('job_positions/view')) { ?>
+          <li class="nav-item">
+            <a href="<?= base_url(route_to('JobPositions')) ?>" class="nav-link <?=$active_nav=='job-positions'?' active ':'';?>">
+              <!-- <i class="nav-icon fa fa-id-card"></i> -->
+              <i class="nav-icon fas fa-graduation-cap"></i>
+              <p>
+              Job Positions
+              </p>
+            </a>
+          </li>
+          <?php }?>
+
+          <?php if (hasCapability('users/view')) { ?>
+          <li class="nav-item">
+            <a href="<?= base_url(route_to('users')) ?>" class="nav-link <?=$active_nav=='users'?' active ':'';?>">
+            <i class="nav-icon fa fa-users"></i>
+              <p>
+              Users
+              </p>
+            </a>
+          </li>
+        <?php }?>
+
+        <?php if (hasCapability('clients/view')) { ?>
+          <li class="nav-item">
+            <a href="<?= base_url(route_to('clients')) ?>" class="nav-link <?=$active_nav=='clients'?' active ':'';?>">
+            <i class="nav-icon fa fa-user"></i>
+              <p>
+              Clients
+              </p>
+            </a>
+          </li>
+        <?php }?>
+
+          <?php if (hasCapability('roles/view')) { ?>
+          <li class="nav-item">
+            <a href="<?= base_url(route_to('roles')) ?>" class="nav-link <?=$active_nav=='roles'?' active ':'';?>">
+            <i class="nav-icon fa fa-user-cog"></i>
+              <p>
+              Roles
+              </p>
+            </a>
+          </li>
+        <?php }?>
 
           <li class="nav-item">
             <a href="<?=base_url(route_to('user-settings'))?>" class="nav-link <?=$active_nav_parent=='settings'?' active ':'';?>">
@@ -109,3 +159,4 @@
     </div>
     <!-- /.sidebar -->
   </aside>
+  

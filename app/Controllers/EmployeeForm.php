@@ -29,11 +29,12 @@ class EmployeeForm extends BaseController
             'active_nav_parent' => 'forms',
             'active_nav' => 'forms',
             'id'=> $joingFormId,
+            'joiningFormDetails'=> $joiningFormDetails,
         ];
        
-        if($joiningFormDetails['is_accept_declaration']){
-            $session->remove('employee_joining_form_id');
-            return view('employee_joining_form_success', $data);
+        if($joiningFormDetails['is_accept_declaration'] && $joiningFormDetails['status'] =='1' ){
+           $session->remove('employee_joining_form_id');
+           return view('employee_joining_form_success', $data);
         }
 
         return view('employee_joining_form', $data);

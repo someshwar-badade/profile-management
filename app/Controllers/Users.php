@@ -1,8 +1,11 @@
 <?php 
 namespace App\Controllers;
 use App\Models\UserModel;
-// use App\Models\ContactusModel;
-// use App\Models\SettingsModel;
+use App\Models\RoleModel;
+use App\Models\ProfileModel;
+use App\Models\JobPositionModel;
+use App\Models\EmployeeJoinigDetailsModel;
+use App\Models\ClientsModel;
 // use Exception;
 // use Firebase\JWT\JWT;
 // use App\Models\BankUserModel;
@@ -12,10 +15,49 @@ class Users extends BaseController
 	public function index()
 	{
 		$data = [
-			'page_title' => 'Home',
-			'active_nav'=>'home'
+			'page_title' => 'Users',
+			'active_nav'=>'users'
 		];
-		return view('home',$data);
+
+		if(!hasCapability('user/view')){
+			$data['errorMessage'] = "You don't have capability to access this page. Please contact to admin.";
+			return view('user/error',$data);
+		}
+
+		return view('user/users/index',$data);
+	}
+	public function user()
+	{
+		$roleModel = new RoleModel();
+		$data = [
+			'page_title' => 'Users',
+			'active_nav'=>'users',
+			'roleList'=> $roleModel->where('role_type','USER')->find(),
+		];
+
+		if(!hasCapability('user/add')){
+			$data['errorMessage'] = "You don't have capability to access this page. Please contact to admin.";
+			return view('user/error',$data);
+		}
+		return view('user/users/user',$data);
+	}
+
+	public function getUser($user_id)
+	{
+
+		if(!hasCapability('user/view')){
+			$data['errorMessage'] = "You don't have capability to access this page. Please contact to admin.";
+			return view('user/error',$data);
+		}
+		
+		$roleModel = new RoleModel();
+		$data = [
+			'page_title' => 'Users',
+			'active_nav'=>'users',
+			'user_id'=>$user_id,
+			'roleList'=> $roleModel->where('role_type','USER')->find(),
+		];
+		return view('user/users/editUser',$data);
 	}
 
 	public function register(){
@@ -47,10 +89,75 @@ class Users extends BaseController
 	}
 	
 	public function forgotPassword(){
+		helper(['form', 'url']);
+		
 		$data = [
 			'page_title' => 'Forgot Password',
-			'active_nav'=>'forgot-password'
+			'active_nav'=>'forgot-password',
+			'email'=>'',
 		];
+		$userModel = new UserModel();
+		if ($_POST && $this->request->getPost('verify')=='') {
+
+			$input = $this->validate([
+				'email' => ['label' => 'E-mail', 'rules' => 'required|valid_email','errors'=>['required'=>"Enter a valid E-mail.",'valid_email'=>"Enter a valid E-mail."]],
+			]);
+
+			if (!$input) {
+				$data['validation'] = $this->validator;
+
+			}else {
+				
+				
+				$userDetails = $userModel->where('email',$this->request->getPost('email'))->first();
+				if(empty($userDetails)){
+					$data['messageError'] = "E-mail is not registered with us.";
+				}else if($userDetails['status']=='0'){
+					$data['messageError'] = "Your account is deactivated please contact to admin.";
+				}else{
+					//send verification code
+					$userDetails['verification_code'] = substr(number_format(time() * rand(), 0, '', ''), 0, 8);
+					$userModel->save($userDetails);
+
+					//send email
+					$templateData = [
+						'first_name' => $userDetails['fname'],
+						'verification_code' => $userDetails['verification_code']
+					];
+					$message = view('email-templates/send-profile-verification-code', $templateData);
+					$isEmailSent =  sendEmail_common($userDetails['email'], $message, 'Bitstringit', '');
+					$data['messageSuccess']="The verification code has been sent on your e-mail.";
+					$data['email'] = $userDetails['email'];
+				}
+			}
+
+		}else if($_POST && $this->request->getPost('verify')=='true'){
+			$data['email'] = $this->request->getPost('email');
+			$input = $this->validate([
+				'verification_code' => ['label' => 'Verification Code', 'rules' => 'required|exact_length[8]','errors'=>['required'=>"Enter 8 digit verification code.",'exact_length'=>"Enter 8 digit verification code."]],
+				'password' => ['label' => 'Password', 'rules' => 'required','errors'=>['required'=>"Password can not be empty."]],
+				'cpassword' => ['label' => 'Confirm Password', 'rules' => 'matches[password]','errors'=>['matches'=>"Not match with password."]],
+			]);
+			if (!$input) {
+				$data['validation'] = $this->validator;
+
+			}else {
+				$userDetails = $userModel->where('email',$this->request->getPost('email'))->first();
+
+				if($userDetails['verification_code']==$this->request->getPost('verification_code')){
+					$userDetails['password'] =  password_hash($this->request->getPost('password'), PASSWORD_BCRYPT);;
+					$userModel->save($userDetails);
+					$data['messageSuccess']="The password updated successfully.";
+					$data['email'] = '';
+				}else{
+					$data['messageError'] = "Please enter a valid verification code.";
+				}
+
+			}
+
+		}
+
+
 		return view('forgot-password',$data);
 	}
 	
@@ -105,6 +212,17 @@ class Users extends BaseController
 			'user'=>$user
 		];
 
+		// $ProfileModel = new ProfileModel();
+		// $JobPositionModel = new JobPositionModel();
+		// $EmployeeJoinigDetailsModel = new EmployeeJoinigDetailsModel();
+		// $EmployeeJoinigDetailsModel = new
+
+		$data['counts'] = [
+			'profiles'=>ProfileModel::getCount(),
+			'onboards'=>EmployeeJoinigDetailsModel::getCount(),
+			'jobPositions'=>JobPositionModel::getCount(),
+			'clients'=> ClientsModel::getCount(),
+		];
 		
 		
 		return view('user/dashboard',$data);
@@ -143,6 +261,14 @@ class Users extends BaseController
 		setcookie('fname','',time() - 3600,'/');
 		setcookie('lname','',time() - 3600,'/');
 		setcookie('user_type','',time() - 3600,'/');
+		$session = session();
+		$session->remove('employee_joining_form_id');
+		$session->remove('employee_name');
+		
+		$session->remove('profile_id');
+		$session->remove('profile_first_name');
+		$session->remove('profile_last_name');
+
 		return redirect()->route('home');
 	}
 

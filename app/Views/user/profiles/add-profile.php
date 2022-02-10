@@ -213,7 +213,7 @@
             <div class="form-group row">
               <label class="col-sm-3" for="topSkills">Top Skills</label>
               <div class="col-sm-9">
-                <tags-input ng-model="profile.top_skills" use-strings="true" replace-spaces-with-dashes="false">
+                <tags-input ng-model="profile.primary_skills" use-strings="true" replace-spaces-with-dashes="false">
                   <auto-complete source="loadTags($query)"></auto-complete>
                 </tags-input>
               </div>
@@ -222,7 +222,7 @@
             <div class="form-group row">
               <label class="col-sm-3" for="middleSkills">Middle Skills</label>
               <div class="col-sm-9">
-                <tags-input ng-model="profile.middle_skills" use-strings="true" replace-spaces-with-dashes="false">
+                <tags-input ng-model="profile.secondary_skills" use-strings="true" replace-spaces-with-dashes="false">
                   <auto-complete source="loadTags($query)"></auto-complete>
                 </tags-input>
 

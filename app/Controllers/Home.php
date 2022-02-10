@@ -79,26 +79,28 @@ class Home extends BaseController
 
 	public function emailTest()
 	{
-		$email = \Config\Services::email();
 
-		$config['protocol'] = 'sendmail';
-		$config['mailPath'] = '/usr/sbin/sendmail';
-		$config['charset']  = 'iso-8859-1';
-		$config['wordWrap'] = true;
+		return view('email-templates/shortlist-candidate');
+		// $email = \Config\Services::email();
 
-		$email->initialize($config);
+		// $config['protocol'] = 'sendmail';
+		// $config['mailPath'] = '/usr/sbin/sendmail';
+		// $config['charset']  = 'iso-8859-1';
+		// $config['wordWrap'] = true;
 
-		$email->setFrom('someshbadade@gmail.com', 'Someshwar');
-		$email->setTo(['someshwar@essensys.co.in', 'someshbadade@gmail.com']);
-		// $email->setCC('another@another-example.com');
-		// $email->setBCC('them@their-example.com');
+		// $email->initialize($config);
 
-		$email->setSubject('Email Test 2');
-		$email->setMessage('Testing the email class.');
+		// $email->setFrom('someshbadade@gmail.com', 'Someshwar');
+		// $email->setTo(['someshwar@essensys.co.in', 'someshbadade@gmail.com']);
+		// // $email->setCC('another@another-example.com');
+		// // $email->setBCC('them@their-example.com');
 
-		echo	$email->send();
+		// $email->setSubject('Email Test 2');
+		// $email->setMessage('Testing the email class.');
 
-		$email->printDebugger(['headers']);
+		// echo	$email->send();
+
+		// $email->printDebugger(['headers']);
 	}
 	public function phpEmailTest()
 	{

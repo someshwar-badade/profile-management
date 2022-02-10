@@ -14,7 +14,7 @@
             <div class="col-md-6 offset-md-3">
                 <div class="card thanku-box">
                     <div class="card-body">
-                        <h2 class="text-center">Thank you for submiting Joining Form</h2>
+                        <h2 class="text-center">Thank you for submitting Joining Form</h2>
                     </div>
                 </div>
             </div>

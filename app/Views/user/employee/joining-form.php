@@ -35,880 +35,1557 @@
         white-space: nowrap;
     }
 </style>
-<section ng-cloak class="abutsSection clearfix" ng-controller="joiningFormCtrl">
-    <div class="container-fluid mt-5">
-        <?php if (!$showTitle) { ?>
-            <div class="row justify-content-center">
-                <h2>Joining Form ()</h2>
-            </div>
-        <?php } ?>
-        <div class="row mt-5">
+<?php
+function isEditableForm($cap, $status)
+{
+    $editable = false;
+
+    if (hasCapability('joining_form/edit') && hasCapability($cap)) {
+        $editable = true;
+    }
+
+    if ($status == '2') {
+        $editable = false;
+    }
+
+    if ($status == '2' && hasCapability('joining_form/update_approved')) {
+        $editable = true;
+    }
 
 
-            <div class="col-md-12">
-                Form Completed:
-                <div class="progress">
-                    <div class="progress-bar bg-success" ng-style="{'width':formComlpletion+'%'}">{{formComlpletion}}%</div>
-                </div>
-                <p>Please complete the form in <strong>BLOCK CAPITALS</strong> as fully as possible using sign. No section should be left blank. The information you provide in this form will be subject to verification by the company.</p>
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="employeeDetails-tab" data-toggle="tab" href="#employeeDetails" role="tab" aria-controls="employeeDetails" aria-selected="true">Employee Details</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="educationalQualifications-tab" data-toggle="tab" href="#educationalQualifications" role="tab" aria-controls="educationalQualifications" aria-selected="false">Educational Qualifications</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="employmentHistory-tab" data-toggle="tab" href="#employmentHistory" role="tab" aria-controls="employmentHistory" aria-selected="false">Employment History</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="backgroundInfo-tab" data-toggle="tab" href="#backgroundInfo" role="tab" aria-controls="backgroundInfo" aria-selected="false">Background Information</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="uploadDocuments-tab" data-toggle="tab" href="#uploadDocuments" role="tab" aria-controls="uploadDocuments" aria-selected="false">Documents</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="declaration-tab" data-toggle="tab" href="#declaration" role="tab" aria-controls="declaration" aria-selected="false">Declaration & Authorization</a>
-                    </li>
+    return $editable;
+}
 
-                </ul>
-                <div class="tab-content" id="myTabContent" style="background-color: white;padding:20px;">
-                    <div class="tab-pane fade show active" id="employeeDetails" role="tabpanel" aria-labelledby="employeeDetails-tab">
-                        <form class="">
-                            <fieldset class="form-group p-3">
-                                <legend class="w-auto px-2">Personal details</legend>
-                                <div class="form-row">
-                                    <div class="form-group col-md-3">
-                                        <label>First Name<sup class="text-danger">*</sup></label>
-                                        <input type="text" maxlength="50" class="form-control" placeholder="First Name" ng-model="joiningForm.first_name">
-                                        <div class="text-danger" ng-show="errors.first_name">{{errors.first_name}}</div>
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                        <label>Last Name<sup class="text-danger">*</sup></label>
-                                        <input type="text" maxlength="50" class="form-control" placeholder="Last Name" ng-model="joiningForm.last_name">
-                                        <div class="text-danger" ng-show="errors.last_name">{{errors.last_name}}</div>
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                        <label>Father's Name</label>
-                                        <input type="text" maxlength="50" class="form-control" placeholder="Father's Name" ng-model="joiningForm.father_name">
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                        <label>Mother's Name</label>
-                                        <input type="text" maxlength="50" class="form-control" placeholder="Mother's Name" ng-model="joiningForm.mother_name">
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-3">
-                                        <label>Gender<sup class="text-danger">*</sup></label>
-                                        <div>
-                                            <div class="custom-control custom-radio custom-control-inline">
-                                                <input type="radio" id="gender1" name="gender" value="Male" ng-model="joiningForm.employee_other_details.gender" class="custom-control-input">
-                                                <label class="custom-control-label" for="gender1">Male</label>
-                                            </div>
-                                            <div class="custom-control custom-radio custom-control-inline">
-                                                <input type="radio" id="gender2" name="gender" value="Female" ng-model="joiningForm.employee_other_details.gender" class="custom-control-input">
-                                                <label class="custom-control-label" for="gender2">Female</label>
-                                            </div>
-                                            <div class="text-danger" ng-show="errors['employee_other_details.gender']">{{errors['employee_other_details.gender']}}</div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                        <label>Marital Status<sup class="text-danger">*</sup></label>
-                                        <div>
-                                            <div class="custom-control custom-radio custom-control-inline">
-                                                <input type="radio" id="customRadioInline1" name="marital_status" value="Married" ng-model="joiningForm.employee_other_details.marital_status" class="custom-control-input">
-                                                <label class="custom-control-label" for="customRadioInline1">Married</label>
-                                            </div>
-                                            <div class="custom-control custom-radio custom-control-inline">
-                                                <input type="radio" id="customRadioInline2" name="marital_status" value="Single" ng-model="joiningForm.employee_other_details.marital_status" class="custom-control-input">
-                                                <label class="custom-control-label" for="customRadioInline2">Single</label>
-                                            </div>
-                                            <div class="text-danger" ng-show="errors['employee_other_details.marital_status']">{{errors['employee_other_details.marital_status']}}</div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                        <label>Spouse's Name</label>
-                                        <input type="text" maxlength="50" class="form-control" placeholder="Spouse's Name" ng-model="joiningForm.spouse_name">
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                        <label>Kid(s) Name</label>
-                                        <input type="text" maxlength="50" class="form-control" placeholder="Kid(s) Name" ng-model="joiningForm.kids_name">
-                                    </div>
-                                </div>
-                                <div class="form-row">
+?>
+<div ng-cloak ng-controller="joiningFormCtrl">
+    <?php if ($showTitle) { ?>
+        <section class="content-header">
+            <div class="container-fluid">
 
-                                    <div class="form-group col-md-2">
-                                        <label>Date of Birth<sup class="text-danger">*</sup></label>
-                                        <input type="text" id="dob" class="form-control past-datepicker" ng-init="initializeDatepicker();" placeholder="Date of Birth" ng-model="joiningForm.dob">
-                                        <div class="text-danger" ng-show="errors.dob">{{errors.dob}}</div>
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label>Place of Birth</label>
-                                        <input type="text" maxlength="50" class="form-control" placeholder="Place of Birth" ng-model="joiningForm.place_of_birth">
-
-                                    </div>
-
-                                    <div class="form-group col-md-3">
-                                        <label>Nationality (both, if dual national)</label>
-                                        <input type="text" maxlength="50" class="form-control" placeholder="Indian" ng-model="joiningForm.nationality">
-                                    </div>
-
-                                    <div class="form-group col-md-2">
-                                        <label>Blood Group<sup class="text-danger">*</sup></label>
-                                        <input type="text" maxlength="5" class="form-control" placeholder="Blood Group" ng-model="joiningForm.employee_other_details.blood_group">
-                                        <div class="text-danger" ng-show="errors['employee_other_details.blood_group']">{{errors['employee_other_details.blood_group']}}</div>
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                        <label>Medical conditions, if any</label>
-                                        <input type="text" maxlength="50" class="form-control" ng-model="joiningForm.employee_other_details.medical_condition">
-                                    </div>
-                                </div>
-                                <div class="form-row">
-
-                                    <div class="form-group col-md-3">
-                                        <label>PAN Number<sup class="text-danger">*</sup></label>
-                                        <input type="text" maxlength="10" class="form-control" placeholder="PAN Number" ng-model="joiningForm.pan_number">
-                                        <div class="text-danger" ng-show="errors.pan_number">{{errors.pan_number}}</div>
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                        <label>Aadhar Number<sup class="text-danger">*</sup></label>
-                                        <input type="text" maxlength="12" class="form-control" placeholder="Aadhar Number" ng-model="joiningForm.aadhar_number">
-                                        <div class="text-danger" ng-show="errors.aadhar_number">{{errors.aadhar_number}}</div>
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                        <label>UAN Number</label>
-                                        <input type="text" maxlength="50" class="form-control" placeholder="UAN Number" ng-model="joiningForm.employee_other_details.uan_number">
-                                    </div>
-                                </div>
-
-                                <div class="form-row">
-
-                                    <div class="form-group col-md-3">
-                                        <label>Total Experience(Years)</label>
-                                        <input type="text" maxlength="3" class="form-control" ng-model="joiningForm.employee_other_details.total_experience">
-
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                        <label>Type of employment with BitString</label>
-                                        <select ng-model="joiningForm.employee_other_details.nature_of_job_hired" ng-init="joiningForm.employee_other_details.nature_of_job_hired=''" class="form-control">
-                                            <option value="">Select</option>
-                                            <option value="Full Time">Full Time</option>
-                                            <option value="Contract">Contract</option>
-
-                                        </select>
-
-                                    </div>
-
-                                </div>
-
-
-
-                            </fieldset>
-
-                            <fieldset class="form-group p-3">
-                                <legend class="w-auto px-2">Contact details</legend>
-                                <div class="form-row">
-                                    <div class="form-group col-md-3">
-                                        <label>Email (primary)<sup class="text-danger">*</sup></label>
-                                        <input type="email" maxlength="50" class="form-control" placeholder="Email" ng-model="joiningForm.email_primary">
-                                        <div class="text-danger" ng-show="errors.email_primary">{{errors.email_primary}}</div>
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                        <label>Mobile<sup class="text-danger">*</sup></label>
-                                        <input type="text" maxlength="15" class="form-control" placeholder="Mobile" ng-model="joiningForm.mobile_primary">
-                                        <div class="text-danger" ng-show="errors['mobile_primary']">{{errors['mobile_primary']}}</div>
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                        <label>Emergency Contact Name and Relation<sup class="text-danger">*</sup></label>
-                                        <input type="text" maxlength="50" class="form-control" placeholder="Emergency Contact Name" ng-model="joiningForm.employee_other_details.emergency_contact_name">
-                                        <div class="text-danger" ng-show="errors['employee_other_details.emergency_contact_name']">{{errors['employee_other_details.emergency_contact_name']}}</div>
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                        <label>Emergency Mobile No<sup class="text-danger">*</sup></label>
-                                        <input type="text" maxlength="50" class="form-control" placeholder="Emergency Mobile No" ng-model="joiningForm.employee_other_details.emergency_contact_mobile">
-                                        <div class="text-danger" ng-show="errors['employee_other_details.emergency_contact_mobile']">{{errors['employee_other_details.emergency_contact_mobile']}}</div>
-                                    </div>
-                                </div>
-                            </fieldset>
-
-                            <fieldset class="form-group p-3">
-                                <legend class="w-auto px-2">Bank details</legend>
-                                <div class="form-row">
-                                    <div class="form-group col-md-3">
-                                        <label>Bank Name & Branch<sup class="text-danger">*</sup></label>
-                                        <input type="text" maxlength="50" class="form-control" placeholder="Bank Name & Branch" ng-model="joiningForm.employee_other_details.bank_name_branch">
-                                        <div class="text-danger" ng-show="errors['employee_other_details.bank_name_branch']">{{errors['employee_other_details.bank_name_branch']}}</div>
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                        <label>Bank A/c No<sup class="text-danger">*</sup></label>
-                                        <input type="text" maxlength="20" class="form-control" placeholder="Bank A/c No" ng-model="joiningForm.employee_other_details.bank_account_number">
-                                        <div class="text-danger" ng-show="errors['employee_other_details.bank_account_number']">{{errors['employee_other_details.bank_account_number']}}</div>
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                        <label>IFS Code<sup class="text-danger">*</sup></label>
-                                        <input type="text" maxlength="11" class="form-control" placeholder="IFS Code" ng-model="joiningForm.employee_other_details.bank_ifsc_code">
-                                        <div class="text-danger" ng-show="errors['employee_other_details.bank_ifsc_code']">{{errors['employee_other_details.bank_ifsc_code']}}</div>
-                                    </div>
-                                </div>
-
-                            </fieldset>
-
-                            <fieldset class="form-group p-3">
-                                <legend class="w-auto px-2">Address</legend>
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label>Present Address <sup class="text-danger">*</sup></label>
-                                        <input type="text" maxlength="300" class="form-control" ng-model="joiningForm.employee_other_details.present_address">
-                                        <div class="text-danger" ng-show="errors['employee_other_details.present_address']">{{errors['employee_other_details.present_address']}}</div>
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label>Postcode <sup class="text-danger">*</sup></label>
-                                        <input type="text" maxlength="6" class="form-control" ng-model="joiningForm.employee_other_details.present_address_postcode">
-                                        <div class="text-danger" ng-show="errors['employee_other_details.present_address_postcode']">{{errors['employee_other_details.present_address_postcode']}}</div>
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        <label>For how long are you residing at this address (Year/Months)<sup class="text-danger">*</sup></label>
-                                        <input type="text" maxlength="2" class="form-control" ng-model="joiningForm.employee_other_details.present_address_residing_duration">
-                                        <div class="text-danger" ng-show="errors['employee_other_details.present_address_residing_duration']">{{errors['employee_other_details.present_address_residing_duration']}}</div>
-                                    </div>
-                                </div>
-
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label>Permanent Address<sup class="text-danger">*</sup></label>
-                                        <input type="text" maxlength="300" class="form-control" ng-model="joiningForm.employee_other_details.permanent_address">
-                                        <div class="text-danger" ng-show="errors['employee_other_details.permanent_address']">{{errors['employee_other_details.permanent_address']}}</div>
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label>Postcode<sup class="text-danger">*</sup></label>
-                                        <input type="text" maxlength="6" class="form-control" ng-model="joiningForm.employee_other_details.permanent_address_postcode">
-                                        <div class="text-danger" ng-show="errors['employee_other_details.permanent_address_postcode']">{{errors['employee_other_details.permanent_address_postcode']}}</div>
-                                    </div>
-                                </div>
-
-                            </fieldset>
-
-
-                            <button type="button" class="btn btn-primary" ng-click="submitForm('save-employee-details','#educationalQualifications')">
-                                <div ng-show="loading" class="css-animated-loader"></div>Save
-                            </button>
-                        </form>
+                <div class="row mb-2">
+                    <div class="col-md-12">
+                        <h1><?= $pageHeading ?> <small ng-show="!!joiningForm.first_name || !!joiningForm.last_name">({{joiningForm.first_name +' '+joiningForm.last_name | uppercase }})</small> <a target="_blank" title="Download Joining Form" href="<?= base_url(route_to('downloadJoiningForm', $id)) ?>" class="fa fa-download pull-right" style="float: right;font-size:1rem;"></a></h1>
 
                     </div>
-                    <div class="tab-pane fade" id="educationalQualifications" role="tabpanel" aria-labelledby="educationalQualifications-tab">
-                        <div class="table-responsive">
+                </div>
+
+            </div>
+        </section>
+    <?php } ?>
+    <section class="abutsSection clearfix">
+        <div class="container-fluid mt-2">
+            <?php if (!$showTitle) { ?>
+                <div class="row justify-content-center">
+                    <h2>JOINING FORM </h2>
+                </div>
+            <?php } ?>
+            <div class="row">
+                <div class="col-md-12">
+                    Form Completed:
+                    <div class="progress">
+                        <div class="progress-bar bg-success" ng-style="{'width':formComlpletion+'%'}">{{formComlpletion}}%</div>
+                    </div>
+                    <p>Please complete as fully as possible. No section should be left blank. The information you provide in this form will be subject to verification by the company.</p>
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="employeeDetails-tab" data-toggle="tab" href="#employeeDetails" role="tab" data-iserror="{{errors.employeeDetailsTab}}" aria-controls="employeeDetails" aria-selected="true">Employee Details <span ng-show="errors.employeeDetailsTab" class="fa fa-exclamation-triangle text-danger"></span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="educationalQualifications-tab" data-toggle="tab" href="#educationalQualifications" role="tab" data-iserror="{{errors.educationalQualificationsTab}}" aria-controls="educationalQualifications" aria-selected="false">Educational Qualifications <span ng-show="errors.educationalQualificationsTab" class="fa fa-exclamation-triangle text-danger"></span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="employmentHistory-tab" data-toggle="tab" href="#employmentHistory" role="tab" data-iserror="{{errors.employmentHistoryTab}}" aria-controls="employmentHistory" aria-selected="false">Employment History <span ng-show="errors.employmentHistoryTab" class="fa fa-exclamation-triangle text-danger"></span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="backgroundInfo-tab" data-toggle="tab" href="#backgroundInfo" role="tab" data-iserror="{{errors.backgroundInfoTab}}" aria-controls="backgroundInfo" aria-selected="false">Background Information <span ng-show="errors.backgroundInfoTab" class="fa fa-exclamation-triangle text-danger"></span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="uploadDocuments-tab" data-toggle="tab" href="#uploadDocuments" role="tab" data-iserror="{{errors.uploadDocumentsTab}}" aria-controls="uploadDocuments" aria-selected="false">Documents <span ng-show="errors.uploadDocumentsTab" class="fa fa-exclamation-triangle text-danger"></span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="declaration-tab" data-toggle="tab" href="#declaration" role="tab" data-iserror="{{errors.declarationTab}}" aria-controls="declaration" aria-selected="false">Declaration & Authorization <span ng-show="errors.declarationTab" class="fa fa-exclamation-triangle text-danger"></span></a>
+                        </li>
+
+                        <?php if ($joiningFormDetails['status'] == '2') { ?>
+                            <li class="nav-item">
+                                <a class="nav-link" id="policydocument-tab" data-toggle="tab" href="#policydocument" role="tab" data-iserror="{{errors.policydocument}}" aria-controls="policydocument" aria-selected="false">Policy Documents <span ng-show="errors.policydocumentTab" class="fa fa-exclamation-triangle text-danger"></span></a>
+                            </li>
+                        <?php } ?>
+
+                    </ul>
+                    <div class="tab-content" id="myTabContent" style="background-color: white;padding:20px;">
+                        <div class="tab-pane fade show active" id="employeeDetails" role="tabpanel" aria-labelledby="employeeDetails-tab">
                             <form class="">
-                                <fieldset class="form-group p-3">
-                                    <table class="table table-bordered table-stripped">
-                                        <thead>
-                                            <tr>
-                                                <td><b>Degree / Course</b></td>
-                                                <td><b>Course Title along with Board / University</b></td>
-                                                <td style="width: 25%;"><b>Name and full address of school/Institution </b></td>
-                                                <td><b>From (MM/YYYY)</b></td>
-                                                <td><b>To (MM/YYYY)</b></td>
-                                                <td><b>Full time / Part Time/ off campus / Open Univ.</b></td>
-                                                <td><b>%age/ CGPA</b></td>
-                                                <td style="width: 80px;"></td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr ng-repeat="qualification in joiningForm.education_qualification">
-                                                <td>
-                                                    {{qualification.degree}}
-                                                </td>
-                                                <td>
-                                                    {{qualification.degree}}
-                                                </td>
-                                                <td>
-                                                    {{qualification.institution}}
-                                                </td>
-                                                <td>
-                                                    {{qualification.from_date}}
-                                                </td>
-                                                <td>
-                                                    {{qualification.to_date}}
-                                                </td>
-                                                <td>
-                                                    {{qualification.course_type}}
-                                                </td>
-                                                <td>
-                                                    {{qualification.percentage}}
-                                                </td>
 
-                                                <td>
-                                                    <div>
-                                                        <a role="button" class="fa fa-edit text-primary" ng-click="edit_e_qualification($index)" title="Edit" data-toggle="modal" data-target="#educationalQualification"></a>
-                                                        <a href="<?= base_url('uploaded-documents') ?>/{{qualification.document_path}}" title="Download document" target="_blank" ng-show="qualification.document_path" class="fa fa-download text-success"></a>
-                                                        <a role="button" class="fa fa-trash text-danger" ng-click="remove_e_qualification($index)" title="Remove"></a>
-
+                                <?php if (isEditableForm('joining_form/update_personal_details', $joiningFormDetails['status'])) { ?>
+                                    <fieldset class="form-group p-3">
+                                        <legend class="w-auto px-2">Personal details</legend>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-3">
+                                                <label>First Name<sup class="text-danger">*</sup></label>
+                                                <input type="text" maxlength="50" class="form-control" placeholder="First Name" ng-model="joiningForm.first_name">
+                                                <div class="text-danger" ng-show="errors.first_name">{{errors.first_name}}</div>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>Last Name<sup class="text-danger">*</sup></label>
+                                                <input type="text" maxlength="50" class="form-control" placeholder="Last Name" ng-model="joiningForm.last_name">
+                                                <div class="text-danger" ng-show="errors.last_name">{{errors.last_name}}</div>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>Father's Name</label>
+                                                <input type="text" maxlength="50" class="form-control" placeholder="Father's Name" ng-model="joiningForm.father_name">
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>Mother's Name</label>
+                                                <input type="text" maxlength="50" class="form-control" placeholder="Mother's Name" ng-model="joiningForm.mother_name">
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-3">
+                                                <label>Gender<sup class="text-danger">*</sup></label>
+                                                <div>
+                                                    <div class="custom-control custom-radio custom-control-inline">
+                                                        <input type="radio" id="gender1" name="gender" value="Male" ng-model="joiningForm.employee_other_details.gender" class="custom-control-input">
+                                                        <label class="custom-control-label" for="gender1">Male</label>
                                                     </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <td colspan="8">
-                                                    <a role="button" class="text-primary" ng-click="addEducationQualification()" data-toggle="modal" data-target="#educationalQualification"> <i class="fa fa-plus"></i> Add</a>
-                                                </td>
-                                            </tr>
+                                                    <div class="custom-control custom-radio custom-control-inline">
+                                                        <input type="radio" id="gender2" name="gender" value="Female" ng-model="joiningForm.employee_other_details.gender" class="custom-control-input">
+                                                        <label class="custom-control-label" for="gender2">Female</label>
+                                                    </div>
+                                                    <div class="text-danger" ng-show="errors['employee_other_details.gender']">{{errors['employee_other_details.gender']}}</div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>Marital Status<sup class="text-danger">*</sup></label>
+                                                <div>
+                                                    <div class="custom-control custom-radio custom-control-inline">
+                                                        <input type="radio" id="customRadioInline1" name="marital_status" value="Married" ng-model="joiningForm.employee_other_details.marital_status" class="custom-control-input">
+                                                        <label class="custom-control-label" for="customRadioInline1">Married</label>
+                                                    </div>
+                                                    <div class="custom-control custom-radio custom-control-inline">
+                                                        <input type="radio" id="customRadioInline2" name="marital_status" value="Single" ng-model="joiningForm.employee_other_details.marital_status" class="custom-control-input">
+                                                        <label class="custom-control-label" for="customRadioInline2">Single</label>
+                                                    </div>
+                                                    <div class="text-danger" ng-show="errors['employee_other_details.marital_status']">{{errors['employee_other_details.marital_status']}}</div>
+                                                </div>
+                                            </div>
 
-                                        </tfoot>
-                                    </table>
-                                </fieldset>
+                                            <div class="form-group col-md-3" ng-show="joiningForm.employee_other_details.marital_status=='Married'">
+                                                <label>Spouse's Name</label>
+                                                <input type="text" maxlength="50" class="form-control" placeholder="Spouse's Name" ng-model="joiningForm.spouse_name">
+                                            </div>
+                                            <!-- <div class="form-group col-md-3">
+                                            <label>Kid(s) Name</label>
+                                            <input type="text" maxlength="50" class="form-control" placeholder="Kid(s) Name" ng-model="joiningForm.kids_name">
+                                        </div> -->
 
-                                <fieldset class="form-group p-3">
-                                    <div>
-                                        <p>Professional qualifications, memberships & licences</p>
-                                        <p>
-                                        <ul>
-                                            <li>Professional qualifications obtained or being studied for</li>
-                                            <li>Memberships of professional bodies</li>
-                                            <li>Professional licenses, certificates or registrations, including registrations with a regulatory body (e.g. ICAI) and whether you are in an approved regulatory role</li>
-                                        </ul>
-                                        </p>
-                                    </div>
-                                    <table class="table table-bordered table-stripped">
-                                        <thead>
+                                        </div>
+                                        <div class="form-row">
 
-                                            <tr>
-                                                <td style="width: 50%;"><b>Qualification/Body/Institute / Licence</b></td>
-                                                <td><b>Category/Membership level</b></td>
-                                                <td><b>Dates (MM/YY)</b></td>
-                                                <td style="width: 80px;"></td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr ng-repeat="qualification in joiningForm.professional_qualification">
-                                                <td>
-                                                    {{qualification.qualification}}
-                                                </td>
-                                                <td>
-                                                    {{qualification.category}}
-                                                </td>
-                                                <td>
-                                                    {{qualification.date}}
-                                                </td>
-                                                <td>
-                                                    <a role="button" class="fa fa-edit text-primary" ng-click="edit_p_qualification($index)" title="Edit" data-toggle="modal" data-target="#professionalQualification"></a>
-                                                    <a href="<?= base_url('uploaded-documents') ?>/{{qualification.document_path}}" title="Download document" target="_blank" ng-show="qualification.document_path" class="fa fa-download text-success"></a>
+                                            <div class="form-group col-md-2">
+                                                <label>Date of Birth<sup class="text-danger">*</sup></label>
+                                                <input type="text" id="dob" class="form-control past-datepicker" ng-init="initializeDatepicker();" placeholder="dd-mmm-yyyy" ng-model="joiningForm.dob">
+                                                <div class="text-danger" ng-show="errors.dob">{{errors.dob}}</div>
+                                            </div>
+                                            <div class="form-group col-md-2">
+                                                <label>Place of Birth</label>
+                                                <input type="text" maxlength="50" class="form-control" placeholder="Place, State" ng-model="joiningForm.place_of_birth">
 
-                                                    <a role="button" class="fa fa-trash text-danger" title="Remove" ng-click="remove_p_qualification($index)"></a>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <td colspan="4">
-                                                    <a role="button" class="text-primary" ng-click="addProfetionalQualification()" data-toggle="modal" data-target="#professionalQualification"> <i class="fa fa-plus"></i> Add</a>
-                                                </td>
-                                            </tr>
+                                            </div>
 
-                                        </tfoot>
-                                    </table>
-                                </fieldset>
-                                <!-- <button type="button" class="btn btn-primary" ng-click="submitForm('save-education-details','#professionalQualifications')">
+                                            <div class="form-group col-md-3">
+                                                <label>Nationality (both, if dual national)</label>
+                                                <input type="text" maxlength="50" class="form-control" placeholder="Nationality" ng-model="joiningForm.nationality">
+                                            </div>
+
+                                            <div class="form-group col-md-2">
+                                                <label>Blood Group<sup class="text-danger">*</sup></label>
+                                                <select ng-model="joiningForm.employee_other_details.blood_group" ng-init="joiningForm.employee_other_details.blood_group=''" class="form-control">
+                                                    <option value="">Select</option>
+                                                    <option value="A+">A+</option>
+                                                    <option value="A-">A-</option>
+                                                    <option value="B+">B+</option>
+                                                    <option value="B-">B-</option>
+                                                    <option value="AB+">AB+</option>
+                                                    <option value="AB-">AB-</option>
+                                                    <option value="O+">O+</option>
+                                                    <option value="O-">O-</option>
+
+                                                </select>
+                                                <!-- <input type="text" maxlength="5" class="form-control" placeholder="Blood Group" ng-model="joiningForm.employee_other_details.blood_group"> -->
+
+                                                <div class="text-danger" ng-show="errors['employee_other_details.blood_group']">{{errors['employee_other_details.blood_group']}}</div>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>Medical conditions, if any</label>
+                                                <input type="text" maxlength="50" class="form-control" ng-model="joiningForm.employee_other_details.medical_condition">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
+
+                                            <div class="form-group col-md-3">
+                                                <label>PAN Number<sup class="text-danger">*</sup></label>
+                                                <input type="text" maxlength="10" class="form-control" placeholder="PAN Number" ng-model="joiningForm.pan_number">
+                                                <div class="text-danger" ng-show="errors.pan_number">{{errors.pan_number}}</div>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>Aadhar Number<sup class="text-danger">*</sup></label>
+                                                <input type="text" maxlength="12" class="form-control" placeholder="Aadhar Number" ng-model="joiningForm.aadhar_number">
+                                                <div class="text-danger" ng-show="errors.aadhar_number">{{errors.aadhar_number}}</div>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>UAN Number</label>
+                                                <input type="text" maxlength="50" class="form-control" placeholder="UAN Number" ng-model="joiningForm.employee_other_details.uan_number">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
+
+                                            <div class="form-group col-md-3">
+                                                <label>Total Experience (in Months)</label>
+                                                <input type="text" maxlength="3" class="form-control only-numbers" ng-model="joiningForm.employee_other_details.total_experience">
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>Type of employment with BitString</label>
+                                                <select ng-model="joiningForm.employee_other_details.nature_of_job_hired" ng-init="joiningForm.employee_other_details.nature_of_job_hired=''" class="form-control">
+                                                    <option value="">Select</option>
+                                                    <option value="Full Time">Full Time</option>
+                                                    <option value="Contract">Contract</option>
+
+                                                </select>
+
+                                            </div>
+
+                                            <div class="form-group col-md-3">
+                                                <label>Date of Joining<sup class="text-danger">*</sup></label>
+                                                <input type="text" class="form-control datepicker" ng-init="initializeDatepicker();" placeholder="dd-mmm-yyyy" ng-model="joiningForm.employee_other_details.date_of_joining">
+                                                <div class="text-danger" ng-show="errors['employee_other_details.date_of_joining']">{{errors['employee_other_details.date_of_joining']}}</div>
+                                            </div>
+
+                                        </div>
+                                    </fieldset>
+
+                                    <fieldset class="form-group p-3">
+                                        <legend class="w-auto px-2">Contact details</legend>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-3">
+                                                <label>E-mail (primary)<sup class="text-danger">*</sup></label>
+                                                <input type="email" maxlength="50" class="form-control" placeholder="E-mail" ng-model="joiningForm.email_primary">
+                                                <div class="text-danger" ng-show="errors.email_primary">{{errors.email_primary}}</div>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>Mobile No.<sup class="text-danger">*</sup></label>
+                                                <input type="text" maxlength="15" class="form-control only-numbers" placeholder="Mobile No." ng-model="joiningForm.mobile_primary">
+                                                <div class="text-danger" ng-show="errors['mobile_primary']">{{errors['mobile_primary']}}</div>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>Emergency Contact Name and Relation<sup class="text-danger">*</sup></label>
+                                                <input type="text" maxlength="50" class="form-control" placeholder="Emergency Contact Name" ng-model="joiningForm.employee_other_details.emergency_contact_name">
+                                                <div class="text-danger" ng-show="errors['employee_other_details.emergency_contact_name']">{{errors['employee_other_details.emergency_contact_name']}}</div>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>Emergency Mobile No.<sup class="text-danger">*</sup></label>
+                                                <input type="text" maxlength="15" class="form-control only-numbers" placeholder="Emergency Mobile No." ng-model="joiningForm.employee_other_details.emergency_contact_mobile">
+                                                <div class="text-danger" ng-show="errors['employee_other_details.emergency_contact_mobile']">{{errors['employee_other_details.emergency_contact_mobile']}}</div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                <?php } else { //read only 
+                                ?>
+
+                                    <fieldset class="form-group p-3">
+                                        <legend class="w-auto px-2">Personal details</legend>
+                                        <div class="form-row">
+
+                                            <div class="form-group col-md-3">
+                                                <label>First Name:<sup class="text-danger">*</sup></label>
+                                                <span>
+                                                    {{joiningForm.first_name}}
+                                                </span>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>Last Name:<sup class="text-danger">*</sup></label>
+                                                <span>
+                                                    {{joiningForm.last_name}}
+                                                </span>
+
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>Father's Name:</label>
+                                                <span>{{joiningForm.father_name}}</span>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>Mother's Name:</label>
+                                                <span>{{joiningForm.mother_name}}</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-3">
+                                                <label>Gender:<sup class="text-danger">*</sup></label>
+                                                <span>{{joiningForm.employee_other_details.gender}}</span>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>Marital Status:<sup class="text-danger">*</sup></label>
+                                                <span>{{joiningForm.employee_other_details.marital_status}}</span>
+                                            </div>
+
+                                            <div class="form-group col-md-3">
+                                                <label>Spouse's Name:</label>
+                                                <span>{{joiningForm.spouse_name}}</span>
+                                            </div>
+                                            <!-- <div class="form-group col-md-3">
+                                            <label>Kid(s) Name:</label>
+                                            <span>{{joiningForm.kids_name}}</span>
+                                        </div> -->
+
+                                        </div>
+                                        <div class="form-row">
+
+                                            <div class="form-group col-md-3">
+                                                <label>Date of Birth:<sup class="text-danger">*</sup></label>
+                                                <span>{{joiningForm.dob}}</span>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>Place of Birth:</label>
+                                                <span>{{joiningForm.place_of_birth}}</span>
+
+                                            </div>
+
+                                            <div class="form-group col-md-3">
+                                                <label>Nationality (both, if dual national):</label>
+                                                <span>{{joiningForm.nationality}}</span>
+                                            </div>
+
+                                            <div class="form-group col-md-3">
+                                                <label>Blood Group:<sup class="text-danger">*</sup></label>
+                                                <span>{{joiningForm.employee_other_details.blood_group}}</span>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>Medical conditions, if any:</label>
+                                                <span>{{joiningForm.employee_other_details.medical_condition}}</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
+
+                                            <div class="form-group col-md-3">
+                                                <label>PAN Number:<sup class="text-danger">*</sup></label>
+                                                <span>{{joiningForm.pan_number}}</span>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>Aadhar Number:<sup class="text-danger">*</sup></label>
+                                                <span>{{joiningForm.aadhar_number}}</span>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>UAN Number:</label>
+                                                <span>{{joiningForm.employee_other_details.uan_number}}</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
+
+                                            <div class="form-group col-md-3">
+                                                <label>Total Experience (in Months):</label>
+                                                <span>{{joiningForm.employee_other_details.total_experience}}</span>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>Type of employment with BitString:</label>
+                                                <span>{{joiningForm.employee_other_details.nature_of_job_hired}}</span>
+                                            </div>
+
+                                            <div class="form-group col-md-3">
+                                                <label>Date of Joining:</label>
+                                                <span>{{joiningForm.employee_other_details.date_of_joining}}</span>
+                                            </div>
+
+                                        </div>
+                                    </fieldset>
+
+                                    <fieldset class="form-group p-3">
+                                        <legend class="w-auto px-2">Contact details</legend>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-3">
+                                                <label>E-mail (primary)<sup class="text-danger">*</sup></label>
+                                                <div>{{joiningForm.email_primary}}</div>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>Mobile No.<sup class="text-danger">*</sup></label>
+                                                <div>{{joiningForm.mobile_primary}}</div>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>Emergency Contact Name and Relation<sup class="text-danger">*</sup></label>
+                                                <div>{{joiningForm.employee_other_details.emergency_contact_name}}</div>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>Emergency Mobile No.<sup class="text-danger">*</sup></label>
+                                                <div>{{joiningForm.employee_other_details.emergency_contact_mobile}}</div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                <?php } ?>
+
+                                <?php if (isEditableForm('joining_form/update_bank_details', $joiningFormDetails['status'])) { ?>
+                                    <fieldset class="form-group p-3">
+                                        <legend class="w-auto px-2">Bank details</legend>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-3">
+                                                <label>Bank Name & Branch<sup class="text-danger">*</sup></label>
+                                                <input type="text" maxlength="30" class="form-control" placeholder="Bank Name & Branch" ng-model="joiningForm.employee_other_details.bank_name_branch">
+                                                <div class="text-danger" ng-show="errors['employee_other_details.bank_name_branch']">{{errors['employee_other_details.bank_name_branch']}}</div>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>Bank A/c No<sup class="text-danger">*</sup></label>
+                                                <input type="text" maxlength="20" class="form-control" placeholder="Bank A/c No" ng-model="joiningForm.employee_other_details.bank_account_number">
+                                                <div class="text-danger" ng-show="errors['employee_other_details.bank_account_number']">{{errors['employee_other_details.bank_account_number']}}</div>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>IFSC Code<sup class="text-danger">*</sup></label>
+                                                <input type="text" maxlength="11" class="form-control" placeholder="IFSC Code" ng-model="joiningForm.employee_other_details.bank_ifsc_code">
+                                                <div class="text-danger" ng-show="errors['employee_other_details.bank_ifsc_code']">{{errors['employee_other_details.bank_ifsc_code']}}</div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                <?php } else { //read only 
+                                ?>
+                                    <fieldset class="form-group p-3">
+                                        <legend class="w-auto px-2">Bank details</legend>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-3">
+                                                <label>Bank Name & Branch<sup class="text-danger">*</sup></label>
+                                                <div>{{joiningForm.employee_other_details.bank_name_branch}}</div>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>Bank A/c No<sup class="text-danger">*</sup></label>
+                                                <div>{{joiningForm.employee_other_details.bank_account_number}}</div>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>IFSC Code<sup class="text-danger">*</sup></label>
+                                                <div>{{joiningForm.employee_other_details.bank_ifsc_code}}</div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                <?php } ?>
+
+
+
+
+                                <?php if (isEditableForm('joining_form/update_personal_details', $joiningFormDetails['status'])) { ?>
+                                    <fieldset class="form-group p-3">
+                                        <legend class="w-auto px-2">Address</legend>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-4">
+                                                <label>Present Address <sup class="text-danger">*</sup></label>
+                                                <input type="text" maxlength="200" class="form-control" ng-model="joiningForm.employee_other_details.present_address">
+                                                <div class="text-danger" ng-show="errors['employee_other_details.present_address']">{{errors['employee_other_details.present_address']}}</div>
+                                            </div>
+                                            <div class="form-group col-md-2">
+                                                <label>City Name<sup class="text-danger">*</sup></label>
+                                                <input type="text" maxlength="60" class="form-control" ng-model="joiningForm.employee_other_details.present_address_city">
+                                                <div class="text-danger" ng-show="errors['employee_other_details.present_address_city']">{{errors['employee_other_details.present_address_city']}}</div>
+                                            </div>
+                                            <div class="form-group col-md-2">
+                                                <label>Postcode <sup class="text-danger">*</sup></label>
+                                                <input type="text" maxlength="6" class="form-control only-numbers" ng-model="joiningForm.employee_other_details.present_address_postcode">
+                                                <div class="text-danger" ng-show="errors['employee_other_details.present_address_postcode']">{{errors['employee_other_details.present_address_postcode']}}</div>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label>For how long are you residing at this address (Year/Months)<sup class="text-danger">*</sup></label>
+                                                <input type="text" maxlength="10" class="form-control" ng-model="joiningForm.employee_other_details.present_address_residing_duration">
+                                                <div class="text-danger" ng-show="errors['employee_other_details.present_address_residing_duration']">{{errors['employee_other_details.present_address_residing_duration']}}</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="form-group col-md-4">
+                                                <label>Permanent Address<sup class="text-danger">*</sup></label>
+                                                <input type="text" maxlength="200" class="form-control" ng-model="joiningForm.employee_other_details.permanent_address">
+                                                <div class="text-danger" ng-show="errors['employee_other_details.permanent_address']">{{errors['employee_other_details.permanent_address']}}</div>
+                                            </div>
+                                            <div class="form-group col-md-2">
+                                                <label>City Name<sup class="text-danger">*</sup></label>
+                                                <input type="text" maxlength="60" class="form-control" ng-model="joiningForm.employee_other_details.permanent_address_city">
+                                                <div class="text-danger" ng-show="errors['employee_other_details.permanent_address_city']">{{errors['employee_other_details.permanent_address_city']}}</div>
+                                            </div>
+                                            <div class="form-group col-md-2">
+                                                <label>Postcode<sup class="text-danger">*</sup></label>
+                                                <input type="text" maxlength="6" class="form-control only-numbers" ng-model="joiningForm.employee_other_details.permanent_address_postcode">
+                                                <div class="text-danger" ng-show="errors['employee_other_details.permanent_address_postcode']">{{errors['employee_other_details.permanent_address_postcode']}}</div>
+                                            </div>
+                                        </div>
+
+                                    </fieldset>
+                                <?php } else { //read only 
+                                ?>
+                                    <fieldset class="form-group p-3">
+                                        <legend class="w-auto px-2">Address</legend>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label>Present Address <sup class="text-danger">*</sup></label>
+                                                <div>{{joiningForm.employee_other_details.present_address}}</div>
+                                            </div>
+                                            <div class="form-group col-md-2">
+                                                <label>City Name <sup class="text-danger">*</sup></label>
+                                                <div>{{joiningForm.employee_other_details.present_address_city}}</div>
+                                            </div>
+                                            <div class="form-group col-md-2">
+                                                <label>Postcode <sup class="text-danger">*</sup></label>
+                                                <div>{{joiningForm.employee_other_details.present_address_postcode}}</div>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label>For how long are you residing at this address (Year/Months)<sup class="text-danger">*</sup></label>
+                                                <div>{{joiningForm.employee_other_details.present_address_residing_duration}}</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label>Permanent Address<sup class="text-danger">*</sup></label>
+                                                <div>{{joiningForm.employee_other_details.permanent_address}}</div>
+                                            </div>
+                                            <div class="form-group col-md-2">
+                                                <label>City Name <sup class="text-danger">*</sup></label>
+                                                <div>{{joiningForm.employee_other_details.permanent_address_city}}</div>
+                                            </div>
+                                            <div class="form-group col-md-2">
+                                                <label>Postcode<sup class="text-danger">*</sup></label>
+                                                <div>{{joiningForm.employee_other_details.permanent_address_postcode}}</div>
+                                            </div>
+                                        </div>
+
+                                    </fieldset>
+                                <?php } ?>
+
+
+                                <?php if (isEditableForm('joining_form/update_personal_details', $joiningFormDetails['status']) || isEditableForm('joining_form/update_bank_details', $joiningFormDetails['status'])) { ?>
+                                    <button type="button" class="btn btn-primary" ng-click="submitForm('save-employee-details','#educationalQualifications')">
+                                        <div ng-show="loading" class="css-animated-loader"></div>Save
+                                    </button>
+                                <?php } ?>
+
+                            </form>
+
+                        </div>
+                        <div class="tab-pane fade" id="educationalQualifications" role="tabpanel" aria-labelledby="educationalQualifications-tab">
+                            <div class="table-responsive">
+                                <form class="">
+                                    <fieldset class="form-group p-3 table-responsive">
+                                        <table class="table table-bordered table-stripped">
+                                            <thead>
+                                                <tr>
+                                                    <td><b>Degree / Course</b></td>
+                                                    <td><b>Board / University</b></td>
+                                                    <td style="width: 25%;"><b>School / Institution </b></td>
+                                                    <td><b>From </b></td>
+                                                    <td><b>To </b></td>
+                                                    <td><b title="Full time / Part Time / off campus / Open Univ.">Course Type</b></td>
+                                                    <td><b>%age/ CGPA</b></td>
+                                                    <td style="width: 80px;"></td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="qualification in joiningForm.education_qualification">
+                                                    <td>
+                                                        {{qualification.degree}}
+                                                        <div class="text-danger" ng-show="errors['education_qualification.'+$index+'.document_path']">{{errors['education_qualification.'+$index+'.document_path']}}</div>
+                                                    </td>
+                                                    <td>
+                                                        {{qualification.university}}
+                                                    </td>
+                                                    <td>
+                                                        {{qualification.institution}}
+                                                    </td>
+                                                    <td>
+                                                        {{qualification.from_date}}
+                                                    </td>
+                                                    <td>
+                                                        {{qualification.to_date}}
+                                                    </td>
+                                                    <td>
+                                                        {{qualification.course_type}}
+                                                    </td>
+                                                    <td>
+                                                        {{qualification.percentage}}
+                                                    </td>
+
+                                                    <td>
+                                                        <div>
+
+                                                            <?php if (isEditableForm('joining_form/update_education_details', $joiningFormDetails['status'])) { ?>
+                                                                <a role="button" class="fa fa-edit text-primary" ng-click="edit_e_qualification($index)" title="Edit" data-toggle="modal" data-target="#educationalQualification"></a>
+                                                            <?php } ?>
+                                                            <a href="<?= base_url('uploaded-documents') ?>/{{qualification.document_path}}" title="Download document" target="_blank" ng-show="qualification.document_path" class="fa fa-download text-success"></a>
+                                                            <?php if (isEditableForm('joining_form/update_education_details', $joiningFormDetails['status'])) { ?>
+                                                                <a role="button" class="fa fa-trash text-danger" ng-click="remove_e_qualification($index)" title="Remove"></a>
+                                                            <?php } ?>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                            <?php if (isEditableForm('joining_form/update_education_details', $joiningFormDetails['status'])) { ?>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td colspan="8">
+                                                            <a role="button" class="text-primary" ng-click="addEducationQualification()" data-toggle="modal" data-target="#educationalQualification"> <i class="fa fa-plus"></i> Add</a>
+                                                        </td>
+                                                    </tr>
+
+                                                </tfoot>
+                                            <?php } ?>
+                                        </table>
+                                    </fieldset>
+
+                                    <fieldset class="form-group p-3 table-responsive">
+                                        <div>
+                                            <p>Professional qualifications, memberships & licences</p>
+                                            <p>
+                                            <ul>
+                                                <li>Professional qualifications obtained or being studied for</li>
+                                                <li>Memberships of professional bodies</li>
+                                                <li>Professional licenses, certificates or registrations, including registrations with a regulatory body (e.g. ICAI) and whether you are in an approved regulatory role</li>
+                                            </ul>
+                                            </p>
+                                        </div>
+                                        <table class="table table-bordered table-stripped">
+                                            <thead>
+
+                                                <tr>
+                                                    <td style="width: 50%;"><b>Qualification / Body / Institute / Licence</b></td>
+                                                    <td><b>Category / Membership level</b></td>
+                                                    <td><b>Date</b></td>
+                                                    <td style="width: 80px;"></td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="qualification in joiningForm.professional_qualification">
+                                                    <td>
+                                                        {{qualification.qualification}}
+                                                        <div class="text-danger" ng-show="errors['professional_qualification.'+$index+'.document_path']">{{errors['professional_qualification.'+$index+'.document_path']}}</div>
+                                                    </td>
+                                                    <td>
+                                                        {{qualification.category}}
+                                                    </td>
+                                                    <td>
+                                                        {{qualification.date}}
+                                                    </td>
+                                                    <td>
+                                                        <?php if (isEditableForm('joining_form/update_education_details', $joiningFormDetails['status'])) { ?>
+                                                            <a role="button" class="fa fa-edit text-primary" ng-click="edit_p_qualification($index)" title="Edit" data-toggle="modal" data-target="#professionalQualification"></a>
+                                                        <?php } ?>
+                                                        <a href="<?= base_url('uploaded-documents') ?>/{{qualification.document_path}}" title="Download document" target="_blank" ng-show="qualification.document_path" class="fa fa-download text-success"></a>
+                                                        <?php if (isEditableForm('joining_form/update_education_details', $joiningFormDetails['status'])) { ?>
+                                                            <a role="button" class="fa fa-trash text-danger" title="Remove" ng-click="remove_p_qualification($index)"></a>
+                                                        <?php } ?>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                            <?php if (isEditableForm('joining_form/update_education_details', $joiningFormDetails['status'])) { ?>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td colspan="4">
+                                                            <a role="button" class="text-primary" ng-click="addProfetionalQualification()" data-toggle="modal" data-target="#professionalQualification"> <i class="fa fa-plus"></i> Add</a>
+                                                        </td>
+                                                    </tr>
+
+                                                </tfoot>
+                                            <?php } ?>
+                                        </table>
+                                    </fieldset>
+                                    <!-- <button type="button" class="btn btn-primary" ng-click="submitForm('save-education-details','#professionalQualifications')">
                                     <div ng-show="loading" class="css-animated-loader"></div>Save
                                 </button> -->
-                            </form>
+                                </form>
+                            </div>
                         </div>
-                    </div>
 
 
-                    <div class="tab-pane fade" id="employmentHistory" role="tabpanel" aria-labelledby="employmentHistory-tab">
-                        <div>
-                            <p> Starting with your <b>most recent employer</b> please give details of your complete employment history since you left full time education. Include any periods of self-employment, unemployment, maternity leave or <b>military service.</b> Include all part time and temporary employment and provide details of both the agencies and placements. Under ‘position held’ state clearly if you were a partner or had an ownership interest in any of the employing companies, or if the position was part time. If you are aware that one of your employers has changed its trading name, please provide the former name first, followed by the new name.</p>
-                            <p><b>Please sign an authorization letter to allow us to do a complete background check.</b></p>
+                        <div class="tab-pane fade" id="employmentHistory" role="tabpanel" aria-labelledby="employmentHistory-tab">
+                            <div>
+                                <p> Starting with your <b>most recent employer</b> please give details of your complete employment history since you left full time education. Include any periods of self-employment, unemployment, maternity leave or <b>military service.</b> Include all part time and temporary employment and provide details of both the agencies and placements. Under ‘position held’ state clearly if you were a partner or had an ownership interest in any of the employing companies, or if the position was part time. If you are aware that one of your employers has changed its trading name, please provide the former name first, followed by the new name.</p>
+                            </div>
+                            <div class="table-responsive">
+                                <?php if (isEditableForm('joining_form/update_education_details', $joiningFormDetails['status'])) { ?>
+                                    <form class="">
+
+
+                                        <fieldset class="form-group p-3 animation" ng-repeat="employer in joiningForm.employment_history.employers">
+                                            <legend class="w-auto px-2">Employer {{$index+1}}</legend>
+                                            <a role="button" class="remove-btn fa fa-times text-default" ng-click="remove_employer($index)" title="Remove"></a>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-3">
+                                                    <label>Company<sup class="text-danger">*</sup></label>
+                                                    <input type="text" maxlength="50" class="form-control" placeholder="Company" ng-model="joiningForm.employment_history.employers[$index].company">
+                                                    <div class="text-danger" ng-show="errors['employment_history.employers.'+$index+'.company']">{{errors['employment_history.employers.'+$index+'.company']}}</div>
+                                                </div>
+                                                <div class="form-group col-md-2">
+                                                    <label>Department</label>
+                                                    <input type="text" maxlength="20" class="form-control" placeholder="Department" ng-model="joiningForm.employment_history.employers[$index].department">
+                                                    <div class="text-danger" ng-show="errors['employment_history.employers.'+$index+'.department']">{{errors['employment_history.employers.'+$index+'.department']}}</div>
+                                                </div>
+                                                <div class="form-group col-md-2">
+                                                    <label>Position held</label>
+                                                    <input type="text" maxlength="50" class="form-control" placeholder="Position held" ng-model="joiningForm.employment_history.employers[$index].position_held">
+                                                    <div class="text-danger" ng-show="errors['employment_history.employers.'+$index+'.position_held']">{{errors['employment_history.employers.'+$index+'.position_held']}}</div>
+                                                </div>
+                                                <div class="form-group col-md-1">
+                                                    <label>From Date</label>
+                                                    <input type="text" class="form-control month-year-picker" ng-init="initializeMonthYear();" placeholder="MMM-YYYY" ng-model="joiningForm.employment_history.employers[$index].from_date">
+                                                    <div class="text-danger" ng-show="errors['employment_history.employers.'+$index+'.from_date']">{{errors['employment_history.employers.'+$index+'.from_date']}}</div>
+                                                </div>
+                                                <div class="form-group col-md-1">
+                                                    <label>To Date</label>
+                                                    <input type="text" class="form-control month-year-picker" ng-init="initializeMonthYear();" placeholder="MMM-YYYY" ng-model="joiningForm.employment_history.employers[$index].to_date">
+                                                    <div class="text-danger" ng-show="errors['employment_history.employers.'+$index+'.to_date']">{{errors['employment_history.employers.'+$index+'.to_date']}}</div>
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label>Nature of Job<sup class="text-danger">*</sup></label>
+                                                    <select class="form-control" ng-model="joiningForm.employment_history.employers[$index].nature_of_job">
+                                                        <option value="">Select</option>
+                                                        <option value="Part Time">Part Time</option>
+                                                        <option value="Full Time">Full Time</option>
+                                                        <option value="Freelancer">Freelancer</option>
+                                                    </select>
+                                                    <div class="text-danger" ng-show="errors['employment_history.employers.'+$index+'.nature_of_job']">{{errors['employment_history.employers.'+$index+'.nature_of_job']}}</div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-row">
+                                                <div class="form-group col-md-3">
+                                                    <label>Primary Job Responsibilities</label>
+                                                    <input type="text" maxlength="50" class="form-control" placeholder="Job Responsibilities" ng-model="joiningForm.employment_history.employers[$index].job_responsibilities">
+                                                </div>
+
+
+                                                <div class="form-group col-md-2">
+                                                    <label>Annual CTC (in Lacs)</label>
+                                                    <input type="text" maxlength="30" class="form-control" placeholder="Annual CTC" ng-model="joiningForm.employment_history.employers[$index].annual_ctc">
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label>Address</label>
+                                                    <input type="text" maxlength="50" class="form-control" placeholder="Address" ng-model="joiningForm.employment_history.employers[$index].address">
+                                                </div>
+                                                <div class="form-group col-md-2">
+                                                    <label>City</label>
+                                                    <input type="text" maxlength="50" class="form-control" placeholder="City" ng-model="joiningForm.employment_history.employers[$index].city">
+                                                </div>
+                                                <div class="form-group col-md-2">
+                                                    <label>Telephone</label>
+                                                    <input type="text" maxlength="15" class="form-control" placeholder="Telephone" ng-model="joiningForm.employment_history.employers[$index].telephone">
+                                                </div>
+                                            </div>
+
+                                            <hr>
+
+                                            <div class="form-row">
+                                                <div class="form-group col-md-3">
+                                                    <label>Name of Reporting Manager<sup class="text-danger">*</sup></label>
+                                                    <input type="text" maxlength="50" class="form-control" placeholder="Name of Reporting Manager" ng-model="joiningForm.employment_history.employers[$index].reporting_manager">
+                                                    <div class="text-danger" ng-show="errors['employment_history.employers.'+$index+'.reporting_manager']">{{errors['employment_history.employers.'+$index+'.reporting_manager']}}</div>
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label>Contact Number<sup class="text-danger">*</sup></label>
+                                                    <input type="text" maxlength="15" class="form-control" placeholder="Contact Number" ng-model="joiningForm.employment_history.employers[$index].contact_number_manager">
+                                                    <div class="text-danger" ng-show="errors['employment_history.employers.'+$index+'.contact_number_manager']">{{errors['employment_history.employers.'+$index+'.contact_number_manager']}}</div>
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label>E-mail<sup class="text-danger">*</sup></label>
+                                                    <input type="email" maxlength="50" class="form-control" placeholder="E-mail" ng-model="joiningForm.employment_history.employers[$index].email_manager">
+                                                    <div class="text-danger" ng-show="errors['employment_history.employers.'+$index+'.email_manager']">{{errors['employment_history.employers.'+$index+'.email_manager']}}</div>
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label>Reason for Leaving</label>
+                                                    <input type="text" maxlength="50" class="form-control" placeholder="Reason for Leaving" ng-model="joiningForm.employment_history.employers[$index].reason_of_leaving">
+                                                </div>
+                                            </div>
+                                            <hr>
+
+                                            <div class="form-row">
+                                                <div class="form-group col-md-3">
+                                                    <label>HR Name</label>
+                                                    <input type="text" maxlength="50" class="form-control" placeholder="HR Name" ng-model="joiningForm.employment_history.employers[$index].hr_name">
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label>HR Contact Number</label>
+                                                    <input type="text" maxlength="15" class="form-control" placeholder="HR Contact Number" ng-model="joiningForm.employment_history.employers[$index].hr_contact_number">
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label>HR E-mail</label>
+                                                    <input type="email" maxlength="50" class="form-control" placeholder="HR E-mail" ng-model="joiningForm.employment_history.employers[$index].hr_email">
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label>HR Designation</label>
+                                                    <input type="text" maxlength="20" class="form-control" placeholder="HR Designation" ng-model="joiningForm.employment_history.employers[$index].hr_designation">
+                                                </div>
+
+                                            </div>
+
+                                        </fieldset>
+
+                                        <fieldset class="form-group p-3">
+                                            <div class="form-row">
+                                                <div class="col-md-12">
+
+                                                    <a role="button" class="text-primary" ng-click="addEmployer()" data-toggle="modal" data-target="#employmentHistoryModal"> <i class="fa fa-plus"></i> Add Employer</a>
+                                                </div>
+                                            </div>
+
+                                        </fieldset>
+
+
+
+                                        <fieldset class="form-group p-3 table-responsive">
+                                            <legend class="w-auto px-2">Gap Declaration</legend>
+                                            <table class="table table-bordered table-stripped">
+                                                <thead>
+
+                                                    <tr>
+
+                                                        <th><b>Sr. No.</b></th>
+                                                        <th style="width: 40%;"><b>Particulars (Reason)</b></th>
+                                                        <th><b>From</b></th>
+                                                        <th><b>to</b></th>
+                                                        <td style="width: 80px;"></td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr class="animation" ng-repeat="gap in joiningForm.gap_declaration">
+                                                        <td>
+                                                            {{$index+1}}
+                                                        </td>
+                                                        <td>
+                                                            {{gap.particular}}
+                                                            <div class="text-danger" ng-show="errors['gap_declaration.'+$index+'.document_path']">{{errors['gap_declaration.'+$index+'.document_path']}}</div>
+                                                        </td>
+                                                        <td>
+                                                            {{gap.from_date}}
+                                                        </td>
+                                                        <td>
+                                                            {{gap.to_date}}
+                                                        </td>
+
+                                                        <td>
+                                                            <a role="button" class="fa fa-edit text-primary" ng-click="edit_gap_declaration($index)" title="Edit" data-toggle="modal" data-target="#gapDeclaration"></a>
+                                                            <a href="<?= base_url('uploaded-documents') ?>/{{gap.document_path}}" title="Download document" target="_blank" ng-show="gap.document_path" class="fa fa-download text-success"></a>
+
+                                                            <a role="button" class="fa fa-trash text-danger" ng-click="remove_gap_declartion($index)"></a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td colspan="6">
+                                                            <a role="button" class="text-primary" ng-click="addGapDeclaration()" data-toggle="modal" data-target="#gapDeclaration"> <i class="fa fa-plus"></i> Add</a>
+                                                            <div class="col-md-12 alert alert-danger alert-dismissible fade show" role="alert" ng-show="errors.gap_declaration">{{errors.gap_declaration}}</div>
+                                                        </td>
+                                                    </tr>
+
+                                                </tfoot>
+                                            </table>
+                                            <p>* GAP Declaration to be filed when there is a time gap between two Employments OR between Education and Employment OR between Education and Education.</p>
+                                            <p>* Any gap of more than 3 months to be filled in with complete details and supporting documents.</p>
+                                        </fieldset>
+
+                                        <button type="button" class="btn btn-primary" ng-click="submitForm('save-employment-history','#backgroundInfo')">
+                                            <div ng-show="loading" class="css-animated-loader"></div>Save
+                                        </button>
+
+                                    </form>
+                                <?php } else { //read only 
+                                ?>
+                                    <form class="">
+                                        <fieldset class="form-group p-3 animation" ng-repeat="employer in joiningForm.employment_history.employers">
+                                            <legend class="w-auto px-2">Employer {{$index+1}}</legend>
+
+                                            <div class="form-row">
+                                                <div class="form-group col-md-3">
+                                                    <label>Company / Organization Name:<sup class="text-danger">*</sup></label>
+                                                    <span>{{employer.company}}</span>
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label>Department:</label>
+                                                    <span>{{employer.department}}</span>
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label>Position held:</label>
+                                                    <span>{{employer.position_held}}</span>
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label>From Date:</label>
+                                                    <span>{{employer.from_date}}</span>
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label>To Date:</label>
+                                                    <span>{{employer.to_date}}</span>
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label>Nature of Job:<sup class="text-danger">*</sup></label>
+                                                    <span>{{employer.nature_of_job}}</span>
+                                                </div>
+
+                                                <div class="form-group col-md-6">
+                                                    <label>Primary Job Responsibilities:</label>
+                                                    <span>{{employer.job_responsibilities}}</span>
+                                                </div>
+
+                                                <div class="form-group col-md-3">
+                                                    <label>Annual CTC (in Lacs):</label>
+                                                    <span>{{employer.annual_ctc}}</span>
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label>Address:</label>
+                                                    <span>{{employer.address}}</span>
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label>City:</label>
+                                                    <span>{{employer.city}}</span>
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label>Telephone:</label>
+                                                    <span>{{employer.telephone}}</span>
+                                                </div>
+                                            </div>
+
+                                            <hr>
+
+                                            <div class="form-row">
+                                                <div class="form-group col-md-3">
+                                                    <label>Name of Reporting Manager:<sup class="text-danger">*</sup></label>
+                                                    <span>{{employer.reporting_manager}}</span>
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label>Contact Number:<sup class="text-danger">*</sup></label>
+                                                    <span>{{employer.contact_number_manager}}</span>
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label>E-mail:<sup class="text-danger">*</sup></label>
+                                                    <span>{{employer.email_manager}}</span>
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label>Reason for Leaving:</label>
+                                                    <span>{{employer.reason_of_leaving}}</span>
+                                                </div>
+                                            </div>
+                                            <hr>
+
+                                            <div class="form-row">
+                                                <div class="form-group col-md-3">
+                                                    <label>HR Name:</label>
+                                                    <span>{{employer.hr_name}}</span>
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label>HR Contact Number:</label>
+                                                    <span>{{employer.hr_contact_number}}</span>
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label>HR E-mail:</label>
+                                                    <span>{{employer.hr_email}}</span>
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label>HR Designation:</label>
+                                                    <span>{{employer.hr_designation}}</span>
+                                                </div>
+
+                                            </div>
+
+                                        </fieldset>
+
+
+                                        <fieldset class="form-group p-3 table-responsive">
+                                            <legend class="w-auto px-2">Gap Declaration</legend>
+                                            <table class="table table-bordered table-stripped">
+                                                <thead>
+
+                                                    <tr>
+
+                                                        <th><b>Sr. No.</b></th>
+                                                        <th style="width: 40%;"><b>Particulars (Reason)</b></th>
+                                                        <th><b>From</b></th>
+                                                        <th><b>to</b></th>
+                                                        <td style="width: 80px;"></td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr class="animation" ng-repeat="gap in joiningForm.gap_declaration">
+                                                        <td>
+                                                            {{$index+1}}
+                                                        </td>
+                                                        <td>
+                                                            {{gap.particular}}
+                                                            <div class="text-danger" ng-show="errors['gap_declaration.'+$index+'.document_path']">{{errors['gap_declaration.'+$index+'.document_path']}}</div>
+                                                        </td>
+                                                        <td>
+                                                            {{gap.from_date}}
+                                                        </td>
+                                                        <td>
+                                                            {{gap.to_date}}
+                                                        </td>
+
+                                                        <td>
+                                                            <a href="<?= base_url('uploaded-documents') ?>/{{gap.document_path}}" title="Download document" target="_blank" ng-show="gap.document_path" class="fa fa-download text-success"></a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+
+                                            </table>
+                                            <p>* GAP Declaration to be filed when there is a time gap between two Employments OR between Education and Employment OR between Education and Education.</p>
+                                            <p>* Any gap of more than 3 months to be filled in with complete details and supporting documents.</p>
+                                        </fieldset>
+                                    </form>
+                                <?php } ?>
+
+
+                            </div>
                         </div>
-                        <div class="table-responsive">
-                            <form class="">
 
+                        <div class="tab-pane fade" id="backgroundInfo" role="tabpanel" aria-labelledby="backgroundInfo-tab">
 
-                                <fieldset class="form-group p-3 animation" ng-repeat="employer in joiningForm.employment_history.employers">
-                                    <legend class="w-auto px-2">Employer {{$index+1}}</legend>
-                                    <a role="button" class="remove-btn fa fa-times text-default" ng-click="remove_employer($index)" title="Remove"></a>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-3">
-                                            <label>Company<sup class="text-danger">*</sup></label>
-                                            <input type="text" maxlength="50" class="form-control" placeholder="Company" ng-model="joiningForm.employment_history.employers[$index].company">
-                                            <div class="text-danger" ng-show="errors['employment_history.employers.'+$index+'.company']">{{errors['employment_history.employers.'+$index+'.company']}}</div>
-                                        </div>
-                                        <div class="form-group col-md-2">
-                                            <label>Department</label>
-                                            <input type="text" maxlength="20" class="form-control" placeholder="Department" ng-model="joiningForm.employment_history.employers[$index].department">
-                                            <div class="text-danger" ng-show="errors['employment_history.employers.'+$index+'.department']">{{errors['employment_history.employers.'+$index+'.department']}}</div>
-                                        </div>
-                                        <div class="form-group col-md-2">
-                                            <label>Position held</label>
-                                            <input type="text" maxlength="50" class="form-control" placeholder="Position held" ng-model="joiningForm.employment_history.employers[$index].position_held">
-                                            <div class="text-danger" ng-show="errors['employment_history.employers.'+$index+'.position_held']">{{errors['employment_history.employers.'+$index+'.position_held']}}</div>
-                                        </div>
-                                        <div class="form-group col-md-1">
-                                            <label>From Date</label>
-                                            <input type="text" class="form-control month-year-picker" ng-init="initializeMonthYear();" placeholder="From Date" ng-model="joiningForm.employment_history.employers[$index].from_date">
-                                        </div>
-                                        <div class="form-group col-md-1">
-                                            <label>To Date</label>
-                                            <input type="text" class="form-control month-year-picker" ng-init="initializeMonthYear();" placeholder="To Date" ng-model="joiningForm.employment_history.employers[$index].to_date">
-                                        </div>
-                                        <div class="form-group col-md-3">
-                                            <label>Nature of Job<sup class="text-danger">*</sup></label>
-                                            <input type="text" maxlength="30" class="form-control" placeholder="Nature of Job" ng-model="joiningForm.employment_history.employers[$index].nature_of_job">
-                                            <div class="text-danger" ng-show="errors['employment_history.employers.'+$index+'.nature_of_job']">{{errors['employment_history.employers.'+$index+'.nature_of_job']}}</div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-row">
-                                        <div class="form-group col-md-3">
-                                            <label>Main Job Responsibilities</label>
-                                            <input type="text" maxlength="50" class="form-control" placeholder="Job Responsibilities" ng-model="joiningForm.employment_history.employers[$index].job_responsibilities">
-                                        </div>
-
-
-                                        <div class="form-group col-md-2">
-                                            <label>Annual CTC (in Lacs)</label>
-                                            <input type="text" maxlength="30" class="form-control" placeholder="Annual CTC" ng-model="joiningForm.employment_history.employers[$index].annual_ctc">
-                                        </div>
-                                        <div class="form-group col-md-3">
-                                            <label>Address</label>
-                                            <input type="text" maxlength="50" class="form-control" placeholder="Address" ng-model="joiningForm.employment_history.employers[$index].address">
-                                        </div>
-                                        <div class="form-group col-md-2">
-                                            <label>City</label>
-                                            <input type="text" maxlength="50" class="form-control" placeholder="City" ng-model="joiningForm.employment_history.employers[$index].city">
-                                        </div>
-                                        <div class="form-group col-md-2">
-                                            <label>Telephone</label>
-                                            <input type="text" maxlength="15" class="form-control" placeholder="Telephone" ng-model="joiningForm.employment_history.employers[$index].telephone">
-                                        </div>
-                                    </div>
-
-                                    <hr>
-
-                                    <div class="form-row">
-                                        <div class="form-group col-md-3">
-                                            <label>Name of Reporting Manager<sup class="text-danger">*</sup></label>
-                                            <input type="text" maxlength="50" class="form-control" placeholder="Name of Reporting Manager" ng-model="joiningForm.employment_history.employers[$index].reporting_manager">
-                                            <div class="text-danger" ng-show="errors['employment_history.employers.'+$index+'.reporting_manager']">{{errors['employment_history.employers.'+$index+'.reporting_manager']}}</div>
-                                        </div>
-                                        <div class="form-group col-md-3">
-                                            <label>Contact Number<sup class="text-danger">*</sup></label>
-                                            <input type="text" maxlength="15" class="form-control" placeholder="Contact Number" ng-model="joiningForm.employment_history.employers[$index].contact_number_manager">
-                                            <div class="text-danger" ng-show="errors['employment_history.employers.'+$index+'.contact_number_manager']">{{errors['employment_history.employers.'+$index+'.contact_number_manager']}}</div>
-                                        </div>
-                                        <div class="form-group col-md-3">
-                                            <label>Email<sup class="text-danger">*</sup></label>
-                                            <input type="email" maxlength="50" class="form-control" placeholder="Email" ng-model="joiningForm.employment_history.employers[$index].email_manager">
-                                            <div class="text-danger" ng-show="errors['employment_history.employers.'+$index+'.email_manager']">{{errors['employment_history.employers.'+$index+'.email_manager']}}</div>
-                                        </div>
-                                        <div class="form-group col-md-3">
-                                            <label>Reason for Leaving</label>
-                                            <input type="text" maxlength="50" class="form-control" placeholder="Reason for Leaving" ng-model="joiningForm.employment_history.employers[$index].reason_of_leaving">
-                                        </div>
-                                    </div>
-                                    <hr>
-
-                                    <div class="form-row">
-                                        <div class="form-group col-md-3">
-                                            <label>HR Name</label>
-                                            <input type="text" maxlength="50" class="form-control" placeholder="HR Name" ng-model="joiningForm.employment_history.employers[$index].hr_name">
-                                        </div>
-                                        <div class="form-group col-md-3">
-                                            <label>HR Contact Number</label>
-                                            <input type="text" maxlength="15" class="form-control" placeholder="HR Contact Number" ng-model="joiningForm.employment_history.employers[$index].hr_contact_number">
-                                        </div>
-                                        <div class="form-group col-md-3">
-                                            <label>HR Email</label>
-                                            <input type="email" maxlength="50" class="form-control" placeholder="HR Email" ng-model="joiningForm.employment_history.employers[$index].hr_email">
-                                        </div>
-                                        <div class="form-group col-md-3">
-                                            <label>HR Designation</label>
-                                            <input type="text" maxlength="20" class="form-control" placeholder="HR Designation" ng-model="joiningForm.employment_history.employers[$index].hr_designation">
-                                        </div>
-
-                                    </div>
-
-                                </fieldset>
-
-                                <fieldset class="form-group p-3">
-                                    <div class="form-row">
-                                        <div class="col-md-12">
-
-                                            <a role="button" class="text-primary" ng-click="addEmployer()"> <i class="fa fa-plus"></i> Add Employer</a>
-                                        </div>
-                                    </div>
-
-                                </fieldset>
-
-
-
-                                <fieldset class="form-group p-3">
-                                    <legend class="w-auto px-2">Gap Declaration</legend>
-                                    <table class="table table-bordered table-stripped">
-                                        <thead>
-
-                                            <tr>
-
-                                                <th><b>Sr. No.</b></th>
-                                                <th style="width: 40%;"><b>Particulars (Reason)</b></th>
-                                                <th><b>From</b></th>
-                                                <th><b>to</b></th>
-                                                <td style="width: 80px;"></td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr class="animation" ng-repeat="gap in joiningForm.gap_declaration">
-                                                <td>
-                                                    {{$index+1}}
-                                                </td>
-                                                <td>
-                                                    {{gap.particular}}
-                                                </td>
-                                                <td>
-                                                    {{gap.from_date}}
-                                                </td>
-                                                <td>
-                                                    {{gap.to_date}}
-                                                </td>
-
-                                                <td>
-                                                    <a role="button" class="fa fa-edit text-primary" ng-click="edit_gap_declaration($index)" title="Edit" data-toggle="modal" data-target="#gapDeclaration"></a>
-                                                    <a href="<?= base_url('uploaded-documents') ?>/{{gap.document_path}}" title="Download document" target="_blank" ng-show="gap.document_path" class="fa fa-download text-success"></a>
-
-                                                    <a role="button" class="fa fa-trash text-danger" ng-click="remove_gap_declartion($index)"></a>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <td colspan="6">
-                                                    <a role="button" class="text-primary" ng-click="addGapDeclaration()" data-toggle="modal" data-target="#gapDeclaration"> <i class="fa fa-plus"></i> Add</a>
-                                                    <div class="col-md-12 alert alert-danger alert-dismissible fade show" role="alert" ng-show="errors.gap_declaration">{{errors.gap_declaration}}</div>
-                                                </td>
-                                            </tr>
-
-                                        </tfoot>
-                                    </table>
-                                    <p>* GAP Declaration to be filed when there is a time gap between two Employments OR between Education and Employment OR between Education and Education.</p>
-                                    <p>* Any gap of more than 3 months to be filled in with complete details and supporting documents.</p>
-                                </fieldset>
-
-                                <button type="button" class="btn btn-primary" ng-click="submitForm('save-employment-history','#backgroundInfo')">
-                                    <div ng-show="loading" class="css-animated-loader"></div>Save
-                                </button>
-
-                            </form>
-                        </div>
-                    </div>
-
-                    <div class="tab-pane fade" id="backgroundInfo" role="tabpanel" aria-labelledby="backgroundInfo-tab">
-                        <div class="table-responsive">
                             <form class="">
                                 <fieldset class="form-group p-3">
                                     <legend class="w-auto px-2">Criminal and Civil Record</legend>
                                     <div class="form-row">
-                                        <table class="table table-bordered">
-                                            <colgroup>
-                                                <col>
-                                                <col style="width: 90%;">
-                                            </colgroup>
-                                            <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <div class="form-check">
-                                                            <label class="form-check-label">
-                                                                <input type="checkbox" class="form-check-input" ng-model="joiningForm.background_info.criminal_and_civil_record.C01" value="1"> {{joiningForm.background_info.criminal_and_civil_record.C01?"Yes":"No"}}
-                                                            </label>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <?= getBackgroundInformationQuestion('C01') ?>
-                                                    </td>
-                                                </tr>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <colgroup>
+                                                    <col>
+                                                    <col style="width: 80%;">
+                                                </colgroup>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <?php if (isEditableForm('joining_form/update_background_info', $joiningFormDetails['status'])) { ?>
+                                                                <div class="form-check-inline">
+                                                                    <label class="form-check-label">
+                                                                        <input type="radio" class="form-check-input" ng-model="joiningForm.background_info.criminal_and_civil_record.C01" value="1">
+                                                                        Yes
+                                                                    </label>
+                                                                </div>
+                                                                <div class="form-check-inline">
+                                                                    <label class="form-check-label">
+                                                                        <input type="radio" class="form-check-input" ng-model="joiningForm.background_info.criminal_and_civil_record.C01" value="0">
+                                                                        No
+                                                                    </label>
+                                                                </div>
+                                                            <?php } else { ?>
+                                                                {{joiningForm.background_info.criminal_and_civil_record.C01=='1'?"Yes":"No"}}
+                                                            <?php } ?>
+                                                        </td>
+                                                        <td>
+                                                            <?= getBackgroundInformationQuestion('C01') ?>
+                                                        </td>
+                                                    </tr>
 
-                                                <tr>
-                                                    <td>
-                                                        <div class="form-check">
-                                                            <label class="form-check-label">
-                                                                <input type="checkbox" class="form-check-input" ng-model="joiningForm.background_info.criminal_and_civil_record.C02" value="1"> {{joiningForm.background_info.criminal_and_civil_record.C02?"Yes":"No"}}
-                                                            </label>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <?= getBackgroundInformationQuestion('C02') ?>
-                                                    </td>
-                                                </tr>
+                                                    <tr>
+                                                        <td>
 
-                                                <tr>
-                                                    <td>
-                                                        <div class="form-check">
-                                                            <label class="form-check-label">
-                                                                <input type="checkbox" class="form-check-input" ng-model="joiningForm.background_info.criminal_and_civil_record.C03" value="1"> {{joiningForm.background_info.criminal_and_civil_record.C03?"Yes":"No"}}
-                                                            </label>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <?= getBackgroundInformationQuestion('C03') ?>
-                                                    </td>
-                                                </tr>
+                                                            <?php if (isEditableForm('joining_form/update_background_info', $joiningFormDetails['status'])) { ?>
+                                                                <div class="form-check-inline">
+                                                                    <label class="form-check-label">
+                                                                        <input type="radio" class="form-check-input" ng-model="joiningForm.background_info.criminal_and_civil_record.C02" value="1">
+                                                                        Yes
+                                                                    </label>
+                                                                </div>
+                                                                <div class="form-check-inline">
+                                                                    <label class="form-check-label">
+                                                                        <input type="radio" class="form-check-input" ng-model="joiningForm.background_info.criminal_and_civil_record.C02" value="0">
+                                                                        No
+                                                                    </label>
+                                                                </div>
 
-                                                <tr>
-                                                    <td>
-                                                        <div class="form-check">
-                                                            <label class="form-check-label">
-                                                                <input type="checkbox" class="form-check-input" ng-model="joiningForm.background_info.criminal_and_civil_record.C04" value="1"> {{joiningForm.background_info.criminal_and_civil_record.C04?"Yes":"No"}}
-                                                            </label>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <?= getBackgroundInformationQuestion('C04') ?>
-                                                    </td>
-                                                </tr>
+                                                            <?php } else { ?>
+                                                                {{joiningForm.background_info.criminal_and_civil_record.C02=='1'?"Yes":"No"}}
+                                                            <?php } ?>
 
-                                                <tr>
-                                                    <td>
-                                                        <div class="form-check">
-                                                            <label class="form-check-label">
-                                                                <input type="checkbox" class="form-check-input" ng-model="joiningForm.background_info.criminal_and_civil_record.C05" value="1"> {{joiningForm.background_info.criminal_and_civil_record.C05?"Yes":"No"}}
-                                                            </label>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <?= getBackgroundInformationQuestion('C05') ?>
-                                                    </td>
-                                                </tr>
+                                                        </td>
+                                                        <td>
+                                                            <?= getBackgroundInformationQuestion('C02') ?>
+                                                        </td>
+                                                    </tr>
 
-                                                <tr>
-                                                    <td>
-                                                        <div class="form-check">
-                                                            <label class="form-check-label">
-                                                                <input type="checkbox" class="form-check-input" ng-model="joiningForm.background_info.criminal_and_civil_record.C06" value="1"> {{joiningForm.background_info.criminal_and_civil_record.C06?"Yes":"No"}}
-                                                            </label>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <?= getBackgroundInformationQuestion('C06') ?>
-                                                    </td>
-                                                </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <?php if (isEditableForm('joining_form/update_background_info', $joiningFormDetails['status'])) { ?>
+                                                                <div class="form-check-inline">
+                                                                    <label class="form-check-label">
+                                                                        <input type="radio" class="form-check-input" ng-model="joiningForm.background_info.criminal_and_civil_record.C03" value="1">
+                                                                        Yes
+                                                                    </label>
+                                                                </div>
+                                                                <div class="form-check-inline">
+                                                                    <label class="form-check-label">
+                                                                        <input type="radio" class="form-check-input" ng-model="joiningForm.background_info.criminal_and_civil_record.C03" value="0">
+                                                                        No
+                                                                    </label>
+                                                                </div>
+                                                            <?php } else { ?>
+                                                                {{joiningForm.background_info.criminal_and_civil_record.C03=='1'?"Yes":"No"}}
+                                                            <?php } ?>
+                                                        </td>
+                                                        <td>
+                                                            <?= getBackgroundInformationQuestion('C03') ?>
+                                                        </td>
+                                                    </tr>
 
-                                                <tr>
-                                                    <td>
-                                                        <div class="form-check">
-                                                            <label class="form-check-label">
-                                                                <input type="checkbox" class="form-check-input" ng-model="joiningForm.background_info.criminal_and_civil_record.C07" value="1"> {{joiningForm.background_info.criminal_and_civil_record.C07?"Yes":"No"}}
-                                                            </label>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <?= getBackgroundInformationQuestion('C07') ?>
-                                                    </td>
-                                                </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <?php if (isEditableForm('joining_form/update_background_info', $joiningFormDetails['status'])) { ?>
+                                                                <div class="form-check-inline">
+                                                                    <label class="form-check-label">
+                                                                        <input type="radio" class="form-check-input" ng-model="joiningForm.background_info.criminal_and_civil_record.C04" value="1">
+                                                                        Yes
+                                                                    </label>
+                                                                </div>
+                                                                <div class="form-check-inline">
+                                                                    <label class="form-check-label">
+                                                                        <input type="radio" class="form-check-input" ng-model="joiningForm.background_info.criminal_and_civil_record.C04" value="0">
+                                                                        No
+                                                                    </label>
+                                                                </div>
+                                                            <?php } else { ?>
+                                                                {{joiningForm.background_info.criminal_and_civil_record.C04=='1'?"Yes":"No"}}
+                                                            <?php } ?>
+                                                        </td>
+                                                        <td>
+                                                            <?= getBackgroundInformationQuestion('C04') ?>
+                                                        </td>
+                                                    </tr>
 
-                                                <tr>
-                                                    <td>
-                                                        <div class="form-check">
-                                                            <label class="form-check-label">
-                                                                <input type="checkbox" class="form-check-input" ng-model="joiningForm.background_info.criminal_and_civil_record.C08" value="1"> {{joiningForm.background_info.criminal_and_civil_record.C08?"Yes":"No"}}
-                                                            </label>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <?= getBackgroundInformationQuestion('C08') ?>
-                                                    </td>
-                                                </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <?php if (isEditableForm('joining_form/update_background_info', $joiningFormDetails['status'])) { ?>
+                                                                <div class="form-check-inline">
+                                                                    <label class="form-check-label">
+                                                                        <input type="radio" class="form-check-input" ng-model="joiningForm.background_info.criminal_and_civil_record.C05" value="1">
+                                                                        Yes
+                                                                    </label>
+                                                                </div>
+                                                                <div class="form-check-inline">
+                                                                    <label class="form-check-label">
+                                                                        <input type="radio" class="form-check-input" ng-model="joiningForm.background_info.criminal_and_civil_record.C05" value="0">
+                                                                        No
+                                                                    </label>
+                                                                </div>
+                                                            <?php } else { ?>
+                                                                {{joiningForm.background_info.criminal_and_civil_record.C05=='1'?"Yes":"No"}}
+                                                            <?php } ?>
+                                                        </td>
+                                                        <td>
+                                                            <?= getBackgroundInformationQuestion('C05') ?>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>
+                                                            <?php if (isEditableForm('joining_form/update_background_info', $joiningFormDetails['status'])) { ?>
+                                                                <div class="form-check-inline">
+                                                                    <label class="form-check-label">
+                                                                        <input type="radio" class="form-check-input" ng-model="joiningForm.background_info.criminal_and_civil_record.C06" value="1">
+                                                                        Yes
+                                                                    </label>
+                                                                </div>
+                                                                <div class="form-check-inline">
+                                                                    <label class="form-check-label">
+                                                                        <input type="radio" class="form-check-input" ng-model="joiningForm.background_info.criminal_and_civil_record.C06" value="0">
+                                                                        No
+                                                                    </label>
+                                                                </div>
+                                                            <?php } else { ?>
+                                                                {{joiningForm.background_info.criminal_and_civil_record.C06=='1'?"Yes":"No"}}
+                                                            <?php } ?>
+                                                        </td>
+                                                        <td>
+                                                            <?= getBackgroundInformationQuestion('C06') ?>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>
+                                                            <?php if (isEditableForm('joining_form/update_background_info', $joiningFormDetails['status'])) { ?>
+                                                                <div class="form-check-inline">
+                                                                    <label class="form-check-label">
+                                                                        <input type="radio" class="form-check-input" ng-model="joiningForm.background_info.criminal_and_civil_record.C07" value="1">
+                                                                        Yes
+                                                                    </label>
+                                                                </div>
+                                                                <div class="form-check-inline">
+                                                                    <label class="form-check-label">
+                                                                        <input type="radio" class="form-check-input" ng-model="joiningForm.background_info.criminal_and_civil_record.C07" value="0">
+                                                                        No
+                                                                    </label>
+                                                                </div>
+                                                            <?php } else { ?>
+                                                                {{joiningForm.background_info.criminal_and_civil_record.C07=='1'?"Yes":"No"}}
+                                                            <?php } ?>
+                                                        </td>
+                                                        <td>
+                                                            <?= getBackgroundInformationQuestion('C07') ?>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>
+                                                            <?php if (isEditableForm('joining_form/update_background_info', $joiningFormDetails['status'])) { ?>
+                                                                <div class="form-check-inline">
+                                                                    <label class="form-check-label">
+                                                                        <input type="radio" class="form-check-input" ng-model="joiningForm.background_info.criminal_and_civil_record.C08" value="1">
+                                                                        Yes
+                                                                    </label>
+                                                                </div>
+                                                                <div class="form-check-inline">
+                                                                    <label class="form-check-label">
+                                                                        <input type="radio" class="form-check-input" ng-model="joiningForm.background_info.criminal_and_civil_record.C08" value="0">
+                                                                        No
+                                                                    </label>
+                                                                </div>
+                                                            <?php } else { ?>
+                                                                {{joiningForm.background_info.criminal_and_civil_record.C08=='1'?"Yes":"No"}}
+                                                            <?php } ?>
+                                                        </td>
+                                                        <td>
+                                                            <?= getBackgroundInformationQuestion('C08') ?>
+                                                        </td>
+                                                    </tr>
 
 
-                                            </tbody>
-                                        </table>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
                                     </div>
                                 </fieldset>
 
                                 <fieldset class="form-group p-3">
                                     <legend class="w-auto px-2">Business Interests</legend>
                                     <div class="form-row">
-                                        <table class="table table-bordered">
-                                            <colgroup>
-                                                <col>
-                                                <col style="width: 90%;">
-                                            </colgroup>
-                                            <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <div class="form-check">
-                                                            <label class="form-check-label">
-                                                                <input type="checkbox" class="form-check-input" ng-model="joiningForm.background_info.business_interest.B01" value="1"> {{joiningForm.background_info.business_interest.B01?"Yes":"No"}}
-                                                            </label>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <?= getBackgroundInformationQuestion('B01') ?>
-                                                    </td>
-                                                </tr>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <colgroup>
+                                                    <col>
+                                                    <col style="width: 80%;">
+                                                </colgroup>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <?php if (isEditableForm('joining_form/update_background_info', $joiningFormDetails['status'])) { ?>
+                                                                <div class="form-check-inline">
+                                                                    <label class="form-check-label">
+                                                                        <input type="radio" class="form-check-input" ng-model="joiningForm.background_info.business_interest.B01" value="1">
+                                                                        Yes
+                                                                    </label>
+                                                                </div>
+                                                                <div class="form-check-inline">
+                                                                    <label class="form-check-label">
+                                                                        <input type="radio" class="form-check-input" ng-model="joiningForm.background_info.business_interest.B01" value="0">
+                                                                        No
+                                                                    </label>
+                                                                </div>
+                                                            <?php } else { ?>
+                                                                {{joiningForm.background_info.business_interest.B01=='1'?"Yes":"No"}}
+                                                            <?php } ?>
+                                                        </td>
+                                                        <td>
+                                                            <?= getBackgroundInformationQuestion('B01') ?>
+                                                        </td>
+                                                    </tr>
 
-                                                <tr>
-                                                    <td>
-                                                        <div class="form-check">
-                                                            <label class="form-check-label">
-                                                                <input type="checkbox" class="form-check-input" ng-model="joiningForm.background_info.business_interest.B02" value="1"> {{joiningForm.background_info.business_interest.B02?"Yes":"No"}}
-                                                            </label>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <?= getBackgroundInformationQuestion('B02') ?>
-                                                    </td>
-                                                </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <?php if (isEditableForm('joining_form/update_background_info', $joiningFormDetails['status'])) { ?>
+                                                                <div class="form-check-inline">
+                                                                    <label class="form-check-label">
+                                                                        <input type="radio" class="form-check-input" ng-model="joiningForm.background_info.business_interest.B02" value="1">
+                                                                        Yes
+                                                                    </label>
+                                                                </div>
+                                                                <div class="form-check-inline">
+                                                                    <label class="form-check-label">
+                                                                        <input type="radio" class="form-check-input" ng-model="joiningForm.background_info.business_interest.B02" value="0">
+                                                                        No
+                                                                    </label>
+                                                                </div>
+                                                            <?php } else { ?>
+                                                                {{joiningForm.background_info.business_interest.B02=='1'?"Yes":"No"}}
+                                                            <?php } ?>
+                                                        </td>
+                                                        <td>
+                                                            <?= getBackgroundInformationQuestion('B02') ?>
+                                                        </td>
+                                                    </tr>
 
-                                                <tr>
-                                                    <td>
-                                                        <div class="form-check">
-                                                            <label class="form-check-label">
-                                                                <input type="checkbox" class="form-check-input" ng-model="joiningForm.background_info.business_interest.B03" value="1"> {{joiningForm.background_info.business_interest.B03?"Yes":"No"}}
-                                                            </label>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <?= getBackgroundInformationQuestion('B03') ?>
-                                                    </td>
-                                                </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <?php if (isEditableForm('joining_form/update_background_info', $joiningFormDetails['status'])) { ?>
+                                                                <div class="form-check-inline">
+                                                                    <label class="form-check-label">
+                                                                        <input type="radio" class="form-check-input" ng-model="joiningForm.background_info.business_interest.B03" value="1">
+                                                                        Yes
+                                                                    </label>
+                                                                </div>
+                                                                <div class="form-check-inline">
+                                                                    <label class="form-check-label">
+                                                                        <input type="radio" class="form-check-input" ng-model="joiningForm.background_info.business_interest.B03" value="0">
+                                                                        No
+                                                                    </label>
+                                                                </div>
+                                                            <?php } else { ?>
+                                                                {{joiningForm.background_info.business_interest.B03=='1'?"Yes":"No"}}
+                                                            <?php } ?>
+                                                        </td>
+                                                        <td>
+                                                            <?= getBackgroundInformationQuestion('B03') ?>
+                                                        </td>
+                                                    </tr>
 
-                                                <tr>
-                                                    <td>
-                                                        <div class="form-check">
-                                                            <label class="form-check-label">
-                                                                <input type="checkbox" class="form-check-input" ng-model="joiningForm.background_info.business_interest.B04" value="1"> {{joiningForm.background_info.business_interest.B04?"Yes":"No"}}
-                                                            </label>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <?= getBackgroundInformationQuestion('B04') ?>
-                                                    </td>
-                                                </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <?php if (isEditableForm('joining_form/update_background_info', $joiningFormDetails['status'])) { ?>
+                                                                <div class="form-check-inline">
+                                                                    <label class="form-check-label">
+                                                                        <input type="radio" class="form-check-input" ng-model="joiningForm.background_info.business_interest.B04" value="1">
+                                                                        Yes
+                                                                    </label>
+                                                                </div>
+                                                                <div class="form-check-inline">
+                                                                    <label class="form-check-label">
+                                                                        <input type="radio" class="form-check-input" ng-model="joiningForm.background_info.business_interest.B04" value="0">
+                                                                        No
+                                                                    </label>
+                                                                </div>
+                                                            <?php } else { ?>
+                                                                {{joiningForm.background_info.business_interest.B04=='1'?"Yes":"No"}}
+                                                            <?php } ?>
 
 
-                                            </tbody>
-                                        </table>
+                                                        </td>
+                                                        <td>
+                                                            <?= getBackgroundInformationQuestion('B04') ?>
+                                                        </td>
+                                                    </tr>
+
+
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </fieldset>
 
                                 <fieldset class="form-group p-3">
                                     <legend class="w-auto px-2">Other actions and disqualifications</legend>
                                     <div class="form-row">
-                                        <table class="table table-bordered">
-                                            <colgroup>
-                                                <col>
-                                                <col style="width: 90%;">
-                                            </colgroup>
-                                            <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <div class="form-check">
-                                                            <label class="form-check-label">
-                                                                <input type="checkbox" class="form-check-input" ng-model="joiningForm.background_info.other_disqualification.O01" value="1"> {{joiningForm.background_info.other_disqualification.O01?"Yes":"No"}}
-                                                            </label>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <?= getBackgroundInformationQuestion('O01') ?>
-                                                    </td>
-                                                </tr>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <colgroup>
+                                                    <col>
+                                                    <col style="width: 80%;">
+                                                </colgroup>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <?php if (isEditableForm('joining_form/update_background_info', $joiningFormDetails['status'])) { ?>
+                                                                <div class="form-check-inline">
+                                                                    <label class="form-check-label">
+                                                                        <input type="radio" class="form-check-input" ng-model="joiningForm.background_info.other_disqualification.O01" value="1">
+                                                                        Yes
+                                                                    </label>
+                                                                </div>
+                                                                <div class="form-check-inline">
+                                                                    <label class="form-check-label">
+                                                                        <input type="radio" class="form-check-input" ng-model="joiningForm.background_info.other_disqualification.O01" value="0">
+                                                                        No
+                                                                    </label>
+                                                                </div>
+                                                            <?php } else { ?>
+                                                                {{joiningForm.background_info.other_disqualification.O01=='1'?"Yes":"No"}}
+                                                            <?php } ?>
 
-                                                <tr>
-                                                    <td>
-                                                        <div class="form-check">
-                                                            <label class="form-check-label">
-                                                                <input type="checkbox" class="form-check-input" ng-model="joiningForm.background_info.other_disqualification.O02" value="1"> {{joiningForm.background_info.other_disqualification.O02?"Yes":"No"}}
-                                                            </label>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <?= getBackgroundInformationQuestion('O02') ?>
-                                                    </td>
-                                                </tr>
+                                                        </td>
+                                                        <td>
+                                                            <?= getBackgroundInformationQuestion('O01') ?>
+                                                        </td>
+                                                    </tr>
 
-                                                <tr>
-                                                    <td>
-                                                        <div class="form-check">
-                                                            <label class="form-check-label">
-                                                                <input type="checkbox" class="form-check-input" ng-model="joiningForm.background_info.other_disqualification.O03" value="1"> {{joiningForm.background_info.other_disqualification.O03?"Yes":"No"}}
-                                                            </label>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <?= getBackgroundInformationQuestion('O03') ?>
-                                                    </td>
-                                                </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <?php if (isEditableForm('joining_form/update_background_info', $joiningFormDetails['status'])) { ?>
+                                                                <div class="form-check-inline">
+                                                                    <label class="form-check-label">
+                                                                        <input type="radio" class="form-check-input" ng-model="joiningForm.background_info.other_disqualification.O02" value="1">
+                                                                        Yes
+                                                                    </label>
+                                                                </div>
+                                                                <div class="form-check-inline">
+                                                                    <label class="form-check-label">
+                                                                        <input type="radio" class="form-check-input" ng-model="joiningForm.background_info.other_disqualification.O02" value="0">
+                                                                        No
+                                                                    </label>
+                                                                </div>
+                                                            <?php } else { ?>
+                                                                {{joiningForm.background_info.other_disqualification.O02=='1'?"Yes":"No"}}
+                                                            <?php } ?>
+                                                        </td>
+                                                        <td>
+                                                            <?= getBackgroundInformationQuestion('O02') ?>
+                                                        </td>
+                                                    </tr>
 
-                                                <tr>
-                                                    <td>
-                                                        <div class="form-check">
-                                                            <label class="form-check-label">
-                                                                <input type="checkbox" class="form-check-input" ng-model="joiningForm.background_info.other_disqualification.O04" value="1"> {{joiningForm.background_info.other_disqualification.O04?"Yes":"No"}}
-                                                            </label>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <?= getBackgroundInformationQuestion('O04') ?>
-                                                    </td>
-                                                </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <?php if (isEditableForm('joining_form/update_background_info', $joiningFormDetails['status'])) { ?>
+                                                                <div class="form-check-inline">
+                                                                    <label class="form-check-label">
+                                                                        <input type="radio" class="form-check-input" ng-model="joiningForm.background_info.other_disqualification.O03" value="1">
+                                                                        Yes
+                                                                    </label>
+                                                                </div>
+                                                                <div class="form-check-inline">
+                                                                    <label class="form-check-label">
+                                                                        <input type="radio" class="form-check-input" ng-model="joiningForm.background_info.other_disqualification.O03" value="0">
+                                                                        No
+                                                                    </label>
+                                                                </div>
+                                                            <?php } else { ?>
+                                                                {{joiningForm.background_info.other_disqualification.O03=='1'?"Yes":"No"}}
+                                                            <?php } ?>
+                                                        </td>
+                                                        <td>
+                                                            <?= getBackgroundInformationQuestion('O03') ?>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>
+                                                            <?php if (isEditableForm('joining_form/update_background_info', $joiningFormDetails['status'])) { ?>
+                                                                <div class="form-check-inline">
+                                                                    <label class="form-check-label">
+                                                                        <input type="radio" class="form-check-input" ng-model="joiningForm.background_info.other_disqualification.O04" value="1">
+                                                                        Yes
+                                                                    </label>
+                                                                </div>
+                                                                <div class="form-check-inline">
+                                                                    <label class="form-check-label">
+                                                                        <input type="radio" class="form-check-input" ng-model="joiningForm.background_info.other_disqualification.O04" value="0">
+                                                                        No
+                                                                    </label>
+                                                                </div>
+                                                            <?php } else { ?>
+                                                                {{joiningForm.background_info.other_disqualification.O04=='1'?"Yes":"No"}}
+                                                            <?php } ?>
+                                                        </td>
+                                                        <td>
+                                                            <?= getBackgroundInformationQuestion('O04') ?>
+                                                        </td>
+                                                    </tr>
 
 
-                                            </tbody>
-                                        </table>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </fieldset>
 
-                                <fieldset class="form-group p-3">
+                                <fieldset class="form-group p-3 ">
                                     <legend class="w-auto px-2">Previous Addresses</legend>
                                     <p>Please include full personal address history to cover the last 7 years including dates.</p>
                                     <div class="form-row">
+                                        <div class="table-responsive">
 
-                                        <table class="table table-bordered">
-                                            <colgroup>
-                                                <col style="width: 60%;">
-                                                <col>
-                                                <col>
-                                                <col>
-                                            </colgroup>
-                                            <thead>
-                                                <tr>
-                                                    <th>Address</th>
-                                                    <th>Postcode</th>
-                                                    <th>Dates resident at this address (from and to)</th>
-                                                    <th></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr ng-repeat="p_address in joiningForm.background_info.previous_address">
-                                                    <td>
-                                                        <input type="text" class="form-control" maxlength="200" ng-model="joiningForm.background_info.previous_address[$index].address">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" class="form-control" maxlength="6" ng-model="joiningForm.background_info.previous_address[$index].postcode">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" class="form-control" maxlength="25" placeholder="Jan 2001 - Dec 2003" ng-model="joiningForm.background_info.previous_address[$index].dates">
-                                                    </td>
-                                                    <td>
-                                                        <a role="button" class="fa fa-trash text-danger" ng-click="remove_p_address($index)"></a>
-                                                    </td>
-                                                </tr>
+                                            <?php if (isEditableForm('joining_form/update_background_info', $joiningFormDetails['status'])) { ?>
+                                                <table class="table table-bordered">
+                                                    <colgroup>
+                                                        <col style="width: 60%;">
+                                                        <col>
+                                                        <col>
+                                                        <col>
+                                                    </colgroup>
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Address</th>
+                                                            <th>Postcode</th>
+                                                            <th>Dates resident at this address (from and to)</th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="p_address in joiningForm.background_info.previous_address">
+                                                            <td>
+                                                                <input type="text" class="form-control" maxlength="200" ng-model="joiningForm.background_info.previous_address[$index].address">
+                                                                <div class="text-danger" ng-show="errors['background_info.previous_address.'+$index+'.address']">{{errors['background_info.previous_address.'+$index+'.address']}}</div>
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" class="form-control" maxlength="6" ng-model="joiningForm.background_info.previous_address[$index].postcode">
+                                                                <div class="text-danger" ng-show="errors['background_info.previous_address.'+$index+'.postcode']">{{errors['background_info.previous_address.'+$index+'.postcode']}}</div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <input type="text" class="form-control month-year-picker" ng-init="initializeMonthYear();" maxlength="25" placeholder="Jan 2001" ng-model="joiningForm.background_info.previous_address[$index].from_date">
+
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <input type="text" class="form-control month-year-picker" ng-init="initializeMonthYear();" maxlength="25" placeholder="Dec 2003" ng-model="joiningForm.background_info.previous_address[$index].to_date">
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="text-danger" ng-show="errors['background_info.previous_address.'+$index+'.from_date']">{{errors['background_info.previous_address.'+$index+'.from_date']}}</div>
+                                                                <div class="text-danger" ng-show="errors['background_info.previous_address.'+$index+'.to_date']">{{errors['background_info.previous_address.'+$index+'.to_date']}}</div>
+                                                            </td>
+                                                            <td>
+                                                                <a role="button" class="fa fa-trash text-danger" ng-click="remove_p_address($index)"></a>
+                                                            </td>
+                                                        </tr>
 
 
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <td colspan="4">
-                                                        <a role="button" class="text-primary" ng-click="addPreviousAddress()"> <i class="fa fa-plus"></i> Add new line</a>
-                                                        <div class="col-md-12 alert alert-danger alert-dismissible fade show" role="alert" ng-show="errors.previous_address">{{errors.previous_address}}</div>
-                                                    </td>
-                                                </tr>
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <td colspan="4">
+                                                                <a role="button" class="text-primary" ng-click="addPreviousAddress()"> <i class="fa fa-plus"></i> Add new line</a>
+                                                                <div class="col-md-12 alert alert-danger alert-dismissible fade show" role="alert" ng-show="errors.previous_address">{{errors.previous_address}}</div>
+                                                            </td>
+                                                        </tr>
 
-                                            </tfoot>
-                                        </table>
+                                                    </tfoot>
+                                                </table>
+                                            <?php } else { //read only
+                                            ?>
+                                                <table class="table table-bordered">
+                                                    <colgroup>
+                                                        <col style="width: 60%;">
+                                                        <col>
+                                                        <col>
+                                                    </colgroup>
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Address</th>
+                                                            <th>Postcode</th>
+                                                            <th>Dates resident at this address (from and to)</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="p_address in joiningForm.background_info.previous_address">
+                                                            <td>
+                                                                {{p_address.address}}
+                                                            </td>
+                                                            <td>
+                                                                {{p_address.postcode}}
+                                                            </td>
+                                                            <td>
+                                                                {{p_address.from_date}} - {{p_address.to_date}}
+                                                            </td>
+
+                                                        </tr>
+
+
+                                                    </tbody>
+
+                                                </table>
+                                            <?php } ?>
+
+                                        </div>
                                     </div>
                                 </fieldset>
 
-                                <fieldset class="form-group p-3">
+                                <fieldset class="form-group p-3 ">
                                     <legend class="w-auto px-2">Mediclaim / Medical Insurance</legend>
                                     <table class="table table-bordered table-stripped">
                                         <thead>
@@ -927,6 +1604,7 @@
 
                                                 <td>
                                                     {{person.name}}
+                                                    <div class="text-danger" ng-show="errors['mediclaim.'+$index+'.document_path']">{{errors['mediclaim.'+$index+'.document_path']}}</div>
                                                 </td>
                                                 <td> {{person.relationship}}
                                                 </td>
@@ -936,384 +1614,635 @@
                                                 </td>
 
                                                 <td>
-                                                    <a role="button" class="fa fa-edit text-primary" ng-click="edit_mediclaim($index)" title="edit" data-toggle="modal" data-target="#mediclaim"></a>
+                                                    <?php if (hasCapability('joining_form/edit') && hasCapability('joining_form/update_mediclaim_details')) { ?>
+                                                        <a role="button" class="fa fa-edit text-primary" ng-click="edit_mediclaim($index)" title="edit" data-toggle="modal" data-target="#mediclaim"></a>
+                                                    <?php } ?>
+
                                                     <a href="<?= base_url('uploaded-documents') ?>/{{person.document_path}}" title="Download document" target="_blank" ng-show="person.document_path" class="fa fa-download text-success"></a>
 
-                                                    <a role="button" class="fa fa-trash text-danger" ng-click="remove_mediclaim($index)"></a>
+                                                    <?php if (hasCapability('joining_form/edit') && hasCapability('joining_form/update_mediclaim_details')) { ?>
+                                                        <a role="button" class="fa fa-trash text-danger" ng-click="remove_mediclaim($index)"></a>
+                                                    <?php } ?>
                                                 </td>
                                             </tr>
                                         </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <td colspan="6">
-                                                    <a role="button" class="text-primary" ng-click="addMediclaim()" data-toggle="modal" data-target="#mediclaim"> <i class="fa fa-plus"></i> Add new line</a>
-                                                </td>
-                                            </tr>
+                                        <?php if (hasCapability('joining_form/edit') && hasCapability('joining_form/update_mediclaim_details')) { ?>
+                                            <tfoot>
+                                                <tr>
+                                                    <td colspan="6">
+                                                        <a role="button" class="text-primary" ng-click="addMediclaim()" data-toggle="modal" data-target="#mediclaim"> <i class="fa fa-plus"></i> Add new line</a>
+                                                    </td>
+                                                </tr>
 
-                                        </tfoot>
+                                            </tfoot>
+                                        <?php } ?>
                                     </table>
                                     <p>* Please submit passport size photograph of all the members mentioned above.</p>
                                 </fieldset>
 
                                 <fieldset class="form-group p-3">
                                     <legend class="w-auto px-2">Employees Close Relatives working with BitString, if any</legend>
-                                    <table class="table table-bordered table-stripped">
-                                        <thead>
+                                    <div class="table-responsive">
 
-                                            <tr>
+                                        <?php if (isEditableForm('joining_form/update_background_info', $joiningFormDetails['status'])) { ?>
+                                            <table class="table table-bordered table-stripped">
+                                                <thead>
 
-                                                <th><b>Name</b></th>
-                                                <th><b>Relationship</b></th>
-                                                <th><b>Position</b></th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr ng-repeat="gap in joiningForm.background_info.relative_with_bitstring">
+                                                    <tr>
 
-                                                <td>
-                                                    <input type="text" class="form-control" maxlength="50" ng-model="joiningForm.background_info.relative_with_bitstring[$index].name">
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="form-control" maxlength="20" ng-model="joiningForm.background_info.relative_with_bitstring[$index].relationship">
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="form-control" maxlength="20" ng-model="joiningForm.background_info.relative_with_bitstring[$index].position">
-                                                </td>
+                                                        <th><b>Name</b></th>
+                                                        <th><b>Relationship</b></th>
+                                                        <th><b>Position</b></th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="gap in joiningForm.background_info.relative_with_bitstring">
 
-
-                                                <td>
-                                                    <a role="button" class="fa fa-trash text-danger" ng-click="remove_relative_bitstring($index)"></a>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <td colspan="6">
-                                                    <a role="button" class="text-primary" ng-click="addRelativeBitstring()"> <i class="fa fa-plus"></i> Add new line</a>
-                                                    <div class="col-md-12 alert alert-danger alert-dismissible fade show" role="alert" ng-show="errors.relative_with_bitstring">{{errors.relative_with_bitstring}}</div>
-                                                </td>
-                                            </tr>
+                                                        <td>
+                                                            <input type="text" class="form-control" maxlength="50" ng-model="joiningForm.background_info.relative_with_bitstring[$index].name">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" maxlength="20" ng-model="joiningForm.background_info.relative_with_bitstring[$index].relationship">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" maxlength="20" ng-model="joiningForm.background_info.relative_with_bitstring[$index].position">
+                                                        </td>
 
 
-                                        </tfoot>
-                                    </table>
+                                                        <td>
+                                                            <a role="button" class="fa fa-trash text-danger" ng-click="remove_relative_bitstring($index)"></a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td colspan="6">
+                                                            <a role="button" class="text-primary" ng-click="addRelativeBitstring()"> <i class="fa fa-plus"></i> Add new line</a>
+                                                            <div class="col-md-12 alert alert-danger alert-dismissible fade show" role="alert" ng-show="errors.relative_with_bitstring">{{errors.relative_with_bitstring}}</div>
+                                                        </td>
+                                                    </tr>
 
+
+                                                </tfoot>
+                                            </table>
+                                        <?php } else { ?>
+                                            <table class="table table-bordered table-stripped">
+                                                <thead>
+
+                                                    <tr>
+
+                                                        <th><b>Name</b></th>
+                                                        <th><b>Relationship</b></th>
+                                                        <th><b>Position</b></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="relative in joiningForm.background_info.relative_with_bitstring">
+
+                                                        <td>{{relative.name}}
+                                                        </td>
+                                                        <td>{{relative.relationship}}
+                                                        </td>
+                                                        <td>{{relative.position}}
+                                                        </td>
+
+                                                    </tr>
+                                                </tbody>
+
+                                            </table>
+                                        <?php } ?>
+
+                                    </div>
                                 </fieldset>
 
-                                <button type="button" class="btn btn-primary" ng-click="submitForm('save-background-information','#uploadDocuments')">
-                                    <div ng-show="loading" class="css-animated-loader"></div>Save
-                                </button>
+                                <?php if (isEditableForm('joining_form/update_background_info', $joiningFormDetails['status'])) { ?>
+                                    <button type="button" class="btn btn-primary" ng-click="submitForm('save-background-information','#uploadDocuments')">
+                                        <div ng-show="loading" class="css-animated-loader"></div>Save
+                                    </button>
+                                <?php } ?>
                             </form>
-                        </div>
-                    </div>
 
-                    <div class="tab-pane fade" id="uploadDocuments" role="tabpanel" aria-labelledby="uploadDocuments-tab">
+                        </div>
+
+                        <div class="tab-pane fade" id="uploadDocuments" role="tabpanel" aria-labelledby="uploadDocuments-tab">
+                            <form class="">
+                                <?php if (isEditableForm('joining_form/update_documents', $joiningFormDetails['status'])) { ?>
+                                    <fieldset class="form-group p-3">
+                                        <!-- <legend class="w-auto px-2">Select Documents</legend> -->
+                                        <div class="form-row">
+                                            <div class="form-group col-md-3">
+                                                <label for="">Select Document</label>
+                                                <select ng-model="documentName" class="form-control" ng-init="documentName=''">
+                                                    <option value="">Select</option>
+                                                    <option value="{{key}}" ng-repeat="(key,document) in documentNameList">{{document}}</option>
+                                                </select>
+                                            </div>
+
+                                            <div ng-hide="documentName==''" class="col-sm-3">
+                                                <label for="">&nbsp;</label>
+                                                <input type="file" id="customFile" file-input="document" class="form-control" ngf-select>
+
+                                                <div class="text-danger" ng-show="errors.document">{{errors.document}}</div>
+                                            </div>
+                                            <div ng-hide="documentName==''" class="col-sm-4">
+                                                <label for="">Note</label>
+                                                <input type="text" maxlength="50" class="form-control" ng-model="documentNote">
+                                                <div class="text-danger" ng-show="errors.documentNote">{{errors.documentNote}}</div>
+                                            </div>
+                                            <div ng-hide="documentName==''" class="col-sm-2">
+                                                <label for="">&nbsp;</label>
+                                                <div><a ng-click="uploadDocument()" class="btn btn-primary">
+                                                        <div ng-show="loading" class="css-animated-loader"></div> Upload
+                                                    </a> </div>
+                                            </div>
+
+
+                                            <div class="col-md-12" ng-show="errors">
+                                                <ol class="text-danger">
+                                                    <li ng-show="errors['documents.aadhar_card']">{{errors['documents.aadhar_card']}}</li>
+                                                    <li ng-show="errors['documents.cheque']">{{errors['documents.cheque']}}</li>
+                                                    <li ng-show="errors['documents.pan_card']">{{errors['documents.pan_card']}}</li>
+                                                </ol>
+                                            </div>
+                                        </div>
+
+                                    </fieldset>
+                                <?php } ?>
+                                <fieldset class="form-group p-3">
+                                    <legend class="w-auto px-2">Uploaded Documents</legend>
+
+                                    <ol ng-show="documentList">
+                                        <li class="animation" ng-repeat="(key,document) in documentList">
+
+                                            <a href="<?= base_url('uploaded-documents') ?>/{{document.path}}" target="_blank">{{getDocumentFullname(key)}}</a>
+
+                                            <?php if (isEditableForm('joining_form/update_documents', $joiningFormDetails['status'])) { ?>
+                                                <a class="fa fa-trash text-danger ml-2" role="button" ng-click="removeDocument(key)" title="Remove"></a>
+                                            <?php } ?>
+                                            <i class="ml-5" ng-show="document.documentNote">Note: {{document.documentNote}}</i>
+                                        </li>
+                                    </ol>
+
+                                    <div class="text-center" ng-show="documentList.length=='0'">
+                                        <p>Documents not available.</p>
+                                    </div>
+                                </fieldset>
+                        </div>
+
+                        <div class="tab-pane fade" id="declaration" role="tabpanel" aria-labelledby="declaration-tab">
+                            <div class="table-responsive">
+                                <form class="">
+                                    <fieldset class="form-group p-3">
+                                        <legend class="w-auto px-2">Data Protection</legend>
+                                        <div>
+                                            <p>I {{joiningForm.first_name}} {{joiningForm.last_name}} hereby give my consent to the employer or any agent thereof to process the data supplied in this application form for the purposes of recruitment and selection. I accept that this data may be sent and processed in or outside India.</p>
+                                            <p>You have the right to apply for a copy of our information and to have any inaccuracies corrected.</p>
+                                            <p>
+                                                <label class="form-check-label ml-3">
+                                                    <input type="checkbox" class="form-check-input" ng-model="joiningForm.employee_other_details.is_accept_data_protection" value="1"> I accept
+                                                </label>
+                                            </p>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset class="form-group p-3">
+                                        <legend class="w-auto px-2">Declaration & Authorization</legend>
+                                        <div>
+                                            <p>I {{joiningForm.first_name}} {{joiningForm.last_name}} certify that to the best of my knowledge all the information given in this form is true and complete. I understand that any appointment offered will be subject to the information given on this form being correct. I understand that any offer of employment is conditional upon the verification of any or all of the information I have supplied. I understand and accept that the provision of misleading, false or inaccurate information or the omission of a material fact may be legitimate cause for the immediate withdrawal of any offer of employment or, if I am already employed, for disciplinary action up to and including dismissal.</p>
+                                            <p>I {{joiningForm.first_name}} {{joiningForm.last_name}} authorize BitString IT Services Pvt Ltd or any agent thereof to verify information presented on this form and to make inquiries of the school, college or university where a qualification was gained as well as approach previous employers and personal references for verification of my employment records. I acknowledge that all referees are disclosing the above information at my express request and that I will make no claim whatsoever against such referee, its agents and/or employees arising out of disclosure of such information. This shall be the case whether the content of any such document obtained is accurate or inaccurate and/or any information is true or untrue.</p>
+                                            <p>
+                                                <label class="form-check-label ml-3">
+                                                    <input type="checkbox" class="form-check-input" ng-model="joiningForm.employee_other_details.is_accept_authorization" value="1"> I accept
+                                                </label>
+                                            </p>
+                                        </div>
+                                    </fieldset>
+
+                                    <?php if (isEditableForm('joining_form/edit', $joiningFormDetails['status'])) { ?>
+                                        <center>
+
+                                            <button type="button" ng-disabled="!joiningForm.employee_other_details.is_accept_data_protection || !joiningForm.employee_other_details.is_accept_authorization" data-toggle="modal" data-target="#confirmationSubmitForm" class="btn btn-primary">
+                                                <div ng-show="loading" class="css-animated-loader"></div>Submit
+                                            </button>
+                                        </center>
+                                    <?php } ?>
+                                </form>
+                            </div>
+                        </div>
+
+                        <?php if ($joiningFormDetails['status'] == '2') { ?>
+                            <div class="tab-pane fade" id="policydocument" role="tabpanel" aria-labelledby="declaration-tab">
+                                <div class="table-responsive">
+                                    <form class="">
+                                        <fieldset class="form-group p-3">
+                                            <legend class="w-auto px-2">Policy Documents</legend>
+                                            <ol>
+                                                <li>
+                                                    <a href="<?= base_url('assets/policy-documents/company-policy.pdf') ?>" target="_blank">Company Policy</a>
+                                                </li>
+                                                <li>
+                                                    <a href="<?= base_url('assets/policy-documents/leave-policy.pdf') ?>" target="_blank">Leave Policy</a>
+                                                </li>
+                                                <li>
+                                                    <a href="<?= base_url('assets/policy-documents/holidays-policy.pdf') ?>" target="_blank">Holidays Policy</a>
+                                                </li>
+                                            </ol>
+                                        </fieldset>
+                                    </form>
+                                </div>
+                            </div>
+                        <?php } ?>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="modal fade" id="educationalQualification" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Academic Details</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-row">
+
+                                <div class="form-group col-md-6">
+                                    <label>Degree / Course<sup class="text-danger">*</sup></label>
+                                    <input type="text" maxlength="30" class="form-control" ng-model="e_qualification.degree">
+                                    <div class="text-danger" ng-show="errors.degree">{{errors.degree}}</div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Board / University<sup class="text-danger">*</sup></label>
+                                    <input type="text" maxlength="30" class="form-control" ng-model="e_qualification.university">
+                                    <div class="text-danger" ng-show="errors.university">{{errors.university}}</div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label>Name and full address of school / Institution<sup class="text-danger">*</sup></label>
+                                    <input type="text" maxlength="100" class="form-control" ng-model="e_qualification.institution">
+                                    <div class="text-danger" ng-show="errors.institution">{{errors.institution}}</div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label>From<sup class="text-danger">*</sup></label>
+                                    <input type="text" maxlength="8" class="form-control month-year-picker" placeholder="MMM-YYYY" ng-init="initializeMonthYear();" ng-model="e_qualification.from_date">
+                                    <div class="text-danger" ng-show="errors.from_date">{{errors.from_date}}</div>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>To <sup class="text-danger">*</sup></label>
+                                    <input type="text" maxlength="8" class="form-control month-year-picker" placeholder="MMM-YYYY" ng-init="initializeMonthYear();" ng-model="e_qualification.to_date">
+                                    <div class="text-danger" ng-show="errors.to_date">{{errors.to_date}}</div>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>Percentage / CGPA<sup class="text-danger">*</sup></label>
+                                    <input type="text" maxlength="3" class="form-control" ng-model="e_qualification.percentage">
+                                    <div class="text-danger" ng-show="errors.percentage">{{errors.percentage}}</div>
+                                </div>
+
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label>Full time / Part Time/ off campus / Open Univ.<sup class="text-danger">*</sup></label>
+                                    <input type="text" maxlength="20" class="form-control" ng-model="e_qualification.course_type">
+                                    <div class="text-danger" ng-show="errors.course_type">{{errors.course_type}}</div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Certificate</label>
+                                    <input type="file" id="edudocument" file-input="edudocument" class="form-control" ngf-select>
+                                    <div class="text-danger" ng-show="errors.edudocument">{{errors.edudocument}}</div>
+                                </div>
+
+                            </div>
+
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" ng-click="saveEducationQualification()" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="gapDeclaration" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Gap Declaration</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <form>
+                            <div class="form-row">
+
+                                <div class="form-group col-md-12">
+                                    <label>Particulars (Reason)<sup class="text-danger">*</sup></label>
+                                    <input type="text" class="form-control" ng-model="gap_declaration.particular">
+                                    <div class="text-danger" ng-show="errors.particular">{{errors.particular}}</div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-3">
+                                    <label>From <sup class="text-danger">*</sup></label>
+                                    <input type="text" maxlength="8" class="form-control month-year-picker" ng-init="initializeMonthYear();" ng-model="gap_declaration.from_date">
+                                    <div class="text-danger" ng-show="errors.from_date">{{errors.from_date}}</div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-3">
+                                    <label>To <sup class="text-danger">*</sup></label>
+                                    <input type="text" maxlength="8" class="form-control month-year-picker" ng-init="initializeMonthYear();" ng-model="gap_declaration.to_date">
+                                    <div class="text-danger" ng-show="errors.to_date">{{errors.to_date}}</div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label>Certificate</label>
+                                    <input type="file" id="gapdocument" file-input="gapdocument" class="form-control" ngf-select>
+                                    <div class="text-danger" ng-show="errors.gapdocument">{{errors.gapdocument}}</div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" ng-click="saveGapDeclaration()" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="mediclaim" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Mediclaim</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <form>
+                            <div class="form-group">
+                                <label>Name<sup class="text-danger">*</sup></label>
+                                <input type="text" maxlength="30" class="form-control" ng-model="mediclaim.name">
+                                <div class="text-danger" ng-show="errors.name">{{errors.name}}</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Relationship<sup class="text-danger">*</sup></label>
+                                <input type="text" maxlength="30" class="form-control" ng-model="mediclaim.relationship">
+                                <div class="text-danger" ng-show="errors.relationship">{{errors.relationship}}</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Date of Birth<sup class="text-danger">*</sup></label>
+                                <input type="text" maxlength="12" class="form-control past-datepicker" ng-init="initializeDatepicker();" ng-model="mediclaim.dob">
+                                <div class="text-danger" ng-show="errors.dob">{{errors.dob}}</div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label>Photo</label>
+                                <input type="file" id="mediclaimdocumentPhoto" file-input="mediclaimdocumentPhoto" class="form-control" ngf-select>
+                                <div class="text-danger" ng-show="errors.mediclaimdocumentPhoto">{{errors.mediclaimdocumentPhoto}}</div>
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" ng-click="saveMediclaim()" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="professionalQualification" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Professional Qualification</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <form>
+                            <div class="form-group">
+                                <label>Qualification / Body / Institute / Licence<sup class="text-danger">*</sup></label>
+                                <input type="text" maxlength="80" class="form-control" ng-model="p_qualification.qualification">
+                                <div class="text-danger" ng-show="errors.qualification">{{errors.qualification}}</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Category / Membership level<sup class="text-danger">*</sup></label>
+                                <input type="text" maxlength="80" class="form-control" ng-model="p_qualification.category">
+                                <div class="text-danger" ng-show="errors.category">{{errors.category}}</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Date<sup class="text-danger">*</sup></label>
+                                <input type="text" maxlength="8" placeholder="MMM-YYYY" class="form-control month-year-picker" ng-init="initializeMonthYear();" ng-model="p_qualification.date">
+                                <div class="text-danger" ng-show="errors.date">{{errors.date}}</div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label>Certificate</label>
+                                <input type="file" id="professionalDocument" file-input="professionalDocument" class="form-control" ngf-select>
+                                <div class="text-danger" ng-show="errors.professionalDocument">{{errors.professionalDocument}}</div>
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" ng-click="saveProfessionalQualification()" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="employmentHistoryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg mw-100" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Employment History</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
                         <form class="">
-                            <fieldset class="form-group p-3">
-                                <!-- <legend class="w-auto px-2">Select Documents</legend> -->
+
+
+                            <fieldset class="form-group p-3 animation">
+                                <legend class="w-auto px-2">Employer</legend>
+                                <!-- <a role="button" class="remove-btn fa fa-times text-default" ng-click="remove_employer($index)" title="Remove"></a> -->
                                 <div class="form-row">
                                     <div class="form-group col-md-3">
-                                        <label for="">Select Document</label>
-                                        <select ng-model="documentName" class="form-control" ng-init="documentName=''">
+                                        <label>Company<sup class="text-danger">*</sup></label>
+                                        <input type="text" maxlength="50" class="form-control" placeholder="Company" ng-model="employment_history.company">
+                                        <div class="text-danger" ng-show="employment_history_errors.company">{{employment_history_errors.company}}</div>
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label>Department</label>
+                                        <input type="text" maxlength="20" class="form-control" placeholder="Department" ng-model="employment_history.department">
+                                        <div class="text-danger" ng-show="employment_history_errors.department">{{employment_history_errors.department}}</div>
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label>Position held</label>
+                                        <input type="text" maxlength="50" class="form-control" placeholder="Position held" ng-model="employment_history.position_held">
+                                        <div class="text-danger" ng-show="employment_history_errors.position_held">{{employment_history_errors.position_held}}</div>
+                                    </div>
+                                    <div class="form-group col-md-1">
+                                        <label>From Date</label>
+                                        <input type="text" class="form-control month-year-picker" ng-init="initializeMonthYear();" placeholder="MMM-YYYY" ng-model="employment_history.from_date">
+                                        <div class="text-danger" ng-show="employment_history_errors.from_date">{{employment_history_errors.from_date}}</div>
+                                    </div>
+                                    <div class="form-group col-md-1">
+                                        <label>To Date</label>
+                                        <input type="text" class="form-control month-year-picker" ng-init="initializeMonthYear();" placeholder="MMM-YYYY" ng-model="employment_history.to_date">
+                                        <div class="text-danger" ng-show="employment_history_errors.to_date">{{employment_history_errors.to_date}}</div>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>Nature of Job<sup class="text-danger">*</sup></label>
+                                        <select class="form-control" ng-model="employment_history.nature_of_job">
                                             <option value="">Select</option>
-                                            <option value="{{key}}" ng-repeat="(key,document) in documentNameList">{{document}}</option>
+                                            <option value="Part Time">Part Time</option>
+                                            <option value="Full Time">Full Time</option>
+                                            <option value="Freelancer">Freelancer</option>
                                         </select>
+                                        <div class="text-danger" ng-show="employment_history_errors.nature_of_job">{{employment_history_errors.nature_of_job}}</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-3">
+                                        <label>Primary Job Responsibilities</label>
+                                        <input type="text" maxlength="50" class="form-control" placeholder="Job Responsibilities" ng-model="employment_history.job_responsibilities">
                                     </div>
 
-                                    <div ng-hide="documentName==''" class="col-sm-6">
-                                        <label for="">&nbsp;</label>
-                                        <input type="file" id="customFile" file-input="document" class="form-control" ngf-select>
 
-                                        <div class="text-danger" ng-show="errors.document">{{errors.document}}</div>
+                                    <div class="form-group col-md-2">
+                                        <label>Annual CTC (in Lacs)</label>
+                                        <input type="text" maxlength="30" class="form-control" placeholder="Annual CTC" ng-model="employment_history.annual_ctc">
                                     </div>
-                                    <div ng-hide="documentName==''" class="col-sm-2">
-                                        <label for="">&nbsp;</label>
-                                        <div><a ng-click="uploadDocument()" class="btn btn-primary">
-                                                <div ng-show="loading" class="css-animated-loader"></div> Upload
-                                            </a> </div>
+                                    <div class="form-group col-md-3">
+                                        <label>Address</label>
+                                        <input type="text" maxlength="50" class="form-control" placeholder="Address" ng-model="employment_history.address">
                                     </div>
+                                    <div class="form-group col-md-2">
+                                        <label>City</label>
+                                        <input type="text" maxlength="50" class="form-control" placeholder="City" ng-model="employment_history.city">
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label>Telephone</label>
+                                        <input type="text" maxlength="15" class="form-control" placeholder="Telephone" ng-model="employment_history.telephone">
+                                    </div>
+                                </div>
 
+                                <hr>
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-3">
+                                        <label>Name of Reporting Manager<sup class="text-danger">*</sup></label>
+                                        <input type="text" maxlength="50" class="form-control" placeholder="Name of Reporting Manager" ng-model="employment_history.reporting_manager">
+                                        <div class="text-danger" ng-show="employment_history_errors.reporting_manager">{{employment_history_errors.reporting_manager}}</div>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>Contact Number<sup class="text-danger">*</sup></label>
+                                        <input type="text" maxlength="15" class="form-control" placeholder="Contact Number" ng-model="employment_history.contact_number_manager">
+                                        <div class="text-danger" ng-show="employment_history_errors.contact_number_manager">{{employment_history_errors.contact_number_manager}}</div>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>E-mail<sup class="text-danger">*</sup></label>
+                                        <input type="email" maxlength="50" class="form-control" placeholder="E-mail" ng-model="employment_history.email_manager">
+                                        <div class="text-danger" ng-show="employment_history_errors.email_manager">{{employment_history_errors.email_manager}}</div>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>Reason for Leaving</label>
+                                        <input type="text" maxlength="50" class="form-control" placeholder="Reason for Leaving" ng-model="employment_history.reason_of_leaving">
+                                    </div>
+                                </div>
+                                <hr>
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-3">
+                                        <label>HR Name</label>
+                                        <input type="text" maxlength="50" class="form-control" placeholder="HR Name" ng-model="employment_history.hr_name">
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>HR Contact Number</label>
+                                        <input type="text" maxlength="15" class="form-control" placeholder="HR Contact Number" ng-model="employment_history.hr_contact_number">
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>HR E-mail</label>
+                                        <input type="email" maxlength="50" class="form-control" placeholder="HR E-mail" ng-model="employment_history.hr_email">
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>HR Designation</label>
+                                        <input type="text" maxlength="20" class="form-control" placeholder="HR Designation" ng-model="employment_history.hr_designation">
+                                    </div>
 
                                 </div>
+
                             </fieldset>
-
-                            <fieldset class="form-group p-3">
-                                <legend class="w-auto px-2">Uploaded Documents</legend>
-
-                                <ol ng-show="documentList">
-                                    <li class="animation" ng-repeat="(key,document) in documentList">
-
-                                        <a href="<?= base_url('uploaded-documents') ?>/{{document.path}}" target="_blank">{{getDocumentFullname(key)}}</a>
-                                        <a class="fa fa-trash text-danger ml-2" role="button" ng-click="removeDocument(key)" title="Remove"></a>
-                                    </li>
-                                </ol>
-                                <div class="text-center" ng-show="documentList.length=='0'">
-                                    <p>Documents not available.</p>
-                                </div>
-                            </fieldset>
-
+                        </form>
                     </div>
-
-                    <div class="tab-pane fade" id="declaration" role="tabpanel" aria-labelledby="declaration-tab">
-                        <div class="table-responsive">
-                            <form class="">
-                                <fieldset class="form-group p-3">
-                                    <legend class="w-auto px-2">Data Protection</legend>
-                                    <div>
-                                        <p>I hereby give my consent to the employer or any agent thereof to process the data supplied in this application form for the purposes of recruitment and selection. I accept that this data may be sent and processed in or outside India.</p>
-                                        <p>You have the right to apply for a copy of our information and to have any inaccuracies corrected.</p>
-
-                                    </div>
-                                </fieldset>
-                                <fieldset class="form-group p-3">
-                                    <legend class="w-auto px-2">Declaration & Authorization</legend>
-                                    <div>
-                                        <p>I certify that to the best of my knowledge all the information given in this form is true and complete. I understand that any appointment offered will be subject to the information given on this form being correct. I understand that any offer of employment is conditional upon the verification of any or all of the information I have supplied. I understand and accept that the provision of misleading, false or inaccurate information or the omission of a material fact may be legitimate cause for the immediate withdrawal of any offer of employment or, if I am already employed, for disciplinary action up to and including dismissal.</p>
-                                        <p>I authorize BitString IT Services Pvt Ltdor any agent thereof to verify information presented on this form and to make inquiries of the school, college or university where a qualification was gained as well as approach previous employers and personal references for verification of my employment records. I acknowledge that all referees are disclosing the above information at my express request and that I will make no claim whatsoever against such referee, its agents and/or employees arising out of disclosure of such information. This shall be the case whether the content of any such document obtained is accurate or inaccurate and/or any information is true or untrue.</p>
-
-                                    </div>
-                                </fieldset>
-
-                                <center>
-                                    <button type="button" class="btn btn-primary" ng-click="submitForm('accept-declaration','',true)">
-                                        <div ng-show="loading" class="css-animated-loader"></div>Accept and Submit Form
-                                    </button>
-                                </center>
-                            </form>
-                        </div>
+                    <div class="modal-footer">
+                        <button type="button" ng-click="saveEmploymentHistory()" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
         </div>
 
-    </div>
-
-    <div class="modal fade" id="educationalQualification" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Educational Qualification</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-row">
-
-                            <div class="form-group col-md-6">
-                                <label>Degree / Course<sup class="text-danger">*</sup></label>
-                                <input type="text" class="form-control" ng-model="e_qualification.degree">
-                                <div class="text-danger" ng-show="errors.degree">{{errors.degree}}</div>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label>Course Title along with Board / University<sup class="text-danger">*</sup></label>
-                                <input type="text" class="form-control" ng-model="e_qualification.university">
-                                <div class="text-danger" ng-show="errors.university">{{errors.university}}</div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                                <label>Name and full address of school/Institution<sup class="text-danger">*</sup></label>
-                                <input type="text" class="form-control" ng-model="e_qualification.institution">
-                                <div class="text-danger" ng-show="errors.institution">{{errors.institution}}</div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-4">
-                                <label>From (MM/YYYY)<sup class="text-danger">*</sup></label>
-                                <input type="text" class="form-control month-year-picker" ng-init="initializeMonthYear();" ng-model="e_qualification.from_date">
-                                <div class="text-danger" ng-show="errors.from_date">{{errors.from_date}}</div>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label>To (MM/YYYY)<sup class="text-danger">*</sup></label>
-                                <input type="text" class="form-control month-year-picker" ng-init="initializeMonthYear();" ng-model="e_qualification.to_date">
-                                <div class="text-danger" ng-show="errors.to_date">{{errors.to_date}}</div>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label>Percentage / CGPA<sup class="text-danger">*</sup></label>
-                                <input type="text" class="form-control" ng-model="e_qualification.percentage">
-                                <div class="text-danger" ng-show="errors.percentage">{{errors.percentage}}</div>
-                            </div>
-
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label>Full time / Part Time/ off campus / Open Univ.<sup class="text-danger">*</sup></label>
-                                <input type="text" class="form-control" ng-model="e_qualification.course_type">
-                                <div class="text-danger" ng-show="errors.course_type">{{errors.course_type}}</div>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label>Certificate<sup class="text-danger">*</sup></label>
-                                <input type="file" id="edudocument" file-input="edudocument" class="form-control" ngf-select>
-                                <div class="text-danger" ng-show="errors.edudocument">{{errors.edudocument}}</div>
-                            </div>
-
-                        </div>
-
-
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" ng-click="saveEducationQualification()" class="btn btn-primary">Save changes</button>
+        <div class="modal fade" id="confirmationSubmitForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered " role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <h3>
+                            Once you submit the Form you can not edit the information again.
+                        </h3>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Review</button>
+                        <button type="button" ng-click="submitForm('accept-declaration','',true)" class="btn btn-primary" data-dismiss="modal">
+                            <div ng-show="loading" class="css-animated-loader"></div> Submit Anyway
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="modal fade" id="gapDeclaration" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Gap Declaration</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
+    </section>
 
-                    <form>
-                        <div class="form-row">
-
-                            <div class="form-group col-md-12">
-                                <label>Particulars (Reason)<sup class="text-danger">*</sup></label>
-                                <input type="text" class="form-control" ng-model="gap_declaration.particular">
-                                <div class="text-danger" ng-show="errors.particular">{{errors.particular}}</div>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group col-md-3">
-                                <label>From (MM/YYYY)<sup class="text-danger">*</sup></label>
-                                <input type="text" class="form-control month-year-picker" ng-init="initializeMonthYear();" ng-model="gap_declaration.from_date">
-                                <div class="text-danger" ng-show="errors.from_date">{{errors.from_date}}</div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-3">
-                                <label>To (MM/YYYY)<sup class="text-danger">*</sup></label>
-                                <input type="text" class="form-control month-year-picker" ng-init="initializeMonthYear();" ng-model="gap_declaration.to_date">
-                                <div class="text-danger" ng-show="errors.to_date">{{errors.to_date}}</div>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                                <label>Certificate<sup class="text-danger">*</sup></label>
-                                <input type="file" id="gapdocument" file-input="gapdocument" class="form-control" ngf-select>
-                                <div class="text-danger" ng-show="errors.gapdocument">{{errors.gapdocument}}</div>
-                            </div>
-                        </div>
-
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" ng-click="saveGapDeclaration()" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="mediclaim" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Mediclaim</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-
-                    <form>
-                        <div class="form-group">
-                            <label>Name<sup class="text-danger">*</sup></label>
-                            <input type="text" maxlength="30" class="form-control" ng-model="mediclaim.name">
-                            <div class="text-danger" ng-show="errors.name">{{errors.name}}</div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Relationship<sup class="text-danger">*</sup></label>
-                            <input type="text" maxlength="30" class="form-control" ng-model="mediclaim.relationship">
-                            <div class="text-danger" ng-show="errors.relationship">{{errors.relationship}}</div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Date of Birth<sup class="text-danger">*</sup></label>
-                            <input type="text" maxlength="30" class="form-control past-datepicker" ng-init="initializeDatepicker();" ng-model="mediclaim.dob">
-                            <div class="text-danger" ng-show="errors.dob">{{errors.dob}}</div>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label>Photo<sup class="text-danger">*</sup></label>
-                            <input type="file" id="mediclaimdocumentPhoto" file-input="mediclaimdocumentPhoto" class="form-control" ngf-select>
-                            <div class="text-danger" ng-show="errors.mediclaimdocumentPhoto">{{errors.mediclaimdocumentPhoto}}</div>
-                        </div>
-
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" ng-click="saveMediclaim()" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="professionalQualification" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Professional Qualification</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-
-                    <form>
-                        <div class="form-group">
-                            <label>Qualification / Body / Institute / Licence<sup class="text-danger">*</sup></label>
-                            <input type="text" maxlength="30" class="form-control" ng-model="p_qualification.qualification">
-                            <div class="text-danger" ng-show="errors.qualification">{{errors.qualification}}</div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Category / Membership level<sup class="text-danger">*</sup></label>
-                            <input type="text" maxlength="30" class="form-control" ng-model="p_qualification.category">
-                            <div class="text-danger" ng-show="errors.category">{{errors.category}}</div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Dates (MM/YY)<sup class="text-danger">*</sup></label>
-                            <input type="text" maxlength="30" class="form-control month-year-picker" ng-init="initializeMonthYear();" ng-model="p_qualification.date">
-                            <div class="text-danger" ng-show="errors.date">{{errors.date}}</div>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label>Certificate<sup class="text-danger">*</sup></label>
-                            <input type="file" id="professionalDocument" file-input="professionalDocument" class="form-control" ngf-select>
-                            <div class="text-danger" ng-show="errors.professionalDocument">{{errors.professionalDocument}}</div>
-                        </div>
-
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" ng-click="saveProfessionalQualification()" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-</section>
-
-
+</div>
 
 <script>
     app.controller('joiningFormCtrl', ['$scope', '$http', 'slugifyFilter', function($scope, $http, slugifyFilter) {
@@ -1328,9 +2257,12 @@
         };
         $scope.e_qualification = {};
         $scope.p_qualification = {};
+        $scope.employment_history = {};
+        $scope.employment_history_errors = {};
         $scope.gap_declaration = {};
         $scope.mediclaim = {};
         $scope.formComlpletion = 0;
+        $scope.documentNote = '';
         //$scope.joiningForm.education_qualification = new Array();
 
         $scope.documentNameList = {
@@ -1343,7 +2275,9 @@
             passport: "Passport",
             relieving_letter: "Relieving and experience letter",
             resignation_letter: "Resignation Letter",
-            salary_slip: "Salary Slip (Last 3 Months)",
+            salary_slip_1: "Salary Slip 1",
+            salary_slip_2: "Salary Slip 2",
+            salary_slip_3: "Salary Slip 3",
             ssc_certificate: "SSC Certificate"
         }
 
@@ -1351,12 +2285,23 @@
             return $scope.documentNameList[key];
         }
 
+
+
         $scope.initializeDatepicker = function() {
             $('.past-datepicker').datetimepicker({
                 format: 'd-M-Y',
                 scrollInput: false,
                 timepicker: false,
                 maxDate: new Date(),
+                // onSelectDate: function() {
+                //   $scope.joiningForm.dob = $(el).val()
+                // }
+            });
+
+            $('.datepicker').datetimepicker({
+                format: 'd-M-Y',
+                scrollInput: false,
+                timepicker: false,
                 // onSelectDate: function() {
                 //   $scope.joiningForm.dob = $(el).val()
                 // }
@@ -1405,7 +2350,11 @@
             $scope.documentList = response.data.joiningFormDetails.documents;
 
         }, function(response) {
-            console.log(response);
+            if (response.data.status == 403) {
+                toastr.error(response.data.messages.errorMessage);
+            } else {
+                toastr.error("Something went wrong !!");
+            }
 
         });
 
@@ -1479,7 +2428,11 @@
 
                 $scope.loading = false;
                 $scope.errors = response.data.messages;
-                toastr.error("Something went wrong !!");
+                if (response.data.status == 403) {
+                    toastr.error(response.data.messages.errorMessage);
+                } else {
+                    // toastr.error("Please fill all the fileds."); 
+                }
                 // console.log($scope.errors);
                 // console.log($scope.errors['lang.en.title']);
             });
@@ -1513,7 +2466,11 @@
 
                 $scope.loading = false;
                 $scope.errors = response.data.messages;
-                toastr.error("Something went wrong !!");
+                if (response.data.status == 403) {
+                    toastr.error(response.data.messages.errorMessage);
+                } else {
+                    toastr.error("Something went wrong !!");
+                }
                 // console.log($scope.errors);
                 // console.log($scope.errors['lang.en.title']);
             });
@@ -1536,12 +2493,60 @@
             $scope.errors = '';
         }
 
+        $scope.addEmployer = function() {
+
+
+            $scope.employment_history = {
+
+                "joining_form_id": $scope.joiningForm.id,
+
+            };
+            $scope.employment_history_errors = {};
+
+
+        }
+
+        $scope.saveEmploymentHistory = function() {
+            $scope.employment_history_errors = {};
+
+
+            // console.log($scope.profile);
+            var apiUrl = base_url + '/api/employee-joining-form/save-employment-history_';
+            var method = "POST";
+            // console.log($scope.joiningForm);
+            $http({
+                method: method,
+                url: apiUrl,
+                data: $scope.employment_history,
+                // data: $scope.joiningForm
+            }).then(function(response) {
+                $scope.addEmployer();
+
+                $scope.joiningForm.employment_history = response.data.list;
+                $scope.successMessage = response.data.messages.success;
+                toastr.success(response.data.messages.success);
+
+                // window.location = base_url + '/profiles';
+            }, function(response) {
+
+
+                $scope.errors = response.data.messages;
+                if (response.data.status == 403) {
+                    toastr.error(response.data.messages.errorMessage);
+                } else {
+                    // toastr.error("Something went wrong !!"); 
+                }
+                // console.log($scope.errors);
+                // console.log($scope.errors['lang.en.title']);
+            });
+        }
         $scope.saveProfessionalQualification = function() {
             // console.log($scope.e_qualification);
             $scope.errors = '';
             $scope.otpSuccessMsg = '';
             $scope.loading = true;
             $scope.successMessage = '';
+
             // console.log($scope.profile);
             var apiUrl = base_url + '/api/employee-joining-form/save-professional-qualification';
             var method = "POST";
@@ -1583,7 +2588,11 @@
 
                 $scope.loading = false;
                 $scope.errors = response.data.messages;
-                toastr.error("Something went wrong !!");
+                if (response.data.status == 403) {
+                    toastr.error(response.data.messages.errorMessage);
+                } else {
+                    // toastr.error("Something went wrong !!"); 
+                }
                 // console.log($scope.errors);
                 // console.log($scope.errors['lang.en.title']);
             });
@@ -1624,7 +2633,11 @@
 
                 $scope.loading = false;
                 $scope.errors = response.data.messages;
-                toastr.error("Something went wrong !!");
+                if (response.data.status == 403) {
+                    toastr.error(response.data.messages.errorMessage);
+                } else {
+                    toastr.error("Something went wrong !!");
+                }
                 // console.log($scope.errors);
                 // console.log($scope.errors['lang.en.title']);
             });
@@ -1644,35 +2657,37 @@
             $scope.joiningForm.employment_history.employment_summary.splice(index, 1);
         }
 
-        $scope.addEmployer = function() {
+        // $scope.addEmployer = function() {
 
-            if (!('employers' in $scope.joiningForm.employment_history)) {
-                $scope.joiningForm.employment_history.employers = [];
+        //     if (!('employers' in $scope.joiningForm.employment_history)) {
+        //         $scope.joiningForm.employment_history.employers = [];
 
-            }
+        //     }
 
-            $scope.joiningForm.employment_history.employers.push({
-                'position_held': '',
-                'from_date': '',
-                'to_date': '',
-                'company': '',
-                'department': '',
-                'nature_of_job': '',
-                'address': '',
-                'city': '',
-                'telephone': '',
-                'job_responsibilities': '',
-                'annual_ctc': '',
-                'reporting_manager': '',
-                'contact_number_manager': '',
-                'email_manager': '',
-                'reason_of_leaving': '',
-                'hr_name': '',
-                'hr_contact_number': '',
-                'hr_email': '',
-                'hr_designation': '',
-            });
-        }
+        //     $scope.joiningForm.employment_history.employers.push({
+        //         'position_held': '',
+        //         'from_date': '',
+        //         'to_date': '',
+        //         'company': '',
+        //         'department': '',
+        //         'nature_of_job': '',
+        //         'address': '',
+        //         'city': '',
+        //         'telephone': '',
+        //         'job_responsibilities': '',
+        //         'annual_ctc': '',
+        //         'reporting_manager': '',
+        //         'contact_number_manager': '',
+        //         'email_manager': '',
+        //         'reason_of_leaving': '',
+        //         'hr_name': '',
+        //         'hr_contact_number': '',
+        //         'hr_email': '',
+        //         'hr_designation': '',
+        //     });
+        // }
+
+
         $scope.remove_employer = function(index) {
             $scope.joiningForm.employment_history.employers.splice(index, 1);
         }
@@ -1757,8 +2772,11 @@
 
                 $scope.loading = false;
                 $scope.errors = response.data.messages;
-                toastr.error("Something went wrong !!");
-                console.log($scope.errors);
+                if (response.data.status == 403) {
+                    toastr.error(response.data.messages.errorMessage);
+                } else {
+                    // toastr.error("Something went wrong !!"); 
+                }
                 // console.log($scope.errors['lang.en.title']);
             });
         }
@@ -1796,7 +2814,11 @@
 
                 $scope.loading = false;
                 $scope.errors = response.data.messages;
-                toastr.error("Something went wrong !!");
+                if (response.data.status == 403) {
+                    toastr.error(response.data.messages.errorMessage);
+                } else {
+                    // toastr.error("Something went wrong !!"); 
+                }
                 // console.log($scope.errors);
                 // console.log($scope.errors['lang.en.title']);
             });
@@ -1870,7 +2892,11 @@
 
                 $scope.loading = false;
                 $scope.errors = response.data.messages;
-                toastr.error("Something went wrong !!");
+                if (response.data.status == 403) {
+                    toastr.error(response.data.messages.errorMessage);
+                } else {
+                    // toastr.error("Something went wrong !!"); 
+                }
                 console.log($scope.errors);
                 // console.log($scope.errors['lang.en.title']);
             });
@@ -1908,9 +2934,14 @@
                 // window.location = base_url + '/profiles';
             }, function(response) {
 
+                if (response.data.status == 403) {
+                    toastr.error(response.data.messages.errorMessage);
+                } else {
+                    toastr.error("Something went wrong !!");
+                }
                 $scope.loading = false;
                 $scope.errors = response.data.messages;
-                toastr.error("Something went wrong !!");
+                // toastr.error("Something went wrong !!");
                 // console.log($scope.errors);
                 // console.log($scope.errors['lang.en.title']);
             });
@@ -1963,12 +2994,39 @@
                 if (reload) {
                     window.location.reload();
                 }
+
+
+
+
                 // window.location = base_url + '/profiles';
             }, function(response) {
 
                 $scope.loading = false;
                 $scope.errors = response.data.messages;
-                toastr.error("Something went wrong !!");
+                if (response.data.status == 403) {
+                    toastr.error(response.data.messages.errorMessage);
+                } else {
+                    toastr.error("Please fill all the required information.");
+                }
+
+                var errorTab;
+                if ($scope.errors.employeeDetailsTab) {
+                    errorTab = "#employeeDetails";
+                } else if ($scope.errors.educationalQualificationsTab) {
+                    errorTab = "#educationalQualifications";
+                } else if ($scope.errors.employmentHistoryTab) {
+                    errorTab = "#employmentHistory";
+                } else if ($scope.errors.backgroundInfoTab) {
+                    errorTab = "#backgroundInfo";
+                } else if ($scope.errors.uploadDocumentsTab) {
+                    errorTab = "#uploadDocuments";
+                } else if ($scope.errors.declarationTab) {
+                    errorTab = "#declaration";
+                }
+                console.log(errorTab);
+                if (errorTab != '') {
+                    $('#myTab a[href="' + errorTab + '"]').tab('show');
+                }
                 // console.log($scope.errors);
                 // console.log($scope.errors['lang.en.title']);
             });
@@ -1993,6 +3051,7 @@
                         var formData = new FormData();
                         formData.append("id", $scope.joiningForm.id);
                         formData.append("documentName", $scope.documentName);
+                        formData.append("documentNote", $scope.documentNote);
                         // for (var i = 0; i < data.files.length; i++) {  
                         //     formData.append("file" + i, data.files[i]);  
                         // }  
@@ -2015,6 +3074,12 @@
                     // $scope.formData = {};
                     // window.location = base_url + '/admin/categories';
                 }, function(response) {
+
+                    if (response.data.status == 403) {
+                        toastr.error(response.data.messages.errorMessage);
+                    } else {
+                        // toastr.error("Something went wrong !!"); 
+                    }
 
                     $scope.loading = false;
                     $scope.errors = response.data.messages;
@@ -2047,6 +3112,12 @@
                     // $scope.formData = {};
                     // window.location = base_url + '/admin/categories';
                 }, function(response) {
+
+                    if (response.data.status == 403) {
+                        toastr.error(response.data.messages.errorMessage);
+                    } else {
+                        // toastr.error("Something went wrong !!"); 
+                    }
 
                     $scope.loading = false;
                     $scope.errors = response.data.messages;

@@ -42,6 +42,17 @@
                                             </button>
                                         </div>
                                     </div>
+
+                                    <div class="col-md-12 ">
+                                    <div class="form-group text-center ">
+                                        Click <a href="<?=base_url(route_to('joiningFormVerification2'))?>">here</a> to update joining form.
+                                    </div>
+                                    </div>
+                                    <div class="col-md-12 ">
+                                    <div class="form-group text-center ">
+                                        Forgot password click <a href="<?=base_url(route_to('forgot-password'))?>">here</a>.
+                                    </div>
+                                    </div>
                                 </div>
 
                             </form>

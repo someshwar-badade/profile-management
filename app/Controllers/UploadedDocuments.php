@@ -11,30 +11,73 @@ class UploadedDocuments extends BaseController
 
 		$user = checkUserToken();
 
+		$isUserLoggedin = false;
 		$session = session();
+		$documentAccess = '';
+		if(strpos($folderName, "form") !== false){
+			//joining form
+			$documentAccess ='joining_form';
+		}
+		if(strpos($folderName, "profile") !== false){
+			//joining form
+			$documentAccess ='profile';
+		}
+		 
 
-		if (empty($session->get('employee_joining_form_id')) && empty($user)) {
-			if (empty($session->get('employee_joining_form_id'))) {
+		if(!empty($session->get('employee_joining_form_id'))){
+			$isUserLoggedin = true;
+		}
+		if(!empty($session->get('profile_id'))){
+			$isUserLoggedin = true;
+		}
+		if(!empty($user)){
+			$isUserLoggedin = true;
+		}
+		
+		
+
+			if (empty($session->get('employee_joining_form_id')) && !$isUserLoggedin) {
 				//redirect
 				return redirect()->to(base_url(route_to('joiningFormVerification2')));
+				exit();
+			}
+			if (empty($session->get('profile_id')) && !$isUserLoggedin) {
+				//redirect
+				return redirect()->to(base_url(route_to('createMyProfile')));
+				exit();
 			}
 
-			if (!$user) {
+			if (!$user && !$isUserLoggedin) {
 				//redirct to login
 				setcookie("a_token", "", time() - 3600, '/'); //delete cookie
 				setcookie("r_token", "", time() - 3600, '/'); //delete cookie
 				return redirect()->route('logout');
+				exit();
 			}
+		
+		
+		if($session->get('employee_joining_form_id') && $documentAccess=='joining_form'){
+			$folderName = "form_".$session->get('employee_joining_form_id');
 		}
 
-		if($session->get('employee_joining_form_id')){
-			$folderName = "form_".$session->get('employee_joining_form_id');
+		if($session->get('profile_id') && $documentAccess=='profile'){
+			$folderName = "profile_".$session->get('profile_id');
 		}
 
 
 		if (preg_match('^[A-Za-z0-9]{2,32}+[.]{1}[A-Za-z]{3,4}$^', $fileName)) // validation
 		{
-			$file = DOCUMENTS_PATH . $folderName.'/'. $fileName;
+			
+			if($documentAccess=='joining_form'){
+				$file = DOCUMENTS_PATH . $folderName.'/'. $fileName;
+			}else if($documentAccess=='profile'){
+				$file = PROFILE_DOCUMENTS_PATH . $folderName.'/'. $fileName;
+			}else{
+				$file = DOCUMENTS_PATH . $folderName.'/'. $fileName;
+			}
+
+			
+
 			if (file_exists($file)) // check the file is existing 
 			{
 				// header('Content-Description: File Transfer');
@@ -57,5 +100,11 @@ class UploadedDocuments extends BaseController
 				
 			}
 		}
+	}
+
+	public function profile($folderName, $fileName)
+	{
+
+		
 	}
 }

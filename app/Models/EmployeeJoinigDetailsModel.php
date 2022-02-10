@@ -6,7 +6,7 @@ class EmployeeJoinigDetailsModel extends Model
 {
     protected $table = 'employee_joining_form_details';
     protected $primaryKey = 'id';
-    protected $allowedFields =  ['id', 'first_name', 'last_name', 'father_name', 'mother_name', 'spouse_name', 'kids_name', 'email_primary', 'mobile_primary', 'aadhar_number', 'pan_number','dob','place_of_birth','nationality', 'education_qualification', 'professional_qualification', 'employment_history', 'background_info', 'employee_other_details','documents', 'verification_code','is_accept_declaration', 'created_by', 'updated_by', 'status'];
+    protected $allowedFields =  ['id', 'first_name', 'last_name', 'father_name', 'mother_name', 'spouse_name', 'kids_name', 'email_primary', 'mobile_primary', 'aadhar_number', 'pan_number','dob','place_of_birth','nationality', 'education_qualification', 'professional_qualification', 'employment_history', 'background_info', 'employee_other_details','documents', 'verification_code','is_accept_declaration','approval_dt', 'created_by', 'updated_by', 'status'];
     
     protected $useTimestamps = true;
     protected $createdField  = 'created_at';
@@ -17,7 +17,7 @@ class EmployeeJoinigDetailsModel extends Model
 
         $db = \Config\Database::connect();
 		$builder = $db->table('employee_joining_form_details');
-		$builder->select('id');
+		// $builder->select('id','first_name', 'last_name');
         $builder->where("verification_code='$verificationCode' AND email_primary='$email' AND (aadhar_number='$adharPan' OR pan_number='$adharPan')");
         $builder->limit(1, 0);
 
@@ -55,6 +55,12 @@ class EmployeeJoinigDetailsModel extends Model
 					$builder->where("type LIKE '%".$filter['type']."%'");
 				}
             }
+			if(isset($filter['status'])){
+				if(strlen(trim($filter['status']))>0){
+
+					$builder->where("status",$filter['status']);
+				}
+            }
 
         }
         
@@ -69,12 +75,24 @@ class EmployeeJoinigDetailsModel extends Model
             $builder->limit($length, $start);
         }    
 
+        if (trim($orderBy) != '') {
         $builder->orderBy($orderBy);
-
+        }
         $query   = $builder->get();
         
         $data = $query->getResultArray();
-        return ['recordsTotal' => $recordsTotal, 'recordsFiltered' => $recordsFiltered, 'data' => $data];
+        return ['recordsTotal' => $recordsTotal, 'recordsFiltered' => $recordsFiltered, 'data' => $data?:null];
     }
 
+    public static function getCount($status=''){
+        $db = \Config\Database::connect();
+        $builder = $db->table('employee_joining_form_details');
+        if(strlen($status)>0){
+            $builder->where('status',$status);
+        }
+       return  $builder->countAllResults();
+        // $builder->select('status,COUNT(id) as count');
+        // $builder->groupBy('status');
+        // $query   = $builder->get();
+    }
 }

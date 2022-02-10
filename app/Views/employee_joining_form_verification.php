@@ -12,23 +12,21 @@
                     
                     <div class="card card-primary">
                         <div class="card-header text-center">
-                        <h2>Verification</h2>
+                        <h2>Sign In</h2>
                         </div>
                         <div class="card-body">
                             <div class="row">
                             <?=$error_message?>
                             </div>
                             <form method="POST" action="" class="not-hide-submit-btn1">
-                                
                                 <div class="form-group row">
-                                    <label class="col-sm-4" for="email">Email <sup class="text-danger">*</sup></label>
+                                    <label class="col-sm-4" for="email">E-mail <sup class="text-danger">*</sup></label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="email" placeholder="Email"  maxlength="60" name="email" value="<?php echo set_value('email',$email); ?>" class="form-control">
+                                        <input type="text" id="email" placeholder="E-mail"  maxlength="60" name="email" value="<?php echo set_value('email',$email); ?>" class="form-control">
                                        <?php if($validation->getError('email')){?>
                                         <div class="text-danger"><?=$validation->getError('email')?></div>
                                         <?php }?>
                                     </div>
-                                    
                                 </div>
 
                                 <div class="form-group row">
@@ -39,7 +37,6 @@
                                         <div class="text-danger"><?=$validation->getError('aadhar_pan_number')?></div>
                                         <?php }?>
                                     </div>
-                                    
                                 </div>
 
 
@@ -56,7 +53,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-4" ></label>
                                     <div class="col-sm-8">
-                                        <button class="btn btn-primary btn-sm" type="submit"><div></div>Verify </button>
+                                        <button class="btn btn-primary btn-sm" type="submit"><div></div>Sign In </button>
                                     </div>
                                 </div>
 

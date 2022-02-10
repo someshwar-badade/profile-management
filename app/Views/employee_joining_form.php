@@ -7,7 +7,6 @@
 
 <?= $this->endSection() ?>
 
-
 <?= $this->section('javascript') ?>
 
 <?= $this->endSection() ?>

@@ -82,6 +82,15 @@ define('JWT_SECRETE_KEY_2','ioioiuopiuqrwjkfljasfklwrwj');
 define('SITE_CODE','PROFILEMANAGEMENT');
 define('SITE_TITLE','Profile Management');
 
+// define('HR_EMAIL','somesh@bitstringit.in');
+// define('ACCOUNTS_EMAIL','admin@bitstringit.in');
+// define('CEO_EMAIL','ravi.deshmukh@bitstringit.com');
+
+define('HR_EMAIL','hr@bitstringit.com');
+define('ACCOUNTS_EMAIL','admin@bitstringit.com');
+define('CEO_EMAIL','ravi.deshmukh@bitstringit.com');
+
 define('SITE_DATE_FORMAT','d M Y');
 define('SITE_DATE_TIME_FORMAT','d M Y h:i A');
 define('DOCUMENTS_PATH',ROOTPATH.'assets/joining_form_documents/');
+define('PROFILE_DOCUMENTS_PATH',ROOTPATH.'assets/profiles/');

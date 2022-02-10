@@ -26,6 +26,11 @@ app.controller('loginCtrl', ['$scope', '$http', '$cookies', function ($scope, $h
     }, function (response) {
 
       $scope.errors = response.data.messages;
+      if (response.data.status == 403) {
+        toastr.error(response.data.messages.errorMessage);
+    } else {
+        toastr.error("Something went wrong !!");
+    }
       $scope.loading = false;
     });
   }
