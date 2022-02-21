@@ -138,9 +138,36 @@ class Interviews extends ResourceController
         $requestData['schedule_dt'] = date('Y-m-d H:i:s', strtotime($requestData['schedule_dt']));
         $model = new InterviewModel();
         if (empty($requestData['id'])) {
-            $model->insert($requestData);
+            
+            if($model->insert($requestData)){
+
+                $actionLogData = [
+                           
+                    'action_type' => 'created',
+                    'model' => 'profile',
+                    'record_id' => $requestData['profile_id'],
+                    'chaged_data' => json_encode(["interview"=>$requestData])
+                ];
+                creatActionLog($actionLogData);
+            }
+            
+
         } else {
-            $model->save($requestData);
+
+            $oldData = $model->find($requestData['id']);
+            $changed_data = array_diff_assoc((array)$requestData, (array)$oldData);
+
+            if($model->save($requestData)){
+                $actionLogData = [
+                           
+                    'action_type' => 'updated',
+                    'model' => 'profile',
+                    'record_id' => $requestData['profile_id'],
+                    'chaged_data' => json_encode(["interview"=>$changed_data])
+                ];
+                creatActionLog($actionLogData);
+            }
+
         }
 
         $response = [
@@ -167,7 +194,19 @@ class Interviews extends ResourceController
         }
 
         $model = new InterviewModel();
+        $interviewDetails = $model->find($id);
         if ($model->delete($id)) {
+
+            $actionLogData = [
+                           
+                'action_type' => 'deleted',
+                'model' => 'profile',
+                'record_id' => $interviewDetails['profile_id'],
+                'chaged_data' => json_encode(["interview"=>$interviewDetails])
+            ];
+            creatActionLog($actionLogData);
+
+
             $response = [
                 'error'    => null,
                 'messages' => [

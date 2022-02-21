@@ -398,7 +398,7 @@ class UserManagement extends  Controllers\BaseController
 			if (!empty($changed_data)) {
 				$actionLogData = [
 					'user_id' => $user['id'],
-					'action_type' => 'update',
+					'action_type' => 'updated',
 					'model' => 'user',
 					'record_id' => $user_id,
 					'chaged_data' => json_encode($changed_data)

@@ -161,3 +161,11 @@ transform: rotate(360deg);
 .client-contacts-btn .badge {
 	position: absolute;
 }
+
+.card .card-body .light-card{
+	
+		background-color: rgba(248,248,248,0.4);
+		padding: 0 5px;
+		border-radius: 5px;
+	
+}

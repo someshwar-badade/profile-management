@@ -94,6 +94,8 @@
 <script src="<?= base_url('assets/js/custom.js?v=1.2') ?>"></script>
 
 <script src="<?= base_url('assets/js/toastr/toastr.min.js') ?>"></script>
+
+
 <script>
   $(document).ready(function() {
 

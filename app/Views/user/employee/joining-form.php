@@ -121,27 +121,27 @@ function isEditableForm($cap, $status)
                                     <fieldset class="form-group p-3">
                                         <legend class="w-auto px-2">Personal details</legend>
                                         <div class="form-row">
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group col-sm-6 col-md-3">
                                                 <label>First Name<sup class="text-danger">*</sup></label>
                                                 <input type="text" maxlength="50" class="form-control" placeholder="First Name" ng-model="joiningForm.first_name">
                                                 <div class="text-danger" ng-show="errors.first_name">{{errors.first_name}}</div>
                                             </div>
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group  col-sm-6 col-md-3">
                                                 <label>Last Name<sup class="text-danger">*</sup></label>
                                                 <input type="text" maxlength="50" class="form-control" placeholder="Last Name" ng-model="joiningForm.last_name">
                                                 <div class="text-danger" ng-show="errors.last_name">{{errors.last_name}}</div>
                                             </div>
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group  col-sm-6 col-md-3">
                                                 <label>Father's Name</label>
                                                 <input type="text" maxlength="50" class="form-control" placeholder="Father's Name" ng-model="joiningForm.father_name">
                                             </div>
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group  col-sm-6 col-md-3">
                                                 <label>Mother's Name</label>
                                                 <input type="text" maxlength="50" class="form-control" placeholder="Mother's Name" ng-model="joiningForm.mother_name">
                                             </div>
                                         </div>
                                         <div class="form-row">
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group  col-sm-6 col-md-3">
                                                 <label>Gender<sup class="text-danger">*</sup></label>
                                                 <div>
                                                     <div class="custom-control custom-radio custom-control-inline">
@@ -155,7 +155,7 @@ function isEditableForm($cap, $status)
                                                     <div class="text-danger" ng-show="errors['employee_other_details.gender']">{{errors['employee_other_details.gender']}}</div>
                                                 </div>
                                             </div>
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group  col-sm-6 col-md-3">
                                                 <label>Marital Status<sup class="text-danger">*</sup></label>
                                                 <div>
                                                     <div class="custom-control custom-radio custom-control-inline">
@@ -170,7 +170,7 @@ function isEditableForm($cap, $status)
                                                 </div>
                                             </div>
 
-                                            <div class="form-group col-md-3" ng-show="joiningForm.employee_other_details.marital_status=='Married'">
+                                            <div class="form-group  col-sm-6 col-md-3" ng-show="joiningForm.employee_other_details.marital_status=='Married'">
                                                 <label>Spouse's Name</label>
                                                 <input type="text" maxlength="50" class="form-control" placeholder="Spouse's Name" ng-model="joiningForm.spouse_name">
                                             </div>
@@ -182,23 +182,23 @@ function isEditableForm($cap, $status)
                                         </div>
                                         <div class="form-row">
 
-                                            <div class="form-group col-md-2">
+                                            <div class="form-group  col-sm-6 col-md-2">
                                                 <label>Date of Birth<sup class="text-danger">*</sup></label>
                                                 <input type="text" id="dob" class="form-control past-datepicker" ng-init="initializeDatepicker();" placeholder="dd-mmm-yyyy" ng-model="joiningForm.dob">
                                                 <div class="text-danger" ng-show="errors.dob">{{errors.dob}}</div>
                                             </div>
-                                            <div class="form-group col-md-2">
+                                            <div class="form-group  col-sm-6 col-md-2">
                                                 <label>Place of Birth</label>
                                                 <input type="text" maxlength="50" class="form-control" placeholder="Place, State" ng-model="joiningForm.place_of_birth">
 
                                             </div>
 
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group  col-sm-6 col-md-3">
                                                 <label>Nationality (both, if dual national)</label>
                                                 <input type="text" maxlength="50" class="form-control" placeholder="Nationality" ng-model="joiningForm.nationality">
                                             </div>
 
-                                            <div class="form-group col-md-2">
+                                            <div class="form-group  col-sm-6 col-md-2">
                                                 <label>Blood Group<sup class="text-danger">*</sup></label>
                                                 <select ng-model="joiningForm.employee_other_details.blood_group" ng-init="joiningForm.employee_other_details.blood_group=''" class="form-control">
                                                     <option value="">Select</option>
@@ -216,7 +216,7 @@ function isEditableForm($cap, $status)
 
                                                 <div class="text-danger" ng-show="errors['employee_other_details.blood_group']">{{errors['employee_other_details.blood_group']}}</div>
                                             </div>
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group  col-sm-6 col-md-3">
                                                 <label>Medical conditions, if any</label>
                                                 <input type="text" maxlength="50" class="form-control" ng-model="joiningForm.employee_other_details.medical_condition">
                                             </div>
@@ -224,17 +224,17 @@ function isEditableForm($cap, $status)
 
                                         <div class="form-row">
 
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group  col-sm-6 col-md-3">
                                                 <label>PAN Number<sup class="text-danger">*</sup></label>
                                                 <input type="text" maxlength="10" class="form-control" placeholder="PAN Number" ng-model="joiningForm.pan_number">
                                                 <div class="text-danger" ng-show="errors.pan_number">{{errors.pan_number}}</div>
                                             </div>
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group  col-sm-6 col-md-3">
                                                 <label>Aadhar Number<sup class="text-danger">*</sup></label>
                                                 <input type="text" maxlength="12" class="form-control" placeholder="Aadhar Number" ng-model="joiningForm.aadhar_number">
                                                 <div class="text-danger" ng-show="errors.aadhar_number">{{errors.aadhar_number}}</div>
                                             </div>
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group  col-sm-6 col-md-3">
                                                 <label>UAN Number</label>
                                                 <input type="text" maxlength="50" class="form-control" placeholder="UAN Number" ng-model="joiningForm.employee_other_details.uan_number">
                                             </div>
@@ -242,11 +242,11 @@ function isEditableForm($cap, $status)
 
                                         <div class="form-row">
 
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group  col-sm-6 col-md-3">
                                                 <label>Total Experience (in Months)</label>
                                                 <input type="text" maxlength="3" class="form-control only-numbers" ng-model="joiningForm.employee_other_details.total_experience">
                                             </div>
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group  col-sm-6 col-md-3">
                                                 <label>Type of employment with BitString</label>
                                                 <select ng-model="joiningForm.employee_other_details.nature_of_job_hired" ng-init="joiningForm.employee_other_details.nature_of_job_hired=''" class="form-control">
                                                     <option value="">Select</option>
@@ -257,7 +257,7 @@ function isEditableForm($cap, $status)
 
                                             </div>
 
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group  col-sm-6 col-md-3">
                                                 <label>Date of Joining<sup class="text-danger">*</sup></label>
                                                 <input type="text" class="form-control datepicker" ng-init="initializeDatepicker();" placeholder="dd-mmm-yyyy" ng-model="joiningForm.employee_other_details.date_of_joining">
                                                 <div class="text-danger" ng-show="errors['employee_other_details.date_of_joining']">{{errors['employee_other_details.date_of_joining']}}</div>
@@ -269,22 +269,22 @@ function isEditableForm($cap, $status)
                                     <fieldset class="form-group p-3">
                                         <legend class="w-auto px-2">Contact details</legend>
                                         <div class="form-row">
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group col-sm-6 col-md-3">
                                                 <label>E-mail (primary)<sup class="text-danger">*</sup></label>
                                                 <input type="email" maxlength="50" class="form-control" placeholder="E-mail" ng-model="joiningForm.email_primary">
                                                 <div class="text-danger" ng-show="errors.email_primary">{{errors.email_primary}}</div>
                                             </div>
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group col-sm-6 col-md-3">
                                                 <label>Mobile No.<sup class="text-danger">*</sup></label>
                                                 <input type="text" maxlength="15" class="form-control only-numbers" placeholder="Mobile No." ng-model="joiningForm.mobile_primary">
                                                 <div class="text-danger" ng-show="errors['mobile_primary']">{{errors['mobile_primary']}}</div>
                                             </div>
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group col-sm-6 col-md-3">
                                                 <label>Emergency Contact Name and Relation<sup class="text-danger">*</sup></label>
                                                 <input type="text" maxlength="50" class="form-control" placeholder="Emergency Contact Name" ng-model="joiningForm.employee_other_details.emergency_contact_name">
                                                 <div class="text-danger" ng-show="errors['employee_other_details.emergency_contact_name']">{{errors['employee_other_details.emergency_contact_name']}}</div>
                                             </div>
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group col-sm-6 col-md-3">
                                                 <label>Emergency Mobile No.<sup class="text-danger">*</sup></label>
                                                 <input type="text" maxlength="15" class="form-control only-numbers" placeholder="Emergency Mobile No." ng-model="joiningForm.employee_other_details.emergency_contact_mobile">
                                                 <div class="text-danger" ng-show="errors['employee_other_details.emergency_contact_mobile']">{{errors['employee_other_details.emergency_contact_mobile']}}</div>
@@ -298,39 +298,39 @@ function isEditableForm($cap, $status)
                                         <legend class="w-auto px-2">Personal details</legend>
                                         <div class="form-row">
 
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group col-sm-6 col-md-3">
                                                 <label>First Name:<sup class="text-danger">*</sup></label>
                                                 <span>
                                                     {{joiningForm.first_name}}
                                                 </span>
                                             </div>
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group col-sm-6 col-md-3">
                                                 <label>Last Name:<sup class="text-danger">*</sup></label>
                                                 <span>
                                                     {{joiningForm.last_name}}
                                                 </span>
 
                                             </div>
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group col-sm-6 col-md-3">
                                                 <label>Father's Name:</label>
                                                 <span>{{joiningForm.father_name}}</span>
                                             </div>
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group col-sm-6 col-md-3">
                                                 <label>Mother's Name:</label>
                                                 <span>{{joiningForm.mother_name}}</span>
                                             </div>
                                         </div>
                                         <div class="form-row">
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group col-sm-6 col-md-3">
                                                 <label>Gender:<sup class="text-danger">*</sup></label>
                                                 <span>{{joiningForm.employee_other_details.gender}}</span>
                                             </div>
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group col-sm-6 col-md-3">
                                                 <label>Marital Status:<sup class="text-danger">*</sup></label>
                                                 <span>{{joiningForm.employee_other_details.marital_status}}</span>
                                             </div>
 
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group col-sm-6 col-md-3">
                                                 <label>Spouse's Name:</label>
                                                 <span>{{joiningForm.spouse_name}}</span>
                                             </div>
@@ -342,26 +342,26 @@ function isEditableForm($cap, $status)
                                         </div>
                                         <div class="form-row">
 
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group col-sm-6 col-md-3">
                                                 <label>Date of Birth:<sup class="text-danger">*</sup></label>
                                                 <span>{{joiningForm.dob}}</span>
                                             </div>
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group col-sm-6 col-md-3">
                                                 <label>Place of Birth:</label>
                                                 <span>{{joiningForm.place_of_birth}}</span>
 
                                             </div>
 
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group col-sm-6 col-md-3">
                                                 <label>Nationality (both, if dual national):</label>
                                                 <span>{{joiningForm.nationality}}</span>
                                             </div>
 
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group col-sm-6 col-md-3">
                                                 <label>Blood Group:<sup class="text-danger">*</sup></label>
                                                 <span>{{joiningForm.employee_other_details.blood_group}}</span>
                                             </div>
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group col-sm-6 col-md-3">
                                                 <label>Medical conditions, if any:</label>
                                                 <span>{{joiningForm.employee_other_details.medical_condition}}</span>
                                             </div>
@@ -369,15 +369,15 @@ function isEditableForm($cap, $status)
 
                                         <div class="form-row">
 
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group col-sm-6 col-md-3">
                                                 <label>PAN Number:<sup class="text-danger">*</sup></label>
                                                 <span>{{joiningForm.pan_number}}</span>
                                             </div>
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group col-sm-6 col-md-3">
                                                 <label>Aadhar Number:<sup class="text-danger">*</sup></label>
                                                 <span>{{joiningForm.aadhar_number}}</span>
                                             </div>
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group col-sm-6 col-md-3">
                                                 <label>UAN Number:</label>
                                                 <span>{{joiningForm.employee_other_details.uan_number}}</span>
                                             </div>
@@ -385,16 +385,16 @@ function isEditableForm($cap, $status)
 
                                         <div class="form-row">
 
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group col-sm-6 col-md-3">
                                                 <label>Total Experience (in Months):</label>
                                                 <span>{{joiningForm.employee_other_details.total_experience}}</span>
                                             </div>
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group col-sm-6 col-md-3">
                                                 <label>Type of employment with BitString:</label>
                                                 <span>{{joiningForm.employee_other_details.nature_of_job_hired}}</span>
                                             </div>
 
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group col-sm-6 col-md-3">
                                                 <label>Date of Joining:</label>
                                                 <span>{{joiningForm.employee_other_details.date_of_joining}}</span>
                                             </div>
@@ -405,19 +405,19 @@ function isEditableForm($cap, $status)
                                     <fieldset class="form-group p-3">
                                         <legend class="w-auto px-2">Contact details</legend>
                                         <div class="form-row">
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group col-sm-6 col-md-3">
                                                 <label>E-mail (primary)<sup class="text-danger">*</sup></label>
                                                 <div>{{joiningForm.email_primary}}</div>
                                             </div>
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group col-sm-6 col-md-3">
                                                 <label>Mobile No.<sup class="text-danger">*</sup></label>
                                                 <div>{{joiningForm.mobile_primary}}</div>
                                             </div>
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group col-sm-6 col-md-3">
                                                 <label>Emergency Contact Name and Relation<sup class="text-danger">*</sup></label>
                                                 <div>{{joiningForm.employee_other_details.emergency_contact_name}}</div>
                                             </div>
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group col-sm-6 col-md-3">
                                                 <label>Emergency Mobile No.<sup class="text-danger">*</sup></label>
                                                 <div>{{joiningForm.employee_other_details.emergency_contact_mobile}}</div>
                                             </div>
@@ -429,17 +429,17 @@ function isEditableForm($cap, $status)
                                     <fieldset class="form-group p-3">
                                         <legend class="w-auto px-2">Bank details</legend>
                                         <div class="form-row">
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group col-sm-6 col-md-3">
                                                 <label>Bank Name & Branch<sup class="text-danger">*</sup></label>
                                                 <input type="text" maxlength="30" class="form-control" placeholder="Bank Name & Branch" ng-model="joiningForm.employee_other_details.bank_name_branch">
                                                 <div class="text-danger" ng-show="errors['employee_other_details.bank_name_branch']">{{errors['employee_other_details.bank_name_branch']}}</div>
                                             </div>
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group col-sm-6 col-md-3">
                                                 <label>Bank A/c No<sup class="text-danger">*</sup></label>
                                                 <input type="text" maxlength="20" class="form-control" placeholder="Bank A/c No" ng-model="joiningForm.employee_other_details.bank_account_number">
                                                 <div class="text-danger" ng-show="errors['employee_other_details.bank_account_number']">{{errors['employee_other_details.bank_account_number']}}</div>
                                             </div>
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group col-sm-6 col-md-3">
                                                 <label>IFSC Code<sup class="text-danger">*</sup></label>
                                                 <input type="text" maxlength="11" class="form-control" placeholder="IFSC Code" ng-model="joiningForm.employee_other_details.bank_ifsc_code">
                                                 <div class="text-danger" ng-show="errors['employee_other_details.bank_ifsc_code']">{{errors['employee_other_details.bank_ifsc_code']}}</div>
@@ -451,15 +451,15 @@ function isEditableForm($cap, $status)
                                     <fieldset class="form-group p-3">
                                         <legend class="w-auto px-2">Bank details</legend>
                                         <div class="form-row">
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group col-sm-6 col-md-3">
                                                 <label>Bank Name & Branch<sup class="text-danger">*</sup></label>
                                                 <div>{{joiningForm.employee_other_details.bank_name_branch}}</div>
                                             </div>
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group col-sm-6 col-md-3">
                                                 <label>Bank A/c No<sup class="text-danger">*</sup></label>
                                                 <div>{{joiningForm.employee_other_details.bank_account_number}}</div>
                                             </div>
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group col-sm-6 col-md-3">
                                                 <label>IFSC Code<sup class="text-danger">*</sup></label>
                                                 <div>{{joiningForm.employee_other_details.bank_ifsc_code}}</div>
                                             </div>
@@ -474,17 +474,17 @@ function isEditableForm($cap, $status)
                                     <fieldset class="form-group p-3">
                                         <legend class="w-auto px-2">Address</legend>
                                         <div class="form-row">
-                                            <div class="form-group col-md-4">
+                                            <div class="form-group col-sm-12 col-md-4">
                                                 <label>Present Address <sup class="text-danger">*</sup></label>
                                                 <input type="text" maxlength="200" class="form-control" ng-model="joiningForm.employee_other_details.present_address">
                                                 <div class="text-danger" ng-show="errors['employee_other_details.present_address']">{{errors['employee_other_details.present_address']}}</div>
                                             </div>
-                                            <div class="form-group col-md-2">
+                                            <div class="form-group col-sm-6 col-md-2">
                                                 <label>City Name<sup class="text-danger">*</sup></label>
                                                 <input type="text" maxlength="60" class="form-control" ng-model="joiningForm.employee_other_details.present_address_city">
                                                 <div class="text-danger" ng-show="errors['employee_other_details.present_address_city']">{{errors['employee_other_details.present_address_city']}}</div>
                                             </div>
-                                            <div class="form-group col-md-2">
+                                            <div class="form-group col-sm-6 col-md-2">
                                                 <label>Postcode <sup class="text-danger">*</sup></label>
                                                 <input type="text" maxlength="6" class="form-control only-numbers" ng-model="joiningForm.employee_other_details.present_address_postcode">
                                                 <div class="text-danger" ng-show="errors['employee_other_details.present_address_postcode']">{{errors['employee_other_details.present_address_postcode']}}</div>
@@ -497,17 +497,17 @@ function isEditableForm($cap, $status)
                                         </div>
 
                                         <div class="form-row">
-                                            <div class="form-group col-md-4">
+                                            <div class="form-group col-sm-12 col-md-4">
                                                 <label>Permanent Address<sup class="text-danger">*</sup></label>
                                                 <input type="text" maxlength="200" class="form-control" ng-model="joiningForm.employee_other_details.permanent_address">
                                                 <div class="text-danger" ng-show="errors['employee_other_details.permanent_address']">{{errors['employee_other_details.permanent_address']}}</div>
                                             </div>
-                                            <div class="form-group col-md-2">
+                                            <div class="form-group col-sm-6 col-md-2">
                                                 <label>City Name<sup class="text-danger">*</sup></label>
                                                 <input type="text" maxlength="60" class="form-control" ng-model="joiningForm.employee_other_details.permanent_address_city">
                                                 <div class="text-danger" ng-show="errors['employee_other_details.permanent_address_city']">{{errors['employee_other_details.permanent_address_city']}}</div>
                                             </div>
-                                            <div class="form-group col-md-2">
+                                            <div class="form-group col-sm-6 col-md-2">
                                                 <label>Postcode<sup class="text-danger">*</sup></label>
                                                 <input type="text" maxlength="6" class="form-control only-numbers" ng-model="joiningForm.employee_other_details.permanent_address_postcode">
                                                 <div class="text-danger" ng-show="errors['employee_other_details.permanent_address_postcode']">{{errors['employee_other_details.permanent_address_postcode']}}</div>
@@ -520,15 +520,15 @@ function isEditableForm($cap, $status)
                                     <fieldset class="form-group p-3">
                                         <legend class="w-auto px-2">Address</legend>
                                         <div class="form-row">
-                                            <div class="form-group col-md-6">
+                                            <div class="form-group col-sm-12 col-md-6">
                                                 <label>Present Address <sup class="text-danger">*</sup></label>
                                                 <div>{{joiningForm.employee_other_details.present_address}}</div>
                                             </div>
-                                            <div class="form-group col-md-2">
+                                            <div class="form-group col-sm-6 col-md-2">
                                                 <label>City Name <sup class="text-danger">*</sup></label>
                                                 <div>{{joiningForm.employee_other_details.present_address_city}}</div>
                                             </div>
-                                            <div class="form-group col-md-2">
+                                            <div class="form-group col-sm-6 col-md-2">
                                                 <label>Postcode <sup class="text-danger">*</sup></label>
                                                 <div>{{joiningForm.employee_other_details.present_address_postcode}}</div>
                                             </div>
@@ -539,15 +539,15 @@ function isEditableForm($cap, $status)
                                         </div>
 
                                         <div class="form-row">
-                                            <div class="form-group col-md-6">
+                                            <div class="form-group col-sm-12 col-md-6">
                                                 <label>Permanent Address<sup class="text-danger">*</sup></label>
                                                 <div>{{joiningForm.employee_other_details.permanent_address}}</div>
                                             </div>
-                                            <div class="form-group col-md-2">
+                                            <div class="form-group col-sm-6 col-md-2">
                                                 <label>City Name <sup class="text-danger">*</sup></label>
                                                 <div>{{joiningForm.employee_other_details.permanent_address_city}}</div>
                                             </div>
-                                            <div class="form-group col-md-2">
+                                            <div class="form-group col-sm-6 col-md-2">
                                                 <label>Postcode<sup class="text-danger">*</sup></label>
                                                 <div>{{joiningForm.employee_other_details.permanent_address_postcode}}</div>
                                             </div>
@@ -704,334 +704,226 @@ function isEditableForm($cap, $status)
                                 <p> Starting with your <b>most recent employer</b> please give details of your complete employment history since you left full time education. Include any periods of self-employment, unemployment, maternity leave or <b>military service.</b> Include all part time and temporary employment and provide details of both the agencies and placements. Under ‘position held’ state clearly if you were a partner or had an ownership interest in any of the employing companies, or if the position was part time. If you are aware that one of your employers has changed its trading name, please provide the former name first, followed by the new name.</p>
                             </div>
                             <div class="table-responsive">
-                                <?php if (isEditableForm('joining_form/update_education_details', $joiningFormDetails['status'])) { ?>
+                                
                                     <form class="">
 
+                                        <!-- <div class="row"> -->
 
-                                        <fieldset class="form-group p-3 animation" ng-repeat="employer in joiningForm.employment_history.employers">
-                                            <legend class="w-auto px-2">Employer {{$index+1}}</legend>
-                                            <a role="button" class="remove-btn fa fa-times text-default" ng-click="remove_employer($index)" title="Remove"></a>
-                                            <div class="form-row">
-                                                <div class="form-group col-md-3">
-                                                    <label>Company<sup class="text-danger">*</sup></label>
-                                                    <input type="text" maxlength="50" class="form-control" placeholder="Company" ng-model="joiningForm.employment_history.employers[$index].company">
-                                                    <div class="text-danger" ng-show="errors['employment_history.employers.'+$index+'.company']">{{errors['employment_history.employers.'+$index+'.company']}}</div>
+                                        <div class="col-md-12" ng-repeat="employer in joiningForm.employment_history">
+                                            <div class="card card-primary">
+                                                <div class="card-header p-2">
+                                                    <h3 class="card-title">{{$index+1}}. {{employer.company}} ({{employer.from_date}} - {{employer.to_date}})</h3>
+
+                                                    <div class="card-tools">
+                                                    <?php if (isEditableForm('joining_form/update_employment', $joiningFormDetails['status'])) { ?>
+                                                        <button type="button" ng-click="editEmployer($index)" title="Edit" class="btn btn-tool">
+                                                            <i class="fas fa-edit"></i>
+                                                        </button>
+                                                        <button type="button" ng-click="removeEmployer(employer)" title="Delete" class="btn btn-tool">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                        <?php }?>
+                                                        <button type="button" class="btn btn-tool" title="Minimize" data-card-widget="collapse">
+                                                            <i class="fas fa-minus"></i>
+                                                        </button>
+                                                    </div>
+                                                    <!-- /.card-tools -->
                                                 </div>
-                                                <div class="form-group col-md-2">
-                                                    <label>Department</label>
-                                                    <input type="text" maxlength="20" class="form-control" placeholder="Department" ng-model="joiningForm.employment_history.employers[$index].department">
-                                                    <div class="text-danger" ng-show="errors['employment_history.employers.'+$index+'.department']">{{errors['employment_history.employers.'+$index+'.department']}}</div>
+                                                <!-- /.card-header -->
+                                                <div class="card-body p-2" style="background: rgba(0, 123, 255,0.3);">
+                                                    <!-- <fieldset class="form-group p-3 animation"> -->
+                                                    <div class="row">
+                                                        <div class="col-sm-6 col-md-3">
+                                                            <div class="light-card">
+                                                                <span>Department:</span>
+                                                                <p><b>{{employer.department?employer.department:'- -'}}</b></p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-6 col-md-3">
+                                                            <div class="light-card">
+                                                                <span>Position held:</span>
+                                                                <p><b>{{employer.position_held?employer.position_held:'- -'}}</b></p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-6 col-md-3">
+                                                            <div class="light-card">
+                                                                <span>Nature of Job:</span>
+                                                                <p><b>{{employer.nature_of_job?employer.nature_of_job:'- -'}}</b></p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-6 col-md-3">
+                                                            <div class="light-card">
+                                                                <span>Annual CTC (in Lacs):</span>
+                                                                <p><b>{{employer.annual_ctc?employer.annual_ctc:'- -'}}</b></p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-6 col-md-6">
+                                                            <div class="light-card">
+                                                                <span>Primary Job Responsibilities:</span>
+                                                                <p><b>{{employer.job_responsibilities?employer.job_responsibilities:'- -'}}</b></p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-6 col-md-6">
+                                                            <div class="light-card">
+                                                                <span>Reason for Leaving:</span>
+                                                                <p><b>{{employer.reason_of_leaving?employer.reason_of_leaving:'- -'}}</b></p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-sm-12 col-md-4">
+                                                            <div class="card card-secondary">
+                                                                <div class="card-header p-2">
+                                                                    <h4 class="card-title" style="font-size: 0.9rem;">Address</h4>
+                                                                </div>
+                                                                <div class="card-body p-2">
+                                                                    <p class="m-0">{{employer.address?employer.address:'&nbsp;'}}</p>
+                                                                    <p class="m-0">{{employer.city?employer.city:'&nbsp;'}}</p>
+                                                                    <p class="m-0">{{employer.telephone?employer.telephone:'&nbsp;'}}</p>
+                                                                    <p class="m-0">&nbsp;</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-12 col-md-4">
+                                                            <div class="card card-secondary">
+                                                                <div class="card-header p-2">
+                                                                    <h4 class="card-title" style="font-size: 0.9rem;">Reporting Manager</h4>
+                                                                </div>
+                                                                <div class="card-body p-2">
+                                                                    <p class="m-0">
+                                                                        <label class="m-0">Name:</label> <span>{{employer.reporting_manager?employer.reporting_manager:'- -'}}</span>
+                                                                    </p>
+                                                                    <p class="m-0">
+                                                                        <label class="m-0">Mobile:</label> <span>{{employer.contact_number_manager?employer.contact_number_manager:'- -'}}</span>
+                                                                    </p>
+                                                                    <p class="m-0">
+                                                                        <label class="m-0">E-mail:</label> <span>{{employer.email_manager?employer.email_manager:'- -'}}</span>
+                                                                    </p>
+                                                                    <p class="m-0">&nbsp;</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-12 col-md-4">
+                                                            <div class="card card-secondary">
+                                                                <div class="card-header p-2">
+                                                                    <h4 class="card-title" style="font-size: 0.9rem;">HR Person</h4>
+                                                                </div>
+                                                                <div class="card-body p-2">
+                                                                    <p class="m-0">
+                                                                        <label class="m-0">Name:</label> <span>{{employer.hr_name?employer.hr_name:'- -'}}</span>
+                                                                    </p>
+                                                                    <p class="m-0">
+                                                                        <label class="m-0">Mobile:</label> <span>{{employer.hr_contact_number?employer.hr_contact_number:'- -'}}</span>
+                                                                    </p>
+                                                                    <p class="m-0">
+                                                                        <label class="m-0">E-mail:</label> <span>{{employer.hr_email?employer.hr_email:'- -'}}</span>
+                                                                    </p>
+                                                                    <p class="m-0">
+                                                                        <label class="m-0">Designation:</label> <span>{{employer.hr_designation?employer.hr_designation:'- -'}}</span>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <!-- </fieldset> -->
                                                 </div>
-                                                <div class="form-group col-md-2">
-                                                    <label>Position held</label>
-                                                    <input type="text" maxlength="50" class="form-control" placeholder="Position held" ng-model="joiningForm.employment_history.employers[$index].position_held">
-                                                    <div class="text-danger" ng-show="errors['employment_history.employers.'+$index+'.position_held']">{{errors['employment_history.employers.'+$index+'.position_held']}}</div>
-                                                </div>
-                                                <div class="form-group col-md-1">
-                                                    <label>From Date</label>
-                                                    <input type="text" class="form-control month-year-picker" ng-init="initializeMonthYear();" placeholder="MMM-YYYY" ng-model="joiningForm.employment_history.employers[$index].from_date">
-                                                    <div class="text-danger" ng-show="errors['employment_history.employers.'+$index+'.from_date']">{{errors['employment_history.employers.'+$index+'.from_date']}}</div>
-                                                </div>
-                                                <div class="form-group col-md-1">
-                                                    <label>To Date</label>
-                                                    <input type="text" class="form-control month-year-picker" ng-init="initializeMonthYear();" placeholder="MMM-YYYY" ng-model="joiningForm.employment_history.employers[$index].to_date">
-                                                    <div class="text-danger" ng-show="errors['employment_history.employers.'+$index+'.to_date']">{{errors['employment_history.employers.'+$index+'.to_date']}}</div>
-                                                </div>
-                                                <div class="form-group col-md-3">
-                                                    <label>Nature of Job<sup class="text-danger">*</sup></label>
-                                                    <select class="form-control" ng-model="joiningForm.employment_history.employers[$index].nature_of_job">
-                                                        <option value="">Select</option>
-                                                        <option value="Part Time">Part Time</option>
-                                                        <option value="Full Time">Full Time</option>
-                                                        <option value="Freelancer">Freelancer</option>
-                                                    </select>
-                                                    <div class="text-danger" ng-show="errors['employment_history.employers.'+$index+'.nature_of_job']">{{errors['employment_history.employers.'+$index+'.nature_of_job']}}</div>
-                                                </div>
+                                                <!-- /.card-body -->
                                             </div>
-
-                                            <div class="form-row">
-                                                <div class="form-group col-md-3">
-                                                    <label>Primary Job Responsibilities</label>
-                                                    <input type="text" maxlength="50" class="form-control" placeholder="Job Responsibilities" ng-model="joiningForm.employment_history.employers[$index].job_responsibilities">
-                                                </div>
-
-
-                                                <div class="form-group col-md-2">
-                                                    <label>Annual CTC (in Lacs)</label>
-                                                    <input type="text" maxlength="30" class="form-control" placeholder="Annual CTC" ng-model="joiningForm.employment_history.employers[$index].annual_ctc">
-                                                </div>
-                                                <div class="form-group col-md-3">
-                                                    <label>Address</label>
-                                                    <input type="text" maxlength="50" class="form-control" placeholder="Address" ng-model="joiningForm.employment_history.employers[$index].address">
-                                                </div>
-                                                <div class="form-group col-md-2">
-                                                    <label>City</label>
-                                                    <input type="text" maxlength="50" class="form-control" placeholder="City" ng-model="joiningForm.employment_history.employers[$index].city">
-                                                </div>
-                                                <div class="form-group col-md-2">
-                                                    <label>Telephone</label>
-                                                    <input type="text" maxlength="15" class="form-control" placeholder="Telephone" ng-model="joiningForm.employment_history.employers[$index].telephone">
-                                                </div>
+                                            <!-- /.card -->
+                                            <!-- </div> -->
+                                        </div>
+                                        <?php if (isEditableForm('joining_form/update_employment', $joiningFormDetails['status'])) { ?>
+                                        <div class="col-md-12">
+                                            <div class="p-3 my-3 text-center" style="border: dashed;box-shadow: none;">
+                                                <a role="button" class="text-primary" ng-click="addEmployer()" data-toggle="modal" data-target="#employmentHistoryModal"> <i class="fa fa-plus"></i> Add Employer</a>
                                             </div>
+                                        </div>
+                                        <?php }?>
+                                        <div class="col-md-12">
 
-                                            <hr>
+                                            <div class="card card-primary">
+                                                <div class="card-header p-2">
+                                                    <h3 class="card-title ng-binding">Gap Declaration</h3>
 
-                                            <div class="form-row">
-                                                <div class="form-group col-md-3">
-                                                    <label>Name of Reporting Manager<sup class="text-danger">*</sup></label>
-                                                    <input type="text" maxlength="50" class="form-control" placeholder="Name of Reporting Manager" ng-model="joiningForm.employment_history.employers[$index].reporting_manager">
-                                                    <div class="text-danger" ng-show="errors['employment_history.employers.'+$index+'.reporting_manager']">{{errors['employment_history.employers.'+$index+'.reporting_manager']}}</div>
+                                                    <div class="card-tools">
+                                                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                                            <i class="fas fa-minus"></i>
+                                                        </button>
+                                                    </div>
+                                                    <!-- /.card-tools -->
                                                 </div>
-                                                <div class="form-group col-md-3">
-                                                    <label>Contact Number<sup class="text-danger">*</sup></label>
-                                                    <input type="text" maxlength="15" class="form-control" placeholder="Contact Number" ng-model="joiningForm.employment_history.employers[$index].contact_number_manager">
-                                                    <div class="text-danger" ng-show="errors['employment_history.employers.'+$index+'.contact_number_manager']">{{errors['employment_history.employers.'+$index+'.contact_number_manager']}}</div>
+                                                <!-- /.card-header -->
+                                                <div class="card-body p-2" style="background: rgba(0, 123, 255,0.3);">
+                                                    <table class="table table-sm">
+                                                        <thead>
+                                                            <tr>
+                                                                <th><b>Sr. No.</b></th>
+                                                                <th style="width: 40%;"><b>Particulars (Reason)</b></th>
+                                                                <th><b>From</b></th>
+                                                                <th><b>to</b></th>
+                                                                <td style="width: 80px;"></td>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr class="animation" ng-repeat="gap in joiningForm.gap_declaration">
+                                                                <td>
+                                                                    {{$index+1}}
+                                                                </td>
+                                                                <td>
+                                                                    {{gap.particular}}
+                                                                    <div class="text-danger" ng-show="errors['gap_declaration.'+$index+'.document_path']">{{errors['gap_declaration.'+$index+'.document_path']}}</div>
+                                                                </td>
+                                                                <td>
+                                                                    {{gap.from_date}}
+                                                                </td>
+                                                                <td>
+                                                                    {{gap.to_date}}
+                                                                </td>
+
+                                                                <td>
+                                                                <?php if (isEditableForm('joining_form/update_employment', $joiningFormDetails['status'])) { ?>
+                                                                    <a role="button" class="fa fa-edit text-primary" ng-click="edit_gap_declaration($index)" title="Edit" data-toggle="modal" data-target="#gapDeclaration"></a>
+                                                                    <?php }?>
+                                                                    <a href="<?= base_url('uploaded-documents') ?>/{{gap.document_path}}" title="Download document" target="_blank" ng-show="gap.document_path" class="fa fa-download text-success"></a>
+                                                                    <?php if (isEditableForm('joining_form/update_employment', $joiningFormDetails['status'])) { ?>
+
+                                                                    <a role="button" class="fa fa-trash text-danger" ng-click="remove_gap_declartion($index)"></a>
+                                                                    <?php }?>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                        <?php if (isEditableForm('joining_form/update_employment', $joiningFormDetails['status'])) { ?>
+                                                        <tfoot>
+                                                            <tr>
+                                                                <td colspan="6">
+                                                                    <a role="button" class="btn btn-sm btn-primary" ng-click="addGapDeclaration()" data-toggle="modal" data-target="#gapDeclaration"> <i class="fa fa-plus"></i> Add Gap Declaration</a>
+                                                                    <div class="col-md-12 alert alert-danger alert-dismissible fade show" role="alert" ng-show="errors.gap_declaration">{{errors.gap_declaration}}</div>
+                                                                </td>
+                                                            </tr>
+
+                                                        </tfoot>
+                                                        <?php }?>
+                                                    </table>
+                                                    <div class="light-card mt-5">
+
+                                                        <p>* GAP Declaration to be filed when there is a time gap between two Employments OR between Education and Employment OR between Education and Education.</p>
+                                                        <p>* Any gap of more than 3 months to be filled in with complete details and supporting documents.</p>
+                                                    </div>
+
                                                 </div>
-                                                <div class="form-group col-md-3">
-                                                    <label>E-mail<sup class="text-danger">*</sup></label>
-                                                    <input type="email" maxlength="50" class="form-control" placeholder="E-mail" ng-model="joiningForm.employment_history.employers[$index].email_manager">
-                                                    <div class="text-danger" ng-show="errors['employment_history.employers.'+$index+'.email_manager']">{{errors['employment_history.employers.'+$index+'.email_manager']}}</div>
-                                                </div>
-                                                <div class="form-group col-md-3">
-                                                    <label>Reason for Leaving</label>
-                                                    <input type="text" maxlength="50" class="form-control" placeholder="Reason for Leaving" ng-model="joiningForm.employment_history.employers[$index].reason_of_leaving">
-                                                </div>
+                                                <!-- /.card-body -->
                                             </div>
-                                            <hr>
-
-                                            <div class="form-row">
-                                                <div class="form-group col-md-3">
-                                                    <label>HR Name</label>
-                                                    <input type="text" maxlength="50" class="form-control" placeholder="HR Name" ng-model="joiningForm.employment_history.employers[$index].hr_name">
-                                                </div>
-                                                <div class="form-group col-md-3">
-                                                    <label>HR Contact Number</label>
-                                                    <input type="text" maxlength="15" class="form-control" placeholder="HR Contact Number" ng-model="joiningForm.employment_history.employers[$index].hr_contact_number">
-                                                </div>
-                                                <div class="form-group col-md-3">
-                                                    <label>HR E-mail</label>
-                                                    <input type="email" maxlength="50" class="form-control" placeholder="HR E-mail" ng-model="joiningForm.employment_history.employers[$index].hr_email">
-                                                </div>
-                                                <div class="form-group col-md-3">
-                                                    <label>HR Designation</label>
-                                                    <input type="text" maxlength="20" class="form-control" placeholder="HR Designation" ng-model="joiningForm.employment_history.employers[$index].hr_designation">
-                                                </div>
-
-                                            </div>
-
-                                        </fieldset>
-
-                                        <fieldset class="form-group p-3">
-                                            <div class="form-row">
-                                                <div class="col-md-12">
-
-                                                    <a role="button" class="text-primary" ng-click="addEmployer()" data-toggle="modal" data-target="#employmentHistoryModal"> <i class="fa fa-plus"></i> Add Employer</a>
-                                                </div>
-                                            </div>
-
-                                        </fieldset>
+                                        </div>
 
 
 
-                                        <fieldset class="form-group p-3 table-responsive">
-                                            <legend class="w-auto px-2">Gap Declaration</legend>
-                                            <table class="table table-bordered table-stripped">
-                                                <thead>
-
-                                                    <tr>
-
-                                                        <th><b>Sr. No.</b></th>
-                                                        <th style="width: 40%;"><b>Particulars (Reason)</b></th>
-                                                        <th><b>From</b></th>
-                                                        <th><b>to</b></th>
-                                                        <td style="width: 80px;"></td>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr class="animation" ng-repeat="gap in joiningForm.gap_declaration">
-                                                        <td>
-                                                            {{$index+1}}
-                                                        </td>
-                                                        <td>
-                                                            {{gap.particular}}
-                                                            <div class="text-danger" ng-show="errors['gap_declaration.'+$index+'.document_path']">{{errors['gap_declaration.'+$index+'.document_path']}}</div>
-                                                        </td>
-                                                        <td>
-                                                            {{gap.from_date}}
-                                                        </td>
-                                                        <td>
-                                                            {{gap.to_date}}
-                                                        </td>
-
-                                                        <td>
-                                                            <a role="button" class="fa fa-edit text-primary" ng-click="edit_gap_declaration($index)" title="Edit" data-toggle="modal" data-target="#gapDeclaration"></a>
-                                                            <a href="<?= base_url('uploaded-documents') ?>/{{gap.document_path}}" title="Download document" target="_blank" ng-show="gap.document_path" class="fa fa-download text-success"></a>
-
-                                                            <a role="button" class="fa fa-trash text-danger" ng-click="remove_gap_declartion($index)"></a>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                                <tfoot>
-                                                    <tr>
-                                                        <td colspan="6">
-                                                            <a role="button" class="text-primary" ng-click="addGapDeclaration()" data-toggle="modal" data-target="#gapDeclaration"> <i class="fa fa-plus"></i> Add</a>
-                                                            <div class="col-md-12 alert alert-danger alert-dismissible fade show" role="alert" ng-show="errors.gap_declaration">{{errors.gap_declaration}}</div>
-                                                        </td>
-                                                    </tr>
-
-                                                </tfoot>
-                                            </table>
-                                            <p>* GAP Declaration to be filed when there is a time gap between two Employments OR between Education and Employment OR between Education and Education.</p>
-                                            <p>* Any gap of more than 3 months to be filled in with complete details and supporting documents.</p>
-                                        </fieldset>
-
-                                        <button type="button" class="btn btn-primary" ng-click="submitForm('save-employment-history','#backgroundInfo')">
+                                        <!-- <button type="button" class="btn btn-primary" ng-click="submitForm('save-employment-history','#backgroundInfo')">
                                             <div ng-show="loading" class="css-animated-loader"></div>Save
-                                        </button>
+                                        </button> -->
 
                                     </form>
-                                <?php } else { //read only 
-                                ?>
-                                    <form class="">
-                                        <fieldset class="form-group p-3 animation" ng-repeat="employer in joiningForm.employment_history.employers">
-                                            <legend class="w-auto px-2">Employer {{$index+1}}</legend>
-
-                                            <div class="form-row">
-                                                <div class="form-group col-md-3">
-                                                    <label>Company / Organization Name:<sup class="text-danger">*</sup></label>
-                                                    <span>{{employer.company}}</span>
-                                                </div>
-                                                <div class="form-group col-md-3">
-                                                    <label>Department:</label>
-                                                    <span>{{employer.department}}</span>
-                                                </div>
-                                                <div class="form-group col-md-3">
-                                                    <label>Position held:</label>
-                                                    <span>{{employer.position_held}}</span>
-                                                </div>
-                                                <div class="form-group col-md-3">
-                                                    <label>From Date:</label>
-                                                    <span>{{employer.from_date}}</span>
-                                                </div>
-                                                <div class="form-group col-md-3">
-                                                    <label>To Date:</label>
-                                                    <span>{{employer.to_date}}</span>
-                                                </div>
-                                                <div class="form-group col-md-3">
-                                                    <label>Nature of Job:<sup class="text-danger">*</sup></label>
-                                                    <span>{{employer.nature_of_job}}</span>
-                                                </div>
-
-                                                <div class="form-group col-md-6">
-                                                    <label>Primary Job Responsibilities:</label>
-                                                    <span>{{employer.job_responsibilities}}</span>
-                                                </div>
-
-                                                <div class="form-group col-md-3">
-                                                    <label>Annual CTC (in Lacs):</label>
-                                                    <span>{{employer.annual_ctc}}</span>
-                                                </div>
-                                                <div class="form-group col-md-3">
-                                                    <label>Address:</label>
-                                                    <span>{{employer.address}}</span>
-                                                </div>
-                                                <div class="form-group col-md-3">
-                                                    <label>City:</label>
-                                                    <span>{{employer.city}}</span>
-                                                </div>
-                                                <div class="form-group col-md-3">
-                                                    <label>Telephone:</label>
-                                                    <span>{{employer.telephone}}</span>
-                                                </div>
-                                            </div>
-
-                                            <hr>
-
-                                            <div class="form-row">
-                                                <div class="form-group col-md-3">
-                                                    <label>Name of Reporting Manager:<sup class="text-danger">*</sup></label>
-                                                    <span>{{employer.reporting_manager}}</span>
-                                                </div>
-                                                <div class="form-group col-md-3">
-                                                    <label>Contact Number:<sup class="text-danger">*</sup></label>
-                                                    <span>{{employer.contact_number_manager}}</span>
-                                                </div>
-                                                <div class="form-group col-md-3">
-                                                    <label>E-mail:<sup class="text-danger">*</sup></label>
-                                                    <span>{{employer.email_manager}}</span>
-                                                </div>
-                                                <div class="form-group col-md-3">
-                                                    <label>Reason for Leaving:</label>
-                                                    <span>{{employer.reason_of_leaving}}</span>
-                                                </div>
-                                            </div>
-                                            <hr>
-
-                                            <div class="form-row">
-                                                <div class="form-group col-md-3">
-                                                    <label>HR Name:</label>
-                                                    <span>{{employer.hr_name}}</span>
-                                                </div>
-                                                <div class="form-group col-md-3">
-                                                    <label>HR Contact Number:</label>
-                                                    <span>{{employer.hr_contact_number}}</span>
-                                                </div>
-                                                <div class="form-group col-md-3">
-                                                    <label>HR E-mail:</label>
-                                                    <span>{{employer.hr_email}}</span>
-                                                </div>
-                                                <div class="form-group col-md-3">
-                                                    <label>HR Designation:</label>
-                                                    <span>{{employer.hr_designation}}</span>
-                                                </div>
-
-                                            </div>
-
-                                        </fieldset>
-
-
-                                        <fieldset class="form-group p-3 table-responsive">
-                                            <legend class="w-auto px-2">Gap Declaration</legend>
-                                            <table class="table table-bordered table-stripped">
-                                                <thead>
-
-                                                    <tr>
-
-                                                        <th><b>Sr. No.</b></th>
-                                                        <th style="width: 40%;"><b>Particulars (Reason)</b></th>
-                                                        <th><b>From</b></th>
-                                                        <th><b>to</b></th>
-                                                        <td style="width: 80px;"></td>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr class="animation" ng-repeat="gap in joiningForm.gap_declaration">
-                                                        <td>
-                                                            {{$index+1}}
-                                                        </td>
-                                                        <td>
-                                                            {{gap.particular}}
-                                                            <div class="text-danger" ng-show="errors['gap_declaration.'+$index+'.document_path']">{{errors['gap_declaration.'+$index+'.document_path']}}</div>
-                                                        </td>
-                                                        <td>
-                                                            {{gap.from_date}}
-                                                        </td>
-                                                        <td>
-                                                            {{gap.to_date}}
-                                                        </td>
-
-                                                        <td>
-                                                            <a href="<?= base_url('uploaded-documents') ?>/{{gap.document_path}}" title="Download document" target="_blank" ng-show="gap.document_path" class="fa fa-download text-success"></a>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-
-                                            </table>
-                                            <p>* GAP Declaration to be filed when there is a time gap between two Employments OR between Education and Employment OR between Education and Education.</p>
-                                            <p>* Any gap of more than 3 months to be filled in with complete details and supporting documents.</p>
-                                        </fieldset>
-                                    </form>
-                                <?php } ?>
+                               
 
 
                             </div>
@@ -1614,19 +1506,20 @@ function isEditableForm($cap, $status)
                                                 </td>
 
                                                 <td>
-                                                    <?php if (hasCapability('joining_form/edit') && hasCapability('joining_form/update_mediclaim_details')) { ?>
+                                                <?php if (isEditableForm('joining_form/update_mediclaim_details', $joiningFormDetails['status'])) { ?>
                                                         <a role="button" class="fa fa-edit text-primary" ng-click="edit_mediclaim($index)" title="edit" data-toggle="modal" data-target="#mediclaim"></a>
                                                     <?php } ?>
 
                                                     <a href="<?= base_url('uploaded-documents') ?>/{{person.document_path}}" title="Download document" target="_blank" ng-show="person.document_path" class="fa fa-download text-success"></a>
 
-                                                    <?php if (hasCapability('joining_form/edit') && hasCapability('joining_form/update_mediclaim_details')) { ?>
+                                                    <?php if (isEditableForm('joining_form/update_mediclaim_details', $joiningFormDetails['status'])) { ?>
                                                         <a role="button" class="fa fa-trash text-danger" ng-click="remove_mediclaim($index)"></a>
                                                     <?php } ?>
                                                 </td>
                                             </tr>
                                         </tbody>
-                                        <?php if (hasCapability('joining_form/edit') && hasCapability('joining_form/update_mediclaim_details')) { ?>
+                                       
+                                            <?php if (isEditableForm('joining_form/update_mediclaim_details', $joiningFormDetails['status'])) { ?>
                                             <tfoot>
                                                 <tr>
                                                     <td colspan="6">
@@ -1925,8 +1818,8 @@ function isEditableForm($cap, $status)
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="button" ng-click="saveEducationQualification()" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
@@ -1979,8 +1872,8 @@ function isEditableForm($cap, $status)
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="button" ng-click="saveGapDeclaration()" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
@@ -2026,8 +1919,8 @@ function isEditableForm($cap, $status)
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="button" ng-click="saveMediclaim()" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
@@ -2073,8 +1966,8 @@ function isEditableForm($cap, $status)
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="button" ng-click="saveProfessionalQualification()" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
@@ -2209,7 +2102,7 @@ function isEditableForm($cap, $status)
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" ng-click="saveEmploymentHistory()" class="btn btn-primary">Save</button>
+                        <button type="button" ng-click="saveEmployer()" class="btn btn-primary">Save</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                 </div>
@@ -2239,7 +2132,7 @@ function isEditableForm($cap, $status)
                 </div>
             </div>
         </div>
-
+        
     </section>
 
 </div>
@@ -2493,53 +2386,7 @@ function isEditableForm($cap, $status)
             $scope.errors = '';
         }
 
-        $scope.addEmployer = function() {
-
-
-            $scope.employment_history = {
-
-                "joining_form_id": $scope.joiningForm.id,
-
-            };
-            $scope.employment_history_errors = {};
-
-
-        }
-
-        $scope.saveEmploymentHistory = function() {
-            $scope.employment_history_errors = {};
-
-
-            // console.log($scope.profile);
-            var apiUrl = base_url + '/api/employee-joining-form/save-employment-history_';
-            var method = "POST";
-            // console.log($scope.joiningForm);
-            $http({
-                method: method,
-                url: apiUrl,
-                data: $scope.employment_history,
-                // data: $scope.joiningForm
-            }).then(function(response) {
-                $scope.addEmployer();
-
-                $scope.joiningForm.employment_history = response.data.list;
-                $scope.successMessage = response.data.messages.success;
-                toastr.success(response.data.messages.success);
-
-                // window.location = base_url + '/profiles';
-            }, function(response) {
-
-
-                $scope.errors = response.data.messages;
-                if (response.data.status == 403) {
-                    toastr.error(response.data.messages.errorMessage);
-                } else {
-                    // toastr.error("Something went wrong !!"); 
-                }
-                // console.log($scope.errors);
-                // console.log($scope.errors['lang.en.title']);
-            });
-        }
+        
         $scope.saveProfessionalQualification = function() {
             // console.log($scope.e_qualification);
             $scope.errors = '';
@@ -2643,6 +2490,97 @@ function isEditableForm($cap, $status)
             });
         }
 
+        $scope.addEmployer = function() {
+
+
+            $scope.employment_history = {
+
+                "joining_form_id": $scope.joiningForm.id,
+
+            };
+            $scope.employment_history_errors = {};
+
+
+         }
+
+         $scope.editEmployer = function(index) {
+            $scope.employment_history = angular.copy($scope.joiningForm.employment_history[index]);
+            $scope.employment_history_errors = {};
+            $('#employmentHistoryModal').modal('toggle');
+        }
+
+            $scope.saveEmployer = function() {
+                $scope.employment_history_errors = {};
+
+
+                // console.log($scope.profile);
+                var apiUrl = base_url + '/api/employee-joining-form/save-employment-history_';
+                var method = "POST";
+                // console.log($scope.joiningForm);
+                $http({
+                    method: method,
+                    url: apiUrl,
+                    data: $scope.employment_history,
+                    // data: $scope.joiningForm
+                }).then(function(response) {
+                    $scope.addEmployer();
+
+                    $scope.joiningForm.employment_history = response.data.list;
+                    $scope.successMessage = response.data.messages.success;
+                    toastr.success(response.data.messages.success);
+                    $('#employmentHistoryModal').modal('toggle');
+                    // window.location = base_url + '/profiles';
+                }, function(response) {
+
+
+                    $scope.employment_history_errors = response.data.messages;
+                    if (response.data.status == 403) {
+                        toastr.error(response.data.messages.errorMessage);
+                    } else {
+                        // toastr.error("Something went wrong !!"); 
+                    }
+                    // console.log($scope.errors);
+                    // console.log($scope.errors['lang.en.title']);
+                });
+            }
+
+            $scope.removeEmployer = function(employer) {
+                if(!confirm("Are you sure delete this recodrd?")) return;
+                $scope.employment_history_errors = {};
+
+
+                // console.log($scope.profile);
+                var apiUrl = base_url + '/api/employee-joining-form/remove-employment-history_';
+                var method = "DELETE";
+                // console.log($scope.joiningForm);
+                $http({
+                    method: method,
+                    url: apiUrl,
+                    data: employer,
+                    // data: $scope.joiningForm
+                }).then(function(response) {
+                    $scope.addEmployer();
+
+                    $scope.joiningForm.employment_history = response.data.list;
+                    $scope.successMessage = response.data.messages.success;
+                    toastr.success(response.data.messages.success);
+                   
+                    // window.location = base_url + '/profiles';
+                }, function(response) {
+
+
+                    $scope.employment_history_errors = response.data.messages;
+                    if (response.data.status == 403) {
+                        toastr.error(response.data.messages.errorMessage);
+                    } else {
+                        // toastr.error("Something went wrong !!"); 
+                    }
+                    // console.log($scope.errors);
+                    // console.log($scope.errors['lang.en.title']);
+                });
+            }
+
+
         $scope.addEmploymentSummary = function() {
 
             $scope.joiningForm.employment_history.employment_summary.push({
@@ -2653,6 +2591,7 @@ function isEditableForm($cap, $status)
                 "gap": "",
             });
         }
+
         $scope.remove_employment_summary = function(index) {
             $scope.joiningForm.employment_history.employment_summary.splice(index, 1);
         }

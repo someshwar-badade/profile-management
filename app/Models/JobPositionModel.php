@@ -14,7 +14,7 @@ class JobPositionModel extends Model
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
     protected $deletedField  = 'deleted_at';
-
+    protected $useSoftDeletes = true;
     public function getList($filter = array(), $searchQuery = '', $start = 0, $length = 10, $orderBy = 'id ASC')
     {
         $db = \Config\Database::connect();

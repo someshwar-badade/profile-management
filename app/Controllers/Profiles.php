@@ -218,6 +218,7 @@ EOD;
 					$employee_joining_form_id = $employeeDetails->id;
 					$session->set('employee_joining_form_id', $employee_joining_form_id);
 					$session->set('employee_name', $employeeDetails->first_name);
+					$session->set('employee_last_name', $employeeDetails->last_name);
 
 					$session->get('employee_joining_form_id');
 					//redirect

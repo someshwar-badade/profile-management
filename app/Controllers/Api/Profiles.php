@@ -26,7 +26,7 @@ class Profiles extends ResourceController
     // get all animal details
     public function index()
     {
-        ini_set('display_errors', 1);
+        
         $user = checkUserToken();
 
         if (!$user) {
@@ -448,7 +448,7 @@ class Profiles extends ResourceController
         }
 
 
-        $update = $model->save($requestData);
+        $recordId = $model->save($requestData);
 
         $educationQualificationModel = new EducationQualificationModel();
         $professionalQualificationModel = new ProfessionalQualificationModel();
@@ -479,7 +479,14 @@ class Profiles extends ResourceController
         // 	//action log
         // 	$changed_data = $changed_data = array_diff_assoc((array)$requestData, (array)$profileDetails);
 
-        if ($update) {
+        if ($recordId) {
+
+            
+            creatActionLog([
+            'action_type' => 'created',
+            'model' => 'joining_form',
+            'record_id' => $recordId,
+            'chaged_data' => json_encode($requestData)]);
 
             //send email
             $templateData = [
@@ -535,6 +542,11 @@ class Profiles extends ResourceController
 
         if ($isEmailSent) {
             //Respond with 200 status code
+            creatActionLog([
+            'action_type' => 'update',
+            'model' => 'joining_form',
+            'record_id' => $requestData['id'],
+            'chaged_data' => json_encode(['log'=>"Sent joining form link."])]);
             return $this->respond(['success' => 'E-mail has been sent successfully.']);
         }
         return $this->fail(['errorMessage' => "E-mail sending failed please try again."], 403);
@@ -542,6 +554,12 @@ class Profiles extends ResourceController
 
     public function joiningFormSaveEmployeeDetails()
     {
+
+        $user = checkUserToken();
+
+        // if (!$user) {
+        //     return $this->fail(['messages' => 'Please login.'], 400);
+        // }
 
         if (!hasCapability('joining_form/edit')) {
             return $this->fail(['errorMessage' => "You don't have capability to access this page. Please contact to admin."], 403);
@@ -768,9 +786,27 @@ class Profiles extends ResourceController
             return $this->fail($validation->getErrors(), 400);
         }
 
+        $oldDetails = $model->find($joiningFormId);
+        $oldDetails['employee_other_details'] = (array)json_decode($oldDetails['employee_other_details'],true);
+        $changed_data = array_diff_assoc((array)$requestData, (array)$oldDetails);
+        $changed_data['employee_other_details'] = array_diff_assoc((array)$requestData['employee_other_details'], (array)$oldDetails['employee_other_details']);
+
         $requestData['employee_other_details'] = $requestData['employee_other_details'] ? json_encode($requestData['employee_other_details']) : null;
 
-        $id =  $model->update($joiningFormId, $requestData);
+        $updated =  $model->update($joiningFormId, $requestData);
+
+
+        //action log
+        
+        if (!empty($changed_data) && $updated) {
+            $actionLogData = [
+                'action_type' => 'updated',
+                'model' => 'joining_form',
+                'record_id' => $joiningFormId,
+                'chaged_data' => json_encode(['personal_details'=>$changed_data])
+            ];
+            creatActionLog($actionLogData);
+        }
 
         $response = [
             'id'   => $joiningFormId,
@@ -785,6 +821,13 @@ class Profiles extends ResourceController
 
     public function joiningFormSaveEducationDetails()
     {
+
+        $user = checkUserToken();
+
+        // if (!$user) {
+        //     return $this->fail(['messages' => 'Please login.'], 400);
+        // }
+
         if (!hasCapability('joining_form/edit')) {
             return $this->fail(['errorMessage' => "You don't have capability to access this page. Please contact to admin."], 403);
         }
@@ -926,10 +969,34 @@ class Profiles extends ResourceController
 
         //$requestData['education_qualification'] = $requestData['education_qualification'] ? json_encode($requestData['education_qualification']) : null;
         if (empty($requestData['id'])) {
-            $model->insert($requestData);
+           
+           if($model->insert($requestData)){
+            $actionLogData = [
+                'action_type' => 'created',
+                'model' => 'joining_form',
+                'record_id' => $joiningFormId,
+                'chaged_data' => json_encode(['academics'=>$requestData])
+            ];
+            creatActionLog($actionLogData);
+           }
         } else {
-            $model->save($requestData);
+
+            $oldData = $model->find($requestData['id']);
+            $changed_data = array_diff_assoc((array)$requestData, (array)$oldData);
+            if($model->save($requestData)){
+                $actionLogData = [
+                   
+                    'action_type' => 'updated',
+                    'model' => 'joining_form',
+                    'record_id' => $joiningFormId,
+                    'chaged_data' => json_encode(['academics'=>$changed_data])
+                ];
+                creatActionLog($actionLogData);
+            }
         }
+
+
+      
 
 
         $response = [
@@ -964,12 +1031,23 @@ class Profiles extends ResourceController
             return $this->fail(['errorMessage' => "Joining details are approved so you can not update details. Please contact to admin."], 403);
         }
 
-        $model->delete($id);
+        
+
+        if($model->delete($id)){
+            $actionLogData = [
+                   
+                'action_type' => 'deleted',
+                'model' => 'joining_form',
+                'record_id' => $joiningFormId,
+                'chaged_data' => json_encode(['academics'=>$educationDetails])
+            ];
+            creatActionLog($actionLogData);
+        }
         //remove document
 
-        if (file_exists(DOCUMENTS_PATH . $educationDetails['document_path']) && !empty($educationDetails['document_path'])) {
-            unlink(DOCUMENTS_PATH . $educationDetails['document_path']);
-        }
+        // if (file_exists(DOCUMENTS_PATH . $educationDetails['document_path']) && !empty($educationDetails['document_path'])) {
+        //     unlink(DOCUMENTS_PATH . $educationDetails['document_path']);
+        // }
 
         $response = [
             'list' => $model->where('joining_form_id', $joiningFormId)->find(),
@@ -1096,9 +1174,33 @@ class Profiles extends ResourceController
 
         //$requestData['education_qualification'] = $requestData['education_qualification'] ? json_encode($requestData['education_qualification']) : null;
         if (empty($requestData['id'])) {
-            $model->insert($requestData);
+           
+            if($model->insert($requestData)){
+                $actionLogData = [
+                   
+                    'action_type' => 'created',
+                    'model' => 'joining_form',
+                    'record_id' => $joiningFormId,
+                    'chaged_data' => json_encode(['gap_declaration'=>$requestData])
+                ];
+                creatActionLog($actionLogData);
+            }
+
         } else {
-            $model->save($requestData);
+
+            
+            $oldData = $model->find($requestData['id']);
+            $changed_data = array_diff_assoc((array)$requestData, (array)$oldData);
+            if($model->save($requestData)){
+                $actionLogData = [
+                   
+                    'action_type' => 'updated',
+                    'model' => 'joining_form',
+                    'record_id' => $joiningFormId,
+                    'chaged_data' => json_encode(['academics'=>$changed_data])
+                ];
+                creatActionLog($actionLogData);
+            }
         }
 
 
@@ -1135,12 +1237,21 @@ class Profiles extends ResourceController
         }
 
 
-        $model->delete($id);
+        if($model->delete($id)){
+            $actionLogData = [
+                   
+                'action_type' => 'deleted',
+                'model' => 'joining_form',
+                'record_id' => $joiningFormId,
+                'chaged_data' => json_encode(['gap_declaration'=>$educationDetails])
+            ];
+            creatActionLog($actionLogData);
+        }
         //remove document
 
-        if (file_exists(DOCUMENTS_PATH . $educationDetails['document_path']) && !empty($educationDetails['document_path'])) {
-            unlink(DOCUMENTS_PATH . $educationDetails['document_path']);
-        }
+        // if (file_exists(DOCUMENTS_PATH . $educationDetails['document_path']) && !empty($educationDetails['document_path'])) {
+        //     unlink(DOCUMENTS_PATH . $educationDetails['document_path']);
+        // }
 
         $response = [
             'list' => $model->where('joining_form_id', $joiningFormId)->find(),
@@ -1273,9 +1384,34 @@ class Profiles extends ResourceController
         $requestData['age'] = $diff->y;
         //$requestData['education_qualification'] = $requestData['education_qualification'] ? json_encode($requestData['education_qualification']) : null;
         if (empty($requestData['id'])) {
-            $model->insert($requestData);
+            if($model->insert($requestData)){
+                $actionLogData = [
+                   
+                    'action_type' => 'created',
+                    'model' => 'joining_form',
+                    'record_id' => $joiningFormId,
+                    'chaged_data' => json_encode(['mediclaim'=>$requestData])
+                ];
+                creatActionLog($actionLogData);
+            }
+
+
+
         } else {
-            $model->save($requestData);
+            $oldData = $model->find($requestData['id']);
+           
+            $changed_data = array_diff_assoc((array)$requestData, (array)$oldData);
+            if($model->save($requestData)){
+                $actionLogData = [
+                   
+                    'action_type' => 'updated',
+                    'model' => 'joining_form',
+                    'record_id' => $joiningFormId,
+                    'chaged_data' => json_encode(['mediclaim'=>$changed_data])
+                ];
+                creatActionLog($actionLogData);
+            }
+
         }
 
 
@@ -1312,12 +1448,21 @@ class Profiles extends ResourceController
         }
 
 
-        $model->delete($id);
+        if($model->delete($id)){
+            $actionLogData = [
+                   
+                'action_type' => 'deleted',
+                'model' => 'joining_form',
+                'record_id' => $joiningFormId,
+                'chaged_data' => json_encode(['mediclaim'=>$educationDetails])
+            ];
+            creatActionLog($actionLogData);
+        }
         //remove document
 
-        if (file_exists(DOCUMENTS_PATH . $educationDetails['document_path']) && !empty($educationDetails['document_path'])) {
-            unlink(DOCUMENTS_PATH . $educationDetails['document_path']);
-        }
+        // if (file_exists(DOCUMENTS_PATH . $educationDetails['document_path']) && !empty($educationDetails['document_path'])) {
+        //     unlink(DOCUMENTS_PATH . $educationDetails['document_path']);
+        // }
 
         $response = [
             'list' => $model->where('joining_form_id', $joiningFormId)->find(),
@@ -1447,9 +1592,31 @@ class Profiles extends ResourceController
         $requestData['age'] = $diff->y;
         //$requestData['education_qualification'] = $requestData['education_qualification'] ? json_encode($requestData['education_qualification']) : null;
         if (empty($requestData['id'])) {
-            $model->insert($requestData);
+           
+            if($model->insert($requestData)){
+                $actionLogData = [
+                   
+                    'action_type' => 'created',
+                    'model' => 'joining_form',
+                    'record_id' => $joiningFormId,
+                    'chaged_data' => json_encode(['professional_qualification'=>$requestData])
+                ];
+                creatActionLog($actionLogData);
+            }
         } else {
-            $model->save($requestData);
+            $oldData = $model->find($requestData['id']);
+            
+            $changed_data = array_diff_assoc((array)$requestData, (array)$oldData);
+            if($model->save($requestData)){
+                $actionLogData = [
+                   
+                    'action_type' => 'updated',
+                    'model' => 'joining_form',
+                    'record_id' => $joiningFormId,
+                    'chaged_data' => json_encode(['professional_qualification'=>$changed_data])
+                ];
+                creatActionLog($actionLogData);
+            }
         }
 
 
@@ -1485,12 +1652,21 @@ class Profiles extends ResourceController
             return $this->fail(['errorMessage' => "Joining details are approved so you can not update details. Please contact to admin."], 403);
         }
 
-        $model->delete($id);
+        if($model->delete($id)){
+            $actionLogData = [
+                   
+                'action_type' => 'deleted',
+                'model' => 'joining_form',
+                'record_id' => $joiningFormId,
+                'chaged_data' => json_encode(['professional_qualification'=>$educationDetails])
+            ];
+            creatActionLog($actionLogData);
+        }
         //remove document
 
-        if (file_exists(DOCUMENTS_PATH . $educationDetails['document_path']) && !empty($educationDetails['document_path'])) {
-            unlink(DOCUMENTS_PATH . $educationDetails['document_path']);
-        }
+        // if (file_exists(DOCUMENTS_PATH . $educationDetails['document_path']) && !empty($educationDetails['document_path'])) {
+        //     unlink(DOCUMENTS_PATH . $educationDetails['document_path']);
+        // }
 
         $response = [
             'list' => $model->where('joining_form_id', $joiningFormId)->find(),
@@ -1646,57 +1822,67 @@ class Profiles extends ResourceController
         $requestData = (array) $this->request->getJSON(true);
         $joiningFormId = $requestData['joining_form_id'];
 
-       
+
         $validation =  \Config\Services::validation();
-        $rules["company"] = [
-            'label' => 'Company',
-            'rules' => 'required',
-            'errors' => [
-                'required' => 'The company name is required.'
-            ]
+        $rules = [
+            "company" => [
+                'label' => 'Company',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'The company name is required.'
+                ]
+            ],
+            "nature_of_job" => [
+                'label' => 'Nature of Job',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'The nature of job is required.'
+                ]
+            ],
+            "reporting_manager" => [
+                'label' => 'Name of Reporting Manager',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'The name of reporting manager is required.'
+                ]
+            ],
+            
+            "contact_number_manager" => [
+                'label' => 'Contact Number',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'The contact number of manager is required.'
+                ]
+            ],
+            "email_manager" => [
+                'label' => 'Email',
+                'rules' => 'required|valid_email',
+                'errors' => [
+                    'required' => 'The e-mail of manager is required.',
+                    'valid_email' => 'Enter valid e-mail.'
+                ]
+            ],
+
+
         ];
 
-        $rules["nature_of_job"] = [
-            'label' => 'Nature of Job',
-            'rules' => 'required',
-            'errors' => [
-                'required' => 'The nature of job is required.'
-            ]
-        ];
-        $rules["reporting_manager"] = [
-            'label' => 'Name of Reporting Manager',
-            'rules' => 'required',
-            'errors' => [
-                'required' => 'The name of reporting manager is required.'
-            ]
-        ];
-        $rules["from_date"] = [
-            'label' => 'From date',
-            'rules' => 'valid_month_year',
-        ];
-        $rules["to_date"] = [
-            'label' => 'To date',
-            'rules' => 'valid_month_year|check_from_date_to_date[' . $requestData['from_date'] . ']',
-            'errors' => [
-                'check_from_date_to_date' => 'To date should be greater than from date.'
-            ]
-        ];
-        $rules["contact_number_manager"] = [
-            'label' => 'Contact Number',
-            'rules' => 'required',
-            'errors' => [
-                'required' => 'The contact number of manager is required.'
-            ]
-        ];
-        $rules["email_manager"] = [
-            'label' => 'Email',
-            'rules' => 'required|valid_email',
-            'errors' => [
-                'required' => 'The e-mail of manager is required.',
-                'valid_email' => 'Enter valid e-mail.'
-            ]
-        ];
 
+        if(!empty($requestData['from_date'])){
+            $rules["from_date"] = [
+                'label' => 'From date',
+                'rules' => 'valid_month_year',
+            ];
+        }
+
+        if(!empty($requestData['to_date'])){
+            $rules["to_date"] = [
+                'label' => 'To date',
+                'rules' => 'valid_month_year|check_from_date_to_date[' . $requestData['from_date'] . ']',
+                'errors' => [
+                    'check_from_date_to_date' => 'To date should be greater than from date.'
+                ]
+                ];
+        }
         
         $validation->setRules(
             $rules
@@ -1711,9 +1897,31 @@ class Profiles extends ResourceController
         $model = new EmploymentHistoryModel();
 
         if (empty($requestData['id'])) {
-            $model->insert($requestData);
+            
+            if($model->insert($requestData)){
+                $actionLogData = [
+                   
+                    'action_type' => 'created',
+                    'model' => 'joining_form',
+                    'record_id' => $joiningFormId,
+                    'chaged_data' => json_encode(['employment'=>$requestData])
+                ];
+                creatActionLog($actionLogData);
+            }
         } else {
-            $model->save($requestData);
+           
+            $oldData = $model->find($requestData['id']);
+            $changed_data = array_diff_assoc((array)$requestData, (array)$oldData);
+            if($model->save($requestData)){
+                $actionLogData = [
+                   
+                    'action_type' => 'updated',
+                    'model' => 'joining_form',
+                    'record_id' => $joiningFormId,
+                    'chaged_data' => json_encode(['employment'=>$changed_data])
+                ];
+                creatActionLog($actionLogData);
+            }
         }
 
 
@@ -1726,7 +1934,6 @@ class Profiles extends ResourceController
             ]
         ];
         return $this->respondUpdated($response);
-
     }
 
     public function joiningFormRemoveEmploymentHistory_()
@@ -1750,13 +1957,22 @@ class Profiles extends ResourceController
             return $this->fail(['errorMessage' => "Joining details are approved so you can not update details. Please contact to admin."], 403);
         }
 
-        $model->delete($id);
+        if($model->delete($id)){
+            $actionLogData = [
+                   
+                'action_type' => 'deleted',
+                'model' => 'joining_form',
+                'record_id' => $joiningFormId,
+                'chaged_data' => json_encode(['employment'=>$educationDetails])
+            ];
+            creatActionLog($actionLogData);
+        }
         //remove document
 
 
         $response = [
             'list' => $model->where('joining_form_id', $joiningFormId)->find(),
-            'action_type' => 'Updated',
+            'action_type' => 'Delete',
             'error'    => null,
             'messages' => [
                 'success' => 'Deleted'
@@ -1780,6 +1996,7 @@ class Profiles extends ResourceController
 
         $EmployeeJoinigDetailsModel = new EmployeeJoinigDetailsModel();
         $formDetails = $EmployeeJoinigDetailsModel->find($joiningFormId);
+        $formDetails['background_info'] = $formDetails['background_info']?json_decode($formDetails['background_info'],true):null;
         //if joining form is approved the link will not be send
         if ($formDetails['status'] == '2' && !hasCapability('joining_form/update_approved')) {
             return $this->fail(['errorMessage' => "Joining details are approved so you can not update details. Please contact to admin."], 403);
@@ -1839,8 +2056,29 @@ class Profiles extends ResourceController
 
 
         $model = new EmployeeJoinigDetailsModel();
+        $changed_data['background_info']['criminal_and_civil_record'] = array_diff_assoc((array)$requestData['background_info']['criminal_and_civil_record'], (array)$formDetails['background_info']['criminal_and_civil_record']);
+        $changed_data['background_info']['business_interest'] = array_diff_assoc((array)$requestData['background_info']['business_interest'], (array)$formDetails['background_info']['business_interest']);
+        $changed_data['background_info']['other_disqualification'] = array_diff_assoc((array)$requestData['background_info']['other_disqualification'], (array)$formDetails['background_info']['other_disqualification']);
+
+        // $changed_data['background_info']['criminal_and_civil_record']  = array_filter($changed_data['background_info']['criminal_and_civil_record']);
+        // $changed_data['background_info']['business_interest']  = array_filter($changed_data['background_info']['business_interest']);
+        // $changed_data['background_info']['other_disqualification']  = array_filter($changed_data['background_info']['other_disqualification']);
+        $changed_data['background_info']  = array_filter($changed_data['background_info']);
+       
         $requestData['background_info'] = $requestData['background_info'] ? json_encode($requestData['background_info']) : null;
-        $model->update($joiningFormId, $requestData);
+        
+        
+        
+        if($model->update($joiningFormId, $requestData)){
+            $actionLogData = [
+               
+                'action_type' => 'updated',
+                'model' => 'joining_form',
+                'record_id' => $joiningFormId,
+                'chaged_data' => json_encode($changed_data)
+            ];
+            creatActionLog($actionLogData);
+        }
 
         $response = [
             'id'   => $joiningFormId,
@@ -1867,6 +2105,7 @@ class Profiles extends ResourceController
         $document = $this->request->getFile('document');
         $requestData = $this->request->getPost();
         $id = $this->request->getPost('id'); // json_decode($_POST['requestData'], true);
+        $joiningFormId = $id;
         $documentName = $this->request->getPost('documentName'); // json_decode($_POST['requestData'], true);
         helper('form');
         $validation =  \Config\Services::validation();
@@ -1903,7 +2142,7 @@ class Profiles extends ResourceController
         }
 
         $documentDetails = $joiningFormDetails['documents'] ? (array)json_decode($joiningFormDetails['documents']) : [];
-
+        $documentDetailsOld = $documentDetails;
         if (isset($document)) {
             $pathToUpload = "form_" . $id;
             if (!file_exists(str_replace(APPPATH, '', DOCUMENTS_PATH) . $pathToUpload)) {
@@ -1928,7 +2167,21 @@ class Profiles extends ResourceController
 
 
         $saveData['documents'] = $documentDetails ? json_encode($documentDetails) : null;
-        $model->update($id, $saveData);
+
+        
+       
+            $changed_data = array_diff_assoc((array)$documentDetails, (array)$documentDetailsOld);
+            if($model->update($id, $saveData)){
+                $actionLogData = [
+                   
+                    'action_type' => 'updated',
+                    'model' => 'joining_form',
+                    'record_id' => $joiningFormId,
+                    'chaged_data' => json_encode(['documents'=>$changed_data])
+                ];
+                creatActionLog($actionLogData);
+            }
+
         $response = [
             'id'   => $id,
             'action_type' => 'Updated',
@@ -1957,7 +2210,7 @@ class Profiles extends ResourceController
         //get document details
         $model = new EmployeeJoinigDetailsModel();
         $joiningFormDetails = (array)$model->find($requestData['id']);
-
+        $joiningFormId = $requestData['id'];
         //if joining form is approved the link will not be send
         if ($joiningFormDetails['status'] == '2' && !hasCapability('joining_form/update_approved')) {
             return $this->fail(['errorMessage' => "Joining details are approved so you can not update details. Please contact to admin."], 403);
@@ -1967,14 +2220,24 @@ class Profiles extends ResourceController
         $documentDetails = $joiningFormDetails['documents'];
 
         //unlink document
-        if (file_exists(DOCUMENTS_PATH . $documentDetails[$requestData['document']]->path)) {
-            unlink(DOCUMENTS_PATH . $documentDetails[$requestData['document']]->path);
-        }
+        // if (file_exists(DOCUMENTS_PATH . $documentDetails[$requestData['document']]->path)) {
+        //     unlink(DOCUMENTS_PATH . $documentDetails[$requestData['document']]->path);
+        // }
         unset($documentDetails[$requestData['document']]);
 
 
         $saveData['documents'] = $documentDetails ? json_encode($documentDetails) : null;
-        $model->update($requestData['id'], $saveData);
+      
+        if($model->update($requestData['id'], $saveData)){
+            $actionLogData = [
+                   
+                'action_type' => 'deleted',
+                'model' => 'joining_form',
+                'record_id' => $joiningFormId,
+                'chaged_data' => json_encode(['documents'=>$requestData['document']])
+            ];
+            creatActionLog($actionLogData);
+        }
 
         $response = [
             'id'   => $requestData['id'],
@@ -2387,7 +2650,17 @@ class Profiles extends ResourceController
         $requestData['is_accept_declaration'] = date('Y-m-d H:i:s');
         $requestData['employee_other_details'] = $requestData['employee_other_details'] ? json_encode($requestData['employee_other_details']) : null;
         $requestData['status'] = '1';
-        $id =  $model->update($joiningFormId, $requestData);
+        
+        if($model->update($joiningFormId, $requestData)){
+            $actionLogData = [
+                   
+                'action_type' => 'updated',
+                'model' => 'joining_form',
+                'record_id' => $joiningFormId,
+                'chaged_data' => json_encode(['accept_declaration'=>'Yes'])
+            ];
+            creatActionLog($actionLogData);
+        }
         //send mail to employee 
         $payload = [
             'ist' => time(),
@@ -2447,7 +2720,18 @@ class Profiles extends ResourceController
         $updateData['status'] = '2';
         $updateData['approval_dt'] = date('Y-m-d H:i:s');
         $model = new EmployeeJoinigDetailsModel();
-        $model->update($joiningFormId, $updateData);
+
+       if($model->update($joiningFormId, $updateData)){
+            $actionLogData = [
+                'action_type' => 'updated',
+                'model' => 'joining_form',
+                'record_id' => $joiningFormId,
+                'chaged_data' => json_encode(['message'=>'Joining form approved.'])
+            ];
+            creatActionLog($actionLogData);
+        }
+
+
         $formDetails = $model->find($joiningFormId);
         //send email
         $templateData = [
@@ -2868,8 +3152,19 @@ class Profiles extends ResourceController
         $requestData['total_experience'] = ($requestData['total_experience_y'] * 12) + $requestData['total_experience_m'];
         $requestData['relevant_experience'] = ($requestData['relevant_experience_y'] * 12) + $requestData['relevant_experience_m'];
 
-        $model->save($requestData);
-
+        // $model->save($requestData);
+        $oldData = $model->find($profileId);
+        $changed_data = array_diff_assoc((array)$requestData, (array)$oldData);
+        if($model->save($requestData)){
+            $actionLogData = [
+               
+                'action_type' => 'updated',
+                'model' => 'profile',
+                'record_id' => $profileId,
+                'chaged_data' => json_encode(['academics'=>$changed_data])
+            ];
+            creatActionLog($actionLogData);
+        }
         $response = [
             'id'   => $profileId,
             'action_type' => 'Updated',
@@ -3017,9 +3312,33 @@ class Profiles extends ResourceController
 
         //$requestData['education_qualification'] = $requestData['education_qualification'] ? json_encode($requestData['education_qualification']) : null;
         if (empty($requestData['id'])) {
-            $model->insert($requestData);
+            
+
+            if($model->insert($requestData)){
+                $actionLogData = [
+                   
+                    'action_type' => 'created',
+                    'model' => 'profile',
+                    'record_id' => $profileId,
+                    'chaged_data' => json_encode(['academics'=>$requestData])
+                ];
+                creatActionLog($actionLogData);
+            }
         } else {
-            $model->save($requestData);
+          
+            
+                $oldData = $model->find($requestData['id']);
+                $changed_data = array_diff_assoc((array)$requestData, (array)$oldData);
+                if($model->save($requestData)){
+                    $actionLogData = [
+                    
+                        'action_type' => 'updated',
+                        'model' => 'profile',
+                        'record_id' => $profileId,
+                        'chaged_data' => json_encode(['academics'=>$changed_data])
+                    ];
+                    creatActionLog($actionLogData);
+                }
         }
 
 
@@ -3046,13 +3365,26 @@ class Profiles extends ResourceController
 
         $model = new ProfileEducationQualificationModel();
         $educationDetails = (array)$model->find($id);
-        $model->delete($id);
         $profileId = $educationDetails['profile_id'];
+
+        if($model->delete($id)){
+            $actionLogData = [
+                   
+                'action_type' => 'deleted',
+                'model' => 'profile',
+                'record_id' => $profileId,
+                'chaged_data' => json_encode(['academics'=>$educationDetails])
+            ];
+            creatActionLog($actionLogData);
+        }
+
+
+
         //remove document
 
-        if (file_exists(PROFILE_DOCUMENTS_PATH . $educationDetails['document_path']) && !empty($educationDetails['document_path'])) {
-            unlink(PROFILE_DOCUMENTS_PATH . $educationDetails['document_path']);
-        }
+        // if (file_exists(PROFILE_DOCUMENTS_PATH . $educationDetails['document_path']) && !empty($educationDetails['document_path'])) {
+        //     unlink(PROFILE_DOCUMENTS_PATH . $educationDetails['document_path']);
+        // }
 
         $response = [
             'list' => $model->where('profile_id', $profileId)->find(),
@@ -3173,9 +3505,31 @@ class Profiles extends ResourceController
         // $requestData['age'] = $diff->y;
         //$requestData['education_qualification'] = $requestData['education_qualification'] ? json_encode($requestData['education_qualification']) : null;
         if (empty($requestData['id'])) {
-            $model->insert($requestData);
+            if($model->insert($requestData)){
+                $actionLogData = [
+                   
+                    'action_type' => 'created',
+                    'model' => 'profile',
+                    'record_id' => $profileId,
+                    'chaged_data' => json_encode(['professional_qualification'=>$requestData])
+                ];
+                creatActionLog($actionLogData);
+            }
+
         } else {
-            $model->save($requestData);
+            
+            $oldData = $model->find($requestData['id']);
+            $changed_data = array_diff_assoc((array)$requestData, (array)$oldData);
+            if($model->save($requestData)){
+                $actionLogData = [
+                   
+                    'action_type' => 'updated',
+                    'model' => 'profile',
+                    'record_id' => $profileId,
+                    'chaged_data' => json_encode(['professional_qualification'=>$changed_data])
+                ];
+                creatActionLog($actionLogData);
+            }
         }
 
 
@@ -3202,13 +3556,24 @@ class Profiles extends ResourceController
         $model = new ProfileProfessionalQualificationModel();
 
         $educationDetails = (array)$model->find($id);
-        $model->delete($id);
         $profileId = $educationDetails['profile_id'];
+
+        if($model->delete($id)){
+            $actionLogData = [
+                   
+                'action_type' => 'deleted',
+                'model' => 'profile',
+                'record_id' => $profileId,
+                'chaged_data' => json_encode(['professional_qualification'=>$educationDetails])
+            ];
+            creatActionLog($actionLogData);
+        }
+
         //remove document
 
-        if (file_exists(PROFILE_DOCUMENTS_PATH . $educationDetails['document_path']) && !empty($educationDetails['document_path'])) {
-            unlink(PROFILE_DOCUMENTS_PATH . $educationDetails['document_path']);
-        }
+        // if (file_exists(PROFILE_DOCUMENTS_PATH . $educationDetails['document_path']) && !empty($educationDetails['document_path'])) {
+        //     unlink(PROFILE_DOCUMENTS_PATH . $educationDetails['document_path']);
+        // }
 
         $response = [
             'list' => $model->where('profile_id', $profileId)->find(),
@@ -3319,8 +3684,18 @@ class Profiles extends ResourceController
 
         $model = new ProfileModel();
         $requestData['employment_history'] = $requestData['employment_history'] ? json_encode($requestData['employment_history']) : null;
-        $id =  $model->update($profileId, $requestData);
-
+        
+        
+        if( $model->update($profileId, $requestData)){
+            $actionLogData = [
+               
+                'action_type' => 'updated',
+                'model' => 'profile',
+                'record_id' => $profileId,
+                'chaged_data' => json_encode(['academics'=>$requestData['employment_history']])
+            ];
+            creatActionLog($actionLogData);
+        }
         $response = [
             'id'   => $profileId,
             'action_type' => 'Updated',
@@ -3346,6 +3721,7 @@ class Profiles extends ResourceController
         $document = $this->request->getFile('document');
         $requestData = $this->request->getPost();
         $id = $this->request->getPost('id'); // json_decode($_POST['requestData'], true);
+        $profileId = $id;
         $documentName = $this->request->getPost('documentName'); // json_decode($_POST['requestData'], true);
         helper('form');
         $validation =  \Config\Services::validation();
@@ -3379,7 +3755,7 @@ class Profiles extends ResourceController
 
 
         $documentDetails = $joiningFormDetails['documents'] ? (array)json_decode($joiningFormDetails['documents']) : [];
-
+        $documentDetailsOld = $documentDetails;
         if (isset($document)) {
             $pathToUpload = "profile_" . $id;
             if (!file_exists(str_replace(APPPATH, '', PROFILE_DOCUMENTS_PATH) . $pathToUpload)) {
@@ -3404,7 +3780,22 @@ class Profiles extends ResourceController
 
 
         $saveData['documents'] = $documentDetails ? json_encode($documentDetails) : null;
-        $model->update($id, $saveData);
+
+
+        
+        $changed_data = array_diff_assoc((array)$documentDetails, (array)$documentDetailsOld);
+            if($model->update($id, $saveData)){
+                $actionLogData = [
+                   
+                    'action_type' => 'updated',
+                    'model' => 'profile',
+                    'record_id' => $profileId,
+                    'chaged_data' => json_encode(['documents'=>$changed_data])
+                ];
+                creatActionLog($actionLogData);
+            }
+
+
         $response = [
             'id'   => $id,
             'action_type' => 'Updated',
@@ -3424,7 +3815,7 @@ class Profiles extends ResourceController
         //get document details
         $model = new ProfileModel();
         $joiningFormDetails = (array)$model->find($requestData['id']);
-
+        $profileId = $requestData['id'];
         //if joining form is approved the link will not be send
         //  if($joiningFormDetails['status']=='2' && !hasCapability('joining_form/update_approved')){
         //     return $this->fail(['errorMessage' => "Joining details are approved so you can not update details. Please contact to admin."], 403);
@@ -3441,7 +3832,19 @@ class Profiles extends ResourceController
 
 
         $saveData['documents'] = $documentDetails ? json_encode($documentDetails) : null;
-        $model->update($requestData['id'], $saveData);
+        
+
+        if($model->update($requestData['id'], $saveData)){
+            $actionLogData = [
+                   
+                'action_type' => 'deleted',
+                'model' => 'profile',
+                'record_id' => $profileId,
+                'chaged_data' => json_encode(['documents'=>$requestData['document']])
+            ];
+            creatActionLog($actionLogData);
+        }
+
 
         $response = [
             'id'   => $requestData['id'],

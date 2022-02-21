@@ -14,8 +14,6 @@
                 <i class="flaticon-users"></i> Howdy, <?= ucfirst($_COOKIE['fname']) ?> <small>[<?=$user['roles'][0]['display_name']?>]</small></a>
             </li>
           <?php } ?>
-      
-     
     </ul>
 
   </nav>
@@ -129,6 +127,17 @@
             <i class="nav-icon fa fa-user-cog"></i>
               <p>
               Roles
+              </p>
+            </a>
+          </li>
+        <?php }?>
+
+          <?php if (hasCapability('logs/view')) { ?>
+          <li class="nav-item">
+            <a href="<?= base_url(route_to('logs')) ?>" class="nav-link <?=$active_nav=='logs'?' active ':'';?>">
+            <i class="nav-icon fa fa-clock"></i>
+              <p>
+              Logs
               </p>
             </a>
           </li>

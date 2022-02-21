@@ -3,6 +3,7 @@
 
 <?= $this->renderSection('banner') ?>
 
+
 <?= $this->renderSection('content') ?>
 
 

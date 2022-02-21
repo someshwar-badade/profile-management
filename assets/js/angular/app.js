@@ -36,3 +36,31 @@ app.filter('slugify', function() {
   .replace(/-+$/, ''); //trim - from end of text
   }
 });
+
+app.filter('customFilter', function() {
+  return function(input, search) {
+    console.log(typeof(input));
+    if (!input) return input;
+    if (!search) return input;
+    var expected = ('' + search).toLowerCase();
+    var result = {};
+    angular.forEach(input, function(value, key) {
+      var actual = ('' + value).toLowerCase();
+      console.log(typeof(value));
+      if(typeof(value)=='object'){
+        angular.forEach(value, function(value2, key2) {
+          var actual2 = ('' + value2).toLowerCase();
+          if (actual2.indexOf(expected) !== -1) {
+            result[key] = value;
+          }
+        });
+      }else{
+        if (actual.indexOf(expected) !== -1) {
+          result[key] = value;
+        }
+      }
+     
+    });
+    return result;
+  }
+});

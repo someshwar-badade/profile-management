@@ -29,6 +29,21 @@ function cart(bool $getShared = true)
 function creatActionLog($data)
 {
 
+    $actionBy = '';
+    $user = checkUserToken();
+    $session = session();
+    
+    $data['user_id']='0';
+    if($user){
+        $actionBy = $user['fname'].' '.$user['lname'];
+        $data['user_id'] = $user['id'];
+    }else if(!empty($session->get('employee_joining_form_id'))){
+        $actionBy = $session->get('employee_name').' '.$session->get('employee_last_name'); 
+    }else if(!empty($session->get('profile_id'))){
+        $actionBy = $session->get('profile_first_name').' '.$session->get('profile_last_name');
+    }
+    $data['action_by'] = $actionBy;
+
     $ActionLogModel = new ActionLogModel();
     $ActionLogModel->insert($data);
 }
@@ -124,6 +139,7 @@ function checkUserToken(){
 		$a_token = isset($_COOKIE['a_token'])?$_COOKIE['a_token']:'';
 		$r_token = isset($_COOKIE['r_token'])?$_COOKIE['r_token']:'';
 		$userId = -1;
+        $session = session();
 		try{
 			$payload = JWT::decode($a_token,JWT_SECRETE_KEY,['HS256']);
 			$userId = $payload->user_id;
@@ -142,7 +158,7 @@ function checkUserToken(){
 			}
 			
 		}
-		
+		$user = null;
 		if($userId){
 			$userModel = new UserModel();
 			$userRoleModel = new UserRoleModel();

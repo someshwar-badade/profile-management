@@ -7,30 +7,30 @@
       </a>
       <?php
       $session = session();
-     
+
       ?>
 
-<?php if($session->get('employee_joining_form_id')){?>
-      <div class="btn-group">
-        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-expanded="false">
-          <?php echo ucwords(strtolower("WELCOME ".$session->get('employee_name')));?>
-        </button>
-        <div class="dropdown-menu dropdown-menu-left" aria-labelledby="dropdownMenu2">
-          <a class="dropdown-item" href="<?= base_url(route_to('logout')) ?>">Logout</a>
-        </div>
-      </div>
-<?php } else if($session->get('profile_id')){?>
-    <div class="btn-group">
+      <?php if ($session->get('employee_joining_form_id')) { ?>
+        <div class="btn-group">
           <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-expanded="false">
-            <?php echo ucwords(strtolower("WELCOME ".$session->get('profile_first_name')));?>
+            <?php echo ucwords(strtolower("WELCOME " . $session->get('employee_name'))); ?>
           </button>
           <div class="dropdown-menu dropdown-menu-left" aria-labelledby="dropdownMenu2">
             <a class="dropdown-item" href="<?= base_url(route_to('logout')) ?>">Logout</a>
           </div>
         </div>
-  <?php } else {?>
-    <a class="nav-item" href="<?= base_url(route_to('createMyProfile')) ?>">Create Profile</a>
-  <?php }?>
+      <?php } else if ($session->get('profile_id')) { ?>
+        <div class="btn-group">
+          <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-expanded="false">
+            <?php echo ucwords(strtolower("WELCOME " . $session->get('profile_first_name'))); ?>
+          </button>
+          <div class="dropdown-menu dropdown-menu-left" aria-labelledby="dropdownMenu2">
+            <a class="dropdown-item" href="<?= base_url(route_to('logout')) ?>">Logout</a>
+          </div>
+        </div>
+      <?php } else { ?>
+        <a class="nav-item" href="<?= base_url(route_to('createMyProfile')) ?>">Create Profile</a>
+      <?php } ?>
 
     </nav>
     <script>

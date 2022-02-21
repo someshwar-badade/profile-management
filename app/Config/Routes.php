@@ -73,7 +73,7 @@ $routes->post('/api/employee-joining-form/save-professional-qualification', 'Api
 $routes->post('/api/employee-joining-form/remove-professional-qualification', 'Api\Profiles::joiningFormRemoveProfetionalQualification',['as'=>'joiningFormRemoveProfetionalQualification']);
 $routes->post('/api/employee-joining-form/save-employment-history', 'Api\Profiles::joiningFormSaveEmploymentHistory',['as'=>'joiningFormSaveEmploymentHistory']);
 $routes->post('/api/employee-joining-form/save-employment-history_', 'Api\Profiles::joiningFormSaveEmploymentHistory_',['as'=>'joiningFormSaveEmploymentHistory_']);
-$routes->post('/api/employee-joining-form/remove-employment-history_', 'Api\Profiles::joiningFormRemoveEmploymentHistory_',['as'=>'joiningFormRemoveEmploymentHistory_']);
+$routes->delete('/api/employee-joining-form/remove-employment-history_', 'Api\Profiles::joiningFormRemoveEmploymentHistory_',['as'=>'joiningFormRemoveEmploymentHistory_']);
 $routes->post('/api/employee-joining-form/save-background-information', 'Api\Profiles::joiningFormSaveBackgroundInfo',['as'=>'joiningFormSaveBackgroundInfo']);
 $routes->post('/api/employee-joining-form/accept-declaration', 'Api\Profiles::joiningFormAcceptDeclaration',['as'=>'joiningFormAcceptDeclaration']);
 $routes->post('/api/employee-joining-form/documents', 'Api\Profiles::joiningUploadDocument',['as'=>'joiningUploadDocument']);
@@ -153,6 +153,9 @@ $routes->delete('/api/clients/contacts', 'Api\Clients::deleteClientContact',['as
 $routes->get('/api/clients/(:num)', 'Api\Clients::getDetails/$1',['as'=>'getClientDetails']);
 $routes->post('/api/clients', 'Api\Clients::saveClient',['as'=>'saveClient']);
 
+//Logs
+$routes->get('/logs', 'Logs::index',['as'=>'logs']);
+$routes->get('/api/logs', 'Api\Logs::index',['as'=>'getLogs']);
 
 $routes->group('/api',['namespace' => 'App\Controllers\Api'], function($routes)
 {
@@ -161,8 +164,6 @@ $routes->group('/api',['namespace' => 'App\Controllers\Api'], function($routes)
 	$routes->post('user/login', 'Users::login');
 	$routes->post('user/signin', 'Users::login');
 	$routes->post('user/logout', 'Users::logout');
-	
-	
 	
 	$routes->post('user/profile/change-password', 'UserProfile::changePassword');
 

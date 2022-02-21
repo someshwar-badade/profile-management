@@ -366,7 +366,8 @@ ul.ctmmenu li:hover:after {
 }
 .abutsSection {
 	background: #f2f2ee;
-	padding: 50px 0px;
+	/* padding: 50px 0px; */
+	padding: 85px 20px 40px 20px;
 }
 .abutsSection .rimg {
 	width: 50%;

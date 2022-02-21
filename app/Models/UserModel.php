@@ -58,8 +58,8 @@ class UserModel extends Model {
     }
 
     public function getList($filter=array(),$searchQuery='',$start=0,$length=10,$orderBy='id ASC'){
-        $db = \Config\Database::connect();
-		$builder = $db->table('users');
+        // $db = \Config\Database::connect();
+		$builder = $this->db->table('users');
         $builder->select('users.*');
         $countBuilder = clone($builder);
         $recordsTotal = $countBuilder->countAllResults();

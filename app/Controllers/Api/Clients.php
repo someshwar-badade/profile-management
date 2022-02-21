@@ -139,10 +139,37 @@ class Clients extends ResourceController
         $data = null;
         if (empty($requestData['id'])) {
            $newId =  $model->insert($requestData);
+
+           if($newId){
+            $actionLogData = [
+                   
+                'action_type' => 'created',
+                'model' => 'client',
+                'record_id' => $newId,
+                'chaged_data' => json_encode($requestData)
+            ];
+            creatActionLog($actionLogData);
+           }
            $data = $model->find($newId);
+
+
         } else {
-            $model->save($requestData);
+            
+            $oldData = $model->find($requestData['id']);
+            $changed_data = array_diff_assoc((array)$requestData, (array)$oldData);
+            if($model->save($requestData)){
+                $actionLogData = [
+                   
+                    'action_type' => 'updated',
+                    'model' => 'client',
+                    'record_id' => $requestData['id'],
+                    'chaged_data' => json_encode($changed_data)
+                ];
+                creatActionLog($actionLogData);
+            }
+
             $data = $model->find($requestData['id']);
+
         }
 
 
@@ -231,8 +258,30 @@ class Clients extends ResourceController
 
         if (empty($requestData['id'])) {
             $newId =  $model->insert($requestData);
+            if($newId){
+                $actionLogData = [
+                       
+                    'action_type' => 'created',
+                    'model' => 'client',
+                    'record_id' => $requestData['client_id'],
+                    'chaged_data' => json_encode(['contacts'=>$requestData])
+                ];
+                creatActionLog($actionLogData);
+               }
          } else {
-             $model->save($requestData);
+            $oldData = $model->find($requestData['id']);
+            $changed_data = array_diff_assoc((array)$requestData, (array)$oldData);
+             if($model->save($requestData)){
+                $actionLogData = [
+                       
+                    'action_type' => 'updated',
+                    'model' => 'client',
+                    'record_id' => $requestData['client_id'],
+                    'chaged_data' => json_encode(['contacts'=>$changed_data])
+                ];
+                creatActionLog($actionLogData);
+             }
+
          }
 
          $data = [
@@ -263,6 +312,16 @@ class Clients extends ResourceController
        // $ClientContactsModel->delete($requestData['id']);
 
         if($ClientContactsModel->delete($requestData['id'])){
+
+            $actionLogData = [
+                       
+                'action_type' => 'deleted',
+                'model' => 'client',
+                'record_id' => $requestData['client_id'],
+                'chaged_data' => json_encode($requestData)
+            ];
+            creatActionLog($actionLogData);
+
             $data = [
                 'error'    => null,
                 'messages' => [

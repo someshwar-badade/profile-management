@@ -19,7 +19,7 @@ class JobPositions extends BaseController
             'page_title' => 'Job Positions',
             'active_nav_parent' => 'job-positions',
             'active_nav' => 'job-positions',
-            'clients'=>$clientModel->findAll(),
+            'clients'=>$clientModel->where('status','1')->findAll(),
         ];
 
         return view('user/job-positions/index', $data);

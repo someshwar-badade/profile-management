@@ -10,7 +10,7 @@
 
                     <?php $validation =  \Config\Services::validation(); ?>
 
-                    <div class="card card-primary">
+                    <div class="card">
                         <div class="card-header text-center">
                             <h2>Create My Profile</h2>
                         </div>

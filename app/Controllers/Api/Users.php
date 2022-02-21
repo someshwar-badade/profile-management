@@ -11,7 +11,7 @@ use Firebase\JWT\JWT;
 use App\Controllers;
 use App\Models\ContactusModel;
 use App\Models\SettingsModel;
-
+use App\Models\ActionLogModel;
 
 class Users extends  Controllers\BaseController
 {
@@ -167,14 +167,20 @@ class Users extends  Controllers\BaseController
 
 				if ($isValidUser) {
 
+					
+					
 					$actionLogData = [
 						'user_id'=>$user['id'],
 						'action_type'=>'created',
 						'model'=>'login',
 						'record_id'=>$user['id'],
+						'action_by'=> $user['fname'].' '.$user['lname'],
 						'chaged_data'=> json_encode(['login'=>date('Y-m-d H:i:s')])
 					];
-					creatActionLog($actionLogData);
+
+					$ActionLogModel = new ActionLogModel();
+					$ActionLogModel->insert($actionLogData);
+					
 					return $this->userLogin($user);
 				} 
 			 

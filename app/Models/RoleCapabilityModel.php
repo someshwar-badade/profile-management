@@ -12,7 +12,7 @@ class RoleCapabilityModel extends Model
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
     protected $deletedField  = 'deleted_at';
-
+    protected $useSoftDeletes = true;
     public function checkCapability($capabilityId,$role_id){
         return (boolean) $this->where('capability_id',$capabilityId)->where('role_id',$role_id)->where('is_allowed',1)->find();
     }

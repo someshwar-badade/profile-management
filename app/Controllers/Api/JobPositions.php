@@ -103,7 +103,10 @@ class JobPositions extends ResourceController
             return $this->fail(['messages' => 'Please login.'], 400);
         }
 
-        if (!hasCapability('job_positions/add')) {
+        if (!hasCapability('job_positions/add') && empty($requestData['id'])) {
+            return $this->fail(['errorMessage' => "You don't have capability to access this page. Please contact to admin."], 403);
+        }
+        if (!hasCapability('job_positions/edit') && !empty($requestData['id'])) {
             return $this->fail(['errorMessage' => "You don't have capability to access this page. Please contact to admin."], 403);
         }
 
@@ -160,7 +163,17 @@ class JobPositions extends ResourceController
         if (empty($requestData['id'])) {
             $requestData['created_by'] = $user['id'];
             $requestData['updated_by'] = $user['id'];
-            $model->insert($requestData);
+            $insertId = $model->insert($requestData);
+           if($insertId){
+                $actionLogData = [
+                   
+                    'action_type' => 'created',
+                    'model' => 'job_position',
+                    'record_id' => $insertId,
+                    'chaged_data' => json_encode($requestData)
+                ];
+                creatActionLog($actionLogData);
+            }
 
             $response = [
                 'list' => $model->findAll(),
@@ -172,7 +185,20 @@ class JobPositions extends ResourceController
             ];
         } else {
             $requestData['updated_by'] = $user['id'];
-            $model->save($requestData);
+            $oldData = $model->find($requestData['id']);
+            $changed_data = array_diff_assoc((array)$requestData, (array)$oldData);
+
+            if($model->save($requestData)){
+                $actionLogData = [
+                   
+                    'action_type' => 'updated',
+                    'model' => 'job_position',
+                    'record_id' => $requestData['id'],
+                    'chaged_data' => json_encode($changed_data)
+                ];
+                creatActionLog($actionLogData);
+            }
+
             $response = [
                 'list' => $model->findAll(),
                 'action_type' => 'Updated',
@@ -194,7 +220,7 @@ class JobPositions extends ResourceController
             return $this->fail(['messages' => 'Please login.'], 400);
         }
 
-        if (!hasCapability('job_positions/shortlist')) {
+        if (!hasCapability('job_positions/shortlist_candidate')) {
             return $this->fail(['errorMessage' => "You don't have capability to access this page. Please contact to admin."], 403);
         }
 

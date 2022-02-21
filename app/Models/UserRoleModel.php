@@ -13,7 +13,7 @@ class UserRoleModel extends Model
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
     protected $deletedField  = 'deleted_at';
-
+    protected $useSoftDeletes = true;
     public function getRoles($userId){
         $db = \Config\Database::connect();
         $builder = $db->table('user_role');

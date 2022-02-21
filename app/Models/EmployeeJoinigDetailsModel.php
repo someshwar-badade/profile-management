@@ -12,7 +12,7 @@ class EmployeeJoinigDetailsModel extends Model
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
     protected $deletedField  = 'deleted_at';
-
+    protected $useSoftDeletes = true;
     public function verifyJoinigForm($email,$adharPan,$verificationCode){
 
         $db = \Config\Database::connect();
