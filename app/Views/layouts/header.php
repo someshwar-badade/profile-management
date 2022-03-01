@@ -2,7 +2,7 @@
   <header class="clearfix" ng-controller="headerCtrl">
     <!-- Image and text -->
     <nav class="navbar navbar-light bg-light">
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand" href="<?=base_url()?>">
         <img src="<?= base_url('assets/images/bitstring-logo.png') ?>" width="200" class="d-inline-block align-top" alt="">
       </a>
       <?php
@@ -29,7 +29,7 @@
           </div>
         </div>
       <?php } else { ?>
-        <a class="nav-item" href="<?= base_url(route_to('createMyProfile')) ?>">Create Profile</a>
+        <a class="nav-item btn btn-primary" href="<?= base_url(route_to('createMyProfile')) ?>"><span class="text-light">Build Profile</span></a>
       <?php } ?>
 
     </nav>

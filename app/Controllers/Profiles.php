@@ -351,7 +351,8 @@ EOD;
 			'active_nav' => 'my-profile',
 			'pageHeading' => "My Profile",
 			'profileDetails'=>[],
-			'messageSuccess'=>'',
+			'messageSuccess'=>null,
+			'email'=>'',
 		];
 		$model = new ProfileModel();
 		$profileDetails = [];

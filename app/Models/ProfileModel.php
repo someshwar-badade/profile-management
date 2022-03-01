@@ -9,7 +9,7 @@ class ProfileModel extends Model
 {
     protected $table = 'profiles';
     protected $primaryKey = 'id';
-    protected $allowedFields =  ['candidate_name', 'mobile_primary', 'mobile_alternate', 'email_primary', 'email_alternate', 'gender', 'photo', 'resume_pdf', 'resume_pdf_name', 'resume_doc', 'resume_doc_name', 'preferred_work_locations', 'categories', 'primary_skills', 'secondary_skills', 'foundation_skills', 'certifications', 'work_experience', 'total_experience', 'relevant_experience', 'current_company', 'notice_period', 'is_negotiable_np', 'negotiable_np', 'ctc', 'expected_ctc', 'is_negotiable_ctc', 'negotiable_ctc', 'created_by', 'updated_by', 'status', 'first_name', 'father_name', 'last_name', 'marital_status', 'dob', 'pan_number', 'aadhar_number', 'verification_code', 'present_address', 'present_address_postcode', 'permanent_address', 'permanent_address_postcode', 'employment_history','last_working_day','documents'];
+    protected $allowedFields =  ['candidate_name', 'mobile_primary', 'mobile_alternate', 'email_primary', 'email_alternate', 'gender', 'photo', 'resume_pdf', 'resume_pdf_name', 'resume_doc', 'resume_doc_name', 'preferred_work_locations', 'categories', 'primary_skills','primary_skills_soundex', 'secondary_skills','secondary_skills_soundex', 'foundation_skills','foundation_skills_soundex', 'certifications', 'work_experience', 'total_experience', 'relevant_experience', 'current_company', 'notice_period', 'is_negotiable_np', 'negotiable_np', 'ctc', 'expected_ctc', 'is_negotiable_ctc', 'negotiable_ctc', 'created_by', 'updated_by', 'status', 'first_name', 'father_name', 'last_name', 'marital_status', 'dob', 'pan_number', 'aadhar_number', 'verification_code', 'present_address', 'present_address_postcode', 'permanent_address', 'permanent_address_postcode', 'employment_history','last_working_day','documents'];
 
     protected $useTimestamps = true;
     protected $createdField  = 'created_at';
@@ -98,7 +98,7 @@ class ProfileModel extends Model
             if(isset($filter['primary_skills'])){
 
                 foreach (explode(" || ", $row['primary_skills']) as $skill) {
-                    if (in_array($skill, $filter['primary_skills'])) {
+                    if (checkSoundexExist($skill, $filter['primary_skills'])) {
                         $data[$key]['primary_skills_matched'][] = $skill;
                     } else {
                         $data[$key]['primary_skills_other'][] = $skill;
@@ -109,7 +109,7 @@ class ProfileModel extends Model
             if(isset($filter['secondary_skills'])){
 
                 foreach (explode(" || ", $row['secondary_skills']) as $skill) {
-                    if (in_array($skill, $filter['secondary_skills'])) {
+                    if (checkSoundexExist($skill, $filter['secondary_skills'])) {
                         $data[$key]['secondary_skills_matched'][] = $skill;
                     } else {
                         $data[$key]['secondary_skills_other'][] = $skill;

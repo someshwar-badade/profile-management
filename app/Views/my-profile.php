@@ -1212,6 +1212,7 @@
                     $scope.profileForm.documents = response.data.documentList;
                     $scope.documentName = '';
                     $('#customFile').val('');
+                    toastr.success(response.data.messages.success);
                     // $scope.formData = {};
                     // window.location = base_url + '/admin/categories';
                 }, function(response) {

@@ -1,67 +1,81 @@
 <?= $this->extend('layouts/main') ?>
 
 <?= $this->section('content') ?>
+<style>
+    .login-container {
+        position: absolute;
+        top: 20%;
+        right: 0;
+    }
+    .login-container h2{
+        font-size:1.3rem;
+    }
+
+</style>
 
 <section class="abutsSection clearfix">
     <div class="container mt-5">
-        <div class="row justify-content-center">
+        <div ng-controller="loginCtrl" class="row ">
 
-            <div ng-controller="loginCtrl" class="col-md-6 p-0">
-                <div class="justify-content-center">
-                    <div class="card">
-
-                    <div class="card-header text-center">
-                        <h2><?= lang('forms.login.formHeading') ?></h2>
-
+            <div class="col-md-10 offset-md-1">
+            <div class="card">
+                    
+                    <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                    <img src="<?= base_url('assets/images/login.png') ?>" style="width: 100%;">
                     </div>
-                        <div class="card-body">
-                            <form name="login" id="login">
+                    <div class="col-md-6 vertical-center">
+                   <div style="width: 100%;">
+                    <h2 class="text-center">Sign in</h2>
+                        <form name="login" id="login">
 
 
-                                <div class="form-group">
-                                    <!--<label>Email or Mobile</label>-->
-                                    <input class="form-control" ng-model="email" type="text" maxlength="50" placeholder="<?= lang('forms.login.email.placeholder') ?>*">
-                                    <div class="text-danger" ng-show="errors.email">{{ errors.email}}</div>
-                                </div>
-                                <div class="form-group">
-                                    <!--<label>Password</label>-->
-                                    <input class="form-control" ng-model="password" maxlength="20" type="password" placeholder="<?= lang('forms.login.password.placeholder') ?>*">
-                                    <div class="text-danger" ng-show="errors.password">{{ errors.password}}</div>
-                                </div>
+                            <div class="form-group">
+                                <!--<label>Email or Mobile</label>-->
+                                <input class="form-control" ng-model="email" type="text" maxlength="50" placeholder="<?= lang('forms.login.email.placeholder') ?>*">
+                                <div class="text-danger" ng-show="errors.email">{{ errors.email}}</div>
+                            </div>
+                            <div class="form-group">
+                                <!--<label>Password</label>-->
+                                <input class="form-control" ng-model="password" maxlength="20" type="password" placeholder="<?= lang('forms.login.password.placeholder') ?>*">
+                                <div class="text-danger" ng-show="errors.password">{{ errors.password}}</div>
+                            </div>
 
+                            <div class="form-row justify-content-center">
 
-                                <!-- <div class="form-group">
-                            <p> <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#forgotpasswordModal"> <?= lang('forms.login.forgotPassword') ?> </a></p>
-                            </div> -->
-
-                                <div class="form-row justify-content-center">
-
-                                    <div class="col-5">
-                                        <div class="form-group ">
-                                            <button type="button" ng-disabled="loading" ng-click="submitClick()" class="btn btn-block knowmore">
-                                                <div ng-show="loading" class="css-animated-loader"></div><?= lang('forms.login.submitBtn.label') ?>
-                                            </button>
-                                        </div>
+                                <div class="col-5">
+                                    <div class="form-group ">
+                                        <button type="button" ng-disabled="loading" ng-click="submitClick()" class="btn btn-block knowmore">
+                                            <div ng-show="loading" class="css-animated-loader"></div><?= lang('forms.login.submitBtn.label') ?>
+                                        </button>
                                     </div>
+                                </div>
 
-                                    <div class="col-md-12 ">
+                                <!-- <div class="col-md-12 ">
                                     <div class="form-group text-center ">
-                                        Click <a href="<?=base_url(route_to('joiningFormVerification2'))?>">here</a> to update joining form.
+                                        Click <a href="<?= base_url(route_to('joiningFormVerification2')) ?>">here</a> to update joining form.
                                     </div>
-                                    </div>
-                                    <div class="col-md-12 ">
+                                </div> -->
+                                <div class="col-md-12 ">
                                     <div class="form-group text-center ">
-                                        Forgot password click <a href="<?=base_url(route_to('forgot-password'))?>">here</a>.
-                                    </div>
+                                         <a href="<?= base_url(route_to('forgot-password')) ?>">Forgot Password?</a>.
                                     </div>
                                 </div>
+                            </div>
 
-                            </form>
+                        </form>
                         </div>
                     </div>
+                
                 </div>
-
+                </div>
+                </div>
+               
+               
             </div>
+
+
         </div>
     </div>
 </section>

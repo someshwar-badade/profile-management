@@ -2141,7 +2141,7 @@ class Profiles extends ResourceController
             return $this->fail(['errorMessage' => "Joining details are approved so you can not update details. Please contact to admin."], 403);
         }
 
-        $documentDetails = $joiningFormDetails['documents'] ? (array)json_decode($joiningFormDetails['documents']) : [];
+        $documentDetails = $joiningFormDetails['documents'] ? (array)json_decode($joiningFormDetails['documents'],true) : [];
         $documentDetailsOld = $documentDetails;
         if (isset($document)) {
             $pathToUpload = "form_" . $id;
@@ -2153,12 +2153,15 @@ class Profiles extends ResourceController
             $newName = $document->getRandomName();
             $document->move(DOCUMENTS_PATH . $pathToUpload, $newName);
             //remove old document
-
-            if (isset($documentDetails[$documentName])) {
-                if (file_exists(DOCUMENTS_PATH . $documentDetails[$documentName]->path)) {
-                    unlink(ROOTPATH . $documentDetails[$documentName]->path);
+            
+                if (isset($documentDetails[$documentName])) {
+                    if (file_exists(DOCUMENTS_PATH . $documentDetails[$documentName]['path'])) {
+                        unlink(DOCUMENTS_PATH . $documentDetails[$documentName]['path']);
+                    }
                 }
-            }
+            
+            
+
             $doc['path'] = $pathToUpload . '/' . $newName;
             $doc['file_name'] = $document->getClientName();
             $doc['documentNote'] = $requestData['documentNote'];
@@ -2167,10 +2170,14 @@ class Profiles extends ResourceController
 
 
         $saveData['documents'] = $documentDetails ? json_encode($documentDetails) : null;
-
-        
-       
-            $changed_data = array_diff_assoc((array)$documentDetails, (array)$documentDetailsOld);
+      
+            $changed_data =[];
+            foreach($documentDetails as $key=>$rowItem){
+                $changed_data[$key] = array_diff_assoc((array)$documentDetails[$key], (array)$documentDetailsOld[$key]);
+            }
+            $changed_data = array_filter($changed_data);
+           
+           // $changed_data = array_diff_assoc((array)$documentDetails, (array)$documentDetailsOld);
             if($model->update($id, $saveData)){
                 $actionLogData = [
                    
@@ -2216,7 +2223,7 @@ class Profiles extends ResourceController
             return $this->fail(['errorMessage' => "Joining details are approved so you can not update details. Please contact to admin."], 403);
         }
 
-        $joiningFormDetails['documents'] = $joiningFormDetails['documents'] ? (array)json_decode($joiningFormDetails['documents']) : [];
+        $joiningFormDetails['documents'] = $joiningFormDetails['documents'] ? (array)json_decode($joiningFormDetails['documents'],true) : [];
         $documentDetails = $joiningFormDetails['documents'];
 
         //unlink document
@@ -2368,15 +2375,15 @@ class Profiles extends ResourceController
         }
 
         /*Start::validate Entire joining form */
-        $formDetails['employee_other_details'] = $formDetails['employee_other_details'] ? (array)json_decode($formDetails['employee_other_details']) : $employee_other_details;
+        $formDetails['employee_other_details'] = $formDetails['employee_other_details'] ? (array)json_decode($formDetails['employee_other_details'],true) : $employee_other_details;
         $formDetails['education_qualification'] = $educationModel->where('joining_form_id', $joiningFormId)->find();
         $formDetails['gap_declaration'] = $gapDeclarationModel->where('joining_form_id', $joiningFormId)->find();
         $formDetails['mediclaim'] = $mediclaimModel->where('joining_form_id', $joiningFormId)->find();
         $formDetails['professional_qualification'] = $professionalQualificationModel->where('joining_form_id', $joiningFormId)->find();
         // $joiningFormDetails['professional_qualification'] = $joiningFormDetails['professional_qualification'] ? (array)json_decode($joiningFormDetails['professional_qualification']) : [];
-        $formDetails['employment_history'] = $formDetails['employment_history'] ? (array)json_decode($formDetails['employment_history']) : $employment_history;
-        $formDetails['background_info'] = $formDetails['background_info'] ? (array)json_decode($formDetails['background_info']) : $backGroundInfo;
-        $formDetails['documents'] = $formDetails['documents'] ? (array)json_decode($formDetails['documents']) : [];
+        $formDetails['employment_history'] = $formDetails['employment_history'] ? (array)json_decode($formDetails['employment_history'],true) : $employment_history;
+        $formDetails['background_info'] = $formDetails['background_info'] ? (array)json_decode($formDetails['background_info'],true) : $backGroundInfo;
+        $formDetails['documents'] = $formDetails['documents'] ? (array)json_decode($formDetails['documents'],true) : [];
 
 
         //validation
@@ -2859,7 +2866,7 @@ class Profiles extends ResourceController
         $mediclaimModel = new MediclaimModel();
         $EmploymentHistoryModel = new EmploymentHistoryModel();
 
-        $joiningFormDetails['employee_other_details'] = $joiningFormDetails['employee_other_details'] ? (array)json_decode($joiningFormDetails['employee_other_details']) : $employee_other_details;
+        $joiningFormDetails['employee_other_details'] = $joiningFormDetails['employee_other_details'] ? (array)json_decode($joiningFormDetails['employee_other_details'],true) : $employee_other_details;
         $joiningFormDetails['education_qualification'] = $educationModel->where('joining_form_id', $id)->find();
         $joiningFormDetails['gap_declaration'] = $gapDeclarationModel->where('joining_form_id', $id)->find();
         $joiningFormDetails['mediclaim'] = $mediclaimModel->where('joining_form_id', $id)->find();
@@ -2867,8 +2874,8 @@ class Profiles extends ResourceController
         // $joiningFormDetails['professional_qualification'] = $joiningFormDetails['professional_qualification'] ? (array)json_decode($joiningFormDetails['professional_qualification']) : [];
         // $joiningFormDetails['employment_history'] = $joiningFormDetails['employment_history'] ? (array)json_decode($joiningFormDetails['employment_history']) : $employment_history;
         $joiningFormDetails['employment_history'] = $EmploymentHistoryModel->where('joining_form_id', $id)->find();
-        $joiningFormDetails['background_info'] = $joiningFormDetails['background_info'] ? (array)json_decode($joiningFormDetails['background_info']) : $backGroundInfo;
-        $joiningFormDetails['documents'] = $joiningFormDetails['documents'] ? (array)json_decode($joiningFormDetails['documents']) : [];
+        $joiningFormDetails['background_info'] = $joiningFormDetails['background_info'] ? (array)json_decode($joiningFormDetails['background_info'],true) : $backGroundInfo;
+        $joiningFormDetails['documents'] = $joiningFormDetails['documents'] ? (array)json_decode($joiningFormDetails['documents'],true) : [];
 
         $countDetails = $joiningFormDetails;
 
@@ -2935,13 +2942,13 @@ class Profiles extends ResourceController
             return $this->fail(['errorMessage' => "You don't have capability to access this page. Please contact to admin."], 403);
         }
         if (!empty($data['certifications'])) {
-            $data['certifications'] = json_decode($data['certifications']);
+            $data['certifications'] = json_decode($data['certifications'],true);
         } else {
             $data['certifications'] = [];
         }
 
         if (!empty($data['work_experience'])) {
-            $data['work_experience'] = json_decode($data['work_experience']);
+            $data['work_experience'] = json_decode($data['work_experience'],true);
         } else {
             $data['work_experience'] = [];
         }
@@ -2993,8 +3000,8 @@ class Profiles extends ResourceController
 
         $data['education_qualification'] = $educationModel->where('profile_id', $id)->find();
         $data['professional_qualification'] = $professionalQualificationModel->where('profile_id', $id)->find();
-        $data['employment_history'] = $data['employment_history'] ? (array)json_decode($data['employment_history']) : [];
-        $data['documents'] = $data['documents'] ? (array)json_decode($data['documents']) : [];
+        $data['employment_history'] = $data['employment_history'] ? (array)json_decode($data['employment_history'],true) : [];
+        $data['documents'] = $data['documents'] ? (array)json_decode($data['documents'],true) : [];
 
         $createdByDetails = $userModel->find($data['created_by']);
         $updatedByDetails = $userModel->find($data['updated_by']);
@@ -3051,8 +3058,8 @@ class Profiles extends ResourceController
 
         $profileDetails['education_qualification'] = $educationModel->where('profile_id', $profileId)->find();
         $profileDetails['professional_qualification'] = $professionalQualificationModel->where('profile_id', $profileId)->find();
-        $profileDetails['employment_history'] = $profileDetails['employment_history'] ? (array)json_decode($profileDetails['employment_history']) : $employment_history;
-        $profileDetails['documents'] = $profileDetails['documents'] ? (array)json_decode($profileDetails['documents']) : [];
+        $profileDetails['employment_history'] = $profileDetails['employment_history'] ? (array)json_decode($profileDetails['employment_history'],true) : $employment_history;
+        $profileDetails['documents'] = $profileDetails['documents'] ? (array)json_decode($profileDetails['documents'],true) : [];
 
         if (!empty($profileDetails['preferred_work_locations'])) {
             $profileDetails['preferred_work_locations'] = explode(' || ', $profileDetails['preferred_work_locations']);
@@ -3140,12 +3147,15 @@ class Profiles extends ResourceController
             $requestData['preferred_work_locations'] = implode(" || ", $requestData['preferred_work_locations']);
         }
         if (isset($requestData['primary_skills'])) {
+            $requestData['primary_skills_soundex'] = convertStringToSoundex($requestData['primary_skills']," || ");//implode(" || ", $requestData['primary_skills']);
             $requestData['primary_skills'] = implode(" || ", $requestData['primary_skills']);
         }
         if (isset($requestData['secondary_skills'])) {
+            $requestData['secondary_skills_soundex'] = convertStringToSoundex($requestData['secondary_skills']," || ");
             $requestData['secondary_skills'] = implode(" || ", $requestData['secondary_skills']);
         }
         if (isset($requestData['foundation_skills'])) {
+            $requestData['foundation_skills_soundex'] = convertStringToSoundex($requestData['foundation_skills']," || ");
             $requestData['foundation_skills'] = implode(" || ", $requestData['foundation_skills']);
         }
 
@@ -3754,7 +3764,7 @@ class Profiles extends ResourceController
 
 
 
-        $documentDetails = $joiningFormDetails['documents'] ? (array)json_decode($joiningFormDetails['documents']) : [];
+        $documentDetails = $joiningFormDetails['documents'] ? (array)json_decode($joiningFormDetails['documents'],true) : [];
         $documentDetailsOld = $documentDetails;
         if (isset($document)) {
             $pathToUpload = "profile_" . $id;
@@ -3768,8 +3778,8 @@ class Profiles extends ResourceController
             //remove old document
 
             if (isset($documentDetails[$documentName])) {
-                if (file_exists(PROFILE_DOCUMENTS_PATH . $documentDetails[$documentName]->path)) {
-                    unlink(ROOTPATH . $documentDetails[$documentName]->path);
+                if (file_exists(PROFILE_DOCUMENTS_PATH . $documentDetails[$documentName]['path'])) {
+                    unlink(PROFILE_DOCUMENTS_PATH . $documentDetails[$documentName]['path']);
                 }
             }
             $doc['path'] = $pathToUpload . '/' . $newName;
@@ -3781,9 +3791,13 @@ class Profiles extends ResourceController
 
         $saveData['documents'] = $documentDetails ? json_encode($documentDetails) : null;
 
-
+        $changed_data =[];
+        foreach($documentDetails as $key=>$rowItem){
+            $changed_data[$key] = array_diff_assoc((array)$documentDetails[$key], (array)$documentDetailsOld[$key]);
+        }
+        $changed_data = array_filter($changed_data);
         
-        $changed_data = array_diff_assoc((array)$documentDetails, (array)$documentDetailsOld);
+        // $changed_data = array_diff_assoc((array)$documentDetails, (array)$documentDetailsOld);
             if($model->update($id, $saveData)){
                 $actionLogData = [
                    
@@ -3821,7 +3835,7 @@ class Profiles extends ResourceController
         //     return $this->fail(['errorMessage' => "Joining details are approved so you can not update details. Please contact to admin."], 403);
         // }
 
-        $joiningFormDetails['documents'] = $joiningFormDetails['documents'] ? (array)json_decode($joiningFormDetails['documents']) : [];
+        $joiningFormDetails['documents'] = $joiningFormDetails['documents'] ? (array)json_decode($joiningFormDetails['documents'],true) : [];
         $documentDetails = $joiningFormDetails['documents'];
 
         //unlink document

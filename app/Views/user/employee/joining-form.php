@@ -3009,6 +3009,7 @@ function isEditableForm($cap, $status)
                     $scope.loading = false;
                     $scope.documentList = response.data.documentList;
                     $scope.documentName = '';
+                    toastr.success(response.data.messages.success);
                     $('#customFile').val('');
                     // $scope.formData = {};
                     // window.location = base_url + '/admin/categories';

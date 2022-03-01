@@ -137,7 +137,8 @@ $routes->get('/roles', 'Roles::index',['as'=>'roles']);
 $routes->get('/api/capabilities/(:num)', 'Api\Roles::capabilities/$1',['as'=>'capabilities']);
 $routes->post('/api/capabilities/(:num)', 'Api\Roles::saveCapabilities/$1',['as'=>'saveCapabilities']);
 
-$routes->get('/email-test', 'Profiles::emailTest');
+// $routes->get('/email-test', 'Profiles::emailTest');
+$routes->get('/email-test', 'Home::emailTest');
 $routes->get('/profile/(:num)/edit', 'Profiles::create/$1',['as'=>'editprofile']);
 
 $routes->get('/api/get-skills-autocomplete','Api\Profiles::getSkillsAutocomplete');

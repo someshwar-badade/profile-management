@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 
+use App\Models\ProfileModel;
 
 class Home extends BaseController
 {
@@ -80,7 +81,7 @@ class Home extends BaseController
 	public function emailTest()
 	{
 
-		return view('email-templates/shortlist-candidate');
+		//return view('email-templates/shortlist-candidate');
 		// $email = \Config\Services::email();
 
 		// $config['protocol'] = 'sendmail';
@@ -101,6 +102,19 @@ class Home extends BaseController
 		// echo	$email->send();
 
 		// $email->printDebugger(['headers']);
+
+			echo "hi testing|||";
+
+			$ProfileModel = new ProfileModel();
+
+			foreach($ProfileModel->findAll() as $row){
+
+				$row['primary_skills_soundex'] = convertStringToSoundex($row['primary_skills'] ," || ");
+				$row['secondary_skills_soundex'] = convertStringToSoundex($row['secondary_skills'] ," || ");
+				$row['foundation_skills_soundex'] = convertStringToSoundex($row['foundation_skills'] ," || ");
+				$ProfileModel->save($row);
+			}
+
 	}
 	public function phpEmailTest()
 	{

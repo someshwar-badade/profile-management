@@ -223,9 +223,44 @@ function combinations(array $myArray, $choose)
 
 function primary_regxp_fun($value)
     {
-        return "primary_skills REGEXP '([[:blank:][:punct:]]|^)$value([[:blank:][:punct:]]|$)'";
+       
+        // return "primary_skills REGEXP '([[:blank:][:punct:]]|^)$value([[:blank:][:punct:]]|$)'";
+        return "MATCH(primary_skills_soundex) AGAINST('+".soundex($value)."' IN BOOLEAN MODE)";
+        //SOUNDEX(primary_skills) LIKE CONCAT(SOUNDEX('".$value."'), '%')
+        // return "SOUNDEX(primary_skills) LIKE CONCAT('%',SOUNDEX('%".$value."'), '%')";
     }
     function secondary_regxp_fun($value)
     {
-        return "secondary_skills REGEXP '([[:blank:][:punct:]]|^)$value([[:blank:][:punct:]]|$)'";
+       
+        // return "secondary_skills REGEXP '([[:blank:][:punct:]]|^)$value([[:blank:][:punct:]]|$)'";
+        return "MATCH(secondary_skills_soundex) AGAINST('+".soundex($value)."' IN BOOLEAN MODE)";
+        // return "SOUNDEX(secondary_skills) LIKE CONCAT('%',SOUNDEX('".$value."'), '%')";
     }
+
+function convertStringToSoundex($string, $seprator=' '){
+    $soundexStr=[];
+    $wordArray = [];
+   
+    if(is_array($string)){
+        $wordArray = $string; 
+    }else{
+        $wordArray =  explode($seprator,$string);
+    }
+
+    foreach($wordArray as $item){
+        $soundexStr[]= soundex(trim($item));
+    }
+
+    if(is_array($string)){
+        return $soundexStr; 
+    }
+
+    return implode(" ",$soundexStr);
+}
+
+function checkSoundexExist($word,$arrWords)
+{
+    $soundexWordsList = convertStringToSoundex($arrWords);
+    $soundexWord = soundex($word);
+    return in_array($soundexWord,$soundexWordsList);
+}
