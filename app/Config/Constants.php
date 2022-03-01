@@ -80,7 +80,7 @@ defined('EXIT__AUTO_MAX')      || define('EXIT__AUTO_MAX', 125); // highest auto
 define('JWT_SECRETE_KEY','asffasfawerwerweweasfasdf');
 define('JWT_SECRETE_KEY_2','ioioiuopiuqrwjkfljasfklwrwj');
 define('SITE_CODE','PROFILEMANAGEMENT');
-define('SITE_TITLE','Profile Management');
+define('SITE_TITLE','Bitstring');
 
 // define('HR_EMAIL','somesh@bitstringit.in');
 // define('ACCOUNTS_EMAIL','admin@bitstringit.in');

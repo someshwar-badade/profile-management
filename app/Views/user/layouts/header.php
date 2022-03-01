@@ -24,8 +24,8 @@
     <!-- Brand Logo -->
     <a href="<?= base_url(route_to('home')) ?>" class="brand-link text-center">
     <img src="<?=base_url('assets/images/logo-small.png')?>" width="40" class="d-inline-block align-top" alt="">
-      <!-- <img src="<?= base_url('assets/images/goat-logo-white.png') ?>" alt="<?= lang('marutiorganic.site_title') ?>" class="brand-image img-circle elevation-3" style="opacity: .8"> -->
-      <span class="brand-text font-weight-light"><?= lang('marutiorganic.site_title') ?></span>
+      <!-- <img src="<?= base_url('assets/images/goat-logo-white.png') ?>" alt="<?= lang('site.site_title') ?>" class="brand-image img-circle elevation-3" style="opacity: .8"> -->
+      <span class="brand-text font-weight-light"><?= lang('site.site_title') ?></span>
     </a>
 
     <!-- Sidebar -->

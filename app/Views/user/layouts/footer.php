@@ -1,7 +1,7 @@
 <footer class="main-footer">
   <center>
 
-    <strong>Copyright &copy; 2021 <a href="<?= base_url(route_to('home')) ?>"><?= lang('marutiorganic.site_title') ?></a>.</strong>
+    <strong>Copyright &copy; 2021 <a href="<?= base_url(route_to('home')) ?>"><?= lang('site.site_title') ?></a>.</strong>
     All rights reserved.
   </center>
 

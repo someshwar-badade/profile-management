@@ -8,12 +8,12 @@
         <address>
 
 
-          <h5><?= lang('marutiorganic.address.heading2') ?></h5>
-          <?= lang('marutiorganic.address.line1') ?><br>
-          <?= lang('marutiorganic.address.line2') ?><br>
-          <?= lang('marutiorganic.address.line3') ?><br>
-          <?= lang('marutiorganic.address.emailTxt') ?>: <?= lang('marutiorganic.address.email') ?><br>
-          <?= lang('marutiorganic.address.mobileTxt') ?>: <?= lang('marutiorganic.address.mobile') ?>
+          <h5><?= lang('site.address.heading2') ?></h5>
+          <?= lang('site.address.line1') ?><br>
+          <?= lang('site.address.line2') ?><br>
+          <?= lang('site.address.line3') ?><br>
+          <?= lang('site.address.emailTxt') ?>: <?= lang('site.address.email') ?><br>
+          <?= lang('site.address.mobileTxt') ?>: <?= lang('site.address.mobile') ?>
         </address>
         
         <div class="social-link">  
@@ -37,7 +37,7 @@
         
       </div>
 
-      <div class="copyright clearfix">© copyright 2020 | marutiorganic | All Right Reserved.</div>
+      <div class="copyright clearfix">© copyright 2020 | site | All Right Reserved.</div>
     </div>
   </div>
 
