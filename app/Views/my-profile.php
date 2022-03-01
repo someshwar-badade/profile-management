@@ -41,7 +41,7 @@
 </style>
 <section ng-cloak class="abutsSection clearfix" ng-controller="profileFormCtrl">
     <div class="container-fluid mt-5">
-        <?php if (!$showTitle) { ?>
+        <?php if (isset($showTitle)==null) { ?>
             <div class="row justify-content-center">
                 <h2>My Profile</h2>
             </div>

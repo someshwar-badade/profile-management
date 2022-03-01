@@ -58,7 +58,7 @@ function isEditableForm($cap, $status)
 
 ?>
 <div ng-cloak ng-controller="joiningFormCtrl">
-    <?php if ($showTitle) { ?>
+    <?php if (isset($showTitle)) { ?>
         <section class="content-header">
             <div class="container-fluid">
 
@@ -74,7 +74,7 @@ function isEditableForm($cap, $status)
     <?php } ?>
     <section class="abutsSection clearfix">
         <div class="container-fluid mt-2">
-            <?php if (!$showTitle) { ?>
+            <?php if (isset($showTitle)==null) { ?>
                 <div class="row justify-content-center">
                     <h2>JOINING FORM </h2>
                 </div>
