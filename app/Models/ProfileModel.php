@@ -21,7 +21,7 @@ class ProfileModel extends Model
         $db = \Config\Database::connect();
         $builder = $db->table('profiles');
         $builder->select('profiles.*');
-        // print_r($filter);die;
+        
         if($filter['shortlisted'] && !empty($filter['job_position_id'])){
             $builder->join('profile_shortlist','profiles.id = profile_shortlist.profile_id AND profile_shortlist.job_position_id = '.$filter['job_position_id']);
         }else if(!empty($filter['job_position_id'])){
@@ -39,7 +39,7 @@ class ProfileModel extends Model
             		$builder->where("status",$filter['status']);
             	}
             }
-// print_r($filter);die;
+
             if (isset($filter['primary_skills'])) {
                 if (count($filter['primary_skills']) > 0) {
 

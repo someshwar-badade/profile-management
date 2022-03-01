@@ -9,6 +9,8 @@ use App\Models\GapDeclarationModel;
 use App\Models\MediclaimModel;
 use App\Models\ProfessionalQualificationModel;
 use App\Models\ProfileModel;
+use App\Models\ProfileEducationQualificationModel;
+use App\Models\ProfileProfessionalQualificationModel;
 use Firebase\JWT\JWT;
 use Exception;
 
@@ -279,6 +281,69 @@ EOD;
 		$this->_downloadJoiningForm($joiningFormId);
 
 		// $dompdf->output(); 
+	}
+
+	public function downloadMyProfile(){
+
+		$session = session();
+
+		$profileId = null;
+		//redirect is session is set
+		if($session->get('profile_id')){
+			$profileId = $session->get('profile_id');
+		}else{
+			return redirect()->to(base_url(route_to('createMyProfile')));
+		}
+
+		$model = new ProfileModel();
+		$educationModel = new ProfileEducationQualificationModel();
+        $professionalQualificationModel = new ProfileProfessionalQualificationModel();
+
+        $profileDetails = $model->find($profileId);
+
+        $profileDetails['education_qualification'] = $educationModel->where('profile_id', $profileId)->find();
+        $profileDetails['professional_qualification'] = $professionalQualificationModel->where('profile_id', $profileId)->find();
+        $profileDetails['employment_history'] = $profileDetails['employment_history'] ? (array)json_decode($profileDetails['employment_history'],true) : [];
+        $profileDetails['documents'] = $profileDetails['documents'] ? (array)json_decode($profileDetails['documents'],true) : [];
+
+        if (!empty($profileDetails['preferred_work_locations'])) {
+            $profileDetails['preferred_work_locations'] = explode(' || ', $profileDetails['preferred_work_locations']);
+        } else {
+            $profileDetails['preferred_work_locations'] = [];
+        }
+        if (!empty($profileDetails['primary_skills'])) {
+            $profileDetails['primary_skills'] = explode(' || ', $profileDetails['primary_skills']);
+        } else {
+            $profileDetails['primary_skills'] = [];
+        }
+
+        if (!empty($profileDetails['secondary_skills'])) {
+            $profileDetails['secondary_skills'] = explode(' || ', $profileDetails['secondary_skills']);
+        } else {
+            $profileDetails['secondary_skills'] = [];
+        }
+
+        if (!empty($profileDetails['foundation_skills'])) {
+            $profileDetails['foundation_skills'] = explode(' || ', $profileDetails['foundation_skills']);
+        } else {
+            $profileDetails['foundation_skills'] = [];
+        }
+
+        $profileDetails['total_experience_y'] = floor($profileDetails['total_experience'] / 12);
+        $profileDetails['total_experience_m'] = (int)$profileDetails['total_experience'] % 12;
+        $profileDetails['relevant_experience_y'] = floor($profileDetails['relevant_experience'] / 12);
+        $profileDetails['relevant_experience_m'] = (int)$profileDetails['relevant_experience'] % 12;
+
+		$dompdf = new \Dompdf\Dompdf();
+		// echo view('pdf-templates/profile',['joiningFormDetails'=>$profileDetails]);die;
+		$dompdf->loadHtml(view('pdf-templates/profile', ['joiningFormDetails' => $profileDetails]));
+		$dompdf->setPaper('A4', 'p');
+		$dompdf->set_option('isRemoteEnabled', true);
+		$dompdf->render();
+		$canvas = $dompdf->get_canvas();
+		$canvas->page_text(512, 820, "Page: {PAGE_NUM} of {PAGE_COUNT}", '', 8, array(0, 0, 0));
+		$filename = strtolower(str_replace(' ','_',$profileDetails['first_name'].' '.$profileDetails['last_name']));
+		$dompdf->stream($filename."_profile.pdf");
 	}
 
 	public function downloadPrejoiningDocuments($documentName,$joinigFormId){

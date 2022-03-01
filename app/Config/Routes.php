@@ -98,6 +98,7 @@ $routes->post('/api/my-profile/save-employment-history', 'Api\Profiles::profileS
 $routes->get('/api/testing', 'Api\Profiles::testing');
 $routes->post('/api/my-profile/documents', 'Api\Profiles::myProfileUploadDocument',['as'=>'myProfileUploadDocument']);
 $routes->post('/api/my-profile/remove-document', 'Api\Profiles::myProfileRemoveDocument',['as'=>'myProfileRemoveDocument']);
+$routes->get('/download-my-profile', 'Profiles::downloadMyProfile',['as'=>'downloadMyProfile']);
 
 //[interviews]
 //interviews/:profileid

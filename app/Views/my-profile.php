@@ -43,12 +43,15 @@
     <div class="container-fluid mt-5">
         <?php if (isset($showTitle)==null) { ?>
             <div class="row justify-content-center">
-                <h2>My Profile</h2>
+                <div class="col-md-12">
+
+                    <h2 class="text-center">My Profile
+                        <a href="<?=base_url(route_to('downloadMyProfile'))?>" class="fa fa-download float-right" title="Download Profile"></a>
+                        </h2>
+                    </div>
             </div>
         <?php } ?>
         <div class="row">
-
-
             <div class="col-md-12">
                 <!-- Form Completed:
                 <div class="progress">
