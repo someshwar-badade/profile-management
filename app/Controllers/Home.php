@@ -11,11 +11,14 @@ class Home extends BaseController
 	{
 
 		$user = checkUserToken();
-
+		$session = session();
 		if($user){
-			//redirct to dashboard
-			
+			//redirct to dashboard	
 			return redirect()->route('user-dashboard');
+		}else if ($session->get('employee_joining_form_id')) {
+			return redirect()->route('employeeJoiningForm');
+		}else if( $session->get('profile_id')){
+			return redirect()->route('createMyProfile');
 		}
 		
 		$data = [
