@@ -111,41 +111,12 @@
             });
         }
 
-        $scope.tableFilter.profile_plan = [];
-        $scope.selcected_profile_plan = [];
-        $scope.profile_plan_list = JSON.parse('<?= json_encode($profilePlanList['data']) ?>');;
-        $scope.example13settings = {
-            smartButtonMaxItems: 3,
-            template: '{{option.code}}',
-            buttonClasses: "btn btn-primary btn-sm",
-            idProperty: 'code',
-            checkBoxes: true,
-            showCheckAll: false,
-            showUncheckAll: false,
-            smartButtonTextConverter: function(skip, option) {
-                return option.code;
-            },
-
-        };
-        $scope.events = {
-            onItemSelect: function(item) {
-                $scope.tableFilter.profile_plan.push(item.code);
-                console.log($scope.tableFilter.profile_plan);
-            },
-            onItemDeselect: function(item) {
-                $scope.tableFilter.profile_plan = $scope.tableFilter.profile_plan.filter(function(e) {
-                    return e !== item.code
-                });
-                console.log($scope.tableFilter.profile_plan);
-            }
-        }
+     
 
         $scope.clearFilter = function() {
             $scope.tableFilter.status = '';
             $scope.tableFilter.date1 = '';
             $scope.tableFilter.date2 = '';
-            $scope.tableFilter.referral_id = '';
-            $scope.tableFilter.profile_plan = [];;
         }
 
 

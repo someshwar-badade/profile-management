@@ -16,7 +16,8 @@ class Users extends BaseController
 	{
 		$data = [
 			'page_title' => 'Users',
-			'active_nav'=>'users'
+			'active_nav'=>'users',
+			'active_nav_parent'=>'users'
 		];
 
 		if(!hasCapability('user/view')){
@@ -32,6 +33,7 @@ class Users extends BaseController
 		$data = [
 			'page_title' => 'Users',
 			'active_nav'=>'users',
+			'active_nav_parent'=>'users',
 			'roleList'=> $roleModel->where('role_type','USER')->find(),
 		];
 
@@ -56,6 +58,7 @@ class Users extends BaseController
 			'active_nav'=>'users',
 			'user_id'=>$user_id,
 			'roleList'=> $roleModel->where('role_type','USER')->find(),
+			'active_nav_parent'=>'users'
 		];
 		return view('user/users/editUser',$data);
 	}
@@ -69,7 +72,8 @@ class Users extends BaseController
 
 		$data = [
 			'page_title' => 'Register',
-			'active_nav'=>'register'
+			'active_nav'=>'register',
+			'active_nav_parent'=>'register'
 		];
 		return view('register',$data);
 	}
@@ -83,7 +87,8 @@ class Users extends BaseController
 
 		$data = [
 			'page_title' => 'Login',
-			'active_nav'=>'login'
+			'active_nav'=>'login',
+			'active_nav_parent'=>'login',
 		];
 		return view('login',$data);
 	}
@@ -94,6 +99,7 @@ class Users extends BaseController
 		$data = [
 			'page_title' => 'Forgot Password',
 			'active_nav'=>'forgot-password',
+			'active_nav_parent'=>'forgot-password',
 			'email'=>'',
 		];
 		$userModel = new UserModel();
@@ -183,6 +189,7 @@ class Users extends BaseController
 			'page_title' => 'Profile',
 			'active_nav_parent'=>'',
 			'active_nav'=>'profile',
+			'active_nav_parent'=>'profile',
 			'user'=>$user,
 		];
 
