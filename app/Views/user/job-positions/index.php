@@ -400,7 +400,14 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-
+                                <div class="row">
+                                            <div class="col-md-4">
+                                                <label for="showOnlyMatchingSkills">
+                                                <input type="checkbox" id="showOnlyMatchingSkills" ng-model="showOnlyMatchingSkills">
+                                                Show only matching skills
+                                                </label>
+                                            </div>
+                                        </div>
                                 <table class="table datatable">
                                     <thead>
                                         <tr>
@@ -426,12 +433,12 @@
                                             </td>
                                             <td>{{m_profile.total_experience/12|number:0}} {{(m_profile.total_experience/12)>=2?'Years':'Year'}} {{m_profile.total_experience%12|number:0}} {{(m_profile.total_experience%12)>=2?'Months':'Month'}}</td>
                                             <td>
-                                                <span class="badge badge-success ml-1" ng-repeat="skill in m_profile.primary_skills_matched">{{skill}}</span>
-                                                <span class="badge badge-info ml-1" ng-repeat="skill in m_profile.primary_skills_other">{{skill}}</span>
+                                                <span class="badge ml-1 matching-skill {{getBadgeHighlightClass(skill.rating)}}" ng-repeat="skill in m_profile.primary_skills_matched">{{skill.text}} [{{skill.rating}}/10]</span>
+                                                <span ng-hide="showOnlyMatchingSkills" class="badge ml-1 {{getBadgeHighlightClass(skill.rating)}}" ng-repeat="skill in m_profile.primary_skills_other">{{skill.text}} [{{skill.rating}}/10]</span>
                                             </td>
                                             <td>
-                                                <span class="badge badge-success ml-1" ng-repeat="skill in m_profile.secondary_skills_matched">{{skill}}</span>
-                                                <span class="badge badge-info ml-1" ng-repeat="skill in m_profile.secondary_skills_other">{{skill}}</span>
+                                                <span class="badge ml-1 matching-skill {{getBadgeHighlightClass(skill.rating)}}" ng-repeat="skill in m_profile.secondary_skills_matched">{{skill.text}} [{{skill.rating}}/10]</span>
+                                                <span ng-hide="showOnlyMatchingSkills" class="badge ml-1 {{getBadgeHighlightClass(skill.rating)}}" ng-repeat="skill in m_profile.secondary_skills_other">{{skill.text}} [{{skill.rating}}/10]</span>
                                             </td>
                                         </tr>
                                         <tr ng-show="showCase.matchingProfileList.length==0">
@@ -490,10 +497,19 @@
                                                 <span class="text-secondary">Experience:</span> {{ (showCase.jobPositionDetails.min_experience / 12)|number:1}} - {{ (showCase.jobPositionDetails.max_experience / 12)|number:1}} Years
                                             </div>
                                         </div>
+                                       
 
                                     </div>
                                     <!-- /.card-body -->
                                 </div>
+                                <div class="row">
+                                            <div class="col-md-4">
+                                                <label for="showOnlyMatchingSkills">
+                                                <input type="checkbox" id="showOnlyMatchingSkills" ng-model="showOnlyMatchingSkills">
+                                                Show only matching skills
+                                                </label>
+                                            </div>
+                                        </div>
                                 <table class="table datatable">
                                     <thead>
                                         <tr>
@@ -501,8 +517,12 @@
                                             <th>ID</th>
                                             <th>Name</th>
                                             <th>Experience</th>
-                                            <th>Primary Skills</th>
-                                            <th>Secondary Skills</th>
+                                            <th>Primary Skills
+                                               
+                                            </th>
+                                            <th>Secondary Skills
+                                                
+                                            </th>
                                             <th>Applied Date</th>
                                         </tr>
                                     </thead>
@@ -517,12 +537,12 @@
                                             <td><a target="_blank" ng-href="{{base_url+'/profile/'+m_profile.id}}">{{m_profile.first_name}} {{m_profile.last_name}}</a></td>
                                             <td>{{m_profile.total_experience/12|number:0}} {{(m_profile.total_experience/12)>=2?'Years':'Year'}} {{m_profile.total_experience%12|number:0}} {{(m_profile.total_experience%12)>=2?'Months':'Month'}}</td>
                                             <td>
-                                                <span class="badge badge-success ml-1" ng-repeat="skill in m_profile.primary_skills_matched">{{skill}}</span>
-                                                <span class="badge badge-info ml-1" ng-repeat="skill in m_profile.primary_skills_other">{{skill}}</span>
+                                                <span class="badge ml-1 matching-skill {{getBadgeHighlightClass(skill.rating)}}" ng-repeat="skill in m_profile.primary_skills_matched">{{skill.text}} [{{skill.rating}}/10]</span>
+                                                <span ng-hide="showOnlyMatchingSkills" class="badge ml-1  {{getBadgeHighlightClass(skill.rating)}}" ng-repeat="skill in m_profile.primary_skills_other">{{skill.text}} [{{skill.rating}}/10]</span>
                                             </td>
                                             <td>
-                                                <span class="badge badge-success ml-1" ng-repeat="skill in m_profile.secondary_skills_matched">{{skill}}</span>
-                                                <span class="badge badge-info ml-1" ng-repeat="skill in m_profile.secondary_skills_other">{{skill}}</span>
+                                                <span class="badge ml-1 matching-skill {{getBadgeHighlightClass(skill.rating)}}" ng-repeat="skill in m_profile.secondary_skills_matched">{{skill.text}} [{{skill.rating}}/10]</span>
+                                                <span ng-hide="showOnlyMatchingSkills" class="badge ml-1 {{getBadgeHighlightClass(skill.rating)}}" ng-repeat="skill in m_profile.secondary_skills_other">{{skill.text}} [{{skill.rating}}/10]</span>
                                             </td>
                                             <td>{{m_profile.applied_dt}}</td>
                                         </tr>
@@ -832,6 +852,8 @@
         vm.loadTags = function(query) {
             return $http.get(base_url + '/api/get-skills-autocomplete?query=' + query);
         };
+
+        
 
         $scope.onTagAdded = function($tag) {
             if ($tag.text != '') {

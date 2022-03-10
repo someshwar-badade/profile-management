@@ -5,6 +5,8 @@ namespace App\Controllers;
 
 use App\Models\ProfileModel;
 
+use function PHPUnit\Framework\isJson;
+
 class Home extends BaseController
 {
 	public function index()
@@ -112,9 +114,57 @@ class Home extends BaseController
 
 			foreach($ProfileModel->findAll() as $row){
 
-				$row['primary_skills_soundex'] = convertStringToSoundex($row['primary_skills'] ," || ");
-				$row['secondary_skills_soundex'] = convertStringToSoundex($row['secondary_skills'] ," || ");
-				$row['foundation_skills_soundex'] = convertStringToSoundex($row['foundation_skills'] ," || ");
+				// $row['primary_skills_soundex'] = convertStringToSoundex($row['primary_skills'] ," || ");
+				// $row['secondary_skills_soundex'] = convertStringToSoundex($row['secondary_skills'] ," || ");
+				// $row['foundation_skills_soundex'] = convertStringToSoundex($row['foundation_skills'] ," || ");
+				echo "<br>";
+				
+
+					if(!json_decode($row['primary_skills'])){
+						$ps = [];
+						foreach(explode(" || ",$row['primary_skills']) as $item){
+							$ps[]= [
+								"text"=>$item,
+								"rating"=>0
+							];
+
+						}
+
+						$row['primary_skills'] = json_encode($ps);
+					}
+
+					if(!json_decode($row['secondary_skills'])){
+						$ps = [];
+						foreach(explode(" || ",$row['secondary_skills']) as $item){
+							$ps[]= [
+								"text"=>$item,
+								"rating"=>0
+							];
+
+						}
+
+						$row['secondary_skills'] = json_encode($ps);
+					}
+
+					if(!json_decode($row['foundation_skills'])){
+						$ps = [];
+						foreach(explode(" || ",$row['foundation_skills']) as $item){
+							$ps[]= [
+								"text"=>$item,
+								"rating"=>0
+							];
+
+						}
+
+						$row['foundation_skills'] = json_encode($ps);
+					}
+
+					print_r(json_decode($row['primary_skills']));
+					print_r(json_decode($row['secondary_skills']));
+					print_r(json_decode($row['foundation_skills']));
+
+				
+
 				$ProfileModel->save($row);
 			}
 

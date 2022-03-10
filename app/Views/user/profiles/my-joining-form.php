@@ -1,3 +1,8 @@
+<?= $this->extend('user/layouts/main') ?>
+
+
+<?= $this->section('content') ?>
+
 <style>
     .w-auto {
         width: auto;
@@ -57,26 +62,30 @@ function isEditableForm($cap, $status)
 }
 
 ?>
-<div ng-cloak ng-controller="joiningFormCtrl">
+
+<div class="content-wrapper" ng-cloak ng-controller="joiningFormCtrl">
+    <section class="content-header">
     <?php if (isset($showTitle)) { ?>
-        <section class="content-header">
             <div class="container-fluid">
 
                 <div class="row mb-2">
                     <div class="col-md-12">
                         <h1><?= $pageHeading ?> <small ng-show="!!joiningForm.first_name || !!joiningForm.last_name">({{joiningForm.first_name +' '+joiningForm.last_name | uppercase }})</small> <a target="_blank" title="Download Joining Form" href="<?= base_url(route_to('downloadJoiningForm', $id)) ?>" class="fa fa-download pull-right" style="float: right;font-size:1rem;"></a></h1>
-
+<!-- //downloadMyJoiningForm -->
                     </div>
                 </div>
 
             </div>
-        </section>
+       
     <?php } ?>
-    <section class="abutsSection clearfix">
+
+
         <div class="container-fluid mt-2">
             <?php if (isset($showTitle)==null) { ?>
-                <div class="row justify-content-center">
-                    <h2>JOINING FORM </h2>
+                <div class="row ">
+                    <div class="col-md-12 text-center">
+                        <h2>JOINING FORM  <a target="_blank" title="Download Joining Form" href="<?= base_url(route_to('downloadMyJoiningForm2')) ?>" class="fa fa-download pull-right" style="float: right;font-size:1rem;"> Download</a></h2>
+                    </div>
                 </div>
             <?php } ?>
             <div class="row">
@@ -2137,6 +2146,9 @@ function isEditableForm($cap, $status)
 
 </div>
 
+<?= $this->endSection() ?>
+
+<?= $this->section('javascript') ?>
 <script>
     app.controller('joiningFormCtrl', ['$scope', '$http', 'slugifyFilter', function($scope, $http, slugifyFilter) {
 
@@ -2236,7 +2248,7 @@ function isEditableForm($cap, $status)
 
         $http({
             method: 'get',
-            url: base_url + '/api/employee-joining-form/' + '<?= $id ? $id : '0' ?>',
+            url: base_url + '/api/my-joining-form',
         }).then(function(response) {
             $scope.joiningForm = response.data.joiningFormDetails;
             $scope.formComlpletion = response.data.formComlpletion;
@@ -2281,7 +2293,7 @@ function isEditableForm($cap, $status)
             $scope.loading = true;
             $scope.successMessage = '';
             // console.log($scope.profile);
-            var apiUrl = base_url + '/api/employee-joining-form/save-education-details';
+            var apiUrl = base_url + '/api/my-joining-form/save-education-details';
             var method = "POST";
             // console.log($scope.joiningForm);
             $http({
@@ -2336,7 +2348,7 @@ function isEditableForm($cap, $status)
                 return;
             }
             // $scope.joiningForm.education_qualification.splice(index, 1);
-            var apiUrl = base_url + '/api/employee-joining-form/remove-education-details';
+            var apiUrl = base_url + '/api/my-joining-form/remove-education-details';
             var method = "POST";
             var id = $scope.joiningForm.education_qualification[index].id;
             // console.log($scope.joiningForm);
@@ -2395,7 +2407,7 @@ function isEditableForm($cap, $status)
             $scope.successMessage = '';
 
             // console.log($scope.profile);
-            var apiUrl = base_url + '/api/employee-joining-form/save-professional-qualification';
+            var apiUrl = base_url + '/api/my-joining-form/save-professional-qualification';
             var method = "POST";
             // console.log($scope.joiningForm);
             $http({
@@ -2457,7 +2469,7 @@ function isEditableForm($cap, $status)
                 return;
             }
             // $scope.joiningForm.education_qualification.splice(index, 1);
-            var apiUrl = base_url + '/api/employee-joining-form/remove-professional-qualification';
+            var apiUrl = base_url + '/api/my-joining-form/remove-professional-qualification';
             var method = "POST";
             var id = $scope.joiningForm.professional_qualification[index].id;
             // console.log($scope.joiningForm);
@@ -2514,7 +2526,7 @@ function isEditableForm($cap, $status)
 
 
                 // console.log($scope.profile);
-                var apiUrl = base_url + '/api/employee-joining-form/save-employment-history_';
+                var apiUrl = base_url + '/api/my-joining-form/save-employment-history_';
                 var method = "POST";
                 // console.log($scope.joiningForm);
                 $http({
@@ -2550,7 +2562,7 @@ function isEditableForm($cap, $status)
 
 
                 // console.log($scope.profile);
-                var apiUrl = base_url + '/api/employee-joining-form/remove-employment-history_';
+                var apiUrl = base_url + '/api/my-joining-form/remove-employment-history_';
                 var method = "DELETE";
                 // console.log($scope.joiningForm);
                 $http({
@@ -2671,7 +2683,7 @@ function isEditableForm($cap, $status)
             $scope.loading = true;
             $scope.successMessage = '';
             // console.log($scope.profile);
-            var apiUrl = base_url + '/api/employee-joining-form/save-gap-declaration';
+            var apiUrl = base_url + '/api/my-joining-form/save-gap-declaration';
             var method = "POST";
             // console.log($scope.joiningForm);
             $http({
@@ -2730,7 +2742,7 @@ function isEditableForm($cap, $status)
                 return;
             }
             // $scope.joiningForm.employment_history.gap_declaration.splice(index, 1);
-            var apiUrl = base_url + '/api/employee-joining-form/remove-gap-declaration';
+            var apiUrl = base_url + '/api/my-joining-form/remove-gap-declaration';
             var method = "POST";
             var id = $scope.joiningForm.gap_declaration[index].id;
             // console.log($scope.joiningForm);
@@ -2791,7 +2803,7 @@ function isEditableForm($cap, $status)
             $scope.loading = true;
             $scope.successMessage = '';
             // console.log($scope.profile);
-            var apiUrl = base_url + '/api/employee-joining-form/save-mediclaim';
+            var apiUrl = base_url + '/api/my-joining-form/save-mediclaim';
             var method = "POST";
             // console.log($scope.joiningForm);
             $http({
@@ -2852,7 +2864,7 @@ function isEditableForm($cap, $status)
                 return;
             }
             // $scope.joiningForm.employment_history.gap_declaration.splice(index, 1);
-            var apiUrl = base_url + '/api/employee-joining-form/remove-mediclaim';
+            var apiUrl = base_url + '/api/my-joining-form/remove-mediclaim';
             var method = "POST";
             var id = $scope.joiningForm.mediclaim[index].id;
             // console.log($scope.joiningForm);
@@ -2915,7 +2927,7 @@ function isEditableForm($cap, $status)
             $scope.loading = true;
             $scope.successMessage = '';
             // console.log($scope.profile);
-            var apiUrl = base_url + '/api/employee-joining-form/' + formType;
+            var apiUrl = base_url + '/api/my-joining-form/' + formType;
             var method = "POST";
             // console.log($scope.joiningForm);
             $http({
@@ -2978,7 +2990,7 @@ function isEditableForm($cap, $status)
 
             $scope.errors = '';
             $scope.loading = true;
-            var apiUrl = base_url + '/api/employee-joining-form/documents';
+            var apiUrl = base_url + '/api/my-joining-form/documents';
             $http({
                     method: 'POST',
                     url: apiUrl,
@@ -3033,7 +3045,7 @@ function isEditableForm($cap, $status)
             }
             $scope.errors = '';
             $scope.loading = true;
-            var apiUrl = base_url + '/api/employee-joining-form/remove-document';
+            var apiUrl = base_url + '/api/my-joining-form/remove-document';
             $http({
                     method: 'POST',
                     url: apiUrl,
@@ -3067,3 +3079,4 @@ function isEditableForm($cap, $status)
 
     }]);
 </script>
+<?= $this->endSection() ?>

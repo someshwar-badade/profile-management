@@ -3,10 +3,13 @@ app.controller('loginCtrl', ['$scope', '$http', '$cookies', function ($scope, $h
   $scope.mobile = '';
   $scope.password = '';
   $scope.otp = '';
+  $scope.loginChoice = "password";
   $scope.errors = '';
   $scope.otpSuccessMsg = '';
   $scope.otpLoading = false;
   $scope.loading = false;
+  $scope.sendVerificationCodeLoading = false;
+  $scope.sendVerificationCodeSuccess = '';
   $scope.submitClick = function () {
     // $scope.errors='';
     $scope.otpSuccessMsg = '';
@@ -15,7 +18,7 @@ app.controller('loginCtrl', ['$scope', '$http', '$cookies', function ($scope, $h
       method: 'post',
       url: base_url + '/api/user/signin',
       // data:{'mobile':$scope.mobile,'password':$scope.password}
-      data: { 'email': $scope.email, 'password': $scope.password }
+      data: { 'email': $scope.email, 'password': $scope.password, 'loginChoice':$scope.loginChoice,'verificationCodeText':$scope.verificationCodeText }
 
 
     }).then(function (response) {
@@ -32,6 +35,34 @@ app.controller('loginCtrl', ['$scope', '$http', '$cookies', function ($scope, $h
         toastr.error("Something went wrong !!");
     }
       $scope.loading = false;
+    });
+  }
+
+  $scope.sendVerificationCode = function(){
+    $scope.sendVerificationCodeLoading = true;
+    $scope.otpSuccessMsg = '';
+    $scope.errors = '';
+    $http({
+      method: 'post',
+      url: base_url + '/api/send-verification-code',
+      // data:{'mobile':$scope.mobile,'password':$scope.password}
+      data: { 'email': $scope.email }
+
+    }).then(function (response) {
+      $scope.sendVerificationCodeLoading = false;
+      $scope.sendVerificationCodeSuccess= response.data.messages.success;
+     console.log(response);
+
+
+    }, function (response) {
+
+      $scope.errors = response.data.messages;
+      if (response.data.status == 403) {
+        toastr.error(response.data.messages.errorMessage);
+    } else {
+        
+    }
+      $scope.sendVerificationCodeLoading = false;
     });
   }
 

@@ -11,7 +11,7 @@
     $user = checkUserToken();
     if (isset($_COOKIE['fname'])) { ?>
             <li class="nav-item"> <a class="nav-link" href="<?= base_url(route_to('user-dashboard')) ?>">
-                <i class="flaticon-users"></i> Howdy, <?= ucfirst($_COOKIE['fname']) ?> <small>[<?=$user['roles'][0]['display_name']?>]</small></a>
+                <i class="flaticon-users"></i> Howdy, <?= ucfirst($_COOKIE['fname']) ?> <small>[<?=isset($user['roles'][0])?$user['roles'][0]['display_name']:'Guest User'?>]</small></a>
             </li>
           <?php } ?>
     </ul>
@@ -64,6 +64,15 @@
               </p>
             </a>
           </li>
+
+          <!-- <li class="nav-item">
+            <a href="<?= base_url(route_to('createMyProfile')) ?>" class="nav-link <?=$active_nav=='my-profile'?' active ':'';?>">
+              <i class="nav-icon fa fa-id-card"></i>
+              <p>
+              My Profile
+              </p>
+            </a>
+          </li> -->
           
           <?php if (hasCapability('profiles/view')) { ?>
           <li class="nav-item">

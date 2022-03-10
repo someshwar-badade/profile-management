@@ -209,23 +209,26 @@
                   <div class="form-row">
                     <div class="form-group col-md-12">
                       <label>Primary Skills: </label>
-                      <span>
-                        <span class="badge badge-info ml-1" ng-repeat="skill in profileForm.primary_skills">{{skill}}</span>
-                      </span>
+                      <h6>
+                       
+                        <span class="badge badge-info ml-1" ng-repeat="item in profileForm.primary_skills">{{item.text}} [{{item.rating+'/10'}}]</span>
+</h6>
                     </div>
                     <div class="form-group col-md-12">
 
                       <label>Secondary Skills: </label>
-                      <span><span class="badge badge-info ml-1" ng-repeat="skill in profileForm.secondary_skills">{{skill}}</span></span>
+                      <h6>
+                      
+                      <span class="badge badge-info ml-1" ng-repeat="item in profileForm.secondary_skills">{{item.text}} [{{item.rating+'/10'}}]</span>
+                      </h6>
 
                     </div>
                     <div class="form-group col-md-12">
 
                       <label>Foundation Skills: </label>
-                      <span>
-                        <span class="badge badge-info ml-1" ng-repeat="skill in profileForm.foundation_skills">{{skill}}</span>
-
-                      </span>
+                      <h6>
+                      <span class="badge badge-info ml-1" ng-repeat="item in profileForm.foundation_skills">{{item.text}} [{{item.rating+'/10'}}]</span>
+                      </h6>
 
                     </div>
 
@@ -778,11 +781,6 @@
       });
     }
 
-
-
-    $scope.getSkills = function(skills) {
-      return skills.replace(/\|\|/g, ', ');
-    }
     $scope.updateStatus = function() {
       $http({
         method: 'put',
@@ -799,6 +797,10 @@
 
 
       });
+    }
+
+    $scope.getSkills = function(skills) {
+      return skills.replace(/\|\|/g, ', ');
     }
 
   }

@@ -41,14 +41,26 @@
 </style>
 <section ng-cloak class="abutsSection clearfix" ng-controller="profileFormCtrl">
     <div class="container-fluid mt-5">
-        <?php if (isset($showTitle)==null) { ?>
+        <?php if (isset($showTitle) == null) { ?>
             <div class="row justify-content-center">
                 <div class="col-md-12">
 
-                    <h2 class="text-center">My Profile
-                        <a href="<?=base_url(route_to('downloadMyProfile'))?>" class="fa fa-download float-right" title="Download Profile"></a>
-                        </h2>
-                    </div>
+                    <h2 class="text-center">
+                        My Profile
+
+                        <div class="dropdown float-right">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButtonDownload" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Download Resume
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonDownload">
+                                <a class="dropdown-item" href="<?= base_url(route_to('downloadMyProfile')) ?>">Template 1</a>
+                                <a class="dropdown-item" href="<?= base_url(route_to('downloadMyProfile')) ?>">Template 2</a>
+                                <a class="dropdown-item" href="<?= base_url(route_to('downloadMyProfile')) ?>">Template 3</a>
+                            </div>
+                        </div>
+                        <!-- <a href="<?= base_url(route_to('downloadMyProfile')) ?>" class="fa fa-download " title="Download Profile"></a> -->
+                    </h2>
+                </div>
             </div>
         <?php } ?>
         <div class="row">
@@ -167,46 +179,46 @@
                                     <div class="form-group col-md-3">
                                         <label>Total Experience</label>
                                         <div class="row">
-                                                        <div class="col-md-6">
-                                                            <div class="input-group mb-3">
-                                                                <input type="text" maxlength="2" class="form-control only-numbers" ng-model="profileForm.total_experience_y">
-                                                                <div class="input-group-append">
-                                                                    <span class="input-group-text">Y</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="input-group mb-3">
-                                                                <input type="text" maxlength="2" class="form-control only-numbers" ng-change="validateMaxExpMonth()" ng-model="profileForm.total_experience_m">
-                                                                <div class="input-group-append">
-                                                                    <span class="input-group-text">M</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                            <div class="col-md-6">
+                                                <div class="input-group mb-3">
+                                                    <input type="text" maxlength="2" class="form-control only-numbers" ng-model="profileForm.total_experience_y">
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text">Y</span>
                                                     </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="input-group mb-3">
+                                                    <input type="text" maxlength="2" class="form-control only-numbers" ng-change="validateMaxExpMonth()" ng-model="profileForm.total_experience_m">
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text">M</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <!-- <input type="text" maxlength="3" class="form-control only-numbers" ng-model="profileForm.total_experience"> -->
                                     </div>
 
                                     <div class="form-group col-md-3">
                                         <label>Relevant Experience</label>
                                         <div class="row">
-                                                        <div class="col-md-6">
-                                                            <div class="input-group mb-3">
-                                                                <input type="text" maxlength="2" class="form-control only-numbers" ng-model="profileForm.relevant_experience_y">
-                                                                <div class="input-group-append">
-                                                                    <span class="input-group-text">Y</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="input-group mb-3">
-                                                                <input type="text" maxlength="2" class="form-control only-numbers" ng-change="validateMaxExpMonth()" ng-model="profileForm.relevant_experience_m">
-                                                                <div class="input-group-append">
-                                                                    <span class="input-group-text">M</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                            <div class="col-md-6">
+                                                <div class="input-group mb-3">
+                                                    <input type="text" maxlength="2" class="form-control only-numbers" ng-model="profileForm.relevant_experience_y">
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text">Y</span>
                                                     </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="input-group mb-3">
+                                                    <input type="text" maxlength="2" class="form-control only-numbers" ng-change="validateMaxExpMonth()" ng-model="profileForm.relevant_experience_m">
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text">M</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <!-- <input type="text" maxlength="3" class="form-control only-numbers" ng-model="profileForm.relevant_experience"> -->
                                     </div>
 
@@ -308,20 +320,26 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-12">
                                         <label>Primary Skills</label>
-                                        <tags-input ng-model="profileForm.primary_skills" on-tag-added="onTagAdded($tag)" use-strings="true" replace-spaces-with-dashes="false">
+                                        <a role="button" ng-show="profileForm.primary_skills.length>0" class="btn btn-secondary btn-sm float-right" data-toggle="modal" data-target="#primarySkillsRatingModal" >Rate Your Skills</a>
+                                        <tags-input ng-model="profileForm.primary_skills" on-tag-added="onTagAdded($tag)" replace-spaces-with-dashes="false">
                                             <auto-complete source="loadTags($query)"></auto-complete>
                                         </tags-input>
+                                       
+                                        <!-- <div star-rating rating-value="3" max="5" on-rating-selected="getSelectedRating(rating)"></div> -->
+                                       
                                     </div>
                                     <div class="form-group col-md-12">
 
                                         <label>Secondary Skills</label>
-                                        <tags-input ng-model="profileForm.secondary_skills" on-tag-added="onTagAdded($tag)" use-strings="true" replace-spaces-with-dashes="false">
+                                        <a role="button" ng-show="profileForm.secondary_skills.length>0" class="btn btn-secondary btn-sm float-right" data-toggle="modal" data-target="#secondarySkillsRatingModal" >Rate Your Skills</a>
+                                        <tags-input ng-model="profileForm.secondary_skills" on-tag-added="onTagAdded($tag)"  replace-spaces-with-dashes="false">
                                             <auto-complete source="loadTags($query)"></auto-complete>
                                         </tags-input>
                                     </div>
                                     <div class="form-group col-md-12">
                                         <label>Foundation Skills</label>
-                                        <tags-input ng-model="profileForm.foundation_skills" on-tag-added="onTagAdded($tag)" use-strings="true" replace-spaces-with-dashes="false">
+                                        <a role="button" ng-show="profileForm.foundation_skills.length>0" class="btn btn-secondary btn-sm float-right" data-toggle="modal" data-target="#foundationSkillsRatingModal" >Rate Your Skills</a>
+                                        <tags-input ng-model="profileForm.foundation_skills" on-tag-added="onTagAdded($tag)"  replace-spaces-with-dashes="false">
                                             <auto-complete source="loadTags($query)"></auto-complete>
                                         </tags-input>
                                     </div>
@@ -696,6 +714,142 @@
         </div>
     </div>
 
+    <div class="modal fade" id="primarySkillsRatingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Rate Your Primary Skills</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                   
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Skill</th>
+                                <th>Rating</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="skill in profileForm.primary_skills">
+                                <td style="vertical-align: middle;">{{skill.text}}</td>
+                                <td>
+                                    <div class="rating">
+                                        <input type="radio" ng-model="skill.rating" id="rating_{{$index}}_10" value="10" ng-true-value="10"> <label class="form-check-label" for="rating_{{$index}}_10">10</label>
+                                        <input type="radio" ng-model="skill.rating" id="rating_{{$index}}_9" value="9" ng-true-value="9"> <label class="form-check-label" for="rating_{{$index}}_9">9</label>
+                                        <input type="radio" ng-model="skill.rating" id="rating_{{$index}}_8" value="8" ng-true-value="8"> <label class="form-check-label" for="rating_{{$index}}_8">8</label>
+                                        <input type="radio" ng-model="skill.rating" id="rating_{{$index}}_7" value="7" ng-true-value="7"> <label class="form-check-label" for="rating_{{$index}}_7">7</label>
+                                        <input type="radio" ng-model="skill.rating" id="rating_{{$index}}_6" value="6" ng-true-value="6"> <label class="form-check-label" for="rating_{{$index}}_6">6</label>
+                                        <input type="radio" ng-model="skill.rating" id="rating_{{$index}}_5" value="5" ng-true-value="5"> <label class="form-check-label" for="rating_{{$index}}_5">5</label>
+                                        <input type="radio" ng-model="skill.rating" id="rating_{{$index}}_4" value="4" ng-true-value="4"> <label class="form-check-label" for="rating_{{$index}}_4">4</label>
+                                        <input type="radio" ng-model="skill.rating" id="rating_{{$index}}_3" value="3" ng-true-value="3"> <label class="form-check-label" for="rating_{{$index}}_3">3</label>
+                                        <input type="radio" ng-model="skill.rating" id="rating_{{$index}}_2" value="2" ng-true-value="2"> <label class="form-check-label" for="rating_{{$index}}_2">2</label>
+                                        <input type="radio" ng-model="skill.rating" id="rating_{{$index}}_1" value="1" ng-true-value="1"> <label class="form-check-label" for="rating_{{$index}}_1">1</label>
+                                    </div>
+                                   <!-- <input type="range" min="1" max="10" ng-model="skill.rating" class="slider"> <span>{{skill.rating}}</span> -->
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="secondarySkillsRatingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Rate Your Secondary Skills</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Skill</th>
+                                <th>Rating</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="skill in profileForm.secondary_skills">
+                                <td style="vertical-align: middle;">{{skill.text}}</td>
+                                <td>
+                                    <div class="rating">
+                                        <input type="radio" ng-model="skill.rating" id="sk_rating_{{$index}}_10" value="10" ng-true-value="10"> <label class="form-check-label" for="sk_rating_{{$index}}_10">10</label>
+                                        <input type="radio" ng-model="skill.rating" id="sk_rating_{{$index}}_9" value="9" ng-true-value="9"> <label class="form-check-label" for="sk_rating_{{$index}}_9">9</label>
+                                        <input type="radio" ng-model="skill.rating" id="sk_rating_{{$index}}_8" value="8" ng-true-value="8"> <label class="form-check-label" for="sk_rating_{{$index}}_8">8</label>
+                                        <input type="radio" ng-model="skill.rating" id="sk_rating_{{$index}}_7" value="7" ng-true-value="7"> <label class="form-check-label" for="sk_rating_{{$index}}_7">7</label>
+                                        <input type="radio" ng-model="skill.rating" id="sk_rating_{{$index}}_6" value="6" ng-true-value="6"> <label class="form-check-label" for="sk_rating_{{$index}}_6">6</label>
+                                        <input type="radio" ng-model="skill.rating" id="sk_rating_{{$index}}_5" value="5" ng-true-value="5"> <label class="form-check-label" for="sk_rating_{{$index}}_5">5</label>
+                                        <input type="radio" ng-model="skill.rating" id="sk_rating_{{$index}}_4" value="4" ng-true-value="4"> <label class="form-check-label" for="sk_rating_{{$index}}_4">4</label>
+                                        <input type="radio" ng-model="skill.rating" id="sk_rating_{{$index}}_3" value="3" ng-true-value="3"> <label class="form-check-label" for="sk_rating_{{$index}}_3">3</label>
+                                        <input type="radio" ng-model="skill.rating" id="sk_rating_{{$index}}_2" value="2" ng-true-value="2"> <label class="form-check-label" for="sk_rating_{{$index}}_2">2</label>
+                                        <input type="radio" ng-model="skill.rating" id="sk_rating_{{$index}}_1" value="1" ng-true-value="1"> <label class="form-check-label" for="sk_rating_{{$index}}_1">1</label>
+                                    </div>
+                                   <!-- <input type="range" min="1" max="10" ng-model="skill.rating" class="slider"> <span>{{skill.rating}}</span> -->
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="foundationSkillsRatingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Rate Your Foundation Skills</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Skill</th>
+                                <th>Rating</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="skill in profileForm.foundation_skills">
+                                <td style="vertical-align: middle;">{{skill.text}}</td>
+                                <td>
+                                    <div class="rating">
+                                        <input type="radio" ng-model="skill.rating" id="fk_rating_{{$index}}_10" value="10" ng-true-value="10"> <label class="form-check-label" for="fk_rating_{{$index}}_10">10</label>
+                                        <input type="radio" ng-model="skill.rating" id="fk_rating_{{$index}}_9" value="9" ng-true-value="9"> <label class="form-check-label" for="fk_rating_{{$index}}_9">9</label>
+                                        <input type="radio" ng-model="skill.rating" id="fk_rating_{{$index}}_8" value="8" ng-true-value="8"> <label class="form-check-label" for="fk_rating_{{$index}}_8">8</label>
+                                        <input type="radio" ng-model="skill.rating" id="fk_rating_{{$index}}_7" value="7" ng-true-value="7"> <label class="form-check-label" for="fk_rating_{{$index}}_7">7</label>
+                                        <input type="radio" ng-model="skill.rating" id="fk_rating_{{$index}}_6" value="6" ng-true-value="6"> <label class="form-check-label" for="fk_rating_{{$index}}_6">6</label>
+                                        <input type="radio" ng-model="skill.rating" id="fk_rating_{{$index}}_5" value="5" ng-true-value="5"> <label class="form-check-label" for="fk_rating_{{$index}}_5">5</label>
+                                        <input type="radio" ng-model="skill.rating" id="fk_rating_{{$index}}_4" value="4" ng-true-value="4"> <label class="form-check-label" for="fk_rating_{{$index}}_4">4</label>
+                                        <input type="radio" ng-model="skill.rating" id="fk_rating_{{$index}}_3" value="3" ng-true-value="3"> <label class="form-check-label" for="fk_rating_{{$index}}_3">3</label>
+                                        <input type="radio" ng-model="skill.rating" id="fk_rating_{{$index}}_2" value="2" ng-true-value="2"> <label class="form-check-label" for="fk_rating_{{$index}}_2">2</label>
+                                        <input type="radio" ng-model="skill.rating" id="fk_rating_{{$index}}_1" value="1" ng-true-value="1"> <label class="form-check-label" for="fk_rating_{{$index}}_1">1</label>
+                                    </div>
+                                   <!-- <input type="range" min="1" max="10" ng-model="skill.rating" class="slider"> <span>{{skill.rating}}</span> -->
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+                
+            </div>
+        </div>
+    </div>
 
 </section>
 
@@ -735,7 +889,7 @@
         }
 
         $scope.validateMaxExpMonth = function() {
-            
+
             if ($scope.profileForm.total_experience_m < 0) {
                 $scope.profileForm.total_experience_m = 0;
             }

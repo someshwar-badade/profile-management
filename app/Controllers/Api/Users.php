@@ -5,7 +5,7 @@ namespace App\Controllers\api;
 
 use CodeIgniter\API\ResponseTrait;
 use App\Models\UserModel;
-use App\Models\OtpModel;
+use App\Models\UserRoleModel;
 use Exception;
 use Firebase\JWT\JWT;
 use App\Controllers;
@@ -17,7 +17,7 @@ class Users extends  Controllers\BaseController
 {
 	use ResponseTrait;
 
-	
+
 
 	public function register()
 	{
@@ -25,7 +25,7 @@ class Users extends  Controllers\BaseController
 		if ($this->request->getMethod() === "post") {
 			$requestData = (array) $this->request->getJSON();
 
-			
+
 
 			$validation =  \Config\Services::validation();
 
@@ -37,29 +37,29 @@ class Users extends  Controllers\BaseController
 			];
 
 			$rules['email'] = 'required|trim|valid_email|is_unique[users.email,id,{id}]';
-			
+
 
 			$validation->setRules(
 				$rules,
 				[   // Errors
 					'fname' => [
-						'required' => lang('forms.register.firstName.errorRequired')
+						'required' => "First name can not be empty."
 					],
 					'lname' => [
-						'required' => lang('forms.register.lastName.errorRequired')
+						'required' => "Last name can not be empty."
 					],
 					'email' => [
-						'required' => lang('forms.register.emailAddress.errorRequired'),
-						'valid_email' => lang('forms.register.emailAddress.errorEmail'),
-						'is_unique' => lang('forms.register.emailAddress.errorUnique')
+						'required' => "E-mail can not be empty.",
+						'valid_email' => "Enter valid e-mail.",
+						'is_unique' => "E-mail is already registered with us."
 					],
 					'password' => [
-						'required' => lang('forms.register.password.errorRequired'),
-						'min_length' => lang('forms.register.password.errorMinlength')
+						'required' => "Password can not be empty.",
+						'min_length' => "Password is too short.",
 					],
 					'confirm_password' => [
 
-						'matches' => lang('forms.register.confirmPassword.errorEqualto')
+						'matches' => "Password is not match.",
 					]
 				]
 			);
@@ -70,34 +70,38 @@ class Users extends  Controllers\BaseController
 				return $this->fail($validation->getErrors(), 400);
 			}
 
-			
+
 
 			$requestData['password'] = password_hash($requestData['password'], PASSWORD_BCRYPT);
-			$requestData['owner_id'] = 0;
+			
 			$model = new UserModel();
 			$user_id  = $model->insert($requestData);
 			$user = $model->find($user_id);
-			$user['owner_id'] = $user_id;
-			//update owner id
-			$model->save($user);
+			
+			 //insert role [6 - guest_user]
+             $UserRoleModel = new UserRoleModel();
+             if(!$UserRoleModel->where('user_id',$user_id)->where('role_id','6')->first()){
+                $UserRoleModel->insert(['user_id'=>$user_id,'role_id'=>'6']);
+             }
+			
 			$user = $model->find($user_id);
 			$actionLogData = [
-				'user_id'=>$user_id,
-				'action_type'=>'created',
-				'model'=>'user',
-				'record_id'=>$user_id,
-				'chaged_data'=> json_encode($user)
+				'user_id' => $user_id,
+				'action_type' => 'created',
+				'model' => 'user',
+				'record_id' => $user_id,
+				'chaged_data' => json_encode($user)
 			];
 
 			creatActionLog($actionLogData);
-			
+
 			if ($user) {
 				//send sms 
 				// $message = "You have registered on ".SITE_TITLE." and your Registration Id is $user_id.";
 
 				// $message = urlencode($message);
 				// $output = sendSms($requestData['mobile'],$message);
-				
+
 			}
 			//Respond with 200 status code
 			// return $this->respond(['success' => lang('forms.register.successMessage')]);
@@ -108,7 +112,7 @@ class Users extends  Controllers\BaseController
 
 	public function login()
 	{
-		
+
 		if ($this->request->getMethod() === 'post') {
 			$requestData = (array) $this->request->getJSON();
 			$requestData = array_filter($requestData);
@@ -116,76 +120,96 @@ class Users extends  Controllers\BaseController
 			$validation =  \Config\Services::validation();
 			$model = new UserModel();
 			$isValidUser = false;
-			
-			
-				
 
-				$validation->setRules(
-					[
-						'email' => 'required|valid_email',
-						'password' => 'required',
+
+			$rules = [
+				'email' => 'required|valid_email|is_not_unique[users.email]',
+			];
+
+			if ($requestData['loginChoice'] == 'verificationCode') {
+				$rules['verificationCodeText'] = 'required';
+			} else {
+				$rules['password'] = 'required';
+			}
+
+
+			$validation->setRules(
+				$rules,
+				[
+					'email' => [
+						'required' => lang('forms.login.email.errorRequired'),
+						'is_not_unique' => "The e-mail is not registered with us."
 					],
-					[   // Errors
 
-						'email' => [
-							'required' => lang('forms.login.email.errorRequired')
-						],
-						'password' => [
-							'required' => lang('forms.login.password.errorRequired')
-						],
-					]
-				);
+					'verificationCodeText' => [
+						'required' => "Please enter the verification code."
+					],
 
-				$valid = $validation->run($requestData);
-				
-				
-				if (!$valid) {
+					'password' => [
+						'required' => lang('forms.login.password.errorRequired')
+					],
+				]
+			);
 
-					return $this->fail($validation->getErrors(), 400);
-				}
+			$valid = $validation->run($requestData);
 
-				//get user details
-				// if (strlen($requestData['mobile']) == '10') {
-				// 	$user = $model->where('mobile', $requestData['mobile'])->first();
-				// } else {
-				// 	$user = $model->find($requestData['mobile']);
-				// }
+
+			if (!$valid) {
+
+				return $this->fail($validation->getErrors(), 400);
+			}
+
+			//get user details
+			// if (strlen($requestData['mobile']) == '10') {
+			// 	$user = $model->where('mobile', $requestData['mobile'])->first();
+			// } else {
+			// 	$user = $model->find($requestData['mobile']);
+			// }
+
+			$user = $model->where('email', $requestData['email'])->first();
+
+			if ($requestData['loginChoice'] == 'verificationCode') {
+				//check password
+				if ($requestData['verificationCodeText'] != $user['verification_code']) {
+					return $this->fail(['verificationCodeText' => "Invalid verification code."]);
 					
-				$user =$model->where('email', $requestData['email'])->first();
-				
+				}
+			} else {
 				//check password
 				if (!password_verify($requestData['password'], $user['password'])) {
 					return $this->fail(['password' => lang('forms.login.password.errorInvalid')]);
 				}
+			}
 
-				if ($user['status']=='0') {
-					return $this->fail(['errorMessage'=>"Your account is deactivated. Please contact to admin"],403);
-				}
+			if ($user['status'] == '0') {
+				return $this->fail(['errorMessage' => "Your account is deactivated. Please contact to admin"], 403);
+			}
 
-				//valid user
-				$isValidUser = true;
+			//valid user
+			$isValidUser = true;
 
-				if ($isValidUser) {
+			if ($isValidUser) {
 
-					
-					
-					$actionLogData = [
-						'user_id'=>$user['id'],
-						'action_type'=>'created',
-						'model'=>'login',
-						'record_id'=>$user['id'],
-						'action_by'=> $user['fname'].' '.$user['lname'],
-						'chaged_data'=> json_encode(['login'=>date('Y-m-d H:i:s')])
-					];
+				//set verification code to null for security
+				$user['verification_code'] =null;
+				$model->save($user);
+				$actionLogData = [
+					'user_id' => $user['id'],
+					'action_type' => 'created',
+					'model' => 'login',
+					'record_id' => $user['id'],
+					'action_by' => $user['fname'] . ' ' . $user['lname'],
+					'chaged_data' => json_encode(['login' => date('Y-m-d H:i:s')])
+				];
 
-					$ActionLogModel = new ActionLogModel();
-					$ActionLogModel->insert($actionLogData);
-					
-					return $this->userLogin($user);
-				} 
-			 
+				$ActionLogModel = new ActionLogModel();
+				$ActionLogModel->insert($actionLogData);
 
-			
+				return $this->userLogin($user);
+			}
+
+
+
 			return $this->fail(['password' => lang('forms.login.password.errorInvalid')]);
 		}
 	}
@@ -313,8 +337,63 @@ class Users extends  Controllers\BaseController
 		}
 	}
 
-	public function getUserList(){
+	public function sendVerificationCode()
+	{
+		$requestData = (array) $this->request->getJSON();
 
+
+		$validation =  \Config\Services::validation();
+
+		$rules = [
+			'email' => 'required|valid_email|is_not_unique[users.email]',
+		];
+
+
+		$validation->setRules(
+			$rules,
+			[
+				'email' => [
+					'required' => "Please enter an E-mail.",
+					'valid_email' => "Please enter valid E-mail.",
+					'is_not_unique' => "E-mail is not registered with us.",
+				],
+			]
+
+		);
+		$valid = $validation->run($requestData);
+
+		if (!$valid) {
+			return $this->fail($validation->getErrors(), 400);
+		}
+
+		//get user details 
+		$model = new UserModel();
+		$userData = $model->where('email', $requestData['email'])->first();
+
+		$userData['verification_code'] = substr(number_format(time() * rand(), 0, '', ''), 0, 8);
+
+		$update = $model->save($userData);
+
+		//send email
+		$templateData = [
+			'first_name' => $userData['fname'],
+			'link' => '',
+			'verification_code' => $userData['verification_code']
+		];
+		$message = view('email-templates/send-profile-verification-code', $templateData);
+		$isEmailSent =  sendEmail_common($userData['email'], $message, 'Bitstringit', '');
+
+		//Respond with 200 status code
+		return $this->respond([
+			'messages' => [
+				'success' => "Verification code is sent to your email.",
+			]
+		]);
+	}
+
+
+	public function getUserList()
+	{
 	}
 	// public function requestOtp()
 	// {
@@ -379,7 +458,7 @@ class Users extends  Controllers\BaseController
 
 	// 			$message = urlencode($message);
 
-				
+
 	// 			$output = sendSms($requestData['mobile'],$message);
 	// 			if (stripos(strip_tags($output), "Successfully") !== false) {
 
@@ -544,9 +623,7 @@ class Users extends  Controllers\BaseController
 	// 	}
 	// }
 
-	public function getDashboardDetails(){
-
-		
+	public function getDashboardDetails()
+	{
 	}
-	
 }

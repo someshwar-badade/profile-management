@@ -439,7 +439,7 @@
 
 
     <!--table:previous employer start-->
-    <?php $employers =  isset($joiningFormDetails['employment_history']['employers']) ? (array)$joiningFormDetails['employment_history']['employers'] : []; ?>
+    <?php $employers =  $joiningFormDetails['employment_history']['employers'] ? (array)$joiningFormDetails['employment_history']['employers'] : []; ?>
 
     <?php foreach ($employers as $key => $p_employer) {
         $p_employer = (array)$p_employer ?>

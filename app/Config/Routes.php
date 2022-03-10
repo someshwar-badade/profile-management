@@ -36,9 +36,12 @@ $routes->setAutoRoute(true);
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index',['as'=>'home']);
-$routes->get('/register', 'Users::register',['as'=>'register']);
+// $routes->get('/register', 'Users::register',['as'=>'register']);
+$routes->get('/sign-up', 'Users::signUp',['as'=>'signUp']);
+$routes->post('/api/sign-up', 'Api\Users::register',['as'=>'register']);
 $routes->match(['get', 'post'],'/forgot-password', 'Users::forgotPassword',['as'=>'forgot-password']);
 $routes->get('/login', 'Users::login',['as'=>'login']);
+$routes->post('/api/send-verification-code', 'Api\Users::sendVerificationCode',['as'=>'sendVerificationCode']);
 $routes->get('/logout', 'Users::logout',['as'=>'logout']);
 $routes->get('/user-dashboard', 'Users::userDashboard',['as'=>'user-dashboard']);
 $routes->get('/user-settings', 'Users::settings',['as'=>'user-settings']);
@@ -61,6 +64,7 @@ $routes->match(['get', 'post'],'/joining-form-verification/(:any)', 'Profiles::j
 $routes->get('/download-joining-form/(:any)', 'Profiles::downloadJoiningForm/$1',['as'=>'downloadJoiningForm']);
 $routes->get('/download-pre-joining-document/(:any)/(:any)', 'Profiles::downloadPrejoiningDocuments/$1/$2',['as'=>'downloadPrejoiningDocuments']);
 $routes->get('/cv', 'Profiles::cv',['as'=>'cv']);
+$routes->get('/download-my-joining-form', 'Profiles::downloadMyJoiningForm',['as'=>'downloadMyJoiningForm2']);
 $routes->get('/download-my-joining-form/(:any)', 'Profiles::downloadMyJoiningForm/$1',['as'=>'downloadMyJoiningForm']);
 $routes->post('/api/employee-joining-form/save-employee-details', 'Api\Profiles::joiningFormSaveEmployeeDetails',['as'=>'joiningFormSaveEmployeeDetails']);
 $routes->post('/api/employee-joining-form/save-education-details', 'Api\Profiles::joiningFormSaveEducationDetails',['as'=>'joiningFormSaveEducationDetails']);
@@ -99,6 +103,28 @@ $routes->get('/api/testing', 'Api\Profiles::testing');
 $routes->post('/api/my-profile/documents', 'Api\Profiles::myProfileUploadDocument',['as'=>'myProfileUploadDocument']);
 $routes->post('/api/my-profile/remove-document', 'Api\Profiles::myProfileRemoveDocument',['as'=>'myProfileRemoveDocument']);
 $routes->get('/download-my-profile', 'Profiles::downloadMyProfile',['as'=>'downloadMyProfile']);
+
+//my joining form
+$routes->get('/my-joining-form', 'MyJoiningForm::index',['as'=>'myJoiningForm']);
+$routes->get('/api/my-joining-form', 'Api\MyJoiningForm::getJoingformDetails',['as'=>'getMyJoingformDetails']);
+$routes->post('/api/my-joining-form/save-employee-details', 'Api\MyJoiningForm::joiningFormSaveEmployeeDetails',['as'=>'myJoiningFormSaveEmployeeDetails']);
+$routes->post('/api/my-joining-form/save-education-details', 'Api\MyJoiningForm::joiningFormSaveEducationDetails',['as'=>'myJoiningFormSaveEducationDetails']);
+$routes->post('/api/my-joining-form/remove-education-details', 'Api\MyJoiningForm::joiningFormRemoveEducationDetails',['as'=>'myJoiningFormRemoveEducationDetails']);
+$routes->post('/api/my-joining-form/save-gap-declaration', 'Api\MyJoiningForm::joiningFormSaveGapdeclaration',['as'=>'myJoiningFormSaveGapdeclaration']);
+$routes->post('/api/my-joining-form/remove-gap-declaration', 'Api\MyJoiningForm::joiningFormRemoveGapdeclaration',['as'=>'myJoiningFormRemoveGapdeclaration']);
+$routes->post('/api/my-joining-form/save-mediclaim', 'Api\MyJoiningForm::joiningFormSaveMediclaim',['as'=>'myJoiningFormSaveMediclaim']);
+$routes->post('/api/my-joining-form/remove-mediclaim', 'Api\MyJoiningForm::joiningFormRemoveMediclaim',['as'=>'myJoiningFormRemoveMediclaim']);
+$routes->post('/api/my-joining-form/save-professional-qualification', 'Api\MyJoiningForm::joiningFormSaveProfetionalQualification',['as'=>'myJoiningFormSaveProfetionalQualification']);
+$routes->post('/api/my-joining-form/remove-professional-qualification', 'Api\MyJoiningForm::joiningFormRemoveProfetionalQualification',['as'=>'myJoiningFormRemoveProfetionalQualification']);
+$routes->post('/api/my-joining-form/save-employment-history', 'Api\MyJoiningForm::joiningFormSaveEmploymentHistory',['as'=>'myJoiningFormSaveEmploymentHistory']);
+$routes->post('/api/my-joining-form/save-employment-history_', 'Api\MyJoiningForm::joiningFormSaveEmploymentHistory_',['as'=>'myJoiningFormSaveEmploymentHistory_']);
+$routes->delete('/api/my-joining-form/remove-employment-history_', 'Api\MyJoiningForm::joiningFormRemoveEmploymentHistory_',['as'=>'myJoiningFormRemoveEmploymentHistory_']);
+$routes->post('/api/my-joining-form/save-background-information', 'Api\MyJoiningForm::joiningFormSaveBackgroundInfo',['as'=>'myJoiningFormSaveBackgroundInfo']);
+$routes->post('/api/my-joining-form/accept-declaration', 'Api\MyJoiningForm::joiningFormAcceptDeclaration',['as'=>'myJoiningFormAcceptDeclaration']);
+$routes->post('/api/my-joining-form/documents', 'Api\MyJoiningForm::joiningUploadDocument',['as'=>'myJoiningUploadDocument']);
+$routes->post('/api/my-joining-form/remove-document', 'Api\MyJoiningForm::removeDocument',['as'=>'myJoingFormremoveDocument']);
+
+
 
 //[interviews]
 //interviews/:profileid

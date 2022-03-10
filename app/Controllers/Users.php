@@ -63,7 +63,7 @@ class Users extends BaseController
 		return view('user/users/editUser',$data);
 	}
 
-	public function register(){
+	public function signUp(){
 		$user = checkUserToken();
 
 		if($user){
@@ -71,11 +71,11 @@ class Users extends BaseController
 		}
 
 		$data = [
-			'page_title' => 'Register',
-			'active_nav'=>'register',
-			'active_nav_parent'=>'register'
+			'page_title' => 'Sign Up',
+			'active_nav'=>'sign-up',
+			'active_nav_parent'=>'sign-up'
 		];
-		return view('register',$data);
+		return view('sign-up',$data);
 	}
 
 	public function login(){
@@ -201,7 +201,7 @@ class Users extends BaseController
 			
 
 		$user = checkUserToken();
-
+	
 		if(!$user){
 			//redirct to login
 			setcookie("a_token", "", time() - 3600,'/');//delete cookie
@@ -218,6 +218,21 @@ class Users extends BaseController
 			'active_nav'=>'dashboard',
 			'user'=>$user
 		];
+
+		if(isset($user['roles'][0])){
+
+			if($user['roles'][0]['role_name']=='guest_user'){
+			$model = new EmployeeJoinigDetailsModel();
+			$JoiningForm = $model->where('user_id',$user['id'])->first();
+			$data['isJoiningFormExist'] = (bool) $JoiningForm;
+			return view('user/dashboard-guest-user',$data);
+		}
+		}else{
+			$model = new EmployeeJoinigDetailsModel();
+			$JoiningForm = $model->where('user_id',$user['id'])->first();
+			$data['isJoiningFormExist'] = (bool) $JoiningForm;
+			return view('user/dashboard-guest-user',$data);
+		}
 
 		// $ProfileModel = new ProfileModel();
 		// $JobPositionModel = new JobPositionModel();

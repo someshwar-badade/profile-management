@@ -325,11 +325,11 @@
                     </div>
                     <div>
                         <label>UAN No:</label>
-                        <b><?= $joiningFormDetails['employee_other_details']['uan_number'] ?></b>
+                        <b><?= isset($joiningFormDetails['employee_other_details']['uan_number'])?$joiningFormDetails['employee_other_details']['uan_number']:'' ?></b>
                     </div>
                     <div>
                         <label>Medical conditions, if any:</label>
-                        <span><?= $joiningFormDetails['employee_other_details']['medical_condition'] ?></span>
+                        <span><?= isset($joiningFormDetails['employee_other_details']['medical_condition'])?$joiningFormDetails['employee_other_details']['medical_condition']:'' ?></span>
                     </div>
                 </td>
             </tr>
@@ -355,7 +355,7 @@
 
                 <td colspan="2">
                     <label>Present Address:</label>
-                    <span><?= $joiningFormDetails['employee_other_details']['present_address'] ?></span>
+                    <span><?= isset($joiningFormDetails['employee_other_details']['present_address'])?$joiningFormDetails['employee_other_details']['present_address']:'' ?></span>
                     <?php if (!empty($joiningFormDetails['employee_other_details']['present_address_city'])) { ?>
                         <label class="ml-5">City:</label>
                         <span><?= $joiningFormDetails['employee_other_details']['present_address_city'] ?></span>
@@ -387,17 +387,17 @@
 
                 <td colspan="2">
                     <label>Nature of Job hired for (Permanent/Contractual):</label>
-                    <span><?= $joiningFormDetails['employee_other_details']['nature_of_job_hired'] ?></span>
+                    <span><?= isset($joiningFormDetails['employee_other_details']['nature_of_job_hired'])?$joiningFormDetails['employee_other_details']['nature_of_job_hired']:'' ?></span>
 
                 </td>
                 <td colspan="1">
                     <label>Total Experience (Years):</label>
-                    <span><span><?= $joiningFormDetails['employee_other_details']['total_experience'] ?></span></span>
+                    <span><span><?= isset($joiningFormDetails['employee_other_details']['total_experience'])?$joiningFormDetails['employee_other_details']['total_experience']:'' ?></span></span>
 
                 </td>
                 <td colspan="1">
                     <label>Date of Joining:</label>
-                    <span><?= $joiningFormDetails['employee_other_details']['date_of_joining'] ?></span>
+                    <span><?= isset($joiningFormDetails['employee_other_details']['date_of_joining'])?$joiningFormDetails['employee_other_details']['date_of_joining']:'' ?></span>
 
                 </td>
             </tr>

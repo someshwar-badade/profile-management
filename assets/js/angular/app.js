@@ -9,6 +9,24 @@ app.run(function($rootScope,$http,$filter) {
       return $filter('date')(new Date(data), 'dd-MMM-yyyy h:m a');
     }
 
+    $rootScope.getBadgeHighlightClass = function(rating){
+      switch(rating){
+          case '0': return "badge-danger";
+          case '1': return "badge-danger";
+          case '2': return "badge-danger";
+          case '3': return "badge-warning";
+          case '4': return "badge-warning";
+          case '5': return "badge-warning";
+          case '6': return "badge-warning";
+          case '7': return "badge-success";
+          case '8': return "badge-success";
+          case '9': return "badge-success";
+          case '10': return "badge-success";
+          default: return "badge-danger";
+      }
+}
+
+
   });
 
   
@@ -62,5 +80,46 @@ app.filter('customFilter', function() {
      
     });
     return result;
+  }
+});
+
+
+app.directive('starRating', function () {
+  return {
+      restrict: 'A',
+      template: '<ul class="rating">' +
+          '<li ng-repeat="star in stars" ng-class="star" ng-click="toggle($index)">' +
+          '\u2605' +
+          '</li>' +
+          '</ul>',
+      scope: {
+          ratingValue: '=',
+          max: '=',
+          onRatingSelected: '&'
+      },
+      link: function (scope, elem, attrs) {
+
+          var updateStars = function () {
+              scope.stars = [];
+              for (var i = 0; i < scope.max; i++) {
+                  scope.stars.push({
+                      filled: i < scope.ratingValue
+                  });
+              }
+          };
+
+          scope.toggle = function (index) {
+              scope.ratingValue = index + 1;
+              scope.onRatingSelected({
+                  rating: index + 1
+              });
+          };
+
+          scope.$watch('ratingValue', function (oldVal, newVal) {
+              if (newVal) {
+                  updateStars();
+              }
+          });
+      }
   }
 });

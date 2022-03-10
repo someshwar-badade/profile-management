@@ -37,10 +37,10 @@ class Roles extends ResourceController
         foreach($requestData as $roleCapability){
             if($roleCapability['role_capability_id']){
                 //update
-                $model->update($roleCapability['role_capability_id'],['role_id'=>$id, 'capability_id'=>$roleCapability['capability_id'],'is_allowed'=>$roleCapability['is_allowed']]);
+                $model->update($roleCapability['role_capability_id'],['role_id'=>$id, 'capability_id'=>$roleCapability['capability_id'],'is_allowed'=>$roleCapability['is_allowed']?$roleCapability['is_allowed']:0]);
             }else{
                 //insert
-                $model->insert(['role_id'=>$id, 'capability_id'=>$roleCapability['capability_id'],'is_allowed'=>$roleCapability['is_allowed']]);
+                $model->insert(['role_id'=>$id, 'capability_id'=>$roleCapability['capability_id'],'is_allowed'=>$roleCapability['is_allowed']?$roleCapability['is_allowed']:0]);
             }
         }
 

@@ -321,7 +321,7 @@ class UserManagement extends  Controllers\BaseController
 				'email' => 'trim|required|valid_email|is_unique[users.email,id,{id}]',
 			];
 
-			if($requestData['changePassword']){
+			if(isset($requestData['changePassword'])){
 				$rules['password'] = 'required';
 				$requestData['password'] = password_hash($requestData['password'], PASSWORD_BCRYPT);
 			}else{
@@ -385,6 +385,7 @@ class UserManagement extends  Controllers\BaseController
 
 			$userRoles = new UserRoleModel();
 			//delete old roles
+			
 			$userRoles->where('user_id',$user_id)->delete();
 			foreach($requestData['selected_role'] as $role){
 				$role = (array)$role;

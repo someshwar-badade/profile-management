@@ -9,26 +9,6 @@
       $session = session();
 
       ?>
-        <div class="collapse navbar-collapse" id="navbarNav">
-              <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                  <a class="nav-link" href="<?= base_url() ?>">Home</a>
-                </li>
-
-               
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Career
-                  </a>
-                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="<?= base_url(route_to('createMyProfile')) ?>">Build Profile</a>
-                    <a class="dropdown-item" href="<?= base_url(route_to('joiningFormVerification2')) ?>">Joining Form</a>
-                  </div>
-                </li>
-                 
-
-              </ul>
-        </div>
 
       <?php if ($session->get('employee_joining_form_id')) { ?>
         <div class="btn-group">

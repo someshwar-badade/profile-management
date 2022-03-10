@@ -101,20 +101,19 @@
 
                   <div class="form-group row">
                     <!-- <label class="col-sm-4"></label> -->
-                    <div class="col-sm-12 text-center">
-                      <button class="btn btn-primary" type="submit">
+                    <div class="col-md-8 col-sm-12">
+                      <div class="form-group m-0 ">
+                      Have an account? <a href="<?= base_url(route_to('home')) ?>">Log In</a>.
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-sm-12 ">
+                      <button class="btn btn-block btn-primary" type="submit">
                         <div></div>Submit
                       </button>
                     </div>
                   </div>
 
-                  <div class="form-row justify-content-center">
-                    <div class="col-md-12 ">
-                      <div class="form-group text-center ">
-                        Click <a href="<?= base_url(route_to('home')) ?>">here</a> to login.
-                      </div>
-                    </div>
-                  </div>
+                  
 
                 </form>
                 </div>

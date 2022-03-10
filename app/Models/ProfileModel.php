@@ -9,7 +9,7 @@ class ProfileModel extends Model
 {
     protected $table = 'profiles';
     protected $primaryKey = 'id';
-    protected $allowedFields =  ['candidate_name', 'mobile_primary', 'mobile_alternate', 'email_primary', 'email_alternate', 'gender', 'photo', 'resume_pdf', 'resume_pdf_name', 'resume_doc', 'resume_doc_name', 'preferred_work_locations', 'categories', 'primary_skills','primary_skills_soundex', 'secondary_skills','secondary_skills_soundex', 'foundation_skills','foundation_skills_soundex', 'certifications', 'work_experience', 'total_experience', 'relevant_experience', 'current_company', 'notice_period', 'is_negotiable_np', 'negotiable_np', 'ctc', 'expected_ctc', 'is_negotiable_ctc', 'negotiable_ctc', 'created_by', 'updated_by', 'status', 'first_name', 'father_name', 'last_name', 'marital_status', 'dob', 'pan_number', 'aadhar_number', 'verification_code', 'present_address', 'present_address_postcode', 'permanent_address', 'permanent_address_postcode', 'employment_history','last_working_day','documents'];
+    protected $allowedFields =  ['user_id','candidate_name', 'mobile_primary', 'mobile_alternate', 'email_primary', 'email_alternate', 'gender', 'photo', 'resume_pdf', 'resume_pdf_name', 'resume_doc', 'resume_doc_name', 'preferred_work_locations', 'categories', 'primary_skills','primary_skills_soundex', 'secondary_skills','secondary_skills_soundex', 'foundation_skills','foundation_skills_soundex', 'certifications', 'work_experience', 'total_experience', 'relevant_experience', 'current_company', 'notice_period', 'is_negotiable_np', 'negotiable_np', 'ctc', 'expected_ctc', 'is_negotiable_ctc', 'negotiable_ctc', 'created_by', 'updated_by', 'status', 'first_name', 'father_name', 'last_name', 'marital_status', 'dob', 'pan_number', 'aadhar_number', 'verification_code', 'present_address', 'present_address_postcode', 'permanent_address', 'permanent_address_postcode', 'employment_history','last_working_day','documents'];
 
     protected $useTimestamps = true;
     protected $createdField  = 'created_at';
@@ -22,7 +22,7 @@ class ProfileModel extends Model
         $builder = $db->table('profiles');
         $builder->select('profiles.*');
         
-        if($filter['shortlisted'] && !empty($filter['job_position_id'])){
+        if(!empty($filter['shortlisted']) && !empty($filter['job_position_id'])){
             $builder->join('profile_shortlist','profiles.id = profile_shortlist.profile_id AND profile_shortlist.job_position_id = '.$filter['job_position_id']);
         }else if(!empty($filter['job_position_id'])){
             $builder->join('profile_shortlist','profiles.id = profile_shortlist.profile_id AND profile_shortlist.job_position_id = '.$filter['job_position_id'],'left');
@@ -93,23 +93,34 @@ class ProfileModel extends Model
         $data = $query->getResultArray();
 
         $ProfileShortlistModel = new ProfileShortlistModel();
+       
         foreach ($data as $key => $row) {
+            
+            if(!empty($row['primary_skills'])){
+                $data[$key]['primary_skills'] = sortAssociativeArrayByKey( json_decode($row['primary_skills'],true), 'rating', 'DESC');
+
+            }
+            if(!empty($row['secondary_skills'])){
+
+                $data[$key]['secondary_skills'] = sortAssociativeArrayByKey( json_decode($row['secondary_skills'],true), 'rating', 'DESC');
+            }
 
             if(isset($filter['primary_skills'])){
-
-                foreach (explode(" || ", $row['primary_skills']) as $skill) {
-                    if (checkSoundexExist($skill, $filter['primary_skills'])) {
+               
+                foreach ($data[$key]['primary_skills'] as $skill) {
+                    if (checkSoundexExist($skill['text'], $filter['primary_skills'])) {
                         $data[$key]['primary_skills_matched'][] = $skill;
                     } else {
                         $data[$key]['primary_skills_other'][] = $skill;
                     }
                 }
+                
+                
             }
 
             if(isset($filter['secondary_skills'])){
-
-                foreach (explode(" || ", $row['secondary_skills']) as $skill) {
-                    if (checkSoundexExist($skill, $filter['secondary_skills'])) {
+                foreach ( $data[$key]['secondary_skills'] as $skill) {
+                    if (checkSoundexExist($skill['text'], $filter['secondary_skills'])) {
                         $data[$key]['secondary_skills_matched'][] = $skill;
                     } else {
                         $data[$key]['secondary_skills_other'][] = $skill;
@@ -127,7 +138,7 @@ class ProfileModel extends Model
                
 
         }
-
+       
         
         return ['recordsTotal' => $recordsTotal, 'recordsFiltered' => $recordsFiltered, 'data' => $data];
     }

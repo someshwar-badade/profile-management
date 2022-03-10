@@ -175,9 +175,9 @@ function hasCapability($capability){
     $user = checkUserToken();
     $session = session();
     if(!empty($user)){
-        $roleId = $user['roles'][0]['role_id'];
-        if($user['roles'][0]['role_name']=='admin'){
-            return true;
+        $roleId = isset($user['roles'][0])?$user['roles'][0]['role_id']:'6';
+        if(isset($user['roles'][0])){
+            return $user['roles'][0]['role_name']=='admin';
         }
     }else if(!empty($session->get('employee_joining_form_id'))){
         $roleId = 6;//guest_user role_id
@@ -248,7 +248,8 @@ function convertStringToSoundex($string, $seprator=' '){
     }
 
     foreach($wordArray as $item){
-        $soundexStr[]= soundex(trim($item));
+        $item = (array)$item;
+        $soundexStr[]= soundex(trim($item['text']));
     }
 
     if(is_array($string)){
@@ -260,7 +261,41 @@ function convertStringToSoundex($string, $seprator=' '){
 
 function checkSoundexExist($word,$arrWords)
 {
-    $soundexWordsList = convertStringToSoundex($arrWords);
+   
+    foreach($arrWords as $item){
+        $soundexWordsList[]= soundex(trim($item));
+    }
+
     $soundexWord = soundex($word);
     return in_array($soundexWord,$soundexWordsList);
+}
+
+
+/**
+ * A method for sorting associative arrays by a key and a direction.
+ * Direction can be ASC or DESC.
+ *
+ * @param $array
+ * @param $key
+ * @param $direction
+ * @return mixed $array
+ */
+function sortAssociativeArrayByKey($array, $key, $direction){
+
+    switch ($direction){
+        case "ASC":
+            usort($array, function ($first, $second) use ($key) {
+                return $first[$key] <=> $second[$key];
+            });
+            break;
+        case "DESC":
+            usort($array, function ($first, $second) use ($key) {
+                return $second[$key] <=> $first[$key];
+            });
+            break;
+        default:
+            break;
+    }
+
+    return $array;
 }

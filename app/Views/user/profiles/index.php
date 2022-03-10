@@ -52,6 +52,14 @@
         font-size: 0.8rem;
     }
 
+    .badge.extra-badge{
+        display: none;
+    }
+
+    a.show-more-badges:hover > .extra-badge{
+        display: inline-block;
+    }
+
     .table-personal-info td,
     .table-personal-info th {
         padding: 2px;
@@ -106,7 +114,7 @@
                                                 </tags-input>
                                             </td>
                                         </tr>
-                                        
+
 
                                     </tbody>
                                     <tfoot ng-show="tableFilter">
@@ -130,7 +138,7 @@
                                         <input type="radio" name="options" id="option_b1" ng-model="tableFilter.status" value="" autocomplete="off"> All (<?= $statuseWiseCount['all'] ? $statuseWiseCount['all'] : 0 ?>)
                                     </label>
                                     <label class="btn bg-olive">
-                                        <input type="radio" name="options" id="option_b2" ng-model="tableFilter.status" value="0" autocomplete="off"> New (<?= $statuseWiseCount['0'] ? $statuseWiseCount['0']['count'] : 0 ?>)
+                                        <input type="radio" name="options" id="option_b2" ng-model="tableFilter.status" value="0" autocomplete="off"> New (<?= isset($statuseWiseCount['0']) ? $statuseWiseCount['0']['count'] : 0 ?>)
                                     </label>
                                     <label class="btn bg-olive">
                                         <input type="radio" name="options" id="option_b3" ng-model="tableFilter.status" value="1" autocomplete="off"> In Process (<?= $statuseWiseCount['1'] ? $statuseWiseCount['1']['count'] : 0 ?>)
@@ -588,7 +596,7 @@
                 }
                 return fullname;
             }),
-            DTColumnBuilder.newColumn("email_primary").withTitle('Email'),
+            // DTColumnBuilder.newColumn("email_primary").withTitle('Email'),
             DTColumnBuilder.newColumn("mobile_primary").withTitle('Mobile'),
             DTColumnBuilder.newColumn("total_experience").withTitle('Experience').renderWith(function(data, type, full) {
                 if (full.total_experience) {
@@ -600,23 +608,40 @@
                 return '';
             }),
             DTColumnBuilder.newColumn("primary_skills").withTitle('Primary Skills').renderWith(function(data, type, full) {
-                var returnhtml = '<span class="badge badge-info ml-1">';
+                var returnhtml = '';
                 if (!data) {
                     return '';
                 }
-                returnhtml += data.replace(/\|\|/g, '</span><span class="badge badge-info ml-1">');
-                returnhtml += "</span>";
+                try {
+                    // let skills = JSON.parse(data);
+                    data.forEach(function(item) {
+                        returnhtml += '<span class="badge badge-info ml-1 ">' + item.text + "["+item.rating+"/10]"+ '</span>';
+                    });
+
+                } catch (e) {
+
+                }
+
+                // returnhtml += data.replace(/\|\|/g, '</span><span class="badge badge-info ml-1">');
+                // returnhtml += "</span>";
                 return returnhtml;
 
             }),
             DTColumnBuilder.newColumn("secondary_skills").withTitle('Secondary Skills').renderWith(function(data, type, full) {
-                var returnhtml = '<span class="badge badge-info ml-1">';
+                var returnhtml = '';
 
                 if (!data) {
                     return '';
                 }
-                returnhtml += data.replace(/\|\|/g, '</span><span class="badge badge-info ml-1">');
-                returnhtml += "</span>";
+                try {
+                    // let skills = JSON.parse(data);
+
+                    data.forEach(function(item) {
+                        returnhtml += '<span class="badge badge-info ml-1">' + item.text + "["+item.rating+"/10]"+ '</span>';
+                    });
+                } catch (e) {
+
+                }
                 return returnhtml;
 
             }),
@@ -648,7 +673,7 @@
                     "<li> <a role='button' class='mx-2 text-default' ng-click='showCase.deleteClick(" + full.id + ")' ><i class='fas fa-trash-alt'></i> Delete</a></li>" +
                     '</ul>'
                 '</div>';
-                
+
 
                 return html;
 
@@ -709,4 +734,3 @@
 </script>
 
 <?= $this->endSection() ?>
-

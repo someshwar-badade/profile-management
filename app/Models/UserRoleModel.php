@@ -19,6 +19,7 @@ class UserRoleModel extends Model
         $builder = $db->table('user_role');
         $builder->select("user_role.*, roles.role_name, roles.display_name ");
         $builder->join('roles','roles.id = user_role.role_id AND user_role.user_id = '.$userId);
+        $builder->where('user_role.deleted_at IS NULL');
         $query   = $builder->get();
         $data = $query->getResultArray();
         return $data;
@@ -27,8 +28,9 @@ class UserRoleModel extends Model
     public function getSelectedRole($userId){
         $db = \Config\Database::connect();
         $builder = $db->table('user_role');
-        $builder->select("roles.*");
+        $builder->select("roles.*,user_role.id as user_role_id");
         $builder->join('roles','roles.id = user_role.role_id AND user_role.user_id = '.$userId);
+        $builder->where('user_role.deleted_at IS NULL');
         $query   = $builder->get();
         $data = $query->getResultArray();
         return $data;
