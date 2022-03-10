@@ -86,87 +86,19 @@ class Home extends BaseController
 	public function emailTest()
 	{
 
-		//return view('email-templates/shortlist-candidate');
-		// $email = \Config\Services::email();
-
-		// $config['protocol'] = 'sendmail';
-		// $config['mailPath'] = '/usr/sbin/sendmail';
-		// $config['charset']  = 'iso-8859-1';
-		// $config['wordWrap'] = true;
-
-		// $email->initialize($config);
-
-		// $email->setFrom('someshbadade@gmail.com', 'Someshwar');
-		// $email->setTo(['someshwar@essensys.co.in', 'someshbadade@gmail.com']);
-		// // $email->setCC('another@another-example.com');
-		// // $email->setBCC('them@their-example.com');
-
-		// $email->setSubject('Email Test 2');
-		// $email->setMessage('Testing the email class.');
-
-		// echo	$email->send();
-
-		// $email->printDebugger(['headers']);
-
-			echo "hi testing|||";
-
-			$ProfileModel = new ProfileModel();
-
-			foreach($ProfileModel->findAll() as $row){
-
-				// $row['primary_skills_soundex'] = convertStringToSoundex($row['primary_skills'] ," || ");
-				// $row['secondary_skills_soundex'] = convertStringToSoundex($row['secondary_skills'] ," || ");
-				// $row['foundation_skills_soundex'] = convertStringToSoundex($row['foundation_skills'] ," || ");
-				echo "<br>";
-				
-
-					if(!json_decode($row['primary_skills'])){
-						$ps = [];
-						foreach(explode(" || ",$row['primary_skills']) as $item){
-							$ps[]= [
-								"text"=>$item,
-								"rating"=>0
-							];
-
-						}
-
-						$row['primary_skills'] = json_encode($ps);
-					}
-
-					if(!json_decode($row['secondary_skills'])){
-						$ps = [];
-						foreach(explode(" || ",$row['secondary_skills']) as $item){
-							$ps[]= [
-								"text"=>$item,
-								"rating"=>0
-							];
-
-						}
-
-						$row['secondary_skills'] = json_encode($ps);
-					}
-
-					if(!json_decode($row['foundation_skills'])){
-						$ps = [];
-						foreach(explode(" || ",$row['foundation_skills']) as $item){
-							$ps[]= [
-								"text"=>$item,
-								"rating"=>0
-							];
-
-						}
-
-						$row['foundation_skills'] = json_encode($ps);
-					}
-
-					print_r(json_decode($row['primary_skills']));
-					print_r(json_decode($row['secondary_skills']));
-					print_r(json_decode($row['foundation_skills']));
-
-				
-
-				$ProfileModel->save($row);
-			}
+		// return view('pdf-templates/resume/template1');
+		// exit(0);
+		$dompdf = new \Dompdf\Dompdf();
+		$dompdf->loadHtml(view('pdf-templates/resume/template1'));
+		
+		$dompdf->setPaper('A4', 'p');
+		$dompdf->set_option('isRemoteEnabled', true);
+		$dompdf->render();
+		$canvas = $dompdf->get_canvas();
+		$canvas->page_text(512, 820, "Page: {PAGE_NUM} of {PAGE_COUNT}", '', 8, array(0, 0, 0));
+		// $filename = strtolower(str_replace(' ', '_', $joiningFormDetails['first_name'] . ' ' . $joiningFormDetails['last_name']));
+		// $dompdf->stream("resume.pdf");
+		$dompdf->stream("resume.pdf",array("Attachment" => false));
 
 	}
 	public function phpEmailTest()
