@@ -3373,8 +3373,11 @@ class Profiles extends ResourceController
             'document_path' => '',
         ];
         // $joiningFormId = $requestData['joining_form_id'];
+        $ProfileModel = new ProfileModel();
+        $profileDetails = $ProfileModel->where('user_id', $user['id'])->first();
         $requestData = array_intersect_key($requestData, $allowedColums);
-        $profileId = $requestData['profile_id'];
+        $profileId = $profileDetails['id'];
+        $requestData['profile_id'] = $profileId;
         //validation
         $validation =  \Config\Services::validation();
 
@@ -3580,6 +3583,13 @@ class Profiles extends ResourceController
 
     public function profileSaveProfetionalQualification()
     {
+
+        $user = checkUserToken();
+
+        if (!$user) {
+            return $this->fail(['messages' => 'Please login.'], 400);
+        }
+
         // if (!hasCapability('profiles/edit')) {
         //     return $this->fail(['errorMessage' => "You don't have capability to access this page. Please contact to admin."], 403);
         // }
@@ -3596,7 +3606,10 @@ class Profiles extends ResourceController
         ];
         // $joiningFormId = $requestData['joining_form_id'];
         $requestData = array_intersect_key($requestData, $allowedColums);
-        $profileId = $requestData['profile_id'];
+        $ProfileModel = new ProfileModel();
+        $profileDetails = $ProfileModel->where('user_id', $user['id'])->first();
+        $profileId = $profileDetails['id'];
+        $requestData['profile_id'] = $profileId;
         //validation
         $validation =  \Config\Services::validation();
 
@@ -3791,7 +3804,12 @@ class Profiles extends ResourceController
         $allowedColums = [
             'employment_history' => ''
         ];
-        $profileId = $requestData['id'];
+
+        $ProfileModel = new ProfileModel();
+        $profileDetails = $ProfileModel->where('user_id', $user['id'])->first();
+        $profileId = $profileDetails['id'];
+        $requestData['profile_id'] = $profileId;
+       
         $requestData = array_intersect_key($requestData, $allowedColums);
 
         $valid = true;
@@ -3921,7 +3939,13 @@ class Profiles extends ResourceController
         $document = $this->request->getFile('document');
         $requestData = $this->request->getPost();
         $id = $this->request->getPost('id'); // json_decode($_POST['requestData'], true);
-        $profileId = $id;
+
+        $ProfileModel = new ProfileModel();
+        $profileDetails = $ProfileModel->where('user_id', $user['id'])->first();
+        $profileId = $profileDetails['id'];
+        $requestData['profile_id'] = $profileId;
+
+      
         $documentName = $this->request->getPost('documentName'); // json_decode($_POST['requestData'], true);
         helper('form');
         $validation =  \Config\Services::validation();
