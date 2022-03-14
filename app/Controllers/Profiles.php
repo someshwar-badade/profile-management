@@ -355,6 +355,81 @@ EOD;
 		$dompdf->stream($filename . "_profile.pdf");
 	}
 
+	public function downloadMyResume()
+	{
+
+
+
+		$profileId = null;
+
+		$user = checkUserToken();
+
+		if (!$user) {
+			//redirct to login
+			setcookie("a_token", "", time() - 3600, '/'); //delete cookie
+			setcookie("r_token", "", time() - 3600, '/'); //delete cookie
+			return redirect()->route('logout');
+		}
+
+		$template = isset($_GET['template'])?$_GET['template']:"template1";
+		$colorPrimary = isset($_GET['colorPrimary'])?"#".$_GET['colorPrimary']:"";
+		$configStyle['colorPrimary']=$colorPrimary;
+
+
+		$model = new ProfileModel();
+		$educationModel = new ProfileEducationQualificationModel();
+		$professionalQualificationModel = new ProfileProfessionalQualificationModel();
+
+		$profileDetails = $model->where('user_id', $user['id'])->first();
+		$profileId = $profileDetails['id'];
+		$profileDetails['education_qualification'] = $educationModel->where('profile_id', $profileId)->find();
+		$profileDetails['professional_qualification'] = $professionalQualificationModel->where('profile_id', $profileId)->find();
+		$profileDetails['employment_history'] = $profileDetails['employment_history'] ? (array)json_decode($profileDetails['employment_history'], true) : [];
+		$profileDetails['documents'] = $profileDetails['documents'] ? (array)json_decode($profileDetails['documents'], true) : [];
+
+		if (!empty($profileDetails['preferred_work_locations'])) {
+			$profileDetails['preferred_work_locations'] = explode(' || ', $profileDetails['preferred_work_locations']);
+		} else {
+			$profileDetails['preferred_work_locations'] = [];
+		}
+		if (!empty($profileDetails['primary_skills'])) {
+            // $profileDetails['primary_skills'] = explode(' || ', $profileDetails['primary_skills']);
+            $profileDetails['primary_skills'] = json_decode($profileDetails['primary_skills'], true);
+        } else {
+            $profileDetails['primary_skills'] = [];
+        }
+
+        if (!empty($profileDetails['secondary_skills'])) {
+            // $profileDetails['secondary_skills'] = explode(' || ', $profileDetails['secondary_skills']);
+            $profileDetails['secondary_skills'] = json_decode($profileDetails['secondary_skills'], true);
+        } else {
+            $profileDetails['secondary_skills'] = [];
+        }
+
+        if (!empty($profileDetails['foundation_skills'])) {
+            // $profileDetails['foundation_skills'] = explode(' || ', $profileDetails['foundation_skills']);
+            $profileDetails['foundation_skills'] = json_decode($profileDetails['foundation_skills'], true);
+        } else {
+            $profileDetails['foundation_skills'] = [];
+        }
+
+		$profileDetails['total_experience_y'] = floor($profileDetails['total_experience'] / 12);
+		$profileDetails['total_experience_m'] = (int)$profileDetails['total_experience'] % 12;
+		$profileDetails['relevant_experience_y'] = floor($profileDetails['relevant_experience'] / 12);
+		$profileDetails['relevant_experience_m'] = (int)$profileDetails['relevant_experience'] % 12;
+
+		$dompdf = new \Dompdf\Dompdf();
+		// echo view('pdf-templates/resume/'.$template,['joiningFormDetails'=>$profileDetails,'config'=>$configStyle]);die;
+		$dompdf->loadHtml(view('pdf-templates/resume/'.$template, ['joiningFormDetails' => $profileDetails,'config'=>$configStyle]));
+		$dompdf->setPaper('A4', 'p');
+		$dompdf->set_option('isRemoteEnabled', true);
+		$dompdf->render();
+		$canvas = $dompdf->get_canvas();
+		$canvas->page_text(512, 820, "Page: {PAGE_NUM} of {PAGE_COUNT}", '', 8, array(0, 0, 0));
+		$filename = strtolower(str_replace(' ', '_', $profileDetails['first_name'] . ' ' . $profileDetails['last_name']));
+		$dompdf->stream($filename . "_resume.pdf");
+	}
+
 	public function downloadPrejoiningDocuments($documentName, $joinigFormId)
 	{
 		$model = new EmployeeJoinigDetailsModel();

@@ -46,20 +46,28 @@
                 <div class="row mb-2">
                     <div class="col-md-12">
                         <h1 style="display: inline-block;"> My Profile</h1>
-                            <div class="dropdown float-right">
+                        <div class="input-group " style="flex-direction: row-reverse;">
+                            <div class="dropdown ">
+
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButtonDownload" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Download Resume
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonDownload">
-                                    <a class="dropdown-item" href="<?= base_url(route_to('downloadMyProfile')) ?>">Template 1</a>
-                                    <a class="dropdown-item" href="<?= base_url(route_to('downloadMyProfile')) ?>">Template 2</a>
-                                    <a class="dropdown-item" href="<?= base_url(route_to('downloadMyProfile')) ?>">Template 3</a>
+                                    <a class="dropdown-item" href="<?= base_url(route_to('downloadMyResume')) ?>?template=template1&colorPrimary={{colorPrimary.replace('#','')}}">Template 1</a>
+                                    <a class="dropdown-item" href="<?= base_url(route_to('downloadMyResume')) ?>?template=template2&colorPrimary={{colorPrimary.replace('#','')}}">Template 2</a>
+                                    <a class="dropdown-item" href="<?= base_url(route_to('downloadMyResume')) ?>?template=template3&colorPrimary={{colorPrimary.replace('#','')}}">Template 3</a>
                                 </div>
                             </div>
+                            <div class="input-group-append">
+                                <input type="color" class="form-control" style="width: 50px;padding:0;" ng-model="colorPrimary">
+                            </div>
+                        </div>
+
+
                     </div>
                 </div>
 
-                
+
             <?php } ?>
             <div class="row">
                 <div class="col-md-12">
@@ -501,9 +509,22 @@
                                                 <input type="text" class="form-control month-year-picker" ng-init="initializeMonthYear();" placeholder="MMM-YYYY" ng-model="profileForm.employment_history.employers[$index].to_date">
                                                 <div class="text-danger" ng-show="errors['employment_history.employers.'+$index+'.to_date']">{{errors['employment_history.employers.'+$index+'.to_date']}}</div>
                                             </div>
+                                            <div class="form-group col-md-2">
+                                                <label>Position held</label>
+                                                <input type="text" maxlength="50" class="form-control" placeholder="Position held" ng-model="profileForm.employment_history.employers[$index].position_held">
+                                                <div class="text-danger" ng-show="employment_history_errors.position_held">{{employment_history_errors.position_held}}</div>
+                                            </div>
                                             <div class="form-group col-md-3">
                                                 <label>Main Job Responsibilities</label>
                                                 <input type="text" maxlength="50" class="form-control" placeholder="Job Responsibilities" ng-model="profileForm.employment_history.employers[$index].job_responsibilities">
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>Company Address</label>
+                                                <input type="text" maxlength="50" class="form-control" placeholder="Address" ng-model="profileForm.employment_history.employers[$index].address">
+                                            </div>
+                                            <div class="form-group col-md-2">
+                                                <label>City</label>
+                                                <input type="text" maxlength="50" class="form-control" placeholder="City" ng-model="profileForm.employment_history.employers[$index].city">
                                             </div>
                                         </div>
                                     </fieldset>

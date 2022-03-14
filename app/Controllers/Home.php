@@ -86,10 +86,13 @@ class Home extends BaseController
 	public function emailTest()
 	{
 
-		// return view('pdf-templates/resume/template1');
+		$template = isset($_GET['template'])?$_GET['template']:"template2";
+		$colorPrimary = isset($_GET['colorPrimary'])?"#".$_GET['colorPrimary']:"";
+		$data['config']['colorPrimary']=$colorPrimary;
+		// return view('pdf-templates/resume/'.$template,$data);
 		// exit(0);
 		$dompdf = new \Dompdf\Dompdf();
-		$dompdf->loadHtml(view('pdf-templates/resume/template1'));
+		$dompdf->loadHtml(view('pdf-templates/resume/'.$template,$data));
 		
 		$dompdf->setPaper('A4', 'p');
 		$dompdf->set_option('isRemoteEnabled', true);
