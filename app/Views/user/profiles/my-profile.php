@@ -46,22 +46,9 @@
                 <div class="row mb-2">
                     <div class="col-md-12">
                         <h1 style="display: inline-block;"> My Profile</h1>
-                        <div class="input-group " style="flex-direction: row-reverse;">
-                            <div class="dropdown ">
-
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButtonDownload" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Download Resume
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonDownload">
-                                    <a class="dropdown-item" href="<?= base_url(route_to('downloadMyResume')) ?>?template=template1&colorPrimary={{colorPrimary.replace('#','')}}">Template 1</a>
-                                    <a class="dropdown-item" href="<?= base_url(route_to('downloadMyResume')) ?>?template=template2&colorPrimary={{colorPrimary.replace('#','')}}">Template 2</a>
-                                    <a class="dropdown-item" href="<?= base_url(route_to('downloadMyResume')) ?>?template=template3&colorPrimary={{colorPrimary.replace('#','')}}">Template 3</a>
-                                </div>
-                            </div>
-                            <div class="input-group-append">
-                                <input type="color" class="form-control" style="width: 50px;padding:0;" ng-model="colorPrimary">
-                            </div>
-                        </div>
+                        <!-- <div class="input-group " style="flex-direction: row-reverse;">
+                            <a href="<?=base_url(route_to('downloadMyResumePreview'))?>" class="btn btn-sm btn-success">Download Resume</a>
+                        </div> -->
 
 
                     </div>

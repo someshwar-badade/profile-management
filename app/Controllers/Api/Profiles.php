@@ -3965,6 +3965,7 @@ class Profiles extends ResourceController
                 'mime_in' => 'Please upload an image/pdf/doc/docx file.',
             ]
         ]);
+        
         $valid = $validation->run($requestData);
         if (!$valid) {
 

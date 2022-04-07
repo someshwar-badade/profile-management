@@ -1,0 +1,28 @@
+@font-face {
+    font-family: "Arial";
+    src: url('ArialTh.ttf');
+}
+@font-face {
+    font-family: "Comic Sans MS";
+    src: url('ComicSansMS3.ttf');
+}
+@font-face {
+    font-family: "Helvetica Neue";
+    src: url('Helvetica Neue W01 66 Medium It.ttf');
+}
+@font-face {
+    font-family: "Courier New";
+    src: url('cour.ttf');
+}
+@font-face {
+    font-family: "Times New Roman";
+    src: url('Times New Roman.ttf');
+}
+@font-face {
+    font-family: "Verdana";
+    src: url('Verdana.ttf');
+}
+@font-face {
+    font-family: "Impact";
+    src: url('impact.ttf');
+}

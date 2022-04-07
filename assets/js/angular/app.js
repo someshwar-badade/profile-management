@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ngCookies','datatables','ui.bootstrap','angularjs-dropdown-multiselect','ngTagsInput','yaru22.angular-timeago']);
+var app = angular.module('app', ['ngCookies','datatables','ui.bootstrap','angularjs-dropdown-multiselect','ngTagsInput','yaru22.angular-timeago','psi.sortable']);
 app.run(function($rootScope,$http,$filter) {
     $rootScope.base_url = base_url;
 

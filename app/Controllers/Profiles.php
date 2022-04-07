@@ -371,9 +371,37 @@ EOD;
 			return redirect()->route('logout');
 		}
 
+		$systemFonts = ["Arial","Helvetica Neue","Courier New","Times New Roman","Comic Sans MS","Verdana","Impact"];
 		$template = isset($_GET['template'])?$_GET['template']:"template1";
+		$ts1 = isset($_GET['ts1'])?$_GET['ts1']:"";
+		$ts2 = isset($_GET['ts2'])?$_GET['ts2']:"";
+		$ts3 = isset($_GET['ts3'])?$_GET['ts3']:"";
+		$ts4 = isset($_GET['ts4'])?$_GET['ts4']:"";
+		$ts5 = isset($_GET['ts5'])?$_GET['ts5']:"";
+		$ts6 = isset($_GET['ts6'])?$_GET['ts6']:"";
 		$colorPrimary = isset($_GET['colorPrimary'])?"#".$_GET['colorPrimary']:"";
+		$colorSecondary = isset($_GET['colorSecondary'])?"#".$_GET['colorSecondary']:"";
+		$skillsStyle = isset($_GET['skillsStyle'])?$_GET['skillsStyle']:"";
+		$sections = isset($_GET['sections'])?explode("_",$_GET['sections']):['WE','ED','CC'];
+		$font = isset($_GET['font'])?$_GET['font']:"";
+		$fontFamily = isset($_GET['fontFamily'])?$_GET['fontFamily']:"";
+		if(in_array($fontFamily,$systemFonts)){
+			$configStyle['fontFamilyUrl'] = base_url("/assets/fonts/pdf/system-fonts.css");
+		}else{
+			$configStyle['fontFamilyUrl'] = "https://fonts.googleapis.com/css2?family=".$fontFamily;
+		}
 		$configStyle['colorPrimary']=$colorPrimary;
+		$configStyle['colorSecondary']=$colorSecondary;
+		$configStyle['skillsStyle']=$skillsStyle;
+		$configStyle['font']=$font;
+		$configStyle['fontFamily']=$fontFamily;
+		$configStyle['sections']=$sections;
+		$configStyle['ts1']=$ts1;
+		$configStyle['ts2']=$ts2;
+		$configStyle['ts3']=$ts3;
+		$configStyle['ts4']=$ts4;
+		$configStyle['ts5']=$ts5;
+		$configStyle['ts6']=$ts6;
 
 
 		$model = new ProfileModel();
@@ -427,7 +455,7 @@ EOD;
 		$canvas = $dompdf->get_canvas();
 		$canvas->page_text(512, 820, "Page: {PAGE_NUM} of {PAGE_COUNT}", '', 8, array(0, 0, 0));
 		$filename = strtolower(str_replace(' ', '_', $profileDetails['first_name'] . ' ' . $profileDetails['last_name']));
-		$dompdf->stream($filename . "_resume.pdf");
+		$dompdf->stream($filename . "_resume.pdf",array("Attachment" => false));
 	}
 
 	public function downloadPrejoiningDocuments($documentName, $joinigFormId)
@@ -448,6 +476,17 @@ EOD;
 		$dompdf->render();
 		$filename = strtolower(str_replace(' ', '_', $joiningFormDetails['first_name'] . ' ' . $joiningFormDetails['last_name'] . '_' . $documentName));
 		$dompdf->stream($filename . "_joining_form.pdf");
+	}
+
+	public function downloadMyResumePreview(){
+
+		$data = [
+			'page_title' => 'Profiles',
+			'active_nav_parent' => 'profiles',
+			'active_nav' => 'profiles',
+		];
+
+		return view("user/profiles/resume-preview",$data);
 	}
 
 	public function cv()

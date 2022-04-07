@@ -86,6 +86,12 @@ class Home extends BaseController
 	public function emailTest()
 	{
 
+		$string = "adsf20pxsfpx";
+		
+
+		echo preg_match("/^[\b\d+px\b]/","20pxx");
+		
+		die;
 		$template = isset($_GET['template'])?$_GET['template']:"template2";
 		$colorPrimary = isset($_GET['colorPrimary'])?"#".$_GET['colorPrimary']:"";
 		$data['config']['colorPrimary']=$colorPrimary;

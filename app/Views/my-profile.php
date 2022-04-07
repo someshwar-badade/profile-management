@@ -48,7 +48,7 @@
                     <h2 class="text-center">
                         My Profile
 
-                        <div class="dropdown float-right">
+                        <!-- <div class="dropdown float-right">
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButtonDownload" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Download Resume
                             </button>
@@ -57,7 +57,7 @@
                                 <a class="dropdown-item" href="<?= base_url(route_to('downloadMyProfile')) ?>">Template 2</a>
                                 <a class="dropdown-item" href="<?= base_url(route_to('downloadMyProfile')) ?>">Template 3</a>
                             </div>
-                        </div>
+                        </div> -->
                         <!-- <a href="<?= base_url(route_to('downloadMyProfile')) ?>" class="fa fa-download " title="Download Profile"></a> -->
                     </h2>
                 </div>

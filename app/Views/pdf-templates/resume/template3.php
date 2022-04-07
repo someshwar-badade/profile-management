@@ -7,18 +7,37 @@
     <title>Joining Form</title>
     <?php 
     $config['colorPrimary'] = !empty($config['colorPrimary'])?$config['colorPrimary']:'#ffd7dd';
+    $config['header1'] = !empty($config['header1']) ? $config['header1'] : '32px';
+    $config['header2'] = !empty($config['header2']) ? $config['header2'] : '26px';
+    $config['header3'] = !empty($config['header3']) ? $config['header3'] : '20px';
+    $config['header4'] = !empty($config['header4']) ? $config['header4'] : '18px';
+    $config['header5'] = !empty($config['header5']) ? $config['header5'] : '16px';
+    $config['font'] = !empty($config['font']) ? $config['font'] : 'Roboto-Regular.ttf';
     ?>
     <style>
         /** 
         Set the margins of the page to 0, so the footer and the header
         can be of the full height and width !
      **/
-        @page {
-            margin: 0;
-        }
+   
 
-        * {
+       
+
+        /* * {
             padding: 0;
+            margin: 0;
+        } */
+
+        @font-face {
+            font-family: "coustomFont";
+            src: url('<?=base_url("/assets/fonts/".$config['font'])?>');
+            } 
+
+            body,div,p,span,td,h1,h2,h3,h4,h5,h6{
+                font-family: coustomFont !important;
+            }
+        
+        @page {
             margin: 0;
         }
 
@@ -96,7 +115,7 @@
         }
 
         .professional-profile,
-        .education-container {
+        .container {
             padding-right: 25px;
             padding-left: 10px;
         }
@@ -106,6 +125,13 @@
             text-align: center;
             font-size: 22px;
             margin-bottom: 5px;
+        }
+
+        .title-2{
+            font-size: 16px; 
+        }
+        .title-3{
+            font-size: 14px; 
         }
 
         .personal-details p,
@@ -126,32 +152,35 @@
             margin-bottom: 15px;
         }
 
-        .education-container table,.work-experience-container table {
+        .container table,.work-experience-container table {
             width: 100%;
             table-layout: fixed;
             border-collapse: collapse;
         }
 
-        .education-container table tr td.icon,.work-experience-container table tr td.icon{
+        .container table tr td.icon,.work-experience-container table tr td.icon{
             width: 8%;
         }
 
-        .education-container table tr td p,.work-experience-container table tr td p{
+        .container table tr td p,.work-experience-container table tr td p{
             text-align: justify;
             font-size: 12px;
-            margin-bottom: 15px;
+            margin-bottom: 5px;
         }
 
-        .education-container table tr td h3,.work-experience-container table tr td h3{
+        .container table tr td h3,.work-experience-container table tr td h3{
             font-weight: normal;
         }
 
-        .education-container table tr td.icon i,.work-experience-container table tr td.icon {
+        .container table tr td.icon i,.work-experience-container table tr td.icon {
             background-color: <?=$config['colorPrimary']?>;
             padding: 5px;
             border-radius: 50%;
         }
 
+        .container table {
+            margin-bottom: 10px;
+        }
         .personal-details,
         .technical-skills {
             margin-bottom: 15px;
@@ -276,9 +305,10 @@
                 </p>
             </div>
         </div>
-
-        <div class="education-container">
+        <?php if (!empty($joiningFormDetails['education_qualification'])) { ?>
+        <div class="container">
             <h2 class="title-1">education</h2>
+            <?php foreach ($joiningFormDetails['education_qualification'] as $e_qualification) { ?>
             <table>
                 <tbody>
                     <tr>
@@ -286,57 +316,30 @@
                             <i class="fas fa-graduation-cap"></i>
                         </td>
                         <td>
-                            <h3><b>2001-2005 Degree/Major</b></h3>
-                            <h3>university/school name</h3>
+                            <h3 class="title-2"><b><?= $e_qualification['from_date'] ?> - <?= $e_qualification['to_date'] ?> <?= $e_qualification['degree'] ?></b></h3>
+                            <h3 class="title-3"><?= $e_qualification['university'] ?></h3>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium libero veritatis, praesentium possimus ullam in excepturi reiciendis itaque porro nobis. Neque qui, tempore dignissimos perspiciatis nobis quas quo ipsa dolorum!</p>
+                        <p><?= $e_qualification['institution'] ?></p>
+                        <p>Percentage / CGPA:  <?= $e_qualification['percentage'] ?></p>
                         </td>
                     </tr>
                 </tbody>
             </table>
-            <table>
-                <tbody>
-                    <tr>
-                        <td class="icon">
-                            <i class="fas fa-graduation-cap"></i>
-                        </td>
-                        <td>
-                            <h3><b>2001-2005 Degree/Major</b></h3>
-                            <h3>university/school name</h3>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium libero veritatis, praesentium possimus ullam in excepturi reiciendis itaque porro nobis. Neque qui, tempore dignissimos perspiciatis nobis quas quo ipsa dolorum!</p>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table>
-                <tbody>
-                    <tr>
-                        <td class="icon">
-                            <i class="fas fa-graduation-cap"></i>
-                        </td>
-                        <td>
-                            <h3><b>2001-2005 Degree/Major</b></h3>
-                            <h3>university/school name</h3>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium libero veritatis, praesentium possimus ullam in excepturi reiciendis itaque porro nobis. Neque qui, tempore dignissimos perspiciatis nobis quas quo ipsa dolorum!</p>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <?php } ?>
+            
         </div>
+        <?php } ?>
 
-        <div class="education-container">
+        <?php $employers =  isset($joiningFormDetails['employment_history']['employers']) ? (array)$joiningFormDetails['employment_history']['employers'] : []; ?>
+
+        <?php if (!empty($employers)) { ?>
+        <div class="container">
         <h2 class="title-1">Work Experience</h2>
+        <?php foreach ($employers as $key => $p_employer) {
+                                $p_employer = (array)$p_employer ?>
             <table>
                 <tbody>
                     <tr>
@@ -344,57 +347,25 @@
                             <i class="fa fa fa-briefcase"></i>
                         </td>
                         <td>
-                            <h3><b>2020-Present Company/Position</b></h3>
-                            <!-- <h3>university/school name</h3> -->
+                            <h3 class="title-2"><b><?= $p_employer['from_date'] . " - " . $p_employer['to_date'] ?> <?= $p_employer['company'] ?></b></h3>
+                            <h3 class="title-3"><?= $p_employer['position_held']?></h3>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium libero veritatis, praesentium possimus ullam in excepturi reiciendis itaque porro nobis. Neque qui, tempore dignissimos perspiciatis nobis quas quo ipsa dolorum!</p>
+                        <?= $p_employer['job_responsibilities'] ?>
                         </td>
                     </tr>
                 </tbody>
             </table>
 
-            <table>
-                <tbody>
-                    <tr>
-                        <td class="icon">
-                        <i class="fa fa fa-briefcase"></i>
-                        </td>
-                        <td>
-                            <h3><b>2018-2020 Company/Position</b></h3>
-                            <!-- <h3>university/school name</h3> -->
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium libero veritatis, praesentium possimus ullam in excepturi reiciendis itaque porro nobis. Neque qui, tempore dignissimos perspiciatis nobis quas quo ipsa dolorum!</p>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table>
-                <tbody>
-                    <tr>
-                        <td class="icon">
-                        <i class="fa fa fa-briefcase"></i>
-                        </td>
-                        <td>
-                            <h3><b>2015-2018 Company/Position</b></h3>
-                            <!-- <h3>university/school name</h3> -->
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium libero veritatis, praesentium possimus ullam in excepturi reiciendis itaque porro nobis. Neque qui, tempore dignissimos perspiciatis nobis quas quo ipsa dolorum!</p>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <?php } ?>
         </div>
+            <?php } ?>
 
-        <div class="education-container">
+        
+
+        <div class="container">
         <h2 class="title-1">Achievements</h2>
             <table>
                 <tbody>
@@ -403,7 +374,7 @@
                             <i class="fa fa-award"></i>
                         </td>
                         <td>
-                            <h3><b>2020 Acheivment 1</b></h3>
+                            <h3 class="title-2"><b>2020 Acheivment 1</b></h3>
                             <!-- <h3>university/school name</h3> -->
                         </td>
                     </tr>

@@ -4,9 +4,25 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" href="<?= base_url('assets/admin/plugins/fontawesome-free/css/all.min.css') ?>">
+   
+   
+    <link rel="stylesheet" href="<?=$config['fontFamilyUrl']?>">
+
+
     <title>Joining Form</title>
     <?php
     $config['colorPrimary'] = !empty($config['colorPrimary']) ? $config['colorPrimary'] : '#ef8989';
+    $config['colorSecondary'] = !empty($config['colorSecondary']) ? $config['colorSecondary'] : '#000000';
+    $config['ts1'] = !empty($config['ts1']) ? $config['ts1'] : '32px';
+    $config['ts2'] = !empty($config['ts2']) ? $config['ts2'] : '28px';
+    $config['ts3'] = !empty($config['ts3']) ? $config['ts3'] : '24px';
+    $config['ts4'] = !empty($config['ts4']) ? $config['ts4'] : '20px';
+    $config['ts5'] = !empty($config['ts5']) ? $config['ts5'] : '16px';
+    $config['ts6'] = !empty($config['ts6']) ? $config['ts6'] : '12px';
+    $config['skillsStyle'] = !empty($config['skillsStyle']) ? $config['skillsStyle'] : 'bar';
+    $config['font'] = !empty($config['font']) ? $config['font'] : 'Roboto-Regular.ttf';
+    $fontFamily = str_replace('+',' ',$config['fontFamily']);
+    $fontFamily = explode(":",$fontFamily)[0];
     ?>
     <style>
         /** 
@@ -23,7 +39,23 @@
             /* page-break-after: always; */
         }
 
+      
 
+      
+
+        body,
+        div,
+        p,
+        span,
+        td,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: <?=$fontFamily?> !important;
+        }
 
         * {
             border-collapse: collapse;
@@ -41,6 +73,8 @@
         /** Define now the real margins of every page in the PDF **/
         body {
             padding: 0;
+            color: <?= $config['colorSecondary'] ?>;
+            font-size: <?= $config['ts6'] ?>;
         }
 
         .table {
@@ -87,12 +121,57 @@
         h5,
         h6 {
             margin: 0;
+
+        }
+
+        .h1 {
+            font-size: <?= $config['ts1'] ?>;
+            display: block;
+            margin: 0;
+            line-height: <?= $config['ts1'] ?>;
+        }
+
+        .h2 {
+            font-size: <?= $config['ts2'] ?>;
+            display: block;
+            margin: 0;
+            line-height: <?= $config['ts2'] ?>;
+        }
+
+        .h3 {
+            font-size: <?= $config['ts3'] ?>;
+            display: block;
+            padding: 0;
+            line-height: <?= $config['ts3'] ?>;
+        }
+
+        .h4 {
+            font-size: <?= $config['ts4'] ?>;
+            display: block;
+            padding: 0;
+            line-height: <?= $config['ts4'] ?>;
+        }
+
+        .h5 {
+            font-size: <?= $config['ts5'] ?>;
+            display: block;
+            padding: 0;
+            line-height: <?= $config['ts5'] ?>;
+        }
+
+        .h6 {
+            font-size: <?= $config['ts6'] ?>;
+            display: block;
+            padding: 0;
+            line-height:  <?= $config['ts6'] ?>;
         }
 
 
 
-        h2.candidate-name {
+
+        .candidate-name {
             margin-bottom: 5px;
+            font-family: <?=$fontFamily?>,
         }
 
         .heading-1 {
@@ -101,33 +180,42 @@
             text-transform: uppercase;
             padding-left: 10px;
             margin-bottom: 5px;
+            font-size: <?= $config['ts1'] ?>;
         }
 
         .heading-2 {
             color: <?= $config['colorPrimary'] ?>;
             /* padding-left: 10px; */
-        }
-
-        .heading-4 {
-            color: grey;
-            font-size: 12px;
+            font-size: <?= $config['ts2'] ?>;
         }
 
         .heading-3 {
-            font-size: 14px;
+            font-size: <?= $config['ts5'] ?>;
+        }
+
+        .heading-4 {
+            
+            font-size: <?= $config['ts4'] ?>;
+        }
+
+        
+        .heading-5 {
+            font-size: <?= $config['ts5'] ?>;
+        }
+        .heading-6 {
+            color: grey;
+            font-size: <?= $config['ts6'] ?>;
         }
 
         .text-right {
             text-align: right;
         }
 
-        .description {
-            font-size: 12px;
-        }
 
-        .left .heading-2 {
+        .left .heading-4 {
             padding-left: 0;
-            font-size: 14px;
+            font-size: <?= $config['ts4'] ?>;
+            font-weight: bold;
         }
 
         .container-1 .table {
@@ -172,22 +260,30 @@
         .personal-details i {
             color: <?= $config['colorPrimary'] ?>;
             margin-right: 5px;
-            font-size: 12px;
+           
         }
 
         .personal-details label,
         .technical-skills .skill label {
-            font-size: 12px;
+           
             margin: 0;
             padding: 0;
         }
 
-        .technical-skills .skill p {
-
-            border: 1px solid <?= $config['colorPrimary'] ?>;
+        .technical-skills .skill p{
             margin: 0;
+            padding: 0;
             width: 100%;
         }
+        .technical-skills .skill.bar p {
+
+            border: 1px solid <?= $config['colorPrimary'] ?>;
+           
+        }
+        .technical-skills .skill.star i{
+            color: <?= $config['colorPrimary'] ?>;
+        }
+
 
         .technical-skills .skill p span {
             height: 10px;
@@ -215,35 +311,71 @@
             </div>
 
             <div class="technical-skills">
-                <h3 class="heading-2">Technical Skills</h3>
-                <?php foreach ($joiningFormDetails['primary_skills'] as $skill) {
-                    $width = ($skill['rating'] / 10) * 100;
-                ?>
-                    <div class="skill">
-                        <label><?= $skill['text'] ?></label>
-                        <p>
-                            <span style='<?= "width:$width%" ?>'></span>
-                        </p>
-                    </div>
+                <label class="heading-4 h4">Technical Skills</label>
+
+                <?php if ($config['skillsStyle'] == 'bar') { ?>
+                    <?php foreach ($joiningFormDetails['primary_skills'] as $skill) {
+                        $width = ($skill['rating'] / 10) * 100;
+                    ?>
+                        <div class="skill bar">
+                            <label><?= $skill['text'] ?> [<?=$skill['rating']."/10"?>]</label>
+                            <p>
+                                <span style='<?= "width:$width%" ?>'></span>
+                            </p>
+                        </div>
+                    <?php } ?>
                 <?php } ?>
+                <?php if ($config['skillsStyle'] == 'star') { ?>
+                    <?php foreach ($joiningFormDetails['primary_skills'] as $skill) {
+                        $rating = $skill['rating'] / 2;
+
+                    ?>
+                        <div class="skill star">
+                            <label><?= $skill['text'] ?> [<?=$skill['rating']."/10"?>]</label>
+                            <p>
+                                <?php for ($i = 1; $i <= 5; $i++) { ?>
+                                    <?php if ($rating >= 1) { ?>
+                                        <i class="fa fa-star"></i>
+                                    <?php } else if ($rating > 0) { ?>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    <?php } else { ?>
+                                        <i class="far fa-star"></i>
+                                    <?php } 
+                                $rating--;
+                                } ?>
+
+                            </p>
+                        </div>
+
+
+                    <?php } ?>
+                <?php } ?>
+
+
+
             </div>
         </div>
         <div class="right">
             <div style="padding-left: 10px;">
                 <div class="bg-color" style="padding: 10px; padding-right:30px; margin-bottom:15px;">
-                    <h2 class="candidate-name"><?= ucwords(strtolower($joiningFormDetails['first_name'] . ' ' . $joiningFormDetails['last_name'])) ?></h2>
-                    <h4 class="position">Position</h4>
+                    <label class="candidate-name h2"><?= ucwords(strtolower($joiningFormDetails['first_name'] . ' ' . $joiningFormDetails['last_name'])) ?></label>
+                    <label class="position h4">Position</label>
                     <p class="description">
                         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facilis culpa totam nihil dolorem voluptatem, nesciunt neque sapiente distinctio sequi tempore harum iure? Unde, quod neque. Voluptatibus temporibus inventore odit recusandae?
                     </p>
                 </div>
+
                 <div style="padding-right:30px;">
                     <?php $employers =  isset($joiningFormDetails['employment_history']['employers']) ? (array)$joiningFormDetails['employment_history']['employers'] : []; ?>
 
-                    <?php if (!empty($employers)) { ?>
+
+                    <?php foreach($config['sections'] as $section){//section forloop start?>
+
+
+                    <?php if (!empty($employers) && $section=='WE') { ?>
                         <div class="container-1">
 
-                            <h3 class="heading-1">work experience</h3>
+                            <label class="heading-1 h3">work experience</label>
 
                             <?php foreach ($employers as $key => $p_employer) {
                                 $p_employer = (array)$p_employer ?>
@@ -252,17 +384,17 @@
                                     <tbody>
                                         <tr>
                                             <td colspan="12">
-                                                <h4 class="heading-2"><?= $p_employer['position_held'] ?></h4>
-                                                <h4 class="heading-3"><?= $p_employer['company'] ?></h4>
+                                                <label class="heading-2 h4"><?= $p_employer['position_held'] ?></label>
+                                                <label class="heading-3 h4"><?= $p_employer['company'] ?></label>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td colspan="6">
-                                                <i class="heading-4"><?= $p_employer['from_date'] . " - " . $p_employer['to_date'] ?></i>
+                                                <label class="heading-6"><?= $p_employer['from_date'] . " - " . $p_employer['to_date'] ?></label>
                                             </td>
                                             <td colspan="6" class="text-right">
 
-                                                <i class="heading-4"><?= $p_employer['address'] ?>, <?= $p_employer['city'] ?></i>
+                                                <label class="heading-6"><?= $p_employer['address'] ?>, <?= $p_employer['city'] ?></label>
                                             </td>
                                         </tr>
                                         <tr>
@@ -275,54 +407,26 @@
 
                             <?php } ?>
 
-                            <?php foreach ($employers as $key => $p_employer) {
-                                $p_employer = (array)$p_employer ?>
-
-                                <table class="table work-experience">
-                                    <tbody>
-                                        <tr>
-                                            <td colspan="12">
-                                                <h4 class="heading-2"><?= $p_employer['position_held'] ?></h4>
-                                                <h4 class="heading-3"><?= $p_employer['company'] ?></h4>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="6">
-                                                <i class="heading-4"><?= $p_employer['from_date'] . " - " . $p_employer['to_date'] ?></i>
-                                            </td>
-                                            <td colspan="6" class="text-right">
-
-                                                <i class="heading-4"><?= $p_employer['address'] ?>, <?= $p_employer['city'] ?></i>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="12" class="description">
-                                                <?= $p_employer['job_responsibilities'] ?>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-
-                            <?php } ?>
+                            
 
                         </div>
                     <?php } ?>
 
 
-                    <?php if (!empty($joiningFormDetails['professional_qualification'])) { ?>
+                    <?php if (!empty($joiningFormDetails['professional_qualification']) && $section=='CC') { ?>
                         <div class="container-1">
-                            <h3 class="heading-1">Courses and training</h3>
+                            <label class="heading-1 h3">Courses and training</label>
                             <?php foreach ($joiningFormDetails['professional_qualification'] as $p_qualification) { ?>
                                 <table class="table courses">
                                     <tbody>
                                         <tr>
                                             <td colspan="12">
-                                                <h4 class="heading-3"><?= $p_qualification['qualification'] ?></h4>
+                                                <label class="heading-3 h4"><?= $p_qualification['qualification'] ?></label>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td colspan="12">
-                                                <h6 class="heading-4"><?= $p_qualification['date'] ?></h6>
+                                                <label class="heading-6 h6"><?= $p_qualification['date'] ?></label>
                                             </td>
 
                                         </tr>
@@ -332,25 +436,25 @@
                             <?php } ?>
                         </div>
                     <?php } ?>
-                   
-                    <?php if (!empty($joiningFormDetails['education_qualification'])) { ?>
+
+                    <?php if (!empty($joiningFormDetails['education_qualification']) && $section=='ED') { ?>
                         <div class="container-1">
-                            <h3 class="heading-1">Education</h3>
+                            <label class="heading-1 h3">Education</label>
                             <?php foreach ($joiningFormDetails['education_qualification'] as $e_qualification) { ?>
                                 <table class="table">
                                     <tbody>
                                         <tr>
                                             <td colspan="12">
-                                                <h4 class="heading-2"><?= $e_qualification['degree'] ?></h4>
-                                                <h4 class="heading-3"><?= $e_qualification['university'] ?></h4>
+                                                <label class="heading-5 h5"><?= $e_qualification['degree'] ?></label>
+                                                <label class="heading-5 h5"><?= $e_qualification['university'] ?></label>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td colspan="6">
-                                                <i class="heading-4"><?= $e_qualification['from_date'] ?> - <?= $e_qualification['to_date'] ?></i>
+                                                <label class="heading-6"><?= $e_qualification['from_date'] ?> - <?= $e_qualification['to_date'] ?></label>
                                             </td>
                                             <td colspan="6" class="text-right">
-                                                <i class="heading-4"><?= $e_qualification['percentage'] ?> %</i>
+                                                <label class="heading-6"><?= $e_qualification['percentage'] ?> %</label>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -360,7 +464,10 @@
                         </div>
                     <?php } ?>
 
+                    <?php }//section forloop end?>
                 </div>
+
+
             </div>
         </div>
     </div>

@@ -50,6 +50,7 @@
 
 
 
+    <script src="<?= base_url('assets/js/sortable.js') ?>"></script>
     <script src="<?= base_url('assets/js/angular/app.js?v=1.5') ?>"></script>
     <script src="<?= base_url('assets/js/angular/angular-cookies.min.js') ?>"></script>
     <script>

@@ -104,6 +104,8 @@ $routes->post('/api/my-profile/documents', 'Api\Profiles::myProfileUploadDocumen
 $routes->post('/api/my-profile/remove-document', 'Api\Profiles::myProfileRemoveDocument',['as'=>'myProfileRemoveDocument']);
 $routes->get('/download-my-profile', 'Profiles::downloadMyProfile',['as'=>'downloadMyProfile']);
 $routes->get('/download-my-resume', 'Profiles::downloadMyResume',['as'=>'downloadMyResume']);
+$routes->get('/download-my-resume-preview', 'Profiles::downloadMyResumePreview',['as'=>'downloadMyResumePreview']);
+$routes->get('/get-font-image', 'FontImage::index',['as'=>'getFontImage']);
 
 //my joining form
 $routes->get('/my-joining-form', 'MyJoiningForm::index',['as'=>'myJoiningForm']);

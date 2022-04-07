@@ -46,9 +46,15 @@
 <script src="<?= base_url('assets/js/angular-timeago.min.js') ?>"></script>
 
 
-
+<script src="<?= base_url('assets/js/jquery-ui.min.js') ?>"></script>
 <script src="<?= base_url('assets/js/angular/app.js?v=1.5') ?>"></script>
+<script src="<?= base_url('assets/js/sortable.js') ?>"></script>
 <script src="<?= base_url('assets/js/angular/angular-cookies.min.js') ?>"></script>
+
+
+<script src="<?= base_url('assets/js/system-google-font-picker/jquery.fontselect.min.js') ?>"></script>
+<link rel="stylesheet" href="<?=base_url('assets/js/system-google-font-picker/jquery.fontselect.min.css')?>">
+
 <script>
       var base_url = '<?= base_url(route_to('home')) ?>';
       var SITE_CODE = '<?= SITE_CODE ?>';

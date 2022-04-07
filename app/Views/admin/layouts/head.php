@@ -37,7 +37,7 @@
 <script src="<?= base_url('assets/js/angular/angular.min.js') ?>"></script>
 <script src="<?= base_url('assets/js/ui-bootstrap-2.5.0.min.js') ?>"></script>
 <script src="<?= base_url('assets/js/ui-bootstrap-tpls-2.5.0.min.js') ?>"></script>
-
+<script src="<?= base_url('assets/js/sortable.js') ?>"></script>
 <script src="<?= base_url('assets/js/angular/app.js?v=1.5') ?>"></script>
 <script src="<?= base_url('assets/js/angular/angular-cookies.min.js') ?>"></script>
 <script>
