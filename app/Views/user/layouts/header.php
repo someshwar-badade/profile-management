@@ -77,7 +77,7 @@
           <?php if (hasCapability('profiles/view')) { ?>
           <li class="nav-item">
             <a href="<?= base_url(route_to('profiles')) ?>" class="nav-link <?=$active_nav=='profiles'?' active ':'';?>">
-              <i class="nav-icon fa fa-id-card"></i>
+              <i class="nav-icon fas fa-id-card"></i>
               <p>
               Profiles
               </p>
@@ -88,7 +88,7 @@
           <?php if (hasCapability('joining_form/view')) { ?>
           <li class="nav-item">
             <a href="<?= base_url(route_to('sendJoiningForm')) ?>" class="nav-link <?=$active_nav=='send-joining-form'?' active ':'';?>">
-              <i class="nav-icon fa fa-id-card"></i>
+              <i class="nav-icon fas fa-id-card"></i>
               <p>
               Joining Details
               </p>
@@ -133,9 +133,20 @@
           <?php if (hasCapability('roles/view')) { ?>
           <li class="nav-item">
             <a href="<?= base_url(route_to('roles')) ?>" class="nav-link <?=$active_nav=='roles'?' active ':'';?>">
-            <i class="nav-icon fa fa-user-cog"></i>
+            <i class="nav-icon fas fa-user-cog"></i>
               <p>
               Roles
+              </p>
+            </a>
+          </li>
+        <?php }?>
+
+          <?php if (hasCapability('policy-documents/view')) { ?>
+          <li class="nav-item">
+            <a href="<?= base_url(route_to('PolicyDocuments')) ?>" class="nav-link <?=$active_nav=='policy-document'?' active ':'';?>">
+            <i class="nav-icon fas fa-file-alt"></i>
+              <p>
+              Policy Documents
               </p>
             </a>
           </li>

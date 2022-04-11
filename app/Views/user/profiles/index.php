@@ -141,13 +141,13 @@
                                         <input type="radio" name="options" id="option_b2" ng-model="tableFilter.status" value="0" autocomplete="off"> New (<?= isset($statuseWiseCount['0']) ? $statuseWiseCount['0']['count'] : 0 ?>)
                                     </label>
                                     <label class="btn bg-olive">
-                                        <input type="radio" name="options" id="option_b3" ng-model="tableFilter.status" value="1" autocomplete="off"> In Process (<?= $statuseWiseCount['1'] ? $statuseWiseCount['1']['count'] : 0 ?>)
+                                        <input type="radio" name="options" id="option_b3" ng-model="tableFilter.status" value="1" autocomplete="off"> In Process (<?= isset($statuseWiseCount['1']) ? $statuseWiseCount['1']['count'] : 0 ?>)
                                     </label>
                                     <label class="btn bg-olive">
-                                        <input type="radio" name="options" id="option_b4" ng-model="tableFilter.status" value="2" autocomplete="off"> Selected (<?= $statuseWiseCount['2'] ? $statuseWiseCount['2']['count'] : 0 ?>)
+                                        <input type="radio" name="options" id="option_b4" ng-model="tableFilter.status" value="2" autocomplete="off"> Selected (<?= isset($statuseWiseCount['2']) ? $statuseWiseCount['2']['count'] : 0 ?>)
                                     </label>
                                     <label class="btn bg-olive">
-                                        <input type="radio" name="options" id="option_b5" ng-model="tableFilter.status" value="3" autocomplete="off"> Blacklisted (<?= $statuseWiseCount['3'] ? $statuseWiseCount['3']['count'] : 0 ?>)
+                                        <input type="radio" name="options" id="option_b5" ng-model="tableFilter.status" value="3" autocomplete="off"> Blacklisted (<?= isset($statuseWiseCount['3']) ? $statuseWiseCount['3']['count'] : 0 ?>)
                                     </label>
                                 </div>
                             </div>
@@ -509,7 +509,7 @@
                                                     <li class="animation" ng-repeat="(key,document) in profileForm.documents">
 
                                                         <a href="<?= base_url('uploaded-documents') ?>/{{document.path}}" target="_blank">{{getDocumentFullname(key)}}</a>
-                                                        <!-- <a class="fa fa-trash text-danger ml-2" role="button" ng-click="removeDocument(key)" title="Remove"></a> -->
+                                                        <!-- <a class="fas fa-trash text-danger ml-2" role="button" ng-click="removeDocument(key)" title="Remove"></a> -->
                                                     </li>
                                                 </ol>
 

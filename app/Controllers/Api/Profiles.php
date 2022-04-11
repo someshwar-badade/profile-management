@@ -17,6 +17,7 @@ use App\Models\GapDeclarationModel;
 use App\Models\MediclaimModel;
 use App\Models\SkillsModel;
 use App\Models\JobPositionModel;
+use App\Models\PolicyDocumentsModel;
 use DateTime;
 use Firebase\JWT\JWT;
 
@@ -2889,6 +2890,8 @@ class Profiles extends ResourceController
         $gapDeclarationModel = new GapDeclarationModel();
         $mediclaimModel = new MediclaimModel();
         $EmploymentHistoryModel = new EmploymentHistoryModel();
+        $PolicyDocumentsModel = new PolicyDocumentsModel();
+    
 
         $joiningFormDetails['employee_other_details'] = $joiningFormDetails['employee_other_details'] ? (array)json_decode($joiningFormDetails['employee_other_details'], true) : $employee_other_details;
         $joiningFormDetails['education_qualification'] = $educationModel->where('joining_form_id', $id)->find();
@@ -2900,6 +2903,7 @@ class Profiles extends ResourceController
         $joiningFormDetails['employment_history'] = $EmploymentHistoryModel->where('joining_form_id', $id)->find();
         $joiningFormDetails['background_info'] = $joiningFormDetails['background_info'] ? (array)json_decode($joiningFormDetails['background_info'], true) : $backGroundInfo;
         $joiningFormDetails['documents'] = $joiningFormDetails['documents'] ? (array)json_decode($joiningFormDetails['documents'], true) : [];
+        $joiningFormDetails['policy_documents'] = $PolicyDocumentsModel->getPolicyDocUser($joiningFormDetails['user_id']);
 
         $countDetails = $joiningFormDetails;
 

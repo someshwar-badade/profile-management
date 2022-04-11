@@ -393,7 +393,7 @@
                     <li class="animation" ng-repeat="(key,document) in profileForm.documents">
 
                       <a href="<?= base_url('uploaded-documents') ?>/{{document.path}}" target="_blank">{{getDocumentFullname(key)}}</a>
-                      <!-- <a class="fa fa-trash text-danger ml-2" role="button" ng-click="removeDocument(key)" title="Remove"></a> -->
+                      <!-- <a class="fas fa-trash text-danger ml-2" role="button" ng-click="removeDocument(key)" title="Remove"></a> -->
                     </li>
                   </ol>
 
@@ -471,7 +471,7 @@
                             <td>{{getInterviewStatus(interview.status)}}</td>
                             <td>
                               <button type="button" class="btn btn-sm text-primary" ng-click="viewInterview(interview.id);" title="Edit"><i class="fa fa-edit"></i></button>
-                              <button type="button" class="btn btn-sm text-danger" ng-click="deleteInterview(interview.id);" title="Delete"><i class="fa fa-trash"></i></button>
+                              <button type="button" class="btn btn-sm text-danger" ng-click="deleteInterview(interview.id);" title="Delete"><i class="fas fa-trash"></i></button>
                             </td>
                           </tr>
                           <tr ng-show="!position.interviews">

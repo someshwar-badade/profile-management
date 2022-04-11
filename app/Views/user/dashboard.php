@@ -17,7 +17,7 @@
                 <div class="col-md-3 col-sm-6 col-12">
                     <a href="<?=base_url(route_to('profiles'))?>" style="color: inherit;">
                         <div class="info-box shadow-sm">
-                            <span class="info-box-icon bg-info"><i class="fa fa-id-card"></i></span>
+                            <span class="info-box-icon bg-info"><i class="fas fa-id-card"></i></span>
 
                             <div class="info-box-content">
                                 <span class="info-box-text">Profiles</span>

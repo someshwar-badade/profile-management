@@ -65,26 +65,26 @@ function isEditableForm($cap, $status)
 
 <div class="content-wrapper" ng-cloak ng-controller="joiningFormCtrl">
     <section class="content-header">
-    <?php if (isset($showTitle)) { ?>
+        <?php if (isset($showTitle)) { ?>
             <div class="container-fluid">
 
                 <div class="row mb-2">
                     <div class="col-md-12">
                         <h1><?= $pageHeading ?> <small ng-show="!!joiningForm.first_name || !!joiningForm.last_name">({{joiningForm.first_name +' '+joiningForm.last_name | uppercase }})</small> <a target="_blank" title="Download Joining Form" href="<?= base_url(route_to('downloadJoiningForm', $id)) ?>" class="fa fa-download pull-right" style="float: right;font-size:1rem;"></a></h1>
-<!-- //downloadMyJoiningForm -->
+                        <!-- //downloadMyJoiningForm -->
                     </div>
                 </div>
 
             </div>
-       
-    <?php } ?>
+
+        <?php } ?>
 
 
         <div class="container-fluid mt-2">
-            <?php if (isset($showTitle)==null) { ?>
+            <?php if (isset($showTitle) == null) { ?>
                 <div class="row ">
                     <div class="col-md-12 text-center">
-                        <h2>JOINING FORM  <a target="_blank" title="Download Joining Form" href="<?= base_url(route_to('downloadMyJoiningForm2')) ?>" class="fa fa-download pull-right" style="float: right;font-size:1rem;"> Download</a></h2>
+                        <h2>JOINING FORM <a target="_blank" title="Download Joining Form" href="<?= base_url(route_to('downloadMyJoiningForm2')) ?>" class="fa fa-download pull-right" style="float: right;font-size:1rem;"> Download</a></h2>
                     </div>
                 </div>
             <?php } ?>
@@ -625,7 +625,7 @@ function isEditableForm($cap, $status)
                                                             <?php } ?>
                                                             <a href="<?= base_url('uploaded-documents') ?>/{{qualification.document_path}}" title="Download document" target="_blank" ng-show="qualification.document_path" class="fa fa-download text-success"></a>
                                                             <?php if (isEditableForm('joining_form/update_education_details', $joiningFormDetails['status'])) { ?>
-                                                                <a role="button" class="fa fa-trash text-danger" ng-click="remove_e_qualification($index)" title="Remove"></a>
+                                                                <a role="button" class="fas fa-trash text-danger" ng-click="remove_e_qualification($index)" title="Remove"></a>
                                                             <?php } ?>
                                                         </div>
                                                     </td>
@@ -683,7 +683,7 @@ function isEditableForm($cap, $status)
                                                         <?php } ?>
                                                         <a href="<?= base_url('uploaded-documents') ?>/{{qualification.document_path}}" title="Download document" target="_blank" ng-show="qualification.document_path" class="fa fa-download text-success"></a>
                                                         <?php if (isEditableForm('joining_form/update_education_details', $joiningFormDetails['status'])) { ?>
-                                                            <a role="button" class="fa fa-trash text-danger" title="Remove" ng-click="remove_p_qualification($index)"></a>
+                                                            <a role="button" class="fas fa-trash text-danger" title="Remove" ng-click="remove_p_qualification($index)"></a>
                                                         <?php } ?>
                                                     </td>
                                                 </tr>
@@ -713,17 +713,17 @@ function isEditableForm($cap, $status)
                                 <p> Starting with your <b>most recent employer</b> please give details of your complete employment history since you left full time education. Include any periods of self-employment, unemployment, maternity leave or <b>military service.</b> Include all part time and temporary employment and provide details of both the agencies and placements. Under ‘position held’ state clearly if you were a partner or had an ownership interest in any of the employing companies, or if the position was part time. If you are aware that one of your employers has changed its trading name, please provide the former name first, followed by the new name.</p>
                             </div>
                             <div class="table-responsive">
-                                
-                                    <form class="">
 
-                                        <!-- <div class="row"> -->
+                                <form class="">
 
-                                        <div class="col-md-12" ng-repeat="employer in joiningForm.employment_history">
-                                            <div class="card card-primary">
-                                                <div class="card-header p-2">
-                                                    <h3 class="card-title">{{$index+1}}. {{employer.company}} ({{employer.from_date}} - {{employer.to_date}})</h3>
+                                    <!-- <div class="row"> -->
 
-                                                    <div class="card-tools">
+                                    <div class="col-md-12" ng-repeat="employer in joiningForm.employment_history">
+                                        <div class="card card-primary">
+                                            <div class="card-header p-2">
+                                                <h3 class="card-title">{{$index+1}}. {{employer.company}} ({{employer.from_date}} - {{employer.to_date}})</h3>
+
+                                                <div class="card-tools">
                                                     <?php if (isEditableForm('joining_form/update_employment', $joiningFormDetails['status'])) { ?>
                                                         <button type="button" ng-click="editEmployer($index)" title="Edit" class="btn btn-tool">
                                                             <i class="fas fa-edit"></i>
@@ -731,178 +731,178 @@ function isEditableForm($cap, $status)
                                                         <button type="button" ng-click="removeEmployer(employer)" title="Delete" class="btn btn-tool">
                                                             <i class="fas fa-trash"></i>
                                                         </button>
-                                                        <?php }?>
-                                                        <button type="button" class="btn btn-tool" title="Minimize" data-card-widget="collapse">
-                                                            <i class="fas fa-minus"></i>
-                                                        </button>
-                                                    </div>
-                                                    <!-- /.card-tools -->
+                                                    <?php } ?>
+                                                    <button type="button" class="btn btn-tool" title="Minimize" data-card-widget="collapse">
+                                                        <i class="fas fa-minus"></i>
+                                                    </button>
                                                 </div>
-                                                <!-- /.card-header -->
-                                                <div class="card-body p-2" style="background: rgba(0, 123, 255,0.3);">
-                                                    <!-- <fieldset class="form-group p-3 animation"> -->
-                                                    <div class="row">
-                                                        <div class="col-sm-6 col-md-3">
-                                                            <div class="light-card">
-                                                                <span>Department:</span>
-                                                                <p><b>{{employer.department?employer.department:'- -'}}</b></p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6 col-md-3">
-                                                            <div class="light-card">
-                                                                <span>Position held:</span>
-                                                                <p><b>{{employer.position_held?employer.position_held:'- -'}}</b></p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6 col-md-3">
-                                                            <div class="light-card">
-                                                                <span>Nature of Job:</span>
-                                                                <p><b>{{employer.nature_of_job?employer.nature_of_job:'- -'}}</b></p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6 col-md-3">
-                                                            <div class="light-card">
-                                                                <span>Annual CTC (in Lacs):</span>
-                                                                <p><b>{{employer.annual_ctc?employer.annual_ctc:'- -'}}</b></p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6 col-md-6">
-                                                            <div class="light-card">
-                                                                <span>Primary Job Responsibilities:</span>
-                                                                <p><b>{{employer.job_responsibilities?employer.job_responsibilities:'- -'}}</b></p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6 col-md-6">
-                                                            <div class="light-card">
-                                                                <span>Reason for Leaving:</span>
-                                                                <p><b>{{employer.reason_of_leaving?employer.reason_of_leaving:'- -'}}</b></p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-sm-12 col-md-4">
-                                                            <div class="card card-secondary">
-                                                                <div class="card-header p-2">
-                                                                    <h4 class="card-title" style="font-size: 0.9rem;">Address</h4>
-                                                                </div>
-                                                                <div class="card-body p-2">
-                                                                    <p class="m-0">{{employer.address?employer.address:'&nbsp;'}}</p>
-                                                                    <p class="m-0">{{employer.city?employer.city:'&nbsp;'}}</p>
-                                                                    <p class="m-0">{{employer.telephone?employer.telephone:'&nbsp;'}}</p>
-                                                                    <p class="m-0">&nbsp;</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-12 col-md-4">
-                                                            <div class="card card-secondary">
-                                                                <div class="card-header p-2">
-                                                                    <h4 class="card-title" style="font-size: 0.9rem;">Reporting Manager</h4>
-                                                                </div>
-                                                                <div class="card-body p-2">
-                                                                    <p class="m-0">
-                                                                        <label class="m-0">Name:</label> <span>{{employer.reporting_manager?employer.reporting_manager:'- -'}}</span>
-                                                                    </p>
-                                                                    <p class="m-0">
-                                                                        <label class="m-0">Mobile:</label> <span>{{employer.contact_number_manager?employer.contact_number_manager:'- -'}}</span>
-                                                                    </p>
-                                                                    <p class="m-0">
-                                                                        <label class="m-0">E-mail:</label> <span>{{employer.email_manager?employer.email_manager:'- -'}}</span>
-                                                                    </p>
-                                                                    <p class="m-0">&nbsp;</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-12 col-md-4">
-                                                            <div class="card card-secondary">
-                                                                <div class="card-header p-2">
-                                                                    <h4 class="card-title" style="font-size: 0.9rem;">HR Person</h4>
-                                                                </div>
-                                                                <div class="card-body p-2">
-                                                                    <p class="m-0">
-                                                                        <label class="m-0">Name:</label> <span>{{employer.hr_name?employer.hr_name:'- -'}}</span>
-                                                                    </p>
-                                                                    <p class="m-0">
-                                                                        <label class="m-0">Mobile:</label> <span>{{employer.hr_contact_number?employer.hr_contact_number:'- -'}}</span>
-                                                                    </p>
-                                                                    <p class="m-0">
-                                                                        <label class="m-0">E-mail:</label> <span>{{employer.hr_email?employer.hr_email:'- -'}}</span>
-                                                                    </p>
-                                                                    <p class="m-0">
-                                                                        <label class="m-0">Designation:</label> <span>{{employer.hr_designation?employer.hr_designation:'- -'}}</span>
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                    <!-- </fieldset> -->
-                                                </div>
-                                                <!-- /.card-body -->
+                                                <!-- /.card-tools -->
                                             </div>
-                                            <!-- /.card -->
-                                            <!-- </div> -->
+                                            <!-- /.card-header -->
+                                            <div class="card-body p-2" style="background: rgba(0, 123, 255,0.3);">
+                                                <!-- <fieldset class="form-group p-3 animation"> -->
+                                                <div class="row">
+                                                    <div class="col-sm-6 col-md-3">
+                                                        <div class="light-card">
+                                                            <span>Department:</span>
+                                                            <p><b>{{employer.department?employer.department:'- -'}}</b></p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6 col-md-3">
+                                                        <div class="light-card">
+                                                            <span>Position held:</span>
+                                                            <p><b>{{employer.position_held?employer.position_held:'- -'}}</b></p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6 col-md-3">
+                                                        <div class="light-card">
+                                                            <span>Nature of Job:</span>
+                                                            <p><b>{{employer.nature_of_job?employer.nature_of_job:'- -'}}</b></p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6 col-md-3">
+                                                        <div class="light-card">
+                                                            <span>Annual CTC (in Lacs):</span>
+                                                            <p><b>{{employer.annual_ctc?employer.annual_ctc:'- -'}}</b></p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6 col-md-6">
+                                                        <div class="light-card">
+                                                            <span>Primary Job Responsibilities:</span>
+                                                            <p><b>{{employer.job_responsibilities?employer.job_responsibilities:'- -'}}</b></p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6 col-md-6">
+                                                        <div class="light-card">
+                                                            <span>Reason for Leaving:</span>
+                                                            <p><b>{{employer.reason_of_leaving?employer.reason_of_leaving:'- -'}}</b></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-12 col-md-4">
+                                                        <div class="card card-secondary">
+                                                            <div class="card-header p-2">
+                                                                <h4 class="card-title" style="font-size: 0.9rem;">Address</h4>
+                                                            </div>
+                                                            <div class="card-body p-2">
+                                                                <p class="m-0">{{employer.address?employer.address:'&nbsp;'}}</p>
+                                                                <p class="m-0">{{employer.city?employer.city:'&nbsp;'}}</p>
+                                                                <p class="m-0">{{employer.telephone?employer.telephone:'&nbsp;'}}</p>
+                                                                <p class="m-0">&nbsp;</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-12 col-md-4">
+                                                        <div class="card card-secondary">
+                                                            <div class="card-header p-2">
+                                                                <h4 class="card-title" style="font-size: 0.9rem;">Reporting Manager</h4>
+                                                            </div>
+                                                            <div class="card-body p-2">
+                                                                <p class="m-0">
+                                                                    <label class="m-0">Name:</label> <span>{{employer.reporting_manager?employer.reporting_manager:'- -'}}</span>
+                                                                </p>
+                                                                <p class="m-0">
+                                                                    <label class="m-0">Mobile:</label> <span>{{employer.contact_number_manager?employer.contact_number_manager:'- -'}}</span>
+                                                                </p>
+                                                                <p class="m-0">
+                                                                    <label class="m-0">E-mail:</label> <span>{{employer.email_manager?employer.email_manager:'- -'}}</span>
+                                                                </p>
+                                                                <p class="m-0">&nbsp;</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-12 col-md-4">
+                                                        <div class="card card-secondary">
+                                                            <div class="card-header p-2">
+                                                                <h4 class="card-title" style="font-size: 0.9rem;">HR Person</h4>
+                                                            </div>
+                                                            <div class="card-body p-2">
+                                                                <p class="m-0">
+                                                                    <label class="m-0">Name:</label> <span>{{employer.hr_name?employer.hr_name:'- -'}}</span>
+                                                                </p>
+                                                                <p class="m-0">
+                                                                    <label class="m-0">Mobile:</label> <span>{{employer.hr_contact_number?employer.hr_contact_number:'- -'}}</span>
+                                                                </p>
+                                                                <p class="m-0">
+                                                                    <label class="m-0">E-mail:</label> <span>{{employer.hr_email?employer.hr_email:'- -'}}</span>
+                                                                </p>
+                                                                <p class="m-0">
+                                                                    <label class="m-0">Designation:</label> <span>{{employer.hr_designation?employer.hr_designation:'- -'}}</span>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <!-- </fieldset> -->
+                                            </div>
+                                            <!-- /.card-body -->
                                         </div>
-                                        <?php if (isEditableForm('joining_form/update_employment', $joiningFormDetails['status'])) { ?>
+                                        <!-- /.card -->
+                                        <!-- </div> -->
+                                    </div>
+                                    <?php if (isEditableForm('joining_form/update_employment', $joiningFormDetails['status'])) { ?>
                                         <div class="col-md-12">
                                             <div class="p-3 my-3 text-center" style="border: dashed;box-shadow: none;">
                                                 <a role="button" class="text-primary" ng-click="addEmployer()" data-toggle="modal" data-target="#employmentHistoryModal"> <i class="fa fa-plus"></i> Add Employer</a>
                                             </div>
                                         </div>
-                                        <?php }?>
-                                        <div class="col-md-12">
+                                    <?php } ?>
+                                    <div class="col-md-12">
 
-                                            <div class="card card-primary">
-                                                <div class="card-header p-2">
-                                                    <h3 class="card-title ng-binding">Gap Declaration</h3>
+                                        <div class="card card-primary">
+                                            <div class="card-header p-2">
+                                                <h3 class="card-title ng-binding">Gap Declaration</h3>
 
-                                                    <div class="card-tools">
-                                                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                                            <i class="fas fa-minus"></i>
-                                                        </button>
-                                                    </div>
-                                                    <!-- /.card-tools -->
+                                                <div class="card-tools">
+                                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                                        <i class="fas fa-minus"></i>
+                                                    </button>
                                                 </div>
-                                                <!-- /.card-header -->
-                                                <div class="card-body p-2" style="background: rgba(0, 123, 255,0.3);">
-                                                    <table class="table table-sm">
-                                                        <thead>
-                                                            <tr>
-                                                                <th><b>Sr. No.</b></th>
-                                                                <th style="width: 40%;"><b>Particulars (Reason)</b></th>
-                                                                <th><b>From</b></th>
-                                                                <th><b>to</b></th>
-                                                                <td style="width: 80px;"></td>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr class="animation" ng-repeat="gap in joiningForm.gap_declaration">
-                                                                <td>
-                                                                    {{$index+1}}
-                                                                </td>
-                                                                <td>
-                                                                    {{gap.particular}}
-                                                                    <div class="text-danger" ng-show="errors['gap_declaration.'+$index+'.document_path']">{{errors['gap_declaration.'+$index+'.document_path']}}</div>
-                                                                </td>
-                                                                <td>
-                                                                    {{gap.from_date}}
-                                                                </td>
-                                                                <td>
-                                                                    {{gap.to_date}}
-                                                                </td>
+                                                <!-- /.card-tools -->
+                                            </div>
+                                            <!-- /.card-header -->
+                                            <div class="card-body p-2" style="background: rgba(0, 123, 255,0.3);">
+                                                <table class="table table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th><b>Sr. No.</b></th>
+                                                            <th style="width: 40%;"><b>Particulars (Reason)</b></th>
+                                                            <th><b>From</b></th>
+                                                            <th><b>to</b></th>
+                                                            <td style="width: 80px;"></td>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr class="animation" ng-repeat="gap in joiningForm.gap_declaration">
+                                                            <td>
+                                                                {{$index+1}}
+                                                            </td>
+                                                            <td>
+                                                                {{gap.particular}}
+                                                                <div class="text-danger" ng-show="errors['gap_declaration.'+$index+'.document_path']">{{errors['gap_declaration.'+$index+'.document_path']}}</div>
+                                                            </td>
+                                                            <td>
+                                                                {{gap.from_date}}
+                                                            </td>
+                                                            <td>
+                                                                {{gap.to_date}}
+                                                            </td>
 
-                                                                <td>
+                                                            <td>
                                                                 <?php if (isEditableForm('joining_form/update_employment', $joiningFormDetails['status'])) { ?>
                                                                     <a role="button" class="fa fa-edit text-primary" ng-click="edit_gap_declaration($index)" title="Edit" data-toggle="modal" data-target="#gapDeclaration"></a>
-                                                                    <?php }?>
-                                                                    <a href="<?= base_url('uploaded-documents') ?>/{{gap.document_path}}" title="Download document" target="_blank" ng-show="gap.document_path" class="fa fa-download text-success"></a>
-                                                                    <?php if (isEditableForm('joining_form/update_employment', $joiningFormDetails['status'])) { ?>
+                                                                <?php } ?>
+                                                                <a href="<?= base_url('uploaded-documents') ?>/{{gap.document_path}}" title="Download document" target="_blank" ng-show="gap.document_path" class="fa fa-download text-success"></a>
+                                                                <?php if (isEditableForm('joining_form/update_employment', $joiningFormDetails['status'])) { ?>
 
-                                                                    <a role="button" class="fa fa-trash text-danger" ng-click="remove_gap_declartion($index)"></a>
-                                                                    <?php }?>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                        <?php if (isEditableForm('joining_form/update_employment', $joiningFormDetails['status'])) { ?>
+                                                                    <a role="button" class="fas fa-trash text-danger" ng-click="remove_gap_declartion($index)"></a>
+                                                                <?php } ?>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                    <?php if (isEditableForm('joining_form/update_employment', $joiningFormDetails['status'])) { ?>
                                                         <tfoot>
                                                             <tr>
                                                                 <td colspan="6">
@@ -912,27 +912,27 @@ function isEditableForm($cap, $status)
                                                             </tr>
 
                                                         </tfoot>
-                                                        <?php }?>
-                                                    </table>
-                                                    <div class="light-card mt-5">
+                                                    <?php } ?>
+                                                </table>
+                                                <div class="light-card mt-5">
 
-                                                        <p>* GAP Declaration to be filed when there is a time gap between two Employments OR between Education and Employment OR between Education and Education.</p>
-                                                        <p>* Any gap of more than 3 months to be filled in with complete details and supporting documents.</p>
-                                                    </div>
-
+                                                    <p>* GAP Declaration to be filed when there is a time gap between two Employments OR between Education and Employment OR between Education and Education.</p>
+                                                    <p>* Any gap of more than 3 months to be filled in with complete details and supporting documents.</p>
                                                 </div>
-                                                <!-- /.card-body -->
+
                                             </div>
+                                            <!-- /.card-body -->
                                         </div>
+                                    </div>
 
 
 
-                                        <!-- <button type="button" class="btn btn-primary" ng-click="submitForm('save-employment-history','#backgroundInfo')">
+                                    <!-- <button type="button" class="btn btn-primary" ng-click="submitForm('save-employment-history','#backgroundInfo')">
                                             <div ng-show="loading" class="css-animated-loader"></div>Save
                                         </button> -->
 
-                                    </form>
-                               
+                                </form>
+
 
 
                             </div>
@@ -1430,7 +1430,7 @@ function isEditableForm($cap, $status)
                                                                 <div class="text-danger" ng-show="errors['background_info.previous_address.'+$index+'.to_date']">{{errors['background_info.previous_address.'+$index+'.to_date']}}</div>
                                                             </td>
                                                             <td>
-                                                                <a role="button" class="fa fa-trash text-danger" ng-click="remove_p_address($index)"></a>
+                                                                <a role="button" class="fas fa-trash text-danger" ng-click="remove_p_address($index)"></a>
                                                             </td>
                                                         </tr>
 
@@ -1515,20 +1515,20 @@ function isEditableForm($cap, $status)
                                                 </td>
 
                                                 <td>
-                                                <?php if (isEditableForm('joining_form/update_mediclaim_details', $joiningFormDetails['status'])) { ?>
+                                                    <?php if (isEditableForm('joining_form/update_mediclaim_details', $joiningFormDetails['status'])) { ?>
                                                         <a role="button" class="fa fa-edit text-primary" ng-click="edit_mediclaim($index)" title="edit" data-toggle="modal" data-target="#mediclaim"></a>
                                                     <?php } ?>
 
                                                     <a href="<?= base_url('uploaded-documents') ?>/{{person.document_path}}" title="Download document" target="_blank" ng-show="person.document_path" class="fa fa-download text-success"></a>
 
                                                     <?php if (isEditableForm('joining_form/update_mediclaim_details', $joiningFormDetails['status'])) { ?>
-                                                        <a role="button" class="fa fa-trash text-danger" ng-click="remove_mediclaim($index)"></a>
+                                                        <a role="button" class="fas fa-trash text-danger" ng-click="remove_mediclaim($index)"></a>
                                                     <?php } ?>
                                                 </td>
                                             </tr>
                                         </tbody>
-                                       
-                                            <?php if (isEditableForm('joining_form/update_mediclaim_details', $joiningFormDetails['status'])) { ?>
+
+                                        <?php if (isEditableForm('joining_form/update_mediclaim_details', $joiningFormDetails['status'])) { ?>
                                             <tfoot>
                                                 <tr>
                                                     <td colspan="6">
@@ -1573,7 +1573,7 @@ function isEditableForm($cap, $status)
 
 
                                                         <td>
-                                                            <a role="button" class="fa fa-trash text-danger" ng-click="remove_relative_bitstring($index)"></a>
+                                                            <a role="button" class="fas fa-trash text-danger" ng-click="remove_relative_bitstring($index)"></a>
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -1680,7 +1680,7 @@ function isEditableForm($cap, $status)
                                             <a href="<?= base_url('uploaded-documents') ?>/{{document.path}}" target="_blank">{{getDocumentFullname(key)}}</a>
 
                                             <?php if (isEditableForm('joining_form/update_documents', $joiningFormDetails['status'])) { ?>
-                                                <a class="fa fa-trash text-danger ml-2" role="button" ng-click="removeDocument(key)" title="Remove"></a>
+                                                <a class="fas fa-trash text-danger ml-2" role="button" ng-click="removeDocument(key)" title="Remove"></a>
                                             <?php } ?>
                                             <i class="ml-5" ng-show="document.documentNote">Note: {{document.documentNote}}</i>
                                         </li>
@@ -1738,15 +1738,15 @@ function isEditableForm($cap, $status)
                                     <form class="">
                                         <fieldset class="form-group p-3">
                                             <legend class="w-auto px-2">Policy Documents</legend>
-                                            <ol>
-                                                <li>
-                                                    <a href="<?= base_url('assets/policy-documents/company-policy.pdf') ?>" target="_blank">Company Policy</a>
-                                                </li>
-                                                <li>
-                                                    <a href="<?= base_url('assets/policy-documents/leave-policy.pdf') ?>" target="_blank">Leave Policy</a>
-                                                </li>
-                                                <li>
-                                                    <a href="<?= base_url('assets/policy-documents/holidays-policy.pdf') ?>" target="_blank">Holidays Policy</a>
+                                            <ol style="list-style-type: none;">
+                                                <li ng-repeat="doc in policy_documents">
+                                                    <h5 ng-show="doc.type=='File'">
+                                                        <a  target="_blank" href="{{base_url+'/view-policy-document/'+doc.id+'/'+ doc.document_name}}">{{doc.document_name}}</a> <small ng-show="doc.view_at" class="text-muted">last view:{{doc.view_at | timeAgo}}</small>
+                                                    </h5>
+                                                    <h5 ng-show="doc.type=='Text'">
+                                                        <a  role="button" ng-click="viewDocument(doc.id)">{{doc.document_name}}</a> <small ng-show="doc.view_at" class="text-muted">last view:{{doc.view_at | timeAgo}}</small>
+
+                                                    </h5>
                                                 </li>
                                             </ol>
                                         </fieldset>
@@ -2141,7 +2141,29 @@ function isEditableForm($cap, $status)
                 </div>
             </div>
         </div>
-        
+
+        <div class="modal" id="viewDocumentModal">
+            <div class="modal-dialog modal-lg ">
+                <div class="modal-content">
+                    <!-- Modal header -->
+                    <div class="modal-header p-2 bg-primary">
+                        <h5 class="modal-title">Policy Document Details</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                    <div id="documentHtml"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </section>
 
 </div>
@@ -2168,6 +2190,7 @@ function isEditableForm($cap, $status)
         $scope.mediclaim = {};
         $scope.formComlpletion = 0;
         $scope.documentNote = '';
+        $scope.policy_documents = {};
         //$scope.joiningForm.education_qualification = new Array();
 
         $scope.documentNameList = {
@@ -2253,7 +2276,7 @@ function isEditableForm($cap, $status)
             $scope.joiningForm = response.data.joiningFormDetails;
             $scope.formComlpletion = response.data.formComlpletion;
             $scope.documentList = response.data.joiningFormDetails.documents;
-
+            $scope.policy_documents = response.data.joiningFormDetails.policy_documents;
         }, function(response) {
             if (response.data.status == 403) {
                 toastr.error(response.data.messages.errorMessage);
@@ -2398,7 +2421,7 @@ function isEditableForm($cap, $status)
             $scope.errors = '';
         }
 
-        
+
         $scope.saveProfessionalQualification = function() {
             // console.log($scope.e_qualification);
             $scope.errors = '';
@@ -2513,84 +2536,84 @@ function isEditableForm($cap, $status)
             $scope.employment_history_errors = {};
 
 
-         }
+        }
 
-         $scope.editEmployer = function(index) {
+        $scope.editEmployer = function(index) {
             $scope.employment_history = angular.copy($scope.joiningForm.employment_history[index]);
             $scope.employment_history_errors = {};
             $('#employmentHistoryModal').modal('toggle');
         }
 
-            $scope.saveEmployer = function() {
-                $scope.employment_history_errors = {};
+        $scope.saveEmployer = function() {
+            $scope.employment_history_errors = {};
 
 
-                // console.log($scope.profile);
-                var apiUrl = base_url + '/api/my-joining-form/save-employment-history_';
-                var method = "POST";
-                // console.log($scope.joiningForm);
-                $http({
-                    method: method,
-                    url: apiUrl,
-                    data: $scope.employment_history,
-                    // data: $scope.joiningForm
-                }).then(function(response) {
-                    $scope.addEmployer();
+            // console.log($scope.profile);
+            var apiUrl = base_url + '/api/my-joining-form/save-employment-history_';
+            var method = "POST";
+            // console.log($scope.joiningForm);
+            $http({
+                method: method,
+                url: apiUrl,
+                data: $scope.employment_history,
+                // data: $scope.joiningForm
+            }).then(function(response) {
+                $scope.addEmployer();
 
-                    $scope.joiningForm.employment_history = response.data.list;
-                    $scope.successMessage = response.data.messages.success;
-                    toastr.success(response.data.messages.success);
-                    $('#employmentHistoryModal').modal('toggle');
-                    // window.location = base_url + '/profiles';
-                }, function(response) {
-
-
-                    $scope.employment_history_errors = response.data.messages;
-                    if (response.data.status == 403) {
-                        toastr.error(response.data.messages.errorMessage);
-                    } else {
-                        // toastr.error("Something went wrong !!"); 
-                    }
-                    // console.log($scope.errors);
-                    // console.log($scope.errors['lang.en.title']);
-                });
-            }
-
-            $scope.removeEmployer = function(employer) {
-                if(!confirm("Are you sure delete this recodrd?")) return;
-                $scope.employment_history_errors = {};
+                $scope.joiningForm.employment_history = response.data.list;
+                $scope.successMessage = response.data.messages.success;
+                toastr.success(response.data.messages.success);
+                $('#employmentHistoryModal').modal('toggle');
+                // window.location = base_url + '/profiles';
+            }, function(response) {
 
 
-                // console.log($scope.profile);
-                var apiUrl = base_url + '/api/my-joining-form/remove-employment-history_';
-                var method = "DELETE";
-                // console.log($scope.joiningForm);
-                $http({
-                    method: method,
-                    url: apiUrl,
-                    data: employer,
-                    // data: $scope.joiningForm
-                }).then(function(response) {
-                    $scope.addEmployer();
+                $scope.employment_history_errors = response.data.messages;
+                if (response.data.status == 403) {
+                    toastr.error(response.data.messages.errorMessage);
+                } else {
+                    // toastr.error("Something went wrong !!"); 
+                }
+                // console.log($scope.errors);
+                // console.log($scope.errors['lang.en.title']);
+            });
+        }
 
-                    $scope.joiningForm.employment_history = response.data.list;
-                    $scope.successMessage = response.data.messages.success;
-                    toastr.success(response.data.messages.success);
-                   
-                    // window.location = base_url + '/profiles';
-                }, function(response) {
+        $scope.removeEmployer = function(employer) {
+            if (!confirm("Are you sure delete this recodrd?")) return;
+            $scope.employment_history_errors = {};
 
 
-                    $scope.employment_history_errors = response.data.messages;
-                    if (response.data.status == 403) {
-                        toastr.error(response.data.messages.errorMessage);
-                    } else {
-                        // toastr.error("Something went wrong !!"); 
-                    }
-                    // console.log($scope.errors);
-                    // console.log($scope.errors['lang.en.title']);
-                });
-            }
+            // console.log($scope.profile);
+            var apiUrl = base_url + '/api/my-joining-form/remove-employment-history_';
+            var method = "DELETE";
+            // console.log($scope.joiningForm);
+            $http({
+                method: method,
+                url: apiUrl,
+                data: employer,
+                // data: $scope.joiningForm
+            }).then(function(response) {
+                $scope.addEmployer();
+
+                $scope.joiningForm.employment_history = response.data.list;
+                $scope.successMessage = response.data.messages.success;
+                toastr.success(response.data.messages.success);
+
+                // window.location = base_url + '/profiles';
+            }, function(response) {
+
+
+                $scope.employment_history_errors = response.data.messages;
+                if (response.data.status == 403) {
+                    toastr.error(response.data.messages.errorMessage);
+                } else {
+                    // toastr.error("Something went wrong !!"); 
+                }
+                // console.log($scope.errors);
+                // console.log($scope.errors['lang.en.title']);
+            });
+        }
 
 
         $scope.addEmploymentSummary = function() {
@@ -2606,6 +2629,23 @@ function isEditableForm($cap, $status)
 
         $scope.remove_employment_summary = function(index) {
             $scope.joiningForm.employment_history.employment_summary.splice(index, 1);
+        }
+
+        $scope.viewDocument = function(documentId){
+            $('#viewDocumentModal').modal('toggle');
+            $scope.documentHtml = '';
+            if (documentId != '') {
+
+                $http({
+                    method: 'get',
+                    url: base_url + '/view-policy-document/' + documentId,
+                }).then(function(response) {
+                    $('#documentHtml').html(response.data.data.text)
+                }, function(response) {
+
+
+                });
+            }
         }
 
         // $scope.addEmployer = function() {

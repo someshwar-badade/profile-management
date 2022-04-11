@@ -393,7 +393,7 @@
                                                         <div>
                                                             <a role="button" class="fa fa-edit text-primary" ng-click="edit_e_qualification($index)" title="Edit" data-toggle="modal" data-target="#educationalQualification"></a>
                                                             <a href="<?= base_url('uploaded-documents') ?>/{{qualification.document_path}}" title="Download document" target="_blank" ng-show="qualification.document_path" class="fa fa-download text-success"></a>
-                                                            <a role="button" class="fa fa-trash text-danger" ng-click="remove_e_qualification($index)" title="Remove"></a>
+                                                            <a role="button" class="fas fa-trash text-danger" ng-click="remove_e_qualification($index)" title="Remove"></a>
 
                                                         </div>
                                                     </td>
@@ -447,7 +447,7 @@
                                                         <a role="button" class="fa fa-edit text-primary" ng-click="edit_p_qualification($index)" title="Edit" data-toggle="modal" data-target="#professionalQualification"></a>
                                                         <a href="<?= base_url('uploaded-documents') ?>/{{qualification.document_path}}" title="Download document" target="_blank" ng-show="qualification.document_path" class="fa fa-download text-success"></a>
 
-                                                        <a role="button" class="fa fa-trash text-danger" title="Remove" ng-click="remove_p_qualification($index)"></a>
+                                                        <a role="button" class="fas fa-trash text-danger" title="Remove" ng-click="remove_p_qualification($index)"></a>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -580,7 +580,7 @@
                                         <li class="animation" ng-repeat="(key,document) in profileForm.documents">
 
                                             <a href="<?= base_url('uploaded-documents') ?>/{{document.path}}" target="_blank">{{getDocumentFullname(key)}}</a>
-                                            <a class="fa fa-trash text-danger ml-2" role="button" ng-click="removeDocument(key)" title="Remove"></a>
+                                            <a class="fas fa-trash text-danger ml-2" role="button" ng-click="removeDocument(key)" title="Remove"></a>
                                         </li>
                                     </ol>
 

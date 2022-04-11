@@ -46,10 +46,9 @@ class Home extends BaseController
 			'active_nav' => 'contact-us'
 		];
 		
-
-
 		return view('contact-us', $data);
 	}
+
 	public function faq()
 	{
 		$data = [

@@ -184,6 +184,18 @@ $routes->delete('/api/clients/contacts', 'Api\Clients::deleteClientContact',['as
 $routes->get('/api/clients/(:num)', 'Api\Clients::getDetails/$1',['as'=>'getClientDetails']);
 $routes->post('/api/clients', 'Api\Clients::saveClient',['as'=>'saveClient']);
 
+
+//Policy Documents
+$routes->get('/policy-documents', 'PolicyDocuments::index',['as'=>'PolicyDocuments']);
+$routes->get('/api/policy-documents', 'Api\PolicyDocuments::index',['as'=>'getPolicyDocuments']);
+$routes->delete('/api/policy-documents/(:num)', 'Api\PolicyDocuments::deletePolicyDocument/$1',['as'=>'deletePolicyDocument']);
+$routes->get('/api/policy-documents-user', 'Api\PolicyDocuments::getPolicyDocumentsUser',['as'=>'getPolicyDocumentsUser']);
+$routes->get('/api/policy-documents/(:num)', 'Api\PolicyDocuments::getDetails/$1',['as'=>'getPolicyDocument']);
+$routes->post('/api/policy-documents', 'Api\PolicyDocuments::savePolicyDocument',['as'=>'savePolicyDocument']);
+$routes->get('/view-policy-document/(:num)', 'Api\PolicyDocuments::viewPolicyDocumentFile/$1',['as'=>'viewPolicyDocumentFile1']);
+$routes->get('/view-policy-document/(:num)/(:any)', 'Api\PolicyDocuments::viewPolicyDocumentFile/$1/$2',['as'=>'viewPolicyDocumentFile']);
+
+
 //Logs
 $routes->get('/logs', 'Logs::index',['as'=>'logs']);
 $routes->get('/api/logs', 'Api\Logs::index',['as'=>'getLogs']);

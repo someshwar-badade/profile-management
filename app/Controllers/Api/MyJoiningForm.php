@@ -16,6 +16,7 @@ use App\Models\GapDeclarationModel;
 use App\Models\MediclaimModel;
 use App\Models\SkillsModel;
 use App\Models\JobPositionModel;
+use App\Models\PolicyDocumentsModel;
 use DateTime;
 use Firebase\JWT\JWT;
 
@@ -129,6 +130,7 @@ class MyJoiningForm extends ResourceController
         $gapDeclarationModel = new GapDeclarationModel();
         $mediclaimModel = new MediclaimModel();
         $EmploymentHistoryModel = new EmploymentHistoryModel();
+        $PolicyDocumentsModel = new PolicyDocumentsModel();
 
         $this->joiningFormDetails['employee_other_details'] = $this->joiningFormDetails['employee_other_details'] ? (array)json_decode($this->joiningFormDetails['employee_other_details'], true) : $employee_other_details;
         $this->joiningFormDetails['education_qualification'] = $educationModel->where('joining_form_id', $this->joiningFormDetails['id'])->find();
@@ -140,7 +142,7 @@ class MyJoiningForm extends ResourceController
         $this->joiningFormDetails['employment_history'] = $EmploymentHistoryModel->where('joining_form_id', $this->joiningFormDetails['id'])->find();
         $this->joiningFormDetails['background_info'] = $this->joiningFormDetails['background_info'] ? (array)json_decode($this->joiningFormDetails['background_info'], true) : $backGroundInfo;
         $this->joiningFormDetails['documents'] = $this->joiningFormDetails['documents'] ? (array)json_decode($this->joiningFormDetails['documents'], true) : [];
-
+        $this->joiningFormDetails['policy_documents'] = $PolicyDocumentsModel->getPolicyDocUser($this->user['id']);
     }
 
     public function getJoingformDetails()

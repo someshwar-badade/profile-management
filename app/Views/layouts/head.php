@@ -33,8 +33,8 @@
     <link rel="stylesheet" href="<?= base_url('assets/admin/plugins/summernote/summernote-bs4.min.css') ?>">
 
     <link rel="stylesheet" href="<?= base_url('assets/js/datatables/datatables.min.css') ?>">
-    <link rel="stylesheet" href="<?= base_url('assets/css/main.css?v1.4') ?>">
-    <link rel="stylesheet" href="<?= base_url('assets/admin/custom.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/css/main.css?v1.5') ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/admin/custom.css?v1.0') ?>">
 
     <link rel="stylesheet" href="<?= base_url('assets/js/toastr/toastr.min.css') ?>">
     <script src="<?= base_url('assets/js/angular/angular.min.js') ?>"></script>
@@ -51,8 +51,12 @@
 
 
     <script src="<?= base_url('assets/js/sortable.js') ?>"></script>
-    <script src="<?= base_url('assets/js/angular/app.js?v=1.5') ?>"></script>
+    <script src="<?= base_url('assets/js/angular/app.js?v=1.6') ?>"></script>
     <script src="<?= base_url('assets/js/angular/angular-cookies.min.js') ?>"></script>
+    <!-- Angular Sanitize JS -->
+<script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.2.4/angular-sanitize.min.js'></script>
+<!-- Text Angular JS -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/textAngular/1.1.2/textAngular.min.js'></script>
     <script>
         var base_url = '<?= base_url(route_to('home')) ?>';
         var SITE_CODE = '<?= SITE_CODE ?>';

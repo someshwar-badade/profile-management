@@ -282,6 +282,9 @@ function checkSoundexExist($word,$arrWords)
  */
 function sortAssociativeArrayByKey($array, $key, $direction){
 
+    if(empty($array)){
+        return;
+    }
     switch ($direction){
         case "ASC":
             usort($array, function ($first, $second) use ($key) {

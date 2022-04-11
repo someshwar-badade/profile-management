@@ -669,4 +669,34 @@ EOD;
 
 		return view('my-profile-login-form', $data);
 	}
+
+
+	public function updateSkills(){
+		$model = new ProfileModel();
+
+		// foreach($model->findAll() as $p){
+		// 	$p['primary_skills'] = $this->converSkills($p['primary_skills']);	
+		// 	$p['secondary_skills'] = $this->converSkills($p['secondary_skills']);	
+		// 	$p['foundation_skills'] = $this->converSkills($p['foundation_skills']);	
+
+		// 	$model->Save($p);
+		// }
+		die;
+	}
+
+	public function converSkills($skills){
+		$skills = explode(" || ",$skills);
+		$result = [];
+		foreach($skills as $skill){
+
+			$temp = [
+				'text'=>$skill,
+				'rating'=>0,
+			];
+			$result[]=$temp;
+		}
+
+		return json_encode($result);
+	}
+
 }

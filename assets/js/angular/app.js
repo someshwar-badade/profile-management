@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ngCookies','datatables','ui.bootstrap','angularjs-dropdown-multiselect','ngTagsInput','yaru22.angular-timeago','psi.sortable']);
+var app = angular.module('app', ['ngCookies','datatables','ui.bootstrap','angularjs-dropdown-multiselect','ngTagsInput','yaru22.angular-timeago','psi.sortable','textAngular']);
 app.run(function($rootScope,$http,$filter) {
     $rootScope.base_url = base_url;
 
@@ -38,7 +38,7 @@ app.run(function($rootScope,$http,$filter) {
                   // console.log(files);
                    $parse(attrs.fileInput).assign($scope, element[0].files);
                    $scope.$apply();
-                   console.log($scope.edudocument);
+                  //  console.log($scope.document);
                   //  console.log($scope.resumeword);
               });
          }

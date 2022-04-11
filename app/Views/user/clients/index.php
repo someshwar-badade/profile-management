@@ -82,7 +82,7 @@
                             </ul> -->
 
                             <button class="btn btn-sm client-contacts-btn" ng-click="viewClientContacts(client);" title="Contacts ({{client.clientContacts.length}})">
-                                <i class="fa fa-user-plus text-secondary"></i>
+                                <i class="fas fa-user-plus text-secondary"></i>
                                 <span class="badge badge-secondary ">{{client.clientContacts.length}}</span>
                             </button>
                             <button ng-click="viewClient(client.id);" class="btn btn-primary btn-block"><b>Edit</b></button>
@@ -264,7 +264,7 @@
                                             <td>
                                                 <button class="btn btn-sm btn-outline-primary" ng-click="editClientContact(contact);"><i class="fa fa-edit"></i> Edit</button>
                                                 <button ng-disabled="contact.isDisabledDeleteBtn" class="btn btn-sm btn-outline-danger" ng-click="deleteClientContact(contact);">
-                                                    <i ng-show="!contact.isDisabledDeleteBtn" class="fa fa-trash"></i> 
+                                                    <i ng-show="!contact.isDisabledDeleteBtn" class="fas fa-trash"></i> 
                                                     <div ng-show="contact.isDisabledDeleteBtn" role="status" class="spinner-border spinner-border-sm">
                                                         <span class="sr-only">Loading...</span>
                                                     </div>
