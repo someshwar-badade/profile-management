@@ -1,6 +1,10 @@
 <?php
 namespace App\Controllers;
 
+
+
+use App\Models\ActionLogModel;
+
 class Logs extends BaseController
 {
 
@@ -29,4 +33,25 @@ class Logs extends BaseController
 
 		return view('user/logs/index', $data);
     }
+
+
+	public function downloadLogReport() {
+		
+		header("Content-Type: application/vnd.ms-excel");
+		$model = new ActionLogModel();
+
+		$start = 0;
+		$length = 10;
+		
+		echo "ID\t Date\t Action By\tAction Type\t Model\t Changed Data\n";
+		while($data = $model->getList([], '', $start, $length,'action_log.id desc',true)){
+			foreach($data as $row){
+				echo "{$row['id']}\t {$row['created_at']}\t {$row['action_by']}\t {$row['action_type']}\t {$row['model']}\t {$row['chaged_data']}\n";
+			}
+			$start += $length;
+		}
+		header("Content-disposition: attachment; filename=states.xls");
+		exit();
+
+	}
 }

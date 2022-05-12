@@ -5,38 +5,49 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" href="<?= base_url('assets/admin/plugins/fontawesome-free/css/all.min.css') ?>">
     <title>Joining Form</title>
-    <?php 
-    $config['colorPrimary'] = !empty($config['colorPrimary'])?$config['colorPrimary']:'#ffd7dd';
-    $config['header1'] = !empty($config['header1']) ? $config['header1'] : '32px';
-    $config['header2'] = !empty($config['header2']) ? $config['header2'] : '26px';
-    $config['header3'] = !empty($config['header3']) ? $config['header3'] : '20px';
-    $config['header4'] = !empty($config['header4']) ? $config['header4'] : '18px';
-    $config['header5'] = !empty($config['header5']) ? $config['header5'] : '16px';
-    $config['font'] = !empty($config['font']) ? $config['font'] : 'Roboto-Regular.ttf';
+    <?php
+     $config['colorPrimary'] = !empty($config['colorPrimary']) ? $config['colorPrimary'] : '#ef8989';
+     $config['colorSecondary'] = !empty($config['colorSecondary']) ? $config['colorSecondary'] : '#fff';
+     $config['ts1'] = !empty($config['ts1']) ? $config['ts1'] : '20px';
+     $config['ts2'] = !empty($config['ts2']) ? $config['ts2'] : '18px';
+     $config['ts3'] = !empty($config['ts3']) ? $config['ts3'] : '26px';
+     $config['ts4'] = !empty($config['ts4']) ? $config['ts4'] : '14px';
+     $config['ts5'] = !empty($config['ts5']) ? $config['ts5'] : '12px';
+     $config['ts6'] = !empty($config['ts6']) ? $config['ts6'] : '10px';
+     $config['skillsStyle'] = !empty($config['skillsStyle']) ? $config['skillsStyle'] : 'bar';
+     $config['font'] = !empty($config['font']) ? $config['font'] : 'Roboto-Regular.ttf';
+     $fontFamily = str_replace('+',' ',$config['fontFamily']);
+     $fontFamily = explode(":",$fontFamily)[0];
     ?>
     <style>
         /** 
         Set the margins of the page to 0, so the footer and the header
         can be of the full height and width !
      **/
-   
 
-       
+
+
 
         /* * {
             padding: 0;
             margin: 0;
         } */
 
-        @font-face {
-            font-family: "coustomFont";
-            src: url('<?=base_url("/assets/fonts/".$config['font'])?>');
-            } 
-
-            body,div,p,span,td,h1,h2,h3,h4,h5,h6{
-                font-family: coustomFont !important;
-            }
         
+        body,
+        div,
+        p,
+        span,
+        td,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: <?=$fontFamily?> !important;
+        }
+
         @page {
             margin: 0;
         }
@@ -45,7 +56,7 @@
             width: 100%;
             table-layout: fixed;
             border-collapse: collapse;
-            background-color: <?=$config['colorPrimary']?>;
+            background-color: <?= $config['colorPrimary'] ?>;
             margin-bottom: 30px;
         }
 
@@ -59,7 +70,7 @@
 
 
         /* section.heading {
-            background-color: <?=$config['colorPrimary']?>;
+            background-color: <?= $config['colorPrimary'] ?>;
             padding: 25px
         }*/
 
@@ -127,12 +138,8 @@
             margin-bottom: 5px;
         }
 
-        .title-2{
-            font-size: 16px; 
-        }
-        .title-3{
-            font-size: 14px; 
-        }
+  
+
 
         .personal-details p,
         .professional-profile div {
@@ -140,7 +147,7 @@
         }
 
         .personal-details i {
-            /* color: <?=$config['colorPrimary']?>; */
+            /* color: <?= $config['colorPrimary'] ?>; */
             margin-right: 5px;
             margin-bottom: 5px;
             font-size: 12px;
@@ -152,28 +159,34 @@
             margin-bottom: 15px;
         }
 
-        .container table,.work-experience-container table {
+        .container table,
+        .work-experience-container table {
             width: 100%;
             table-layout: fixed;
             border-collapse: collapse;
         }
 
-        .container table tr td.icon,.work-experience-container table tr td.icon{
+        .container table tr td.icon,
+        .work-experience-container table tr td.icon {
             width: 8%;
         }
 
-        .container table tr td p,.work-experience-container table tr td p{
+        .container table tr td p,
+        .work-experience-container table tr td p {
             text-align: justify;
             font-size: 12px;
             margin-bottom: 5px;
         }
 
-        .container table tr td h3,.work-experience-container table tr td h3{
+        .container table tr td h3,
+        .work-experience-container table tr td h3 {
             font-weight: normal;
         }
 
-        .container table tr td.icon i,.work-experience-container table tr td.icon {
-            background-color: <?=$config['colorPrimary']?>;
+        .container table tr td.icon i,
+        .work-experience-container table tr td.icon {
+            background-color: white;
+            color: <?= $config['colorPrimary'] ?>;
             padding: 5px;
             border-radius: 50%;
         }
@@ -181,6 +194,7 @@
         .container table {
             margin-bottom: 10px;
         }
+
         .personal-details,
         .technical-skills {
             margin-bottom: 15px;
@@ -204,46 +218,94 @@
         .technical-skills .skill p span {
             height: 10px;
             display: block;
-            background-color: <?=$config['colorPrimary']?>;
+            background-color: <?= $config['colorPrimary'] ?>;
         }
 
         .technical-skills .skill {
             margin-bottom: 8px;
             padding-right: 10px;
         }
+
+
+        .h1 {
+            font-size: <?= $config['ts1'] ?>;
+            display: block;
+            margin: 0;
+            line-height: <?= $config['ts1'] ?>;
+        }
+
+        .h2 {
+            font-size: <?= $config['ts2'] ?>;
+            display: block;
+            margin: 0;
+            line-height: <?= $config['ts2'] ?>;
+        }
+
+        .h3 {
+            font-size: <?= $config['ts3'] ?>;
+            display: block;
+            padding: 0;
+            line-height: <?= $config['ts3'] ?>;
+        }
+
+        .h4 {
+            font-size: <?= $config['ts4'] ?>;
+            display: block;
+            padding: 0;
+            line-height: <?= $config['ts4'] ?>;
+        }
+
+        .h5 {
+            font-size: <?= $config['ts5'] ?>;
+            display: block;
+            padding: 0;
+            line-height: <?= $config['ts5'] ?>;
+        }
+
+        .h6 {
+            font-size: <?= $config['ts6'] ?>;
+            display: block;
+            padding: 0;
+            line-height:  <?= $config['ts6'] ?>;
+        }
+
+
+        .profile-name {
+            color: <?= $config['colorSecondary'] ?>;
+            font-size: 22px;
+        }
+        .heading {
+            font-size: <?= $config['ts1'] ?>;
+        }
+        .sub-heading {
+            font-size: <?= $config['ts2'] ?>;
+        }
+        .text {
+            font-size: <?= $config['ts3'] ?>;
+        }
+
     </style>
 </head>
 
 <body>
     <?php
-
-    $skills = [
-        ['text' => "PHP", "rating" => "8"],
-        ['text' => "Javascript", "rating" => "7"],
-        ['text' => "JAVA", "rating" => "6"],
-        ['text' => "CSS", "rating" => "9"],
-        ['text' => "HTML", "rating" => "10"],
-        ['text' => "MySql", "rating" => "6"],
-        ['text' => "Angular", "rating" => "3"],
-        ['text' => "Python", "rating" => "2"],
-    ];
     $languages = [
         ['text' => "English", "rating" => "8"],
         ['text' => "Hindi", "rating" => "10"],
         ['text' => "Marathi", "rating" => "10"],
     ];
-
     ?>
+
     <table class="heading">
         <tbody>
             <tr>
                 <td class="image">
-                    <img class="user-image" src="<?= base_url('/assets/images/somesh.jpeg') ?>">
+                <img class="user-image" src="<?= base_url($joiningFormDetails['photo']?$joiningFormDetails['photo']:'/assets/images/placeholder-employee.jpg') ?>">
                 </td>
                 <td class="profile-name">
                     <center>
-                        <h1><span><?= ucwords(strtolower($joiningFormDetails['first_name'] . ' ' . $joiningFormDetails['last_name'])) ?></span></h1>
-                        <h3>Profession</h3>
+                        <label class="h1"><span><?= ucwords(strtolower($joiningFormDetails['first_name'] . ' ' . $joiningFormDetails['last_name'])) ?></span></label>
+                        <!-- <label>Profession</label> -->
                     </center>
                 </td>
             </tr>
@@ -253,33 +315,19 @@
     <!-- <div> -->
     <section class="left">
         <div class="personal-details">
-            <h2 class="title-1">Contacts</h2>
+            <label class="title-1 heading">Contacts</label>
             <p><i class="far fa-envelope"></i> <label for=""><?= $joiningFormDetails['email_primary'] ?></label></p>
             <p><i class="fas fa-mobile-alt"></i> <label for=""><?= $joiningFormDetails['mobile_primary'] ?></label></p>
-            <p><i class="fas fa-map-marker-alt"></i> <label for=""><?=$joiningFormDetails['present_address']?></label></p>
+            <p><i class="fas fa-map-marker-alt"></i> <label for=""><?= $joiningFormDetails['present_address'] ?></label></p>
         </div>
 
         <div class="technical-skills">
-            <h2 class="title-1">Skills</h2>
+            <label class="title-1 heading">Skills</label>
             <?php foreach ($joiningFormDetails['primary_skills'] as $skill) {
-                    $width = ($skill['rating'] / 10) * 100;
-                ?>
-                <div class="skill">
-                    <label><?= $skill['text'] ?></label>
-                    <p>
-                        <span style='<?= "width:$width%" ?>'></span>
-                    </p>
-                </div>
-            <?php } ?>
-        </div>
-
-        <div class="technical-skills">
-            <h2 class="title-1">Languages</h2>
-            <?php foreach ($languages as $language) {
-                $width = ($language['rating'] / 10) * 100;
+                $width = ($skill['rating'] / 10) * 100;
             ?>
                 <div class="skill">
-                    <label><?= $language['text'] ?></label>
+                    <label><?= $skill['text'] ?></label>
                     <p>
                         <span style='<?= "width:$width%" ?>'></span>
                     </p>
@@ -291,120 +339,117 @@
     <section class="right">
         <div class="professional-profile">
 
-            <h2 class="title-1">Professional profile</h2>
+            <label class="title-1 heading">Professional profile</label>
             <div>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere neque tenetur est cumque accusantium consequuntur, veritatis enim error mollitia placeat itaque eos voluptas repellat facilis asperiores. Voluptate nesciunt adipisci error.
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere neque tenetur est cumque accusantium consequuntur, veritatis enim error mollitia placeat itaque eos voluptas repellat facilis asperiores. Voluptate nesciunt adipisci error.
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere neque tenetur est cumque accusantium consequuntur, veritatis enim error mollitia placeat itaque eos voluptas repellat facilis asperiores. Voluptate nesciunt adipisci error.
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere neque tenetur est cumque accusantium consequuntur, veritatis enim error mollitia placeat itaque eos voluptas repellat facilis asperiores. Voluptate nesciunt adipisci error.
-                </p>
+                <p><?= $joiningFormDetails['about_me'] ?></p>
             </div>
         </div>
-        <?php if (!empty($joiningFormDetails['education_qualification'])) { ?>
-        <div class="container">
-            <h2 class="title-1">education</h2>
-            <?php foreach ($joiningFormDetails['education_qualification'] as $e_qualification) { ?>
-            <table>
-                <tbody>
-                    <tr>
-                        <td class="icon">
-                            <i class="fas fa-graduation-cap"></i>
-                        </td>
-                        <td>
-                            <h3 class="title-2"><b><?= $e_qualification['from_date'] ?> - <?= $e_qualification['to_date'] ?> <?= $e_qualification['degree'] ?></b></h3>
-                            <h3 class="title-3"><?= $e_qualification['university'] ?></h3>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                        <p><?= $e_qualification['institution'] ?></p>
-                        <p>Percentage / CGPA:  <?= $e_qualification['percentage'] ?></p>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <?php } ?>
-            
-        </div>
-        <?php } ?>
 
         <?php $employers =  isset($joiningFormDetails['employment_history']['employers']) ? (array)$joiningFormDetails['employment_history']['employers'] : []; ?>
 
-        <?php if (!empty($employers)) { ?>
-        <div class="container">
-        <h2 class="title-1">Work Experience</h2>
-        <?php foreach ($employers as $key => $p_employer) {
-                                $p_employer = (array)$p_employer ?>
-            <table>
-                <tbody>
-                    <tr>
-                        <td class="icon">
-                            <i class="fa fa fa-briefcase"></i>
-                        </td>
-                        <td>
-                            <h3 class="title-2"><b><?= $p_employer['from_date'] . " - " . $p_employer['to_date'] ?> <?= $p_employer['company'] ?></b></h3>
-                            <h3 class="title-3"><?= $p_employer['position_held']?></h3>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                        <?= $p_employer['job_responsibilities'] ?>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
 
-            <?php } ?>
-        </div>
-            <?php } ?>
+        <?php foreach($config['sections'] as $section){//section forloop start?>
 
+        <?php if (!empty($joiningFormDetails['education_qualification']) && $section=='ED') { ?>
+            <div class="container">
+                <label class="title-1 heading">education</label>
+                <?php foreach ($joiningFormDetails['education_qualification'] as $e_qualification) { ?>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td class="icon sub-heading">
+                                    <i class="fas fa-graduation-cap"></i>
+                                </td>
+                                <td>
+                                    <label class="title-2 sub-heading"><?= $e_qualification['from_date'] ?> - <?= $e_qualification['to_date'] ?> <?= $e_qualification['degree'] ?></label>
+                                    <label class="title-3 sub-heading"><?= $e_qualification['university'] ?></label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <p><?= $e_qualification['institution'] ?></p>
+                                    <p>Percentage / CGPA: <?= $e_qualification['percentage'] ?></p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                <?php } ?>
+
+            </div>
+        <?php } ?>
         
 
-        <div class="container">
-        <h2 class="title-1">Achievements</h2>
-            <table>
-                <tbody>
-                    <tr>
-                        <td class="icon">
-                            <i class="fa fa-award"></i>
-                        </td>
-                        <td>
-                            <h3 class="title-2"><b>2020 Acheivment 1</b></h3>
-                            <!-- <h3>university/school name</h3> -->
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <?php if (!empty($employers) && $section=='WE') { ?>
+            <div class="container">
+                <label class="title-1">Work Experience</label>
+                <?php foreach ($employers as $key => $p_employer) {
+                    $p_employer = (array)$p_employer ?>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td class="icon sub-heading">
+                                    <i class="fa fa fa-briefcase"></i>
+                                </td>
+                                <td>
+                                    <label class="title-2 sub-heading"><?= $p_employer['from_date'] . " - " . $p_employer['to_date'] ?> <?= $p_employer['company'] ?></label>
+                                    <label class="title-3 sub-heading"><?= $p_employer['position_held'] ?></label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <?= $p_employer['job_responsibilities'] ?>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
 
-            <table>
-                <tbody>
-                    <tr>
-                        <td class="icon">
-                        <i class="fa fa-award"></i>
-                        </td>
-                        <td>
-                            <h3><b>2018 2020 Acheivment 2</b></h3>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            
-        </div>
+                <?php } ?>
+            </div>
+        <?php } ?>
+
+
+        <?php if (!empty($joiningFormDetails['projects']) && $section == 'PRJ') { ?>
+            <div class="container">
+                <label class="title-1 heading">Projects</label>
+                <?php foreach ($joiningFormDetails['projects'] as $e_qualification) { ?>
+                    <div style="margin-bottom:15px;">
+                        <label class="title-2 sub-heading"><?= $e_qualification['title'] ?></label>
+                        <div>
+                            <?= $e_qualification['description'] ?>
+                        </div>
+                    </div>
+                <?php } ?>
+            </div>
+        <?php } ?>
+
+
+        <?php if (!empty($joiningFormDetails['professional_qualification']) && $section == 'CC') { ?>
+            <div class="container">
+                <label class="title-1 heading">Achievements</label>
+                <?php foreach ($joiningFormDetails['professional_qualification'] as $p_qualification) { ?>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td class="icon sub-heading">
+                                    <i class="fa fa-award"></i>
+                                </td>
+                                <td>
+                                    <label class="title-2 sub-heading"><?= $p_qualification['qualification'] ?></label>
+                                    <!-- <label>university/school name</label> -->
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <p><?= $p_qualification['date'] ?></p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                <?php } ?>
+            </div>
+        <?php } ?>
+ <?php }//section forloop end?>
 
     </section>
     <!-- </div> -->

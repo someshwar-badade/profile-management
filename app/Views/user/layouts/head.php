@@ -19,6 +19,9 @@
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Tempusdominus Bootstrap 4 -->
   <link rel="stylesheet" href="<?=base_url('assets/admin/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css')?>">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="<?=base_url('assets/admin/plugins/select2/css/select2.min.css')?>">
+  <link rel="stylesheet" href="<?=base_url('assets/admin/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')?>">
   <!-- iCheck -->
   <link rel="stylesheet" href="<?=base_url('assets/admin/plugins/icheck-bootstrap/icheck-bootstrap.min.css')?>">
   <!-- JQVMap -->
@@ -33,7 +36,7 @@
   <link rel="stylesheet" href="<?=base_url('assets/admin/plugins/summernote/summernote-bs4.min.css')?>">
 
   <link rel="stylesheet" href="<?=base_url('assets/js/datatables/datatables.min.css')?>">
-  <link rel="stylesheet" href="<?=base_url('assets/admin/custom.css?v1.0')?>">
+  <link rel="stylesheet" href="<?=base_url('assets/admin/custom.css?v1.3')?>">
   <link rel="stylesheet" href="<?=base_url('assets/css/rich-text-editor.css')?>">
 
   <link rel="stylesheet" href="<?=base_url('assets/js/toastr/toastr.min.css')?>">
@@ -50,7 +53,7 @@
 
 
 <script src="<?= base_url('assets/js/jquery-ui.min.js') ?>"></script>
-<script src="<?= base_url('assets/js/angular/app.js?v=1.6') ?>"></script>
+<script src="<?= base_url('assets/js/angular/app.js?v=1.7') ?>"></script>
 <script src="<?= base_url('assets/js/sortable.js') ?>"></script>
 <script src="<?= base_url('assets/js/angular/angular-cookies.min.js') ?>"></script>
 <!-- Angular Sanitize JS -->
@@ -60,6 +63,12 @@
 
 <script src="<?= base_url('assets/js/system-google-font-picker/jquery.fontselect.min.js') ?>"></script>
 <link rel="stylesheet" href="<?=base_url('assets/js/system-google-font-picker/jquery.fontselect.min.css')?>">
+
+<!-- finecrop -->
+<script src="<?= base_url('assets/js/finecrop/js/fineCrop.js') ?>"></script>
+<link rel="stylesheet" href="<?=base_url('assets/js/finecrop/css/fineCrop.css')?>">
+<link rel="stylesheet" href="<?=base_url('assets/js/finecrop/css/layout.css')?>">
+
 
 <script>
       var base_url = '<?= base_url(route_to('home')) ?>';

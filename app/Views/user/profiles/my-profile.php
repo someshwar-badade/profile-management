@@ -46,15 +46,11 @@
                 <div class="row mb-2">
                     <div class="col-md-12">
                         <h1 style="display: inline-block;"> My Profile</h1>
-                        <!-- <div class="input-group " style="flex-direction: row-reverse;">
-                            <a href="<?=base_url(route_to('downloadMyResumePreview'))?>" class="btn btn-sm btn-success">Download Resume</a>
-                        </div> -->
-
-
+                        <div class="input-group " style="flex-direction: row-reverse;">
+                            <a href="<?= base_url(route_to('downloadMyResumePreview')) ?>" class="btn btn-sm btn-success">Download Resume</a>
+                        </div>
                     </div>
                 </div>
-
-
             <?php } ?>
             <div class="row">
                 <div class="col-md-12">
@@ -73,9 +69,14 @@
                             <a class="nav-link" id="employmentHistory-tab" data-toggle="tab" href="#employmentHistory" role="tab" data-iserror="{{errors.employmentHistoryTab}}" aria-controls="employmentHistory" aria-selected="false">Employment History <span ng-show="errors.employmentHistoryTab" class="fa fa-exclamation-triangle text-danger"></span></a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" id="projects-tab" data-toggle="tab" href="#projects" role="tab" data-iserror="{{errors.projectsTab}}" aria-controls="projects" aria-selected="false">Projects <span ng-show="errors.projectsTab" class="fa fa-exclamation-triangle text-danger"></span></a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" id="uploadDocuments-tab" data-toggle="tab" href="#uploadDocuments" role="tab" data-iserror="{{errors.uploadDocumentsTab}}" aria-controls="uploadDocuments" aria-selected="false">Documents <span ng-show="errors.uploadDocumentsTab" class="fa fa-exclamation-triangle text-danger"></span></a>
                         </li>
-
+                        <li class="nav-item">
+                        <a class="nav-link" id="jobPositions-tab" data-toggle="tab" href="#jobPositions" role="tab" data-iserror="{{errors.jobPositions}}" aria-controls="jobPositions" aria-selected="false">Jobs <span ng-show="errors.jobPositions" class="fa fa-exclamation-triangle text-danger"></span></a>
+                        </li>
                     </ul>
                     <div class="tab-content" id="myTabContent" style="background-color: white;padding:20px;">
                         <div class="tab-pane fade show active" id="employeeDetails" role="tabpanel" aria-labelledby="employeeDetails-tab">
@@ -83,14 +84,31 @@
                                 <fieldset class="form-group p-3">
                                     <legend class="w-auto px-2">Personal details</legend>
                                     <div class="form-row">
+
+                                        <div class="form-group col-md-8">
+                                            <label>About me</label>
+                                            <textarea cols="30" rows="6" class="form-control" maxlength="1000" placeholder="Type here..." ng-model="profileForm.about_me">{{profileForm.about_me}}</textarea>
+                                            <span class="pull-right">{{profileForm.about_me.length?profileForm.about_me.length:0}}/{{1000}}</span>
+                                            <!-- <input type="text" maxlength="50" class="form-control" placeholder="First Name" ng-model="profileForm.first_name"> -->
+                                            <!-- <div class="text-danger" ng-show="errors.first_name">{{errors.first_name}}</div> -->
+                                        </div>
+                                        <div class="form-group col-md-4 text-center photo-container">
+                                            <input type="file" id="upphoto" style="display:none;">
+                                            <label class="upphoto" for="upphoto">
+                                                <i class="fas fa-camera"></i>
+                                                Upload photo
+                                            </label>
+                                            <img onerror="this.style.display='none'" id="croppedImg" ng-src="{{base_url+profileForm.photo}}">
+
+                                        </div>
                                         <div class="form-group col-md-3">
                                             <label>First Name<sup class="text-danger">*</sup></label>
-                                            <input type="text" maxlength="50" class="form-control" placeholder="First Name" ng-model="profileForm.first_name">
+                                            <input type="text" maxlength="50" class="form-control capitalize-each-word alpha-space" placeholder="First Name" ng-model="profileForm.first_name">
                                             <div class="text-danger" ng-show="errors.first_name">{{errors.first_name}}</div>
                                         </div>
                                         <div class="form-group col-md-3">
                                             <label>Last Name<sup class="text-danger">*</sup></label>
-                                            <input type="text" maxlength="50" class="form-control" placeholder="Last Name" ng-model="profileForm.last_name">
+                                            <input type="text" maxlength="50" class="form-control capitalize-each-word alpha-space" placeholder="Last Name" ng-model="profileForm.last_name">
                                             <div class="text-danger" ng-show="errors.last_name">{{errors.last_name}}</div>
                                         </div>
                                         <div class="form-group col-md-3">
@@ -124,8 +142,7 @@
 
                                         <div class="form-group col-md-3">
                                             <label>E-mail (primary)<sup class="text-danger">*</sup></label>
-                                            <input type="email" maxlength="50" class="form-control" placeholder="E-mail" ng-model="profileForm.email_primary">
-                                            <div class="text-danger" ng-show="errors.email_primary">{{errors.email_primary}}</div>
+                                            <div>{{profileForm.email_primary}}</div>
                                         </div>
                                         <div class="form-group col-md-3">
                                             <label>E-mail (alternate)</label>
@@ -154,7 +171,7 @@
 
                                         <div class="form-group col-md-3">
                                             <label>PAN Number<sup class="text-danger">*</sup></label>
-                                            <input type="text" maxlength="10" class="form-control" placeholder="PAN Number" ng-model="profileForm.pan_number">
+                                            <input type="text" maxlength="10" class="form-control capitalize-string alpha-numeric" placeholder="PAN Number" ng-model="profileForm.pan_number">
                                             <div class="text-danger" ng-show="errors.pan_number">{{errors.pan_number}}</div>
                                         </div>
 
@@ -221,14 +238,14 @@
 
                                         <div class="form-group col-md-2">
                                             <label>Notice Period (in Months)</label>
-                                            <input type="text" maxlength="2" class="form-control" placeholder="Company Name" ng-model="profileForm.notice_period">
+                                            <input type="text" maxlength="2" class="form-control only-numbers" placeholder="Notice Period" ng-model="profileForm.notice_period">
                                         </div>
 
                                         <div class="form-group col-md-2">
                                             <label>Is notice period negotiable ?</label>
                                             <div class="form-check-inline">
                                                 <label class="form-check-label">
-                                                    <input type="radio" class="form-check-input" ng-model="profileForm.is_negotiable_np" value="1">
+                                                    <input type="radio" class="form-check-input only-numbers" ng-model="profileForm.is_negotiable_np" value="1">
                                                     Yes
                                                 </label>
                                             </div>
@@ -253,12 +270,12 @@
 
                                         <div class="form-group col-md-2">
                                             <label>Current CTC (in Lakh/annum)</label>
-                                            <input type="text" maxlength="10" class="form-control" ng-model="profileForm.ctc">
+                                            <input type="text" maxlength="10" class="form-control decimal-numbers" ng-model="profileForm.ctc">
                                         </div>
 
                                         <div class="form-group col-md-2">
                                             <label>Expected CTC (in Lakh/annum)</label>
-                                            <input type="text" maxlength="10" class="form-control" ng-model="profileForm.expected_ctc">
+                                            <input type="text" maxlength="10" class="form-control decimal-numbers" ng-model="profileForm.expected_ctc">
                                         </div>
                                         <!-- <div class="form-group col-md-2">
                                         <label>Is negotiable expected CTC?</label>
@@ -534,6 +551,50 @@
                             </div>
                         </div>
 
+                        <div class="tab-pane fade" id="projects" role="tabpanel" aria-labelledby="projects-tab">
+                            <div class="table-responsive">
+                                <form class="">
+
+                                    <fieldset class="form-group p-3 table-responsive">
+                                        <table class="table table-bordered table-stripped">
+                                            <thead>
+                                                <tr>
+                                                    <td style="width: 300px;"><b>Project Title</b></td>
+                                                    <td><b>Description</b></td>
+                                                    <td style="width: 80px;"></td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="project in profileForm.projects">
+                                                    <td>
+                                                        {{project.title}}
+                                                    </td>
+                                                    <td ng-bind-html="project.description"></td>
+
+                                                    <td>
+                                                        <div>
+                                                            <a role="button" class="fa fa-edit text-primary" ng-click="edit_project($index)" title="Edit" data-toggle="modal" data-target="#projectsModal"></a>
+                                                            <a role="button" class="fas fa-trash text-danger" ng-click="remove_project($index)" title="Remove"></a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr ng-show="!profileForm.projects">
+                                                    <td colspan="3">No data available</td>
+                                                </tr>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td colspan="3">
+                                                        <a role="button" class="text-primary" ng-click="addProject()" data-toggle="modal" data-target="#projectsModal"> <i class="fa fa-plus"></i> Add</a>
+                                                    </td>
+                                                </tr>
+
+                                            </tfoot>
+                                        </table>
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
 
                         <div class="tab-pane fade" id="uploadDocuments" role="tabpanel" aria-labelledby="uploadDocuments-tab">
                             <form class="">
@@ -592,11 +653,94 @@
                                 </fieldset>
 
                         </div>
+                        <div class="tab-pane fade" id="jobPositions" role="tabpanel" aria-labelledby="jobPositions-tab">
 
+                            <div ng-show="profileForm.jobPositions.length!=0" ng-repeat="position in profileForm.jobPositions" class="card collapsed-card" ng-class="{'card-primary':!!position.applied_dt,'card-danger':!position.applied_dt}">
+                                <div class="card-header">
+                                    <h3 class="card-title">
+                                        {{position.title}} <small>({{position.job_code}}, {{position.client_name}})</small> - <small class="text-warning"> {{dateFormat(position.shortlisted_dt)}}</small>
+
+                                    </h3>
+
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i>
+                                        </button>
+                                    </div>
+                                    <!-- /.card-tools -->
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <small><label for="">Job Description:</label> {{position.desc}}</small>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <small><label for="">Primary Skills ({{(position.match_primary_skills != "0") ?'Match '+ position.match_primary_skills +' skill(s)':'Match all skills'}}):</label> 
+                                            <span class="badge ml-1" ng-repeat="skill in position.primary_skills">{{skill.text}}</span>
+                                        </small>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <small><label for="">Secondary Skills ({{(position.match_secondary_skills != "0") ?'Match '+ position.match_secondary_skills +' skill(s)':'Match all skills'}}):</label> 
+                                            <span class="badge ml-1" ng-repeat="skill in position.secondary_skills">{{skill.text}}</span>
+                                        </small>
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <small><label for="">Applied Date:</label> {{!!position.applied_dt?dateFormat(position.applied_dt):'- -'}}</small>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h5>Interviews </h5>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <table class="table table-bordered table-sm table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Company Name</th>
+                                                        <th>Interviewer Name</th>
+                                                        <th>For Role</th>
+                                                        <th>Schedule Date</th>
+                                                        <th>Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="interview in position.interviews">
+                                                        <td>{{$index+1}}</td>
+                                                        <td>{{interview.company_name}}</td>
+                                                        <td>{{interview.interview_taken_by}}</td>
+                                                        <td>{{interview.for_role}}</td>
+                                                        <td>{{dateTimeFormat(interview.schedule_dt)}}</td>
+                                                        <td>{{getInterviewStatus(interview.status)}}</td>
+                                                        
+                                                    </tr>
+                                                    <tr ng-show="!position.interviews">
+                                                        <td colspan="7">No data available</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                            <div ng-show="profileForm.jobPositions.length==0" class="alert alert-danger" role="alert">
+                                Data not available!
+                            </div>
+
+                        </div>
                     </div>
                 </div>
             </div>
-
         </div>
 
         <div class="modal fade" id="educationalQualification" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -857,6 +1001,79 @@
             </div>
         </div>
 
+
+        <div class="modal fade" id="projectsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Project</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-row">
+
+                                <div class="form-group col-md-12">
+                                    <label>Title<sup class="text-danger">*</sup></label>
+                                    <input type="text" maxlength="200" class="form-control" ng-model="project.title">
+                                    <div class="text-danger" ng-show="errors.title">{{errors.title}}</div>
+                                </div>
+
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label>Description</label>
+                                    <div text-angular="text-angular" name="htmlcontent" ng-model="project.description" ta-disabled='disabled'></div>
+
+                                    <!-- <input type="text" maxlength="30" class="form-control" ng-model="project.description"> -->
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" ng-click="saveProject()" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="cropHolder">
+            <div id="cropWrapper">
+                <img id="inputImage">
+            </div>
+            <div class="cropInputs">
+                <div class="inputtools">
+                    <p>
+
+                        <span> <i class="fas fa-arrows-alt-h"></i> Horizontal movement</span>
+                    </p>
+                    <input type="range" class="cropRange" name="xmove" id="xmove" min="0" value="0">
+                </div>
+                <div class="inputtools">
+                    <p>
+                        <span> <i class="fas fa-arrows-alt-v"></i> Vertical movement</span>
+                    </p>
+                    <input type="range" class="cropRange" name="ymove" id="ymove" min="0" value="0">
+                </div>
+                <br>
+                <button class="cropButtons" id="zplus">
+                    <i class="fa fa-plus"></i>
+                </button>
+                <button class="cropButtons" id="zminus">
+                    <i class="fa fa-minus"></i>
+                </button>
+                <br>
+                <button id="cropSubmit">Submit</button>
+                <button id="closeCrop">Close</button>
+            </div>
+        </div>
+
+        <!-- <iframe src="http://localhost/profiles-management/download-log-report" frameborder="0" width="0" height="0"></iframe> -->
     </section>
 </div>
 
@@ -867,6 +1084,9 @@
 <?= $this->section('javascript') ?>
 
 <script>
+    function capitalizeTxt(txt) {
+        return txt.charAt(0).toUpperCase() + txt.slice(1); //or if you want lowercase the rest txt.slice(1).toLowerCase();
+    }
     app.controller('profileFormCtrl', ['$scope', '$http', 'slugifyFilter', function($scope, $http, slugifyFilter) {
 
         $scope.editMode = false;
@@ -878,6 +1098,7 @@
             employment_history: null
         };
         $scope.e_qualification = {};
+        $scope.project = {};
         $scope.p_qualification = {};
         $scope.gap_declaration = {};
         $scope.mediclaim = {};
@@ -911,6 +1132,27 @@
 
 
 
+        }
+
+
+        $scope.uploadProfilePhoto = function() {
+            $http({
+                method: 'POST',
+                url: base_url + '/api/my-profile/upload-photo',
+                data: {
+                    'profilePhoto': $('#croppedImg').attr('src')
+                }
+            }).then(function(response) {
+                $scope.profileForm = response.data.profileDetails;
+                console.log(response);
+            }, function(response) {
+                if (response.data.status == 403) {
+                    toastr.error(response.data.messages.errorMessage);
+                } else {
+                    toastr.error("Something went wrong !!");
+                }
+
+            });
         }
 
         $scope.initializeDatepicker = function() {
@@ -1082,6 +1324,119 @@
 
                 $scope.loading = false;
                 $scope.profileForm.education_qualification = response.data.list;
+                $scope.successMessage = response.data.messages.success;
+                toastr.success(response.data.messages.success);
+
+                // window.location = base_url + '/profiles';
+            }, function(response) {
+
+                $scope.loading = false;
+                $scope.errors = response.data.messages;
+                if (response.data.status == 403) {
+                    toastr.error(response.data.messages.errorMessage);
+                } else {
+                    toastr.error("Something went wrong !!");
+                }
+                // console.log($scope.errors);
+                // console.log($scope.errors['lang.en.title']);
+            });
+
+        }
+
+
+        $scope.addProject = function() {
+
+            $scope.project = {
+                "id": "",
+                "profile_id": $scope.profileForm.id,
+                "title": "",
+                "description": "",
+            };
+
+            $scope.errors = '';
+        }
+        $scope.edit_project = function(index) {
+
+            $scope.project = angular.copy($scope.profileForm.projects[index]);
+            $scope.errors = '';
+        }
+
+        $scope.saveProject = function() {
+
+            $scope.errors = '';
+            $scope.otpSuccessMsg = '';
+            $scope.loading = true;
+            $scope.successMessage = '';
+            // console.log($scope.profile);
+            var apiUrl = base_url + '/api/my-profile/save-profile-project-details';
+            var method = "POST";
+            // console.log($scope.profileForm);
+            $http({
+                method: method,
+                url: apiUrl,
+                headers: {
+                    'Content-Type': undefined
+                },
+
+                transformRequest: function(data) {
+                    var formData = new FormData();
+
+                    formData.append("requestData", angular.toJson(data.model));
+                    // for (var i = 0; i < data.files.length; i++) {
+                    //     formData.append("photo" + i, data.files[i]);
+                    // }
+                    angular.forEach(data.document, function(file) {
+                        formData.append('edudocument', file);
+                    });
+                    return formData;
+                },
+                data: {
+                    model: $scope.project,
+                },
+                // data: $scope.profileForm
+            }).then(function(response) {
+                $scope.addProject();
+                $scope.editMode = false;
+                $scope.loading = false;
+                $scope.profileForm.projects = response.data.list;
+                $scope.successMessage = response.data.messages.success;
+                toastr.success(response.data.messages.success);
+
+                // window.location = base_url + '/profiles';
+            }, function(response) {
+
+                $scope.loading = false;
+                $scope.errors = response.data.messages;
+                if (response.data.status == 403) {
+                    toastr.error(response.data.messages.errorMessage);
+                } else {
+                    // toastr.error("Please fill all the fileds."); 
+                }
+                // console.log($scope.errors);
+                // console.log($scope.errors['lang.en.title']);
+            });
+        }
+
+        $scope.remove_project = function(index) {
+            if (!confirm("Are you sure?")) {
+                return;
+            }
+            // $scope.profileForm.education_qualification.splice(index, 1);
+            var apiUrl = base_url + '/api/my-profile/remove-profile-project-details';
+            var method = "POST";
+            var id = $scope.profileForm.projects[index].id;
+            // console.log($scope.profileForm);
+            $http({
+                method: method,
+                url: apiUrl,
+                data: {
+                    id: id,
+                },
+                // data: $scope.profileForm
+            }).then(function(response) {
+
+                $scope.loading = false;
+                $scope.profileForm.projects = response.data.list;
                 $scope.successMessage = response.data.messages.success;
                 toastr.success(response.data.messages.success);
 
@@ -1287,14 +1642,31 @@
             }).then(function(response) {
                 $scope.editMode = false;
                 $scope.loading = false;
-                $scope.successMessage = response.data.messages.success;
-                toastr.success(response.data.messages.success);
-                if (nextTab != '') {
-                    $('#myTab a[href="' + nextTab + '"]').tab('show');
+                $scope.errors = response.data.error;
+                if (!$scope.errors) {
+                    $scope.successMessage = response.data.messages.success;
+                    toastr.success(response.data.messages.success);
+                    if (nextTab != '') {
+                        $('#myTab a[href="' + nextTab + '"]').tab('show');
+                    }
+                    if (reload) {
+                        window.location.reload();
+                    }
+                } else {
+                    if (response.data.status == 403) {
+
+                        if (!!response.data.messages.redirectUrl) {
+                            window.location.href = response.data.messages.redirectUrl;
+                        }
+                        if (response.data.messages.errorMessage != '') {
+                            toastr.error(response.data.messages.errorMessage);
+                        }
+
+                    } else {
+                        toastr.error("Please fill all the required information.");
+                    }
                 }
-                if (reload) {
-                    window.location.reload();
-                }
+
 
                 // window.location = base_url + '/profiles';
             }, function(response) {
@@ -1449,5 +1821,16 @@
         }
 
     }]);
+
+
+    $("#upphoto").finecrop({
+        viewHeight: 500,
+        cropWidth: 200,
+        cropHeight: 200,
+        cropInput: 'inputImage',
+        cropOutput: 'croppedImg',
+        zoomValue: 50,
+        postUrl: base_url + '/api/my-profile/upload-photo'
+    });
 </script>
 <?= $this->endSection() ?>

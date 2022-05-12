@@ -18,6 +18,7 @@ use App\Models\MediclaimModel;
 use App\Models\SkillsModel;
 use App\Models\JobPositionModel;
 use App\Models\PolicyDocumentsModel;
+use App\Models\ProfileProjectsModel;
 use DateTime;
 use Firebase\JWT\JWT;
 
@@ -46,7 +47,7 @@ class Profiles extends ResourceController
         $jobPositionModel = new JobPositionModel();
         $jobPositionDetails = '';
         if ($jobPositionId) {
-            $jobPositionDetails = $jobPositionModel->find($jobPositionId);
+            $jobPositionDetails = $jobPositionModel->getJobPositionDetails($jobPositionId);
         }
         // $iSearch = [];
         $searchKey = $this->request->getVar('search'); //$_POST['search'];
@@ -78,8 +79,8 @@ class Profiles extends ResourceController
         }
 
         if ($jobPositionDetails) {
-            $filter['primary_skills'] = $jobPositionDetails['primary_skills'] ? explode(" || ", $jobPositionDetails['primary_skills']) : null;
-            $filter['secondary_skills'] =  $jobPositionDetails['secondary_skills'] ? explode(" || ", $jobPositionDetails['secondary_skills']) : null;
+            $filter['primary_skills'] = $jobPositionDetails['primary_skills'];// ? explode(" || ", $jobPositionDetails['primary_skills']) : null;
+            $filter['secondary_skills'] =  $jobPositionDetails['secondary_skills'];// ? explode(" || ", $jobPositionDetails['secondary_skills']) : null;
             $filter['match_primary_skills'] = $jobPositionDetails['match_primary_skills'] ? $jobPositionDetails['match_primary_skills'] : count($filter['primary_skills']);
             $filter['match_secondary_skills'] =  $jobPositionDetails['match_secondary_skills'] ? $jobPositionDetails['match_secondary_skills'] : count($filter['secondary_skills']);
             $filter['job_position_id'] = $jobPositionDetails['id'];
@@ -584,7 +585,7 @@ class Profiles extends ResourceController
     {
 
         $user = checkUserToken();
-
+        $error = null;
         // if (!$user) {
         //     return $this->fail(['messages' => 'Please login.'], 400);
         // }
@@ -605,6 +606,7 @@ class Profiles extends ResourceController
         }
 
         $allowedColums = [
+            'id' => '',
             'first_name' => '',
             'last_name' => '',
             'father_name' => '',
@@ -811,13 +813,16 @@ class Profiles extends ResourceController
 
         $valid = $validation->run($requestData);
         if (!$valid) {
-            return $this->fail($validation->getErrors(), 400);
+            $error = $validation->getErrors();
+            // return $this->fail($validation->getErrors(), 400);
         }
 
         $oldDetails = $model->find($joiningFormId);
+        $oldDetails = array_intersect_key($oldDetails, $allowedColums);
         $oldDetails['employee_other_details'] = (array)json_decode($oldDetails['employee_other_details'], true);
-        $changed_data = array_diff_assoc((array)$requestData, (array)$oldDetails);
-        $changed_data['employee_other_details'] = array_diff_assoc((array)$requestData['employee_other_details'], (array)$oldDetails['employee_other_details']);
+        $oldDetails = array_intersect_key($oldDetails, $allowedColums);
+        $changed_data = array_diff_assoc_recursive((array)$requestData, (array)$oldDetails);
+        //$changed_data['employee_other_details'] = array_diff_assoc((array)$requestData['employee_other_details'], (array)$oldDetails['employee_other_details']);
 
         $requestData['employee_other_details'] = $requestData['employee_other_details'] ? json_encode($requestData['employee_other_details']) : null;
 
@@ -839,7 +844,7 @@ class Profiles extends ResourceController
         $response = [
             'id'   => $joiningFormId,
             'action_type' => 'Updated',
-            'error'    => null,
+            'error'    => $error,
             'messages' => [
                 'success' => 'Updated successfully'
             ]
@@ -3096,6 +3101,7 @@ class Profiles extends ResourceController
 
         //get profile details
         $model = new ProfileModel();
+        $ProfileProjectsModel = new ProfileProjectsModel();
         $educationModel = new ProfileEducationQualificationModel();
         $professionalQualificationModel = new ProfileProfessionalQualificationModel();
 
@@ -3107,6 +3113,7 @@ class Profiles extends ResourceController
 
         $profileId = $profileDetails['id'];
         $profileDetails['education_qualification'] = $educationModel->where('profile_id', $profileId)->find();
+        $profileDetails['projects'] = $ProfileProjectsModel->where('profile_id', $profileId)->find();
         $profileDetails['professional_qualification'] = $professionalQualificationModel->where('profile_id', $profileId)->find();
         $profileDetails['employment_history'] = $profileDetails['employment_history'] ? (array)json_decode($profileDetails['employment_history'], true) : $employment_history;
         $profileDetails['documents'] = $profileDetails['documents'] ? (array)json_decode($profileDetails['documents'], true) : [];
@@ -3141,6 +3148,8 @@ class Profiles extends ResourceController
         $profileDetails['total_experience_m'] = (int)$profileDetails['total_experience'] % 12;
         $profileDetails['relevant_experience_y'] = floor($profileDetails['relevant_experience'] / 12);
         $profileDetails['relevant_experience_m'] = (int)$profileDetails['relevant_experience'] % 12;
+        $profileDetails['jobPositions'] = $model->getJobPositions($profileId);
+
 
         return $this->respond(['profileDetails' => $profileDetails]);
     }
@@ -3148,7 +3157,7 @@ class Profiles extends ResourceController
     public function updateMyProfile()
     {
         $user = checkUserToken();
-
+        $errors = null;
         if (!$user) {
             return $this->fail(['messages' => 'Please login.'], 400);
         }
@@ -3169,8 +3178,9 @@ class Profiles extends ResourceController
             'mobile_primary' => '',
             'email_alternate' => '',
             'mobile_alternate' => '',
+            'about_me' => '',
             'gender' => '',
-            'martial_status' => '',
+            'marital_status' => '',
             'dob' => '',
             'aadhar_number' => '',
             'pan_number' => '',
@@ -3268,8 +3278,10 @@ class Profiles extends ResourceController
         $valid = $validation->run($requestData);
         if (!$valid) {
             $errors = $validation->getErrors();
-            return $this->fail($errors, 400);
+
+           // return $this->fail($errors, 400);
         }
+
 
 
         if (isset($requestData['preferred_work_locations'])) {
@@ -3341,7 +3353,7 @@ class Profiles extends ResourceController
         $response = [
             'id'   => $profileId,
             'action_type' => 'Updated',
-            'error'    => null,
+            'error'    => $errors,
             'messages' => [
                 'success' => 'Updated successfully'
             ]
@@ -4097,6 +4109,244 @@ class Profiles extends ResourceController
         ];
         return $this->respondUpdated($response);
     }
+
+    public function profileSaveProfileProjectDetails()
+    {
+        $user = checkUserToken();
+
+        if (!$user) {
+            return $this->fail(['messages' => 'Please login.'], 400);
+        }
+
+        // if (!hasCapability('profiles/edit')) {
+        //     return $this->fail(['errorMessage' => "You don't have capability to access this page. Please contact to admin."], 403);
+        // }
+      
+        $requestData =  json_decode($_POST['requestData'], true);
+        //$requestData = $this->request->getRawInput();
+        $allowedColums = [
+            'id' => '',
+            'profile_id' => '',
+            'title' => '',
+            'description' => '',
+        ];
+        // $joiningFormId = $requestData['joining_form_id'];
+        $ProfileModel = new ProfileModel();
+        $profileDetails = $ProfileModel->where('user_id', $user['id'])->first();
+        $requestData = array_intersect_key($requestData, $allowedColums);
+        $profileId = $profileDetails['id'];
+        $requestData['profile_id'] = $profileId;
+        //validation
+        $validation =  \Config\Services::validation();
+
+
+        $rules = [
+            'title' => [
+                'label' => 'Project Title',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'The project title is required.'
+                ]
+            ],
+        ];
+
+
+
+
+        $validation->setRules(
+            $rules
+        );
+
+
+        $valid = $validation->run($requestData);
+        if (!$valid) {
+            return $this->fail($validation->getErrors(), 400);
+            // return $this->fail(['education_qualification' => "Please fill all the fields."], 400);
+        }
+
+
+        $model = new ProfileProjectsModel();
+
+
+        //$requestData['education_qualification'] = $requestData['education_qualification'] ? json_encode($requestData['education_qualification']) : null;
+        if (empty($requestData['id'])) {
+
+
+            if ($model->insert($requestData)) {
+                $actionLogData = [
+
+                    'action_type' => 'created',
+                    'model' => 'profile',
+                    'record_id' => $profileId,
+                    'chaged_data' => json_encode(['projects' => $requestData])
+                ];
+                creatActionLog($actionLogData);
+            }
+        } else {
+
+
+            $oldData = $model->find($requestData['id']);
+            $changed_data = array_diff_assoc((array)$requestData, (array)$oldData);
+            if ($model->save($requestData)) {
+                $actionLogData = [
+
+                    'action_type' => 'updated',
+                    'model' => 'profile',
+                    'record_id' => $profileId,
+                    'chaged_data' => json_encode(['projects' => $changed_data])
+                ];
+                creatActionLog($actionLogData);
+            }
+        }
+
+
+        $response = [
+            'list' => $model->where('profile_id', $profileId)->find(),
+            'action_type' => 'Updated',
+            'error'    => null,
+            'messages' => [
+                'success' => 'Updated successfully'
+            ]
+        ];
+        return $this->respondUpdated($response);
+    }
+
+    public function profileRemoveProfileProjectDetails()
+    {
+
+        $user = checkUserToken();
+
+        if (!$user) {
+            return $this->fail(['messages' => 'Please login.'], 400);
+        }
+
+        // if (!hasCapability('profiles/edit')) {
+        //     return $this->fail(['errorMessage' => "You don't have capability to access this page. Please contact to admin."], 403);
+        // }
+
+        $requestData =  $this->request->getJSON(true);
+        $id = $requestData['id'];
+
+        $model = new ProfileProjectsModel();
+        $educationDetails = (array)$model->find($id);
+        $profileId = $educationDetails['profile_id'];
+
+        if ($model->delete($id)) {
+            $actionLogData = [
+
+                'action_type' => 'deleted',
+                'model' => 'profile',
+                'record_id' => $profileId,
+                'chaged_data' => json_encode(['projects' => $educationDetails])
+            ];
+            creatActionLog($actionLogData);
+        }
+
+
+
+        //remove document
+
+        // if (file_exists(PROFILE_DOCUMENTS_PATH . $educationDetails['document_path']) && !empty($educationDetails['document_path'])) {
+        //     unlink(PROFILE_DOCUMENTS_PATH . $educationDetails['document_path']);
+        // }
+
+        $response = [
+            'list' => $model->where('profile_id', $profileId)->find(),
+            'action_type' => 'Deleted',
+            'error'    => null,
+            'messages' => [
+                'success' => 'Deleted'
+            ]
+        ];
+        return $this->respondUpdated($response);
+    }
+
+
+public function uploadProfilePhoto(){
+    $user = checkUserToken();
+
+        if (!$user) {
+            return $this->fail(['messages' => 'Please login.'], 400);
+        }
+
+        $model = new ProfileModel();
+        $profileDetails = $model->where('user_id', $user['id'])->first();
+        $profileId = $profileDetails['id'];
+
+        $requestData = (array) $this->request->getJSON(true);
+        // print_r($requestData);
+        if(!empty($requestData['croppedImage'])){
+            $pathToUpload = "profile_" . $user['id'];
+            if (!file_exists(str_replace(APPPATH, '', PROFILE_DOCUMENTS_PATH) . $pathToUpload)) {
+                mkdir(str_replace(APPPATH, '', PROFILE_DOCUMENTS_PATH) . $pathToUpload, 0777, true);
+                fopen(str_replace(APPPATH, '', PROFILE_DOCUMENTS_PATH) . $pathToUpload . "/index.html", 'w');
+            }
+
+            //Get convertable base64 image string
+            $destination = PROFILE_DOCUMENTS_PATH.$pathToUpload.'/'.$user['id'].uniqid().'.png';
+            $filePath = '/'.str_replace(ROOTPATH, '', $destination);
+            $image_base64 = $requestData["croppedImage"];
+            $image_base64 = str_replace("data:image/png;base64,", "", $image_base64);
+            $image_base64 = str_replace(" ", "+", $image_base64);
+            //Convert base64 string to image data
+            $image = base64_decode($image_base64);
+            //Save image to final destination
+            if(file_put_contents($destination, $image)){
+                //update path to db
+
+                if (!$profileId) {
+                    $updateData['id'] = $profileId;
+                    $updateData['email_primary'] = $user['email'];
+                    $updateData['photo'] = $filePath;
+                    $lastInsertid=  $model->insert($updateData);
+                     //insert 
+                     if ($lastInsertid) {
+                         $actionLogData = [
+                             'action_type' => 'created',
+                             'model' => 'profile',
+                             'record_id' => $lastInsertid,
+                             'chaged_data' => json_encode(['message' => "created profile"])
+                         ];
+                         creatActionLog($actionLogData);
+                     }
+                 } else {
+                     //update
+                     $updateData['id'] = $profileId;
+                     $updateData['photo'] = $filePath;
+                     if ($model->save($updateData)) {
+                         $actionLogData = [
+                             'action_type' => 'updated',
+                             'model' => 'profile',
+                             'record_id' => $profileId,
+                             'chaged_data' => json_encode(['message' => "Profile photo updated."])
+                         ];
+         
+                         if(!empty($changed_data)){
+                             creatActionLog($actionLogData);
+                         }
+                     }
+                 }
+
+
+                 $response = [
+                    'action_type' => 'Updated',
+                    'error'    => null,
+                    'messages' => [
+                        'success' => 'Updated successfully',
+                    ]
+                ];
+                return $this->respondUpdated($response);
+
+            }
+
+
+
+        }
+
+        return $this->fail(['messages' => 'System error'], 400);
+       
+}
+
 
     public function testing()
     {

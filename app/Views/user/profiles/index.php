@@ -595,7 +595,7 @@
                     fullname += ' ' + full.last_name;
                 }
                 return fullname;
-            }),
+            }).withClass('text-capitalize'),
             // DTColumnBuilder.newColumn("email_primary").withTitle('Email'),
             DTColumnBuilder.newColumn("mobile_primary").withTitle('Mobile'),
             DTColumnBuilder.newColumn("total_experience").withTitle('Experience').renderWith(function(data, type, full) {

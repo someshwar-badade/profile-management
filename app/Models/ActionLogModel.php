@@ -16,14 +16,16 @@ class ActionLogModel extends Model {
 
 
 
-    public function getList($filter=array(),$searchQuery='',$start=0,$length=10,$orderBy='action_log.id desc'){
+    public function getList($filter=array(),$searchQuery='',$start=0,$length=10,$orderBy='action_log.id desc',$report=false){
         // $db = \Config\Database::connect();
         $builder = $this->db->table('action_log');
         // $builder->select("action_log.chaged_data, DATE_FORMAT(action_log.created_at,'%d-%b-%Y %h:%s') as created_at, CONCAT_WS(' ',users.first_name,users.middle_name,users.last_name) as action_by_user ");
         $builder->select("action_log.id,action_log.action_by, action_log.action_type, action_log.model, action_log.chaged_data, DATE_FORMAT(action_log.created_at,'%d-%b-%Y %h:%s %p') as created_at ");
         // $builder->join('users','action_log.user_id = users.id','left');
-        $countBuilder = clone($builder);
-        $recordsTotal = $countBuilder->countAllResults();
+        if(!$report){
+            $countBuilder = clone($builder);
+            $recordsTotal = $countBuilder->countAllResults();
+        }
 
         if(isset($filter)){
 		
@@ -63,9 +65,10 @@ class ActionLogModel extends Model {
         if($searchQuery){
             $builder->where("($searchQuery)");
         }
+        if(!$report){
         $builderCount = clone($builder);
         $recordsFiltered =  $builderCount->countAllResults();
-        
+        }
         if($length >= 0){
 
             $builder->limit($length, $start);
@@ -77,7 +80,12 @@ class ActionLogModel extends Model {
 
         $query   = $builder->get();
         $data = $query->getResultArray();
-        return ['filter'=>$filter,'recordsTotal' => $recordsTotal, 'recordsFiltered' => $recordsFiltered, 'data' => $data];
+        if($report){
+            return $data;
+        }else{
+            return ['filter'=>$filter,'recordsTotal' => $recordsTotal, 'recordsFiltered' => $recordsFiltered, 'data' => $data];
+        }
+       
     }
 
   

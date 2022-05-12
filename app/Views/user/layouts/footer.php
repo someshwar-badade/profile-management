@@ -1,8 +1,6 @@
 <footer class="main-footer">
   <center>
-
-    <strong>Copyright &copy; 2021 <a href="<?= base_url(route_to('home')) ?>"><?= lang('site.site_title') ?></a>.</strong>
-    All rights reserved.
+  <?= getSiteSetting('site_footer') ?>
   </center>
 
 </footer>
@@ -61,7 +59,7 @@
 <!-- Bootstrap 4 -->
 <script src="<?= base_url('assets/admin/plugins/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
 <!-- ChartJS -->
-<!-- <script src="<?= base_url('assets/admin/plugins/chart.js/Chart.min.js') ?>"></script> -->
+<script src="<?= base_url('assets/admin/plugins/chart.js/Chart.min.js') ?>"></script>
 <!-- Sparkline -->
 <!-- <script src="<?= base_url('assets/admin/plugins/sparklines/sparkline.js') ?>"></script> -->
 <!-- JQVMap -->
@@ -74,6 +72,10 @@
 <!-- <script src="<?= base_url('assets/admin/plugins/daterangepicker/daterangepicker.js') ?>"></script> -->
 <!-- Tempusdominus Bootstrap 4 -->
 <!-- <script src="<?= base_url('assets/admin/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') ?>"></script> -->
+
+<!-- Select2 -->
+<script src="<?= base_url('assets/admin/plugins/select2/js/select2.full.min.js')?>"></script>
+
 <!-- Summernote -->
 <script src="<?= base_url('assets/admin/plugins/summernote/summernote-bs4.min.js') ?>"></script>
 <!-- overlayScrollbars -->
@@ -88,10 +90,10 @@
 <script src="<?= base_url('assets/js/angular/controllers/headerCtrl.js') ?>"></script>
 <script src="<?= base_url('assets/js/datatables/datatables.min.js') ?>"></script>
 <script src="<?= base_url('assets/js/angularjs-dropdown-multiselect.min.js') ?>"></script>
-<script src="<?= base_url('assets/js/angular-datatables-0.6.2/angular-datatables.min.js') ?>"></script>
+<script src="<?= base_url('assets/js/angular-datatables-0.6.2/angular-datatables.js') ?>"></script>
 <link rel="stylesheet" href="<?= base_url('assets/js/jquery-datetime-picker/jquery.datetimepicker.min.css') ?>">
 <script src="<?= base_url('assets/js/jquery-datetime-picker/jquery.datetimepicker.full.min.js') ?>"></script>
-<script src="<?= base_url('assets/js/custom.js?v=1.3') ?>"></script>
+<script src="<?= base_url('assets/js/custom.js?v=1.4') ?>"></script>
 
 <script src="<?= base_url('assets/js/toastr/toastr.min.js') ?>"></script>
 
@@ -107,14 +109,17 @@
       $('#documentViewerModal iframe').attr('src', e.target.href);
     });
 
-
+    //Initialize Select2 Elements
+    $('.select2bs4').select2({
+      theme: 'bootstrap4'
+    })
     
   });
 
 
-  $(document).ready(function() {
-    $('.summernote').summernote();
-  });
+  // $(document).ready(function() {
+  //   $('.summernote').summernote();
+  // });
 </script>
 
 <?= $this->renderSection('javascript') ?>

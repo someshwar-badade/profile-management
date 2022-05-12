@@ -210,16 +210,16 @@
                     <div class="form-group col-md-12">
                       <label>Primary Skills: </label>
                       <h6>
-                       
+
                         <span class="badge badge-info ml-1" ng-repeat="item in profileForm.primary_skills">{{item.text}} [{{item.rating+'/10'}}]</span>
-</h6>
+                      </h6>
                     </div>
                     <div class="form-group col-md-12">
 
                       <label>Secondary Skills: </label>
                       <h6>
-                      
-                      <span class="badge badge-info ml-1" ng-repeat="item in profileForm.secondary_skills">{{item.text}} [{{item.rating+'/10'}}]</span>
+
+                        <span class="badge badge-info ml-1" ng-repeat="item in profileForm.secondary_skills">{{item.text}} [{{item.rating+'/10'}}]</span>
                       </h6>
 
                     </div>
@@ -227,7 +227,7 @@
 
                       <label>Foundation Skills: </label>
                       <h6>
-                      <span class="badge badge-info ml-1" ng-repeat="item in profileForm.foundation_skills">{{item.text}} [{{item.rating+'/10'}}]</span>
+                        <span class="badge badge-info ml-1" ng-repeat="item in profileForm.foundation_skills">{{item.text}} [{{item.rating+'/10'}}]</span>
                       </h6>
 
                     </div>
@@ -429,10 +429,14 @@
                   </div>
                   <div class="row">
                     <div class="col-md-6">
-                      <small><label for="">Primary Skills ({{(position.match_primary_skills != "0") ?'Match '+ position.match_primary_skills +' skill(s)':'Match all skills'}}):</label> {{getSkills(position.primary_skills)}}</small>
+                      <small><label for="">Primary Skills ({{(position.match_primary_skills != "0") ?'Match '+ position.match_primary_skills +' skill(s)':'Match all skills'}}):</label>
+                        <span class="badge ml-1" ng-repeat="skill in position.primary_skills">{{skill.text}}</span>
+                      </small>
                     </div>
                     <div class="col-md-6">
-                      <small><label for="">Secondary Skills ({{(position.match_secondary_skills != "0") ?'Match '+ position.match_secondary_skills +' skill(s)':'Match all skills'}}):</label> {{getSkills(position.secondary_skills)}}</small>
+                      <small><label for="">Secondary Skills ({{(position.match_secondary_skills != "0") ?'Match '+ position.match_secondary_skills +' skill(s)':'Match all skills'}}):</label>
+                        <span class="badge ml-1" ng-repeat="skill in position.secondary_skills">{{skill.text}}</span>
+                      </small>
 
                     </div>
                   </div>
@@ -522,69 +526,69 @@
               <div class="row">
                 <div class="col-md-12">
                   <form>
-                    
-                      <form class="form-horizontal">
-                        <div class="form-group row">
-                        <label for="" class="col-sm-4 col-form-label">Company name<sup class="text-danger">*</sup></label>
-                          <div class="col-sm-8">
-                            <label for="" class="col-sm-8 col-form-label form-check-label">
 
-                              {{interviewForm.company_name}}
-                            </label>
+                    <form class="form-horizontal">
+                      <div class="form-group row">
+                        <label for="" class="col-sm-4 col-form-label">Company name<sup class="text-danger">*</sup></label>
+                        <div class="col-sm-8">
+                          <label for="" class="col-sm-8 col-form-label form-check-label">
+
+                            {{interviewForm.company_name}}
+                          </label>
                           <!-- <input type="text" maxlength="50" class="form-control" ng-model="interviewForm.company_name"> -->
-                            <!-- <div class="text-danger" ng-show="interviewFormErrors.company_name">{{interviewFormErrors.company_name}}</div> -->
-                          
-                          </div>
+                          <!-- <div class="text-danger" ng-show="interviewFormErrors.company_name">{{interviewFormErrors.company_name}}</div> -->
+
                         </div>
-                        <div class="form-group row">
+                      </div>
+                      <div class="form-group row">
                         <label for="" class="col-sm-4 col-form-label">For role<sup class="text-danger">*</sup></label>
-                          <div class="col-sm-8">
+                        <div class="col-sm-8">
                           <label for="" class="col-sm-8 col-form-label form-check-label">
 
                             {{interviewForm.for_role}}
                           </label>
                           <!-- <input type="text" maxlength="20" class="form-control" ng-model="interviewForm.for_role"> -->
-                            <!-- <div class="text-danger" ng-show="interviewFormErrors.for_role">{{interviewFormErrors.for_role}}</div> -->
-                         
-                          </div>
+                          <!-- <div class="text-danger" ng-show="interviewFormErrors.for_role">{{interviewFormErrors.for_role}}</div> -->
+
                         </div>
-                        <div class="form-group row">
+                      </div>
+                      <div class="form-group row">
                         <label for="" class="col-sm-4 col-form-label">Interviewer Name<sup class="text-danger">*</sup></label>
-                          <div class="col-sm-8">
+                        <div class="col-sm-8">
                           <input type="text" maxlength="50" class="form-control" ng-model="interviewForm.interview_taken_by">
-                            <div class="text-danger" ng-show="interviewFormErrors.interview_taken_by">{{interviewFormErrors.interview_taken_by}}</div>
-                         
-                          </div>
+                          <div class="text-danger" ng-show="interviewFormErrors.interview_taken_by">{{interviewFormErrors.interview_taken_by}}</div>
+
                         </div>
-                        
-                        <div class="form-group row">
+                      </div>
+
+                      <div class="form-group row">
                         <label for="" class="col-sm-4 col-form-label">Schedule date<sup class="text-danger">*</sup></label>
-                          <div class="col-sm-8">
+                        <div class="col-sm-8">
                           <input type="text" maxlength="20" class="form-control datepicker" ng-init="initializeDatepicker();" ng-model="interviewForm.schedule_dt">
-                            <div class="text-danger" ng-show="interviewFormErrors.schedule_dt">{{interviewFormErrors.schedule_dt}}</div>
-                          
-                          </div>
+                          <div class="text-danger" ng-show="interviewFormErrors.schedule_dt">{{interviewFormErrors.schedule_dt}}</div>
+
                         </div>
-                        <div class="form-group row">
+                      </div>
+                      <div class="form-group row">
                         <label for="" class="col-sm-4 col-form-label">Status<sup class="text-danger">*</sup></label>
-                          <div class="col-sm-8">
+                        <div class="col-sm-8">
                           <select class="form-control" ng-model="interviewForm.status">
-                              <option value="">Select</option>
-                              <option value="1">Cancelled</option>
-                              <option value="2">On Hold</option>
-                              <option value="3">In Process</option>
-                              <option value="4">No Show</option>
-                              <option value="5">Not Selected</option>
-                              <option value="6">Selected</option>
-                              <option value="7">Scheduled</option>
-                            </select>
-                            <div class="text-danger" ng-show="interviewFormErrors.status">{{interviewFormErrors.status}}</div>
-                          
-                          </div>
+                            <option value="">Select</option>
+                            <option value="1">Cancelled</option>
+                            <option value="2">On Hold</option>
+                            <option value="3">In Process</option>
+                            <option value="4">No Show</option>
+                            <option value="5">Not Selected</option>
+                            <option value="6">Selected</option>
+                            <option value="7">Scheduled</option>
+                          </select>
+                          <div class="text-danger" ng-show="interviewFormErrors.status">{{interviewFormErrors.status}}</div>
+
                         </div>
-                        
-                      </form>
-                      
+                      </div>
+
+                    </form>
+
                   </form>
                 </div>
               </div>
@@ -628,7 +632,7 @@
       return $scope.documentNameList[key];
     }
 
-   
+
 
     $scope.initializeDatepicker = function() {
       $('.past-datepicker').datetimepicker({
@@ -703,10 +707,10 @@
     $scope.viewProfile();
     $scope.viewInterview = function(interviewId = '', position = '') {
       $scope.interviewForm = {};
-      $scope.interviewFormErrors='';
+      $scope.interviewFormErrors = '';
       $('#viewInterviewModal').modal('toggle');
       // get profile details
-      console.log(interviewId,position);
+      console.log(interviewId, position);
       if (interviewId != '') {
 
         $http({
@@ -720,7 +724,7 @@
 
 
         });
-      }else{
+      } else {
         $scope.interviewForm.job_position_id = position.id;
         $scope.interviewForm.company_name = position.client_name;
         $scope.interviewForm.for_role = position.title;
@@ -729,39 +733,39 @@
 
 
     $scope.saveInterviewForm = function() {
-      
-      $scope.interviewFormErrors='';
-      $scope.interviewForm.profile_id =  $scope.profileForm.id;
+
+      $scope.interviewFormErrors = '';
+      $scope.interviewForm.profile_id = $scope.profileForm.id;
       // get profile details
       $http({
         method: 'post',
         url: base_url + '/api/interviews/' + $scope.profileForm.id,
-        data:$scope.interviewForm
+        data: $scope.interviewForm
       }).then(function(response) {
-        
+
         $('#viewInterviewModal').modal('toggle');
         $scope.interviewForm = {};
         $scope.viewProfile();
         toastr.success(response.data.messages.success);
         //$scope.profileForm = response.data;
-       // $scope.profile.editUrl = base_url + "/profile/" + $scope.profile.id + "/edit";
+        // $scope.profile.editUrl = base_url + "/profile/" + $scope.profile.id + "/edit";
       }, function(response) {
 
         $scope.loading = false;
         $scope.interviewFormErrors = response.data.messages;
         if (response.data.status == 403) {
-            toastr.error(response.data.messages.errorMessage);
+          toastr.error(response.data.messages.errorMessage);
         } else {
-            toastr.error("Something went wrong !!");
+          toastr.error("Something went wrong !!");
         }
       });
     }
 
 
 
-    $scope.deleteInterview = function(id){
+    $scope.deleteInterview = function(id) {
 
-      if(!confirm("Do you want to delete this record?")) return ;
+      if (!confirm("Do you want to delete this record?")) return;
 
       $http({
         method: 'delete',
@@ -774,9 +778,9 @@
         $scope.loading = false;
         $scope.interviewFormErrors = response.data.messages;
         if (response.data.status == 403) {
-            toastr.error(response.data.messages.errorMessage);
+          toastr.error(response.data.messages.errorMessage);
         } else {
-            toastr.error("Something went wrong !!");
+          toastr.error("Something went wrong !!");
         }
       });
     }

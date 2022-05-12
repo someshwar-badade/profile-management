@@ -40,7 +40,7 @@
                             <div class="form-group row">
                                 <label class="col-sm-3" for="inputName">First Name <sup class="text-danger">*</sup></label>
                                 <div class="col-sm-9">
-                                    <input type="text" id="candidateFullName" ng-model="joiningForm.first_name" ng-init="joiningForm.first_name='<?= isset($profile['first_name']) ? $profile['first_name'] : '' ?>'" maxlength="50" name="first_name" class="form-control">
+                                    <input type="text" id="candidateFullName" ng-model="joiningForm.first_name" ng-init="joiningForm.first_name='<?= isset($profile['first_name']) ? $profile['first_name'] : '' ?>'" maxlength="50" name="first_name" class="form-control only-alphabet capitalize-each-word">
                                     <div class="text-danger" ng-show="errors.first_name">{{errors.first_name}}</div>
                                 </div>
                             </div>
@@ -48,7 +48,7 @@
                             <div class="form-group row">
                                 <label class="col-sm-3" for="inputName">Last Name <sup class="text-danger">*</sup></label>
                                 <div class="col-sm-9">
-                                    <input type="text" id="candidateFullName" ng-model="joiningForm.last_name" ng-init="joiningForm.last_name='<?= isset($profile['last_name']) ? $profile['last_name'] : '' ?>'" maxlength="50" name="last_name" class="form-control">
+                                    <input type="text" id="candidateFullName" ng-model="joiningForm.last_name" ng-init="joiningForm.last_name='<?= isset($profile['last_name']) ? $profile['last_name'] : '' ?>'" maxlength="50" name="last_name" class="form-control only-alphabet capitalize-each-word">
                                     <div class="text-danger" ng-show="errors.last_name">{{errors.last_name}}</div>
                                 </div>
                             </div>
@@ -64,7 +64,7 @@
                             <div class="form-group row">
                                 <label class="col-sm-3" for="inputName">Aadhar Number <sup class="text-danger">*</sup></label>
                                 <div class="col-sm-9">
-                                    <input type="text" id="candidateFullName" ng-model="joiningForm.aadhar_number" ng-init="joiningForm.aadhar_number='<?= isset($profile['aadhar_number']) ? $profile['aadhar_number'] : '' ?>'" maxlength="12" name="aadhar_number" class="form-control">
+                                    <input type="text" id="candidateFullName" ng-model="joiningForm.aadhar_number" ng-init="joiningForm.aadhar_number='<?= isset($profile['aadhar_number']) ? $profile['aadhar_number'] : '' ?>'" maxlength="12" name="aadhar_number" class="form-control only-numbers">
                                     <div class="text-danger" ng-show="errors.aadhar_number">{{errors.aadhar_number}}</div>
                                 </div>
                             </div>
@@ -73,7 +73,7 @@
                             <div class="form-group row">
                                 <label class="col-sm-3" for="inputName">PAN Number <sup class="text-danger">*</sup></label>
                                 <div class="col-sm-9">
-                                    <input type="text" id="candidateFullName" ng-model="joiningForm.pan_number" ng-init="joiningForm.pan_number='<?= isset($profile['pan_number']) ? $profile['pan_number'] : '' ?>'" maxlength="10" name="pan_number" class="form-control">
+                                    <input type="text" id="candidateFullName" ng-model="joiningForm.pan_number" ng-init="joiningForm.pan_number='<?= isset($profile['pan_number']) ? $profile['pan_number'] : '' ?>'" maxlength="10" name="pan_number" class="form-control alpha-numeric capitalize-string">
                                     <div class="text-danger" ng-show="errors.pan_number">{{errors.pan_number}}</div>
                                 </div>
                             </div>
@@ -193,8 +193,8 @@
             .withOption('responsive', true);;
         vm.dtColumns = [
             DTColumnBuilder.newColumn("id").withTitle('ID'),
-            DTColumnBuilder.newColumn("first_name").withTitle('First Name'),
-            DTColumnBuilder.newColumn("last_name").withTitle('Last Name'),
+            DTColumnBuilder.newColumn("first_name").withTitle('First Name').withClass('text-capitalize'),
+            DTColumnBuilder.newColumn("last_name").withTitle('Last Name').withClass('text-capitalize'),
             // DTColumnBuilder.newColumn("").withTitle('Full Name').withTitle('Candidate name').renderWith(function(data, type, full) {
             //     return "<a role='button' class='text-primary' href='" + base_url + "/profile/" + full.id + "/edit'  >" + full.candidate_name + "</a>";
             // }),

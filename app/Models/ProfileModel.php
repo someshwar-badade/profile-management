@@ -9,7 +9,7 @@ class ProfileModel extends Model
 {
     protected $table = 'profiles';
     protected $primaryKey = 'id';
-    protected $allowedFields =  ['user_id','candidate_name', 'mobile_primary', 'mobile_alternate', 'email_primary', 'email_alternate', 'gender', 'photo', 'resume_pdf', 'resume_pdf_name', 'resume_doc', 'resume_doc_name', 'preferred_work_locations', 'categories', 'primary_skills','primary_skills_soundex', 'secondary_skills','secondary_skills_soundex', 'foundation_skills','foundation_skills_soundex', 'certifications', 'work_experience', 'total_experience', 'relevant_experience', 'current_company', 'notice_period', 'is_negotiable_np', 'negotiable_np', 'ctc', 'expected_ctc', 'is_negotiable_ctc', 'negotiable_ctc', 'created_by', 'updated_by', 'status', 'first_name', 'father_name', 'last_name', 'marital_status', 'dob', 'pan_number', 'aadhar_number', 'verification_code', 'present_address', 'present_address_postcode', 'permanent_address', 'permanent_address_postcode', 'employment_history','last_working_day','documents'];
+    protected $allowedFields =  ['user_id','candidate_name', 'mobile_primary', 'mobile_alternate', 'email_primary', 'email_alternate', 'gender', 'photo', 'resume_pdf', 'resume_pdf_name', 'resume_doc', 'resume_doc_name', 'preferred_work_locations', 'categories', 'primary_skills','primary_skills_soundex', 'secondary_skills','secondary_skills_soundex', 'foundation_skills','foundation_skills_soundex', 'certifications', 'work_experience', 'total_experience', 'relevant_experience', 'current_company', 'notice_period', 'is_negotiable_np', 'negotiable_np', 'ctc', 'expected_ctc', 'is_negotiable_ctc', 'negotiable_ctc', 'created_by', 'updated_by', 'status', 'first_name', 'father_name', 'last_name', 'marital_status', 'dob', 'pan_number', 'aadhar_number', 'verification_code', 'present_address', 'present_address_postcode', 'permanent_address', 'permanent_address_postcode', 'employment_history','last_working_day','documents','about_me'];
 
     protected $useTimestamps = true;
     protected $createdField  = 'created_at';
@@ -176,7 +176,22 @@ class ProfileModel extends Model
             //get interviews list
            $result =  $InterviewModel->getList(['profile_id'=>$profile_id,'job_position_id'=>$row['id']],'',0,-1);
            $data[$key]['interviews'] = !empty($result['data'])?$result['data']:null;
+           if (!empty($data[$key]['primary_skills'])) {
+            // $data[$key]['primary_skills'] = explode(' || ', $data[$key]['primary_skills']);
+                $data[$key]['primary_skills'] = json_decode($data[$key]['primary_skills'], true);
+            } else {
+                $data[$key]['primary_skills'] = [];
+            }
+
+            if (!empty($data[$key]['secondary_skills'])) {
+                // $data[$key]['secondary_skills'] = explode(' || ', $data[$key]['secondary_skills']);
+                $data[$key]['secondary_skills'] = json_decode($data[$key]['secondary_skills'], true);
+            } else {
+                $data[$key]['secondary_skills'] = [];
+            }
         }
+
+     
         return $data;
     }
 

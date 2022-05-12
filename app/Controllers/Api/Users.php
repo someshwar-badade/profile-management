@@ -381,7 +381,7 @@ class Users extends  Controllers\BaseController
 			'verification_code' => $userData['verification_code']
 		];
 		$message = view('email-templates/send-profile-verification-code', $templateData);
-		$isEmailSent =  sendEmail_common($userData['email'], $message, 'Bitstringit', '');
+		$isEmailSent =  sendEmail_common($userData['email'], $message, 'Your verification code');
 
 		//Respond with 200 status code
 		return $this->respond([

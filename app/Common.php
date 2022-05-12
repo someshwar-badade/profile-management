@@ -18,12 +18,28 @@ use App\Models\ActionLogModel;
 use App\Models\CapabilityModel;
 use App\Models\UserModel;
 use App\Models\UserRoleModel;
+use App\Models\SiteSettingsModel;
 // use Exception;
 use Firebase\JWT\JWT;
 
 function cart(bool $getShared = true)
 {
     return \Config\Services::cart($getShared);
+}
+
+function getSiteSetting($setting_name){
+    $SiteSettingsModel = new SiteSettingsModel();
+    $data = $SiteSettingsModel->where('setting_name',$setting_name)->first();
+
+    // if($setting_name == 'smtp_pass'){
+    //     $encrypter = \Config\Services::encrypter();
+    //     if(!empty($data['value'])){
+    //         return isset($data['value'])?$encrypter->decrypt(hex2bin($data['value'])):'';
+    //     }
+    // }else{
+    // }
+    return isset($data['value'])?$data['value']:'';
+
 }
 
 function creatActionLog($data)
@@ -97,11 +113,25 @@ function sendSms($mobile, $message)
 //     return base_url(PRODUCT_IMAGE_THUMB_FILE_PATH.$filename);
 // }
 
-function sendEmail_common($to, $message, $subject,$from = 'connect@bitstringit.in')
+function sendEmail_common($to, $message, $subject,$from = '')
 {
     $email = \Config\Services::email();
 
-    $email->setFrom($from, 'Bitstringit');
+    $config['SMTPHost'] = getSiteSetting('smtp_host');
+    $config['SMTPUser'] = getSiteSetting('smtp_user');
+    $config['SMTPPass'] = getSiteSetting('smtp_pass');
+    $config['SMTPPort'] = getSiteSetting('smtp_port');
+    // $config['mailPath'] = '/usr/sbin/sendmail';
+    // $config['charset']  = 'iso-8859-1';
+    // $config['wordWrap'] = true;
+
+    if(!empty($config['SMTPHost']) && !empty($config['SMTPUser']) && !empty($config['SMTPPass']) && !empty($config['SMTPPort']))
+    {
+        $email->initialize($config);
+    }
+
+    $from = empty($from)?getSiteSetting('smtp_user'):'connect@bitstringit.com';
+    $email->setFrom($from, getSiteSetting('site_title'));
     $email->setTo($to);
 
     $email->setSubject($subject);
@@ -174,22 +204,21 @@ function hasCapability($capability){
     $m = new CapabilityModel();
     $user = checkUserToken();
     $session = session();
+    $roleId = isset($user['roles'][0])?$user['roles'][0]['role_id']:'6';
+   
     if(!empty($user)){
+      
         $roleId = isset($user['roles'][0])?$user['roles'][0]['role_id']:'6';
         if(isset($user['roles'][0])){
-            return $user['roles'][0]['role_name']=='admin';
+            if($user['roles'][0]['role_name']=='admin'){
+
+                return true;
+            }else{
+                return $m->hasCapability($capability,$roleId);
+            }
         }
-    }else if(!empty($session->get('employee_joining_form_id'))){
-        $roleId = 6;//guest_user role_id
-    }else if(!empty($session->get('profile_id'))){
-        $roleId = 6;//guest_user role_id
-    }else{
-        return false;
     }
-
-    
-
-   return $m->hasCapability($capability,$roleId);
+    return false;
 }
 
 
@@ -223,17 +252,28 @@ function combinations(array $myArray, $choose)
 
 function primary_regxp_fun($value)
     {
+
+        if(is_array($value)){
+            return "MATCH(primary_skills_soundex) AGAINST('+".soundex($value['text'])."' IN BOOLEAN MODE)";
+        }else{
+            return "MATCH(primary_skills_soundex) AGAINST('+".soundex($value)."' IN BOOLEAN MODE)";
+        }
        
         // return "primary_skills REGEXP '([[:blank:][:punct:]]|^)$value([[:blank:][:punct:]]|$)'";
-        return "MATCH(primary_skills_soundex) AGAINST('+".soundex($value)."' IN BOOLEAN MODE)";
+        
         //SOUNDEX(primary_skills) LIKE CONCAT(SOUNDEX('".$value."'), '%')
         // return "SOUNDEX(primary_skills) LIKE CONCAT('%',SOUNDEX('%".$value."'), '%')";
     }
     function secondary_regxp_fun($value)
     {
        
+        if(is_array($value)){
+            return "MATCH(secondary_skills_soundex) AGAINST('+".soundex($value['text'])."' IN BOOLEAN MODE)";
+        }else{
+            return "MATCH(secondary_skills_soundex) AGAINST('+".soundex($value)."' IN BOOLEAN MODE)";
+        }
         // return "secondary_skills REGEXP '([[:blank:][:punct:]]|^)$value([[:blank:][:punct:]]|$)'";
-        return "MATCH(secondary_skills_soundex) AGAINST('+".soundex($value)."' IN BOOLEAN MODE)";
+       
         // return "SOUNDEX(secondary_skills) LIKE CONCAT('%',SOUNDEX('".$value."'), '%')";
     }
 
@@ -263,7 +303,12 @@ function checkSoundexExist($word,$arrWords)
 {
    
     foreach($arrWords as $item){
-        $soundexWordsList[]= soundex(trim($item));
+        if(is_array($item)){
+            $soundexWordsList[]= soundex(trim($item['text']));
+        }else{
+            $soundexWordsList[]= soundex(trim($item));
+        }
+       
     }
 
     $soundexWord = soundex($word);

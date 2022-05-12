@@ -8,7 +8,7 @@ class JobPositionModel extends Model
 {
     protected $table = 'job_positions';
     protected $primaryKey = 'id';
-    protected $allowedFields =  ['job_code', 'client_name', 'title', 'desc', 'primary_skills', 'secondary_skills','match_primary_skills', 'position_received_date','match_secondary_skills', 'valid_to_date', 'created_by', 'updated_by','locations','min_experience','max_experience'];
+    protected $allowedFields =  ['job_code', 'client_name', 'title', 'desc', 'primary_skills', 'secondary_skills','primary_skills_soundex', 'secondary_skills_soundex','match_primary_skills', 'position_received_date','match_secondary_skills', 'valid_to_date', 'created_by', 'updated_by','locations','min_experience','max_experience'];
 
     protected $useTimestamps = true;
     protected $createdField  = 'created_at';
@@ -114,7 +114,53 @@ class JobPositionModel extends Model
         $query   = $builder->get();
 
         $data = $query->getResultArray();
+        foreach ($data as $key => $row) {
+            
+            if(!empty($row['primary_skills'])){
+                $data[$key]['primary_skills'] = json_decode($row['primary_skills'],true);
+
+            }
+            if(!empty($row['secondary_skills'])){
+
+                $data[$key]['secondary_skills'] = json_decode($row['secondary_skills'],true);
+            }
+
+        }
         return ['recordsTotal' => $recordsTotal, 'recordsFiltered' => $recordsFiltered, 'data' => $data];
+    }
+
+
+    public function getJobPositionDetails($id){
+        $response = $this->find($id);
+
+        // $response['primary_skills'] = !empty($response['primary_skills'])?explode(" || ",$response['primary_skills']):null;
+        // $response['secondary_skills'] = !empty($response['secondary_skills'])?explode(" || ",$response['secondary_skills']):null;
+
+        if (!empty($response['primary_skills'])) {
+            // $response['primary_skills'] = explode(' || ', $response['primary_skills']);
+            $response['primary_skills'] = json_decode($response['primary_skills'], true);
+        } else {
+            $response['primary_skills'] = [];
+        }
+
+        if (!empty($response['secondary_skills'])) {
+            // $response['secondary_skills'] = explode(' || ', $response['secondary_skills']);
+            $response['secondary_skills'] = json_decode($response['secondary_skills'], true);
+        } else {
+            $response['secondary_skills'] = [];
+        }
+
+        $response['locations'] = !empty($response['locations'])?explode(" || ",$response['locations']):null;
+
+        $response['min_exp_y'] = floor($response['min_experience']/12);
+        $response['min_exp_m'] = (int)$response['min_experience']%12;
+        $response['max_exp_y'] = floor($response['max_experience']/12);
+        $response['max_exp_m'] = (int)$response['max_experience']%12;
+
+        $response['position_received_date'] =!empty($response['position_received_date'])? date('d-M-Y',strtotime($response['position_received_date'])):'';
+        $response['valid_to_date'] = !empty($response['valid_to_date'])?date('d-M-Y',strtotime($response['valid_to_date'])):'';
+
+        return $response;
     }
 
     public static function getCount(){

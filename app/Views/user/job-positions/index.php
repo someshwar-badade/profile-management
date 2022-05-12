@@ -293,9 +293,10 @@
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label col-form-label-sm text-right">Primary skills<sup class="text-danger">*</sup></label>
                                         <div class="col-sm-9">
-                                            <tags-input ng-model="showCase.jobPositionForm.primary_skills" on-tag-added="onTagAdded($tag)" use-strings="true" replace-spaces-with-dashes="false">
+                                            <tags-input ng-model="showCase.jobPositionForm.primary_skills" on-tag-added="onTagAdded($tag)"  replace-spaces-with-dashes="false">
                                                 <auto-complete source="showCase.loadTags($query)"></auto-complete>
                                             </tags-input>
+                                           
 
                                             <div class="text-danger" ng-show="showCase.jobPositionFormErrors.primary_skills">{{showCase.jobPositionFormErrors.primary_skills}}</div>
                                         </div>
@@ -312,7 +313,7 @@
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label col-form-label-sm text-right">Secondary skills<sup class="text-danger">*</sup></label>
                                         <div class="col-sm-9">
-                                            <tags-input ng-model="showCase.jobPositionForm.secondary_skills" on-tag-added="onTagAdded($tag)" use-strings="true" replace-spaces-with-dashes="false">
+                                            <tags-input ng-model="showCase.jobPositionForm.secondary_skills" on-tag-added="onTagAdded($tag)" replace-spaces-with-dashes="false">
                                                 <auto-complete source="showCase.loadTags($query)"></auto-complete>
                                             </tags-input>
 
@@ -377,10 +378,12 @@
 
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <span class="text-secondary">Primary Skills ({{(showCase.jobPositionDetails.match_primary_skills != "0") ?'Match '+ showCase.jobPositionDetails.match_primary_skills +' skill(s)':'Match all skills'}}):</span>{{showCase.jobPositionDetails.primary_skills}}
+                                                <span class="text-secondary">Primary Skills ({{(showCase.jobPositionDetails.match_primary_skills != "0") ?'Match '+ showCase.jobPositionDetails.match_primary_skills +' skill(s)':'Match all skills'}}):</span> 
+                                                <span class="badge ml-1" ng-repeat="skill in showCase.jobPositionDetails.primary_skills">{{skill.text}}</span>
                                             </div>
                                             <div class="col-md-6">
-                                                <span class="text-secondary">Secondary Skills ({{(showCase.jobPositionDetails.match_secondary_skills != "0") ?'Match '+ showCase.jobPositionDetails.match_secondary_skills +' skill(s)':'Match all skills'}}):</span>{{showCase.jobPositionDetails.secondary_skills}}
+                                                <span class="text-secondary">Secondary Skills ({{(showCase.jobPositionDetails.match_secondary_skills != "0") ?'Match '+ showCase.jobPositionDetails.match_secondary_skills +' skill(s)':'Match all skills'}}):</span>
+                                                <span class="badge ml-1" ng-repeat="skill in showCase.jobPositionDetails.secondary_skills">{{skill.text}}</span>
                                             </div>
                                         </div>
 
@@ -427,7 +430,7 @@
 
                                             </td>
                                             <td>{{m_profile.id}}</td>
-                                            <td>
+                                            <td class="text-capitalize">
                                                 <a target="_blank" ng-href="{{base_url+'/profile/'+m_profile.id}}">{{m_profile.first_name}} {{m_profile.last_name}}</a>
 
                                             </td>
@@ -534,7 +537,7 @@
 
                                             </td>
                                             <td>{{m_profile.id}}</td>
-                                            <td><a target="_blank" ng-href="{{base_url+'/profile/'+m_profile.id}}">{{m_profile.first_name}} {{m_profile.last_name}}</a></td>
+                                            <td class="text-capitalize"><a target="_blank" ng-href="{{base_url+'/profile/'+m_profile.id}}">{{m_profile.first_name}} {{m_profile.last_name}}</a></td>
                                             <td>{{m_profile.total_experience/12|number:0}} {{(m_profile.total_experience/12)>=2?'Years':'Year'}} {{m_profile.total_experience%12|number:0}} {{(m_profile.total_experience%12)>=2?'Months':'Month'}}</td>
                                             <td>
                                                 <span class="badge ml-1 matching-skill {{getBadgeHighlightClass(skill.rating)}}" ng-repeat="skill in m_profile.primary_skills_matched">{{skill.text}} [{{skill.rating}}/10]</span>
@@ -643,21 +646,52 @@
                 return min + ' - ' + max + ' Years';
             }),
             DTColumnBuilder.newColumn("primary_skills").withTitle('Primary Skills').renderWith(function(data, type, full) {
-                var returnhtml = '<span class="badge badge-info ml-1">';
 
-                returnhtml += data.replace(/\|\|/g, '</span><span class="badge badge-info ml-1">');
-                returnhtml += "</span>";
-                returnhtml += "<p><small><b>" + (full.match_primary_skills > 0 ? 'Match any ' + full.match_primary_skills + ' skill(s)' : 'Match all skills') + "</b></small><p>";
+                var returnhtml = '';
+                if (!data) {
+                    return '';
+                }
+                try {
+                    // let skills = JSON.parse(data);
+                    data.forEach(function(item) {
+                        returnhtml += '<span class="badge badge-info ml-1 ">' + item.text + '</span>';
+                    });
+
+                } catch (e) {
+
+                }
                 return returnhtml;
+                // var returnhtml = '<span class="badge badge-info ml-1">';
+
+                // returnhtml += data.replace(/\|\|/g, '</span><span class="badge badge-info ml-1">');
+                // returnhtml += "</span>";
+                // returnhtml += "<p><small><b>" + (full.match_primary_skills > 0 ? 'Match any ' + full.match_primary_skills + ' skill(s)' : 'Match all skills') + "</b></small><p>";
+                // return returnhtml;
 
             }),
             DTColumnBuilder.newColumn("secondary_skills").withTitle('Secondary Skills').renderWith(function(data, type, full) {
-                var returnhtml = '<span class="badge badge-info ml-1">';
+               
+                var returnhtml = '';
+                if (!data) {
+                    return '';
+                }
+                try {
+                    // let skills = JSON.parse(data);
+                    data.forEach(function(item) {
+                        returnhtml += '<span class="badge badge-info ml-1 ">' + item.text + '</span>';
+                    });
 
-                returnhtml += data.replace(/\|\|/g, '</span><span class="badge badge-info ml-1">');
-                returnhtml += "</span>";
-                returnhtml += "<p><small><b>" + (full.match_secondary_skills > 0 ? 'Match any ' + full.match_secondary_skills + ' skill(s)' : 'Match all skills') + "</b></small><p>";
+                } catch (e) {
+
+                }
                 return returnhtml;
+               
+                // var returnhtml = '<span class="badge badge-info ml-1">';
+
+                // returnhtml += data.replace(/\|\|/g, '</span><span class="badge badge-info ml-1">');
+                // returnhtml += "</span>";
+                // returnhtml += "<p><small><b>" + (full.match_secondary_skills > 0 ? 'Match any ' + full.match_secondary_skills + ' skill(s)' : 'Match all skills') + "</b></small><p>";
+                // return returnhtml;
 
             }), // 
             DTColumnBuilder.newColumn("position_received_date").withTitle('Position received date').renderWith(function(data, type, full) {

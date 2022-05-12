@@ -172,7 +172,7 @@ class MyJoiningForm extends ResourceController
     {
 
         $requestData = (array) $this->request->getJSON();
-        
+        $errors = null;
         //if joining form is approved 
         if ($this->joiningFormDetails['status'] == '2' && !hasCapability('joining_form/update_approved')) {
             return $this->fail(['errorMessage' => "Joining details are approved so you can not update details. Please contact to admin."], 403);
@@ -383,9 +383,11 @@ class MyJoiningForm extends ResourceController
             $rules
         );
 
+        
         $valid = $validation->run($requestData);
         if (!$valid) {
-            return $this->fail($validation->getErrors(), 400);
+            $errors = $validation->getErrors();
+            // return $this->fail($errors, 400);
         }
 
         
@@ -418,7 +420,7 @@ class MyJoiningForm extends ResourceController
         $response = [
             'id'   => $this->joiningFormDetails['id'],
             'action_type' => 'Updated',
-            'error'    => null,
+            'error'    => $errors,
             'messages' => [
                 'success' => 'Updated successfully'
             ]

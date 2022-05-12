@@ -11,6 +11,7 @@ use App\Models\ProfessionalQualificationModel;
 use App\Models\ProfileModel;
 use App\Models\ProfileEducationQualificationModel;
 use App\Models\ProfileProfessionalQualificationModel;
+use App\Models\ProfileProjectsModel;
 use Firebase\JWT\JWT;
 use Exception;
 
@@ -359,7 +360,7 @@ EOD;
 	{
 
 
-
+		header("Content-type: application/pdf");
 		$profileId = null;
 
 		$user = checkUserToken();
@@ -379,8 +380,8 @@ EOD;
 		$ts4 = isset($_GET['ts4'])?$_GET['ts4']:"";
 		$ts5 = isset($_GET['ts5'])?$_GET['ts5']:"";
 		$ts6 = isset($_GET['ts6'])?$_GET['ts6']:"";
-		$colorPrimary = isset($_GET['colorPrimary'])?"#".$_GET['colorPrimary']:"";
-		$colorSecondary = isset($_GET['colorSecondary'])?"#".$_GET['colorSecondary']:"";
+		$colorPrimary = !empty($_GET['colorPrimary'])?"#".$_GET['colorPrimary']:"";
+		$colorSecondary = !empty($_GET['colorSecondary'])?"#".$_GET['colorSecondary']:"";
 		$skillsStyle = isset($_GET['skillsStyle'])?$_GET['skillsStyle']:"";
 		$sections = isset($_GET['sections'])?explode("_",$_GET['sections']):['WE','ED','CC'];
 		$font = isset($_GET['font'])?$_GET['font']:"";
@@ -405,12 +406,14 @@ EOD;
 
 
 		$model = new ProfileModel();
+		$ProfileProjectsModel = new ProfileProjectsModel();
 		$educationModel = new ProfileEducationQualificationModel();
 		$professionalQualificationModel = new ProfileProfessionalQualificationModel();
 
 		$profileDetails = $model->where('user_id', $user['id'])->first();
 		$profileId = $profileDetails['id'];
 		$profileDetails['education_qualification'] = $educationModel->where('profile_id', $profileId)->find();
+		$profileDetails['projects'] = $ProfileProjectsModel->where('profile_id', $profileId)->find();
 		$profileDetails['professional_qualification'] = $professionalQualificationModel->where('profile_id', $profileId)->find();
 		$profileDetails['employment_history'] = $profileDetails['employment_history'] ? (array)json_decode($profileDetails['employment_history'], true) : [];
 		$profileDetails['documents'] = $profileDetails['documents'] ? (array)json_decode($profileDetails['documents'], true) : [];
@@ -455,7 +458,8 @@ EOD;
 		$canvas = $dompdf->get_canvas();
 		$canvas->page_text(512, 820, "Page: {PAGE_NUM} of {PAGE_COUNT}", '', 8, array(0, 0, 0));
 		$filename = strtolower(str_replace(' ', '_', $profileDetails['first_name'] . ' ' . $profileDetails['last_name']));
-		$dompdf->stream($filename . "_resume.pdf",array("Attachment" => false));
+		$dompdf->stream($filename . "_resume.pdf",array("Attachment" => false)); 
+		exit();
 	}
 
 	public function downloadPrejoiningDocuments($documentName, $joinigFormId)

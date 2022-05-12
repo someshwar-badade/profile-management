@@ -34,7 +34,7 @@
 
     <link rel="stylesheet" href="<?= base_url('assets/js/datatables/datatables.min.css') ?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/main.css?v1.5') ?>">
-    <link rel="stylesheet" href="<?= base_url('assets/admin/custom.css?v1.0') ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/admin/custom.css?v1.3') ?>">
 
     <link rel="stylesheet" href="<?= base_url('assets/js/toastr/toastr.min.css') ?>">
     <script src="<?= base_url('assets/js/angular/angular.min.js') ?>"></script>
@@ -51,7 +51,7 @@
 
 
     <script src="<?= base_url('assets/js/sortable.js') ?>"></script>
-    <script src="<?= base_url('assets/js/angular/app.js?v=1.6') ?>"></script>
+    <script src="<?= base_url('assets/js/angular/app.js?v=1.7') ?>"></script>
     <script src="<?= base_url('assets/js/angular/angular-cookies.min.js') ?>"></script>
     <!-- Angular Sanitize JS -->
 <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.2.4/angular-sanitize.min.js'></script>

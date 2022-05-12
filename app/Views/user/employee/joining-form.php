@@ -123,21 +123,21 @@ function isEditableForm($cap, $status)
                                         <div class="form-row">
                                             <div class="form-group col-sm-6 col-md-3">
                                                 <label>First Name<sup class="text-danger">*</sup></label>
-                                                <input type="text" maxlength="50" class="form-control" placeholder="First Name" ng-model="joiningForm.first_name">
+                                                <input type="text" maxlength="50" class="form-control capitalize-each-word alpha-space" placeholder="First Name" ng-model="joiningForm.first_name">
                                                 <div class="text-danger" ng-show="errors.first_name">{{errors.first_name}}</div>
                                             </div>
                                             <div class="form-group  col-sm-6 col-md-3">
                                                 <label>Last Name<sup class="text-danger">*</sup></label>
-                                                <input type="text" maxlength="50" class="form-control" placeholder="Last Name" ng-model="joiningForm.last_name">
+                                                <input type="text" maxlength="50" class="form-control capitalize-each-word alpha-space" placeholder="Last Name" ng-model="joiningForm.last_name">
                                                 <div class="text-danger" ng-show="errors.last_name">{{errors.last_name}}</div>
                                             </div>
                                             <div class="form-group  col-sm-6 col-md-3">
                                                 <label>Father's Name</label>
-                                                <input type="text" maxlength="50" class="form-control" placeholder="Father's Name" ng-model="joiningForm.father_name">
+                                                <input type="text" maxlength="50" class="form-control capitalize-each-word alpha-space" placeholder="Father's Name" ng-model="joiningForm.father_name">
                                             </div>
                                             <div class="form-group  col-sm-6 col-md-3">
                                                 <label>Mother's Name</label>
-                                                <input type="text" maxlength="50" class="form-control" placeholder="Mother's Name" ng-model="joiningForm.mother_name">
+                                                <input type="text" maxlength="50" class="form-control capitalize-each-word alpha-space" placeholder="Mother's Name" ng-model="joiningForm.mother_name">
                                             </div>
                                         </div>
                                         <div class="form-row">
@@ -172,7 +172,7 @@ function isEditableForm($cap, $status)
 
                                             <div class="form-group  col-sm-6 col-md-3" ng-show="joiningForm.employee_other_details.marital_status=='Married'">
                                                 <label>Spouse's Name</label>
-                                                <input type="text" maxlength="50" class="form-control" placeholder="Spouse's Name" ng-model="joiningForm.spouse_name">
+                                                <input type="text" maxlength="50" class="form-control capitalize-each-word alpha-space" placeholder="Spouse's Name" ng-model="joiningForm.spouse_name">
                                             </div>
                                             <!-- <div class="form-group col-md-3">
                                             <label>Kid(s) Name</label>
@@ -195,7 +195,7 @@ function isEditableForm($cap, $status)
 
                                             <div class="form-group  col-sm-6 col-md-3">
                                                 <label>Nationality (both, if dual national)</label>
-                                                <input type="text" maxlength="50" class="form-control" placeholder="Nationality" ng-model="joiningForm.nationality">
+                                                <input type="text" maxlength="50" class="form-control capitalize-each-word alpha-space" placeholder="Nationality" ng-model="joiningForm.nationality">
                                             </div>
 
                                             <div class="form-group  col-sm-6 col-md-2">
@@ -226,17 +226,17 @@ function isEditableForm($cap, $status)
 
                                             <div class="form-group  col-sm-6 col-md-3">
                                                 <label>PAN Number<sup class="text-danger">*</sup></label>
-                                                <input type="text" maxlength="10" class="form-control" placeholder="PAN Number" ng-model="joiningForm.pan_number">
+                                                <input type="text" maxlength="10" class="form-control capitalize-string alpha-numeric" placeholder="PAN Number" ng-model="joiningForm.pan_number">
                                                 <div class="text-danger" ng-show="errors.pan_number">{{errors.pan_number}}</div>
                                             </div>
                                             <div class="form-group  col-sm-6 col-md-3">
                                                 <label>Aadhar Number<sup class="text-danger">*</sup></label>
-                                                <input type="text" maxlength="12" class="form-control" placeholder="Aadhar Number" ng-model="joiningForm.aadhar_number">
+                                                <input type="text" maxlength="12" class="form-control only-numbers" placeholder="Aadhar Number" ng-model="joiningForm.aadhar_number">
                                                 <div class="text-danger" ng-show="errors.aadhar_number">{{errors.aadhar_number}}</div>
                                             </div>
                                             <div class="form-group  col-sm-6 col-md-3">
                                                 <label>UAN Number</label>
-                                                <input type="text" maxlength="50" class="form-control" placeholder="UAN Number" ng-model="joiningForm.employee_other_details.uan_number">
+                                                <input type="text" maxlength="50" class="form-control only-numbers" placeholder="UAN Number" ng-model="joiningForm.employee_other_details.uan_number">
                                             </div>
                                         </div>
 
@@ -281,7 +281,7 @@ function isEditableForm($cap, $status)
                                             </div>
                                             <div class="form-group col-sm-6 col-md-3">
                                                 <label>Emergency Contact Name and Relation<sup class="text-danger">*</sup></label>
-                                                <input type="text" maxlength="50" class="form-control" placeholder="Emergency Contact Name" ng-model="joiningForm.employee_other_details.emergency_contact_name">
+                                                <input type="text" maxlength="50" class="form-control alpha-space" placeholder="Emergency Contact Name" ng-model="joiningForm.employee_other_details.emergency_contact_name">
                                                 <div class="text-danger" ng-show="errors['employee_other_details.emergency_contact_name']">{{errors['employee_other_details.emergency_contact_name']}}</div>
                                             </div>
                                             <div class="form-group col-sm-6 col-md-3">
@@ -431,17 +431,17 @@ function isEditableForm($cap, $status)
                                         <div class="form-row">
                                             <div class="form-group col-sm-6 col-md-3">
                                                 <label>Bank Name & Branch<sup class="text-danger">*</sup></label>
-                                                <input type="text" maxlength="30" class="form-control" placeholder="Bank Name & Branch" ng-model="joiningForm.employee_other_details.bank_name_branch">
+                                                <input type="text" maxlength="30" class="form-control alpha-num-space" placeholder="Bank Name & Branch" ng-model="joiningForm.employee_other_details.bank_name_branch">
                                                 <div class="text-danger" ng-show="errors['employee_other_details.bank_name_branch']">{{errors['employee_other_details.bank_name_branch']}}</div>
                                             </div>
                                             <div class="form-group col-sm-6 col-md-3">
                                                 <label>Bank A/c No<sup class="text-danger">*</sup></label>
-                                                <input type="text" maxlength="20" class="form-control" placeholder="Bank A/c No" ng-model="joiningForm.employee_other_details.bank_account_number">
+                                                <input type="text" maxlength="20" class="form-control alpha-num-space" placeholder="Bank A/c No" ng-model="joiningForm.employee_other_details.bank_account_number">
                                                 <div class="text-danger" ng-show="errors['employee_other_details.bank_account_number']">{{errors['employee_other_details.bank_account_number']}}</div>
                                             </div>
                                             <div class="form-group col-sm-6 col-md-3">
                                                 <label>IFSC Code<sup class="text-danger">*</sup></label>
-                                                <input type="text" maxlength="11" class="form-control" placeholder="IFSC Code" ng-model="joiningForm.employee_other_details.bank_ifsc_code">
+                                                <input type="text" maxlength="11" class="form-control alpha-numeric capitalize-string" placeholder="IFSC Code" ng-model="joiningForm.employee_other_details.bank_ifsc_code">
                                                 <div class="text-danger" ng-show="errors['employee_other_details.bank_ifsc_code']">{{errors['employee_other_details.bank_ifsc_code']}}</div>
                                             </div>
                                         </div>
@@ -481,7 +481,7 @@ function isEditableForm($cap, $status)
                                             </div>
                                             <div class="form-group col-sm-6 col-md-2">
                                                 <label>City Name<sup class="text-danger">*</sup></label>
-                                                <input type="text" maxlength="60" class="form-control" ng-model="joiningForm.employee_other_details.present_address_city">
+                                                <input type="text" maxlength="60" class="form-control alpha-num-space" ng-model="joiningForm.employee_other_details.present_address_city">
                                                 <div class="text-danger" ng-show="errors['employee_other_details.present_address_city']">{{errors['employee_other_details.present_address_city']}}</div>
                                             </div>
                                             <div class="form-group col-sm-6 col-md-2">
@@ -491,7 +491,7 @@ function isEditableForm($cap, $status)
                                             </div>
                                             <div class="form-group col-md-4">
                                                 <label>For how long are you residing at this address (Year/Months)<sup class="text-danger">*</sup></label>
-                                                <input type="text" maxlength="10" class="form-control" ng-model="joiningForm.employee_other_details.present_address_residing_duration">
+                                                <input type="text" maxlength="10" class="form-control" placeholder="8 Months" ng-model="joiningForm.employee_other_details.present_address_residing_duration">
                                                 <div class="text-danger" ng-show="errors['employee_other_details.present_address_residing_duration']">{{errors['employee_other_details.present_address_residing_duration']}}</div>
                                             </div>
                                         </div>
@@ -504,7 +504,7 @@ function isEditableForm($cap, $status)
                                             </div>
                                             <div class="form-group col-sm-6 col-md-2">
                                                 <label>City Name<sup class="text-danger">*</sup></label>
-                                                <input type="text" maxlength="60" class="form-control" ng-model="joiningForm.employee_other_details.permanent_address_city">
+                                                <input type="text" maxlength="60" class="form-control alpha-num-space" ng-model="joiningForm.employee_other_details.permanent_address_city">
                                                 <div class="text-danger" ng-show="errors['employee_other_details.permanent_address_city']">{{errors['employee_other_details.permanent_address_city']}}</div>
                                             </div>
                                             <div class="form-group col-sm-6 col-md-2">
@@ -1553,13 +1553,13 @@ function isEditableForm($cap, $status)
                                                     <tr ng-repeat="gap in joiningForm.background_info.relative_with_bitstring">
 
                                                         <td>
-                                                            <input type="text" class="form-control" maxlength="50" ng-model="joiningForm.background_info.relative_with_bitstring[$index].name">
+                                                            <input type="text" class="form-control alpha-space-dash" maxlength="50" ng-model="joiningForm.background_info.relative_with_bitstring[$index].name">
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="form-control" maxlength="20" ng-model="joiningForm.background_info.relative_with_bitstring[$index].relationship">
+                                                            <input type="text" class="form-control alpha-space-dash" maxlength="20" ng-model="joiningForm.background_info.relative_with_bitstring[$index].relationship">
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="form-control" maxlength="20" ng-model="joiningForm.background_info.relative_with_bitstring[$index].position">
+                                                            <input type="text" class="form-control alpha-space-dash" maxlength="20" ng-model="joiningForm.background_info.relative_with_bitstring[$index].position">
                                                         </td>
 
 
@@ -2952,6 +2952,8 @@ function isEditableForm($cap, $status)
             }).then(function(response) {
                 $scope.editMode = false;
                 $scope.loading = false;
+                $scope.errors = response.data.error;
+                if(!$scope.errors){
                 $scope.successMessage = response.data.messages.success;
                 toastr.success(response.data.messages.success);
                 if (nextTab != '') {
@@ -2960,7 +2962,13 @@ function isEditableForm($cap, $status)
                 if (reload) {
                     window.location.reload();
                 }
-
+            }else{
+                    if (response.data.status == 403) {
+                    toastr.error(response.data.messages.errorMessage);
+                    } else {
+                        toastr.error("Please fill all the required information.");
+                    }
+                }
 
 
 

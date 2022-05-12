@@ -19,7 +19,7 @@ class PolicyDocuments extends ResourceController
             return $this->fail(['messages' => 'Please login.'], 400);
         }
 
-        if (!hasCapability('policy-documents/view')) {
+        if (!hasCapability('policy_documents/view')) {
             return $this->fail(['errorMessage' => "You don't have capability to access this page. Please contact to admin."], 403);
         }
 
@@ -45,7 +45,7 @@ class PolicyDocuments extends ResourceController
             return $this->fail(['messages' => 'Please login.'], 400);
         }
 
-        if (!hasCapability('policy-documents/view')) {
+        if (!hasCapability('policy_documents/view')) {
             return $this->fail(['errorMessage' => "You don't have capability to access this page. Please contact to admin."], 403);
         }
         $PolicyDocumentsModel = new PolicyDocumentsModel();
@@ -82,7 +82,7 @@ class PolicyDocuments extends ResourceController
             return $this->fail(['messages' => 'Please login.'], 400);
         }
 
-        if (!hasCapability('policy-documents/add')) {
+        if (!hasCapability('policy_documents/add')) {
             return $this->fail(['errorMessage' => "You don't have capability to access this page. Please contact to admin."], 403);
         }
 

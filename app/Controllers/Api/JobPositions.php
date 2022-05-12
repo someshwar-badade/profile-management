@@ -63,6 +63,8 @@ class JobPositions extends ResourceController
         
         $data = $model->getList($filter, $iSearch_str, $start, $length, $orderBy);
 
+       
+
         return $this->respond($data);
     }
 
@@ -80,8 +82,23 @@ class JobPositions extends ResourceController
         $model = new JobPositionModel();
         $response = $model->find($id);
 
-        $response['primary_skills'] = !empty($response['primary_skills'])?explode(" || ",$response['primary_skills']):null;
-        $response['secondary_skills'] = !empty($response['secondary_skills'])?explode(" || ",$response['secondary_skills']):null;
+        // $response['primary_skills'] = !empty($response['primary_skills'])?explode(" || ",$response['primary_skills']):null;
+        // $response['secondary_skills'] = !empty($response['secondary_skills'])?explode(" || ",$response['secondary_skills']):null;
+
+        if (!empty($response['primary_skills'])) {
+            // $response['primary_skills'] = explode(' || ', $response['primary_skills']);
+            $response['primary_skills'] = json_decode($response['primary_skills'], true);
+        } else {
+            $response['primary_skills'] = [];
+        }
+
+        if (!empty($response['secondary_skills'])) {
+            // $response['secondary_skills'] = explode(' || ', $response['secondary_skills']);
+            $response['secondary_skills'] = json_decode($response['secondary_skills'], true);
+        } else {
+            $response['secondary_skills'] = [];
+        }
+
         $response['locations'] = !empty($response['locations'])?explode(" || ",$response['locations']):null;
 
         $response['min_exp_y'] = floor($response['min_experience']/12);
@@ -153,8 +170,20 @@ class JobPositions extends ResourceController
         $requestData['position_received_date'] = date('Y-m-d',strtotime($requestData['position_received_date']));
         $requestData['valid_to_date'] = date('Y-m-d',strtotime($requestData['valid_to_date']));
 
-        $requestData['primary_skills'] = !empty($requestData['primary_skills'])?implode(" || ",$requestData['primary_skills']):null;
-        $requestData['secondary_skills'] = !empty($requestData['secondary_skills'])?implode(" || ",$requestData['secondary_skills']):null;
+        // $requestData['primary_skills'] = !empty($requestData['primary_skills'])?implode(" || ",$requestData['primary_skills']):null;
+        // $requestData['secondary_skills'] = !empty($requestData['secondary_skills'])?implode(" || ",$requestData['secondary_skills']):null;
+      
+        if (isset($requestData['primary_skills'])) {
+            $requestData['primary_skills_soundex'] = implode(" ", convertStringToSoundex($requestData['primary_skills']));
+            // $requestData['primary_skills'] = implode(" || ", $requestData['primary_skills']);
+            $requestData['primary_skills'] = json_encode($requestData['primary_skills']);
+        }
+        if (isset($requestData['secondary_skills'])) {
+            $requestData['secondary_skills_soundex'] = implode(" ", convertStringToSoundex($requestData['secondary_skills']));
+            // $requestData['secondary_skills'] = implode(" || ", $requestData['secondary_skills']);
+            $requestData['secondary_skills'] = json_encode($requestData['secondary_skills']);
+        }
+
         $requestData['locations'] = !empty($requestData['locations'])?implode(" || ",$requestData['locations']):null;
         $requestData['min_experience'] = ($requestData['min_exp_y']*12) + $requestData['min_exp_m'];
         $requestData['max_experience'] = ($requestData['max_exp_y']*12) + $requestData['max_exp_m'];

@@ -106,6 +106,11 @@ $routes->get('/download-my-profile', 'Profiles::downloadMyProfile',['as'=>'downl
 $routes->get('/download-my-resume', 'Profiles::downloadMyResume',['as'=>'downloadMyResume']);
 $routes->get('/download-my-resume-preview', 'Profiles::downloadMyResumePreview',['as'=>'downloadMyResumePreview']);
 $routes->get('/get-font-image', 'FontImage::index',['as'=>'getFontImage']);
+$routes->post('/api/my-profile/upload-photo', 'Api\Profiles::uploadProfilePhoto',['as'=>'uploadProfilePhoto']);
+
+$routes->post('/api/my-profile/save-profile-project-details', 'Api\Profiles::profileSaveProfileProjectDetails',['as'=>'profileSaveProfileProjectDetails']);
+$routes->post('/api/my-profile/remove-profile-project-details', 'Api\Profiles::profileRemoveProfileProjectDetails',['as'=>'profileRemoveProfileProjectDetails']);
+
 
 //my joining form
 $routes->get('/my-joining-form', 'MyJoiningForm::index',['as'=>'myJoiningForm']);
@@ -196,9 +201,41 @@ $routes->get('/view-policy-document/(:num)', 'Api\PolicyDocuments::viewPolicyDoc
 $routes->get('/view-policy-document/(:num)/(:any)', 'Api\PolicyDocuments::viewPolicyDocumentFile/$1/$2',['as'=>'viewPolicyDocumentFile']);
 
 
+//Email Templates
+$routes->get('/email-templates', 'EmailTemplates::index',['as'=>'EmailTemplates']);
+$routes->get('/api/email-templates', 'Api\EmailTemplates::index',['as'=>'getEmailTemplates']);
+$routes->get('/api/email-templates/(:num)', 'Api\EmailTemplates::getDetails/$1',['as'=>'getEmailTemplateDetails']);
+$routes->post('/api/update-email-templates', 'Api\EmailTemplates::updateDetails',['as'=>'updateEmailTemplateDetails']);
+
+//Site Settings
+$routes->get('/site-settings', 'SiteSettings::index',['as'=>'SiteSettings']);
+$routes->get('/api/site-settings', 'Api\SiteSettings::index',['as'=>'getSiteSettings']);
+$routes->post('/api/site-settings', 'Api\SiteSettings::updateDetails',['as'=>'updateSiteSettings']);
+
+
+//custome resume templates
+$routes->get('/api/get-resume-templates', 'Api\ResumeTemplates::index',['as'=>'getResumeTemplates']);
+$routes->post('/api/save-resume-template', 'Api\ResumeTemplates::saveDetails',['as'=>'saveResumeTemplates']);
+
+
 //Logs
 $routes->get('/logs', 'Logs::index',['as'=>'logs']);
+$routes->get('/download-log-report', 'Logs::downloadLogReport',['as'=>'downloadLogReport']);
 $routes->get('/api/logs', 'Api\Logs::index',['as'=>'getLogs']);
+
+
+//Leaves
+$routes->get('/leaves', 'Leaves::index',['as'=>'leaves']);
+$routes->get('/leaves-for-approval', 'Leaves::leavesApproval',['as'=>'leavesApproval']);
+$routes->get('/leaves-report', 'Leaves::leavesReport',['as'=>'leavesReport']);
+$routes->get('/api/leaves', 'Api\Leaves::index',['as'=>'getLeaves']);
+$routes->post('/api/get-leave-report', 'Api\Leaves::getReport',['as'=>'getReport']);
+$routes->get('/api/leaves-for-approval', 'Api\Leaves::leavesForApproval',['as'=>'leavesForApproval']);
+$routes->post('/api/leaves', 'Api\Leaves::updateLeave',['as'=>'updateLeave']);
+$routes->post('/api/update-leaves-status', 'Api\Leaves::updateLeaveStatus',['as'=>'updateLeaveStatus']);
+$routes->get('/api/leaves/(:num)', 'Api\Leaves::getLeaveDetails/$1',['as'=>'getLeaveDetails']);
+$routes->get('/api/getChartData', 'Api\Leaves::getChartData',['as'=>'getChartData']);
+
 
 $routes->group('/api',['namespace' => 'App\Controllers\Api'], function($routes)
 {

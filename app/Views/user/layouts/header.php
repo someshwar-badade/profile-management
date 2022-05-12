@@ -23,9 +23,9 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="<?= base_url(route_to('home')) ?>" class="brand-link text-center">
-    <img src="<?=base_url('assets/images/logo-small.png')?>" width="40" class="d-inline-block align-top" alt="">
+    <img src="<?=base_url(getSiteSetting('site_logo'))?>" width="40" class="d-inline-block align-top" alt="">
       <!-- <img src="<?= base_url('assets/images/goat-logo-white.png') ?>" alt="<?= lang('site.site_title') ?>" class="brand-image img-circle elevation-3" style="opacity: .8"> -->
-      <span class="brand-text font-weight-light"><?= lang('site.site_title') ?></span>
+      <span class="brand-text font-weight-light"><?= getSiteSetting('site_title') ?></span>
     </a>
 
     <!-- Sidebar -->
@@ -140,6 +140,16 @@
             </a>
           </li>
         <?php }?>
+          <?php if (hasCapability('email-templates/view')) { ?>
+          <li class="nav-item">
+            <a href="<?= base_url(route_to('EmailTemplates')) ?>" class="nav-link <?=$active_nav=='email-templates'?' active ':'';?>">
+            <i class="nav-icon fas fa-envelope"></i>
+              <p>
+              Email Template
+              </p>
+            </a>
+          </li>
+        <?php }?>
 
           <?php if (hasCapability('policy-documents/view')) { ?>
           <li class="nav-item">
@@ -150,6 +160,43 @@
               </p>
             </a>
           </li>
+        <?php }?>
+
+        <?php if (hasCapability('leaves/view')) { ?>
+          <li class="nav-item">
+            <a href="#" class="nav-link <?=$active_nav_parent=='leaves'?' active ':'';?>">
+            <i class="nav-icon far fa-calendar-alt"></i>
+              <p>
+              Leaves
+              <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview" style="display: none;">
+              <li class="nav-item <?=$active_nav=='leaves'?' active ':'';?>">
+                <a href="<?= base_url(route_to('leaves')) ?>" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>My Leaves</p>
+                </a>
+              </li>
+              <?php if (hasCapability('leaves/approval')) { ?>
+              <li class="nav-item <?=$active_nav=='leave-approval'?' active ':'';?>">
+                <a href="<?= base_url(route_to('leavesApproval')) ?>" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Approval</p>
+                </a>
+              </li>
+              <?php }?>
+              <?php if (hasCapability('leaves/report')) { ?>
+              <li class="nav-item <?=$active_nav=='leave-approval'?' active ':'';?>">
+                <a href="<?= base_url(route_to('leavesReport')) ?>" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Report</p>
+                </a>
+              </li>
+              <?php }?>
+            </ul>
+          </li>
+         
         <?php }?>
 
           <?php if (hasCapability('logs/view')) { ?>
@@ -165,13 +212,22 @@
 
           <li class="nav-item">
             <a href="<?=base_url(route_to('user-settings'))?>" class="nav-link <?=$active_nav_parent=='settings'?' active ':'';?>">
-              <i class="nav-icon fas fa-cog"></i>
+              <i class="nav-icon fas fa-user-cog"></i>
               <p>
               <?= lang('menu.sidebar.settings') ?>
               </p>
             </a>
           </li>
-
+          <?php if (hasCapability('site-settings/view')) { ?>
+          <li class="nav-item">
+            <a href="<?=base_url(route_to('SiteSettings'))?>" class="nav-link <?=$active_nav_parent=='site-settings'?' active ':'';?>">
+              <i class="nav-icon fas fa-cog"></i>
+              <p>
+              Site Settings
+              </p>
+            </a>
+          </li>
+          <?php }?>
           <li class="nav-item">
           <a href="<?= base_url(route_to('logout')) ?>" class="nav-link">
               <i class="nav-icon fas fa-sign-out-alt"></i>

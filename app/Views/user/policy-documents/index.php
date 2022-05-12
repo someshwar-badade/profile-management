@@ -153,10 +153,20 @@
                                     <div ng-show="clientForm.type=='Text'" class="form-group row">
                                         <label class="col-sm-3 col-form-label col-form-label-sm text-right">Text</label>
 
-                                        <div class="col-sm-9">
-                                            <div text-angular="text-angular" name="htmlcontent" ng-model="clientForm.text" ta-disabled='disabled'></div>
 
-                                            <div class="text-danger" ng-show="clientFormErrors.text">{{clientFormErrors.text}}</div>
+                                        <div  class="col-sm-9">
+                                            <!-- <div>
+                                                <span class="badge" ng-click="insertTextAtCursor('[user_first_name]')">[user_first_name]</span>
+                                                <span class="badge" ng-click="insertTextAtCursor('[user_last_name]')">[user_last_name]</span>
+                                                <span class="badge" ng-click="insertTextAtCursor('[user_email]')">[user_email]</span>
+                                                <span class="badge" ng-click="insertTextAtCursor('[user_mobile]')">[user_mobile]</span>
+                                            </div> -->
+                                            <div id="htmlEditor">
+
+                                                <div text-angular="text-angular" name="htmlcontent" ng-model="clientForm.text" ta-disabled='disabled'></div>
+                                                
+                                            </div>
+                                                <div class="text-danger" ng-show="clientFormErrors.text">{{clientFormErrors.text}}</div>
                                         </div>
                                     </div>
 
@@ -193,7 +203,7 @@
         </div>
 
         <div class="modal" id="viewDocumentModal">
-            <div class="modal-dialog modal-lg ">
+            <div class="modal-dialog modal-lg  ">
                 <div class="modal-content">
                     <!-- Modal header -->
                     <div class="modal-header p-2 bg-primary">
@@ -225,6 +235,23 @@
 
 <?= $this->section('javascript') ?>
 <script>
+
+        let selection;
+        let range
+        
+        $(document).on('click','#htmlEditor .ta-text.ta-editor',function(){
+            selection = window.getSelection();
+            range = selection.getRangeAt(0);
+            console.log(selection);
+        });
+
+        $(document).on('input','#htmlEditor .ta-text.ta-editor',function(){
+            selection = window.getSelection();
+            range = selection.getRangeAt(0);
+            console.log(selection);
+        });
+                   
+
     app.controller('policyDocumentsCtrl', ['$scope', '$http', 'slugifyFilter', function($scope, $http, slugifyFilter) {
         $scope.filterForm = {}
         $scope.filterForm.status = 'Active'
@@ -358,7 +385,7 @@
 
         $scope.deleteDocument = function(documentId) {
 
-            if(!confirm("Are you sure you want to delete this document?")) return
+            if (!confirm("Are you sure you want to delete this document?")) return
             if (documentId != '') {
 
                 $http({
@@ -371,6 +398,16 @@
 
                 });
             }
+        }
+
+        $scope.insertTextAtCursor = function(text) {
+            range.deleteContents();
+            let node = document.createTextNode(text);
+            range.insertNode(node);
+
+            for (let position = 0; position != text.length; position++) {
+                selection.modify("move", "right", "character");
+            };
         }
 
     }])

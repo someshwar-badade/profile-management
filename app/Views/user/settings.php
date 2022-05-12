@@ -3,8 +3,7 @@
 
 <?= $this->section('content') ?>
 <style>
-
-  .spinner-border{
+  .spinner-border {
     width: 1.5rem;
     height: 1.5rem;
   }
@@ -27,11 +26,11 @@
       <div class="col-md-10 offset-md-1">
         <div class="card card-primary">
           <nav class="navbar navbar-expand sticky-form-header">
-        <div ng-show="loading" class="spinner-border text-primary"></div>
-        <div class="text-success">{{successMessage}}</div>
+            <div ng-show="loading" class="spinner-border text-primary"></div>
+            <div class="text-success">{{successMessage}}</div>
             <ul class="navbar-nav ml-auto">
               <li class="nav-item"><button class="btn btn-sm btn-success " ng-click="submitClick()">
-               Save</button>
+                  Save</button>
               </li>
               <li class="nav-item">
                 <a href="<?= base_url(route_to('user-dashboard')) ?>" class="btn btn-sm btn-secondary ml-2">Cancel</a>
@@ -41,7 +40,7 @@
           </nav>
 
           <div class="card-body">
-          
+
             <div class="form-group row">
               <label class="col-sm-3" for="inputName">Current Password <sup class="text-danger">*</sup></label>
               <div class="col-sm-9">
@@ -63,7 +62,7 @@
                 <div class="text-danger" ng-show="errors.confirm_password">{{errors.confirm_password}}</div>
               </div>
             </div>
-            
+
 
 
             <!-- </div> -->
@@ -88,7 +87,7 @@
     $scope.loading = false;
     $scope.errors = '';
     $scope.successMessage = '';
-   
+
     // $scope.slugify = function() {
     //     $scope.formData.slug = slugifyFilter($scope.formData.lang.en.title);
     // }
@@ -104,14 +103,14 @@
       console.log($scope.profile);
       var apiUrl = base_url + '/api/user/profile/change-password';
       var method = "POST";
-      
+
       $http({
         method: method,
         url: apiUrl,
         data: {
-            'current_password': $scope.current_password,
-            'new_password': $scope.new_password,
-            'confirm_password': $scope.confirm_password
+          'current_password': $scope.current_password,
+          'new_password': $scope.new_password,
+          'confirm_password': $scope.confirm_password
         }
       }).then(function(response) {
         $scope.editMode = false;
@@ -128,7 +127,7 @@
         console.log($scope.errors);
         console.log($scope.errors['lang.en.title']);
       });
-      
+
     }
 
 

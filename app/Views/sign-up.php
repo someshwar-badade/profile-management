@@ -28,7 +28,7 @@
                             <div class="col-md-6 vertical-center">
                                 <div style="width: 100%;">
                                     <h2 class="text-center">Sign Up</h2>
-                                    <form name="login" id="login">
+                                    <form name="login" id="login" ng-submit="submitClick()">
 
                                         <div class="form-row">
                                             <div class="col-md-6 col-sm-12">
@@ -71,7 +71,7 @@
                                             </div>
                                             <div class="col-md-4 col-sm-12">
                                                 <div class="form-group m-0">
-                                                    <button type="button" ng-disabled="loading" ng-click="submitClick()" class="btn btn-block knowmore">
+                                                    <button type="submit" ng-disabled="loading"  class="btn btn-block knowmore">
                                                         <div ng-show="loading" class="css-animated-loader"></div> Sign Up
                                                     </button>
                                                 </div>

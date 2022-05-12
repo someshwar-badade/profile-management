@@ -55,6 +55,14 @@ app.filter('slugify', function() {
   }
 });
 
+app.filter('removeplus', function() {
+  return function(input) {
+    input = input || '';
+    return input.replace(/\+/g, ' ');
+  }
+});
+
+
 app.filter('customFilter', function() {
   return function(input, search) {
     console.log(typeof(input));
@@ -122,4 +130,30 @@ app.directive('starRating', function () {
           });
       }
   }
+});
+
+
+app.directive('jqdatepicker', function () {
+  return {
+      restrict: 'A',
+      require: 'ngModel',
+       link: function (scope, element, attrs, ngModelCtrl) {
+          element.datetimepicker(
+            {
+              format: 'd-M-Y',
+              scrollInput: false,
+              timepicker: false,
+              // disabledWeekDays:['0','6'],
+              disabledWeekDays:attrs.disableWeekDays,
+              // disabledDates:'02-05-2022, 04-05-2022',
+              disabledDates:['02-May-2022', '04-May-2022'],
+              // validateOnBlur:false,
+              onSelectDate: function(el,date) {
+                scope.date = date;
+                scope.$apply();
+              }
+          }
+            );
+      }
+  };
 });

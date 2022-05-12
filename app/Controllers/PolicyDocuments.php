@@ -20,7 +20,7 @@ class PolicyDocuments extends BaseController
 			'active_nav_parent' => 'policy-document',
 			'active_nav' => 'policy-document',
 		];
-		if(!hasCapability('policy-documents/view')){
+		if(!hasCapability('policy_documents/view')){
 			$data['errorMessage'] = "You don't have capability to access this page. Please contact to admin.";
 			return view('user/error',$data);
 		}
