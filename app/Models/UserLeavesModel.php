@@ -185,6 +185,19 @@ class UserLeavesModel extends Model {
         return $data;
     }
 
+    public function getLeaveTypeWiseCount($user_id){
+        $builder = $this->db->table($this->table);
+        $builder->select(" user_leave_type.title as leave_type, SUM(user_leave_dates.full_or_half) as total_days ");
+        $builder->join('user_leave_type','user_leaves.leave_type_id = user_leave_type.id','left');
+        $builder->join('user_leave_dates','user_leaves.id = user_leave_dates.user_leave_id','left');
+        $builder->where("user_leaves.user_id",$user_id);
+        $builder->whereIn("user_leaves.status",['Approved']);
+        $builder->groupBy("user_leaves.leave_type_id");
+        $query   = $builder->get();
+        $data = $query->getResultArray();
+        return $data;
+    }
+
     public function employeeList(){
         $builder = $this->db->table($this->table);
         // $builder->select("action_log.chaged_data, DATE_FORMAT(action_log.created_at,'%d-%b-%Y %h:%s') as created_at, CONCAT_WS(' ',users.first_name,users.middle_name,users.last_name) as action_by_user ");

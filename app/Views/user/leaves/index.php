@@ -26,10 +26,41 @@
             <div class="row m-0">
 
                 <div class="col-12">
-                    <h1>Leaves
+                    <h1>My Leaves
 
                         <button ng-click="showCase.viewClient();" class="btn btn-sm btn-warning mt-2 pull-right"><b><i class="fa fa-plus"></i> Apply for leave</b></button>
                     </h1>
+                    <div class="col-12 my-3 p-3 bg-light shadow-sm">
+                        <label for="">Leaves Taken: <span class="dropdown">
+                                <a class="" data-toggle="dropdown" href="#" aria-expanded="false">
+                                    <?=$totalLeavesCount?>/18
+                                </a>
+                                <ul class="dropdown-menu p-2">
+                                    <?php foreach($leaveTypeWiseCount as $row){?>
+                                        <li>
+                                        
+                                          
+                                                <h3 class="dropdown-item-title">
+                                                    <?=$row['leave_type']?>
+                                                    <span class="float-right text-sm"><?=$row['total_days']?></span>
+                                                </h3>
+                                            
+                                       
+
+                                        </li>
+                                        
+                                        <?php }?>
+                                    
+                                    
+                                    
+                                </ul>
+                            </span>
+
+                           
+                        </label>
+
+                       
+                    </div>
 
                     <div class="col-12 my-3 p-3 bg-light shadow-sm">
 
@@ -444,8 +475,6 @@
                     '<button class="btn" type="button" data-toggle="dropdown"><i class="fas fa-ellipsis-v"></i></button>' +
                     '<ul class="dropdown-menu">' +
                     "<li> <a role='button' class='mx-2 text-default' ng-click='showCase.viewClient(" + full.user_leave_id + ")' ><i class='far fa-eye'></i> View / Edit</a></li>" +
-                    ((vm.cap_approval && full.status == 'Pending') ? "<li> <a role='button' class='mx-2 text-default' ng-click='showCase.viewApprovalModal(" + full.user_leave_id + ")' ><i class='fas fa-check'></i> Approve</a></li>" : "") +
-                    ((vm.cap_approval && full.status == 'Pending') ? "<li> <a role='button' class='mx-2 text-default' ng-click='showCase.viewApprovalModal(" + full.user_leave_id + ")' ><i class='fas fa-times'></i> Reject</a></li>" : "") +
                     '</ul>'
                 '</div>';
 

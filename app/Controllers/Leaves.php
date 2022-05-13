@@ -21,6 +21,13 @@ class Leaves extends BaseController
 		}
 
 		$UserLeaveTypesModel = new UserLeaveTypesModel();
+		$UserLeavesModel = new UserLeavesModel();
+
+		$leaveTypeWiseCount = $UserLeavesModel->getLeaveTypeWiseCount($user['id']);
+		$totalLeavesCount = 0;
+		foreach($leaveTypeWiseCount as $row){
+			$totalLeavesCount += $row['total_days'];
+		}
 
 		$data = [
 			'page_title' => 'My Leaves',
@@ -28,6 +35,8 @@ class Leaves extends BaseController
 			'active_nav' => 'leaves',
 			'cap_approval' => hasCapability('leaves/approval'),
 			'leave_types' => $UserLeaveTypesModel->getActiveTypeList(),
+			'leaveTypeWiseCount' => $leaveTypeWiseCount,
+			'totalLeavesCount'=> $totalLeavesCount
 		];
 
 		if(!hasCapability('leaves/view')){
